@@ -8,6 +8,7 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
+console.log(process.env.VUE_APP_TITLE);
 
 export default {
   name: "Home",
