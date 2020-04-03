@@ -1,12 +1,12 @@
 <template>
   <div>
     <h1>This is Category Page</h1>
-    {{ products }}
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import { API_PRODUCTS } from "@/constants";
 
 export default {
   name: "CategoryPage",
@@ -32,9 +32,10 @@ export default {
       // with as many query params as possible
       axios
         .get(
-          `http://localhost:3000/api/products?${
-            Object.keys(this.$route.query)[0]
-          }=${Object.values(this.$route.query)[0]}`
+          API_PRODUCTS +
+            `?${Object.keys(this.$route.query)[0]}=${
+              Object.values(this.$route.query)[0]
+            }`
         )
         .then(response => (this.products = response))
         .catch(err => (this.error = err.toString()))
