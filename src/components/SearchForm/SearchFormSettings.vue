@@ -1,5 +1,6 @@
 <template>
   <div>
+    hello form parent prop: {{ selectedOptions }}
     <slot :selects="selects"></slot>
   </div>
 </template>
@@ -7,13 +8,14 @@
 <script>
 export default {
   name: "SearchFormSettings",
+  props: ["selectedOptions"],
   data() {
     return {
       selects: [
         {
           id: 1,
           name: "section",
-          selectedOption: null,
+          selectedOption: "null",
           options: [
             { id: 1, name: "Men", value: "men" },
             { id: 2, name: "Women", value: "women" }
@@ -22,7 +24,7 @@ export default {
         {
           id: 2,
           name: "campaigns",
-          selectedOption: null,
+          selectedOption: "null",
           options: [
             { id: 1, name: "Sale", value: "sale" },
             { id: 2, name: "Essentials", value: "essentials" },
@@ -61,8 +63,22 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    updateSelectedOption() {
+      let that = this;
+      that.selects.forEach(function(select) {
+        for (let [key, value] of Object.entries(that.selectedOptions)) {
+          if (select.name === key) {
+            console.log(key, value);
+            select.selectedOption = value;
+          }
+        }
+      });
+    }
+  },
+  created() {
+    this.updateSelectedOption();
   }
 };
 </script>
-
-<style lang="scss" scoped></style>

@@ -1,9 +1,7 @@
 <template>
   <div>
     <h1>This is Category Page {{ buildRouteQueryString }}</h1>
-    <br />
-    <SearchForm></SearchForm>
-    {{ products }}
+    <SearchForm :selected-options="getSelectedOptions"></SearchForm>
   </div>
 </template>
 
@@ -31,6 +29,9 @@ export default {
     $route: "fetchData"
   },
   computed: {
+    getSelectedOptions() {
+      return this.$route.query;
+    },
     buildRouteQueryString() {
       let routeQueryString = "";
       for (let [key, value] of Object.entries(this.$route.query)) {

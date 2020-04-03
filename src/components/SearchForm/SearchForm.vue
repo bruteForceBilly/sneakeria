@@ -1,6 +1,9 @@
 <template>
   <div>
-    <SearchFormSettings v-slot:default="{ selects }">
+    <SearchFormSettings
+      :selected-options="selectedOptions"
+      v-slot:default="{ selects }"
+    >
       <form>
         <div v-for="(select, index) in selects" :key="index + select.name">
           <label :for="select.name"> {{ select.name }} </label>
@@ -12,7 +15,7 @@
             <option
               v-for="(option, index) in select.options"
               :key="index + option"
-              :value="option.name"
+              :value="option.value"
               :selected="select.selectedOption"
             >
               {{ option.name }}
@@ -29,10 +32,9 @@ import SearchFormSettings from "@/components/SearchForm/SearchFormSettings";
 
 export default {
   name: "SearchForm",
+  props: ["selectedOptions"],
   components: {
     SearchFormSettings
   }
 };
 </script>
-
-<style lang="scss" scoped></style>
