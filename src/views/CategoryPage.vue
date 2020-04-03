@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>This is Category Page</h1>
+    <h1>This is Category Page {{ buildRouteQueryString }}</h1>
+    {{ products }}
   </div>
 </template>
 
@@ -23,20 +24,21 @@ export default {
   watch: {
     $route: "fetchData"
   },
+  computed: {
+    buildRouteQueryString() {
+      let routeQueryString = "";
+      for (let [key, value] of Object.entries(this.$route.query)) {
+        routeQueryString += `${key}=${value}&`;
+      }
+      return routeQueryString.slice(0, -1);
+    }
+  },
   methods: {
     fetchData() {
       this.error = this.products = null;
       this.loading = true;
-      // Create vars for building route in axios get req
-      // Iterate and map route query params so you can build a get request
-      // with as many query params as possible
       axios
-        .get(
-          API_PRODUCTS +
-            `?${Object.keys(this.$route.query)[0]}=${
-              Object.values(this.$route.query)[0]
-            }`
-        )
+        .get(API_PRODUCTS + "?" + this.buildRouteQueryString)
         .then(response => (this.products = response))
         .catch(err => (this.error = err.toString()))
         .finally(() => (this.loading = false));
