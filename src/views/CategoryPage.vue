@@ -1,6 +1,8 @@
 <template>
   <div>
     <h1>This is Category Page {{ buildRouteQueryString }}</h1>
+    <br />
+    <SearchForm></SearchForm>
     {{ products }}
   </div>
 </template>
@@ -8,9 +10,13 @@
 <script>
 import axios from "axios";
 import { API_PRODUCTS } from "@/constants";
+import SearchForm from "@/components/SearchForm/SearchForm.vue";
 
 export default {
   name: "CategoryPage",
+  components: {
+    SearchForm
+  },
   data() {
     return {
       loading: false,
