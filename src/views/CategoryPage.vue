@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>This is Category Page {{ buildRouteQueryString }}</h1>
+    <p>This is Category Page {{ getSelectedOptions }}</p>
     <SearchForm :selected-options="getSelectedOptions"></SearchForm>
   </div>
 </template>
@@ -30,7 +30,14 @@ export default {
   },
   computed: {
     getSelectedOptions() {
-      return this.$route.query;
+      if (
+        Object.keys(this.$route.query).length === 0 &&
+        this.$route.query.constructor === Object
+      ) {
+        return this.$route.path;
+      } else {
+        return this.$route.query;
+      }
     },
     buildRouteQueryString() {
       let routeQueryString = "";

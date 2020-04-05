@@ -7,14 +7,20 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/search",
+    name: "CategoryPage",
+    component: CategoryPage,
+    beforeEnter: (to, from, next) => {
+      let res = Object.values(to.query)
+        .toString()
+        .replace(/,/g, "-");
+      next(`/${res}`);
+    }
+  },
+  {
     path: "/",
     name: "Home",
     component: Home
-  },
-  {
-    path: "/search",
-    name: "CategoryPage",
-    component: CategoryPage
   }
 ];
 

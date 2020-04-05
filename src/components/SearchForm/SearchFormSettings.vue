@@ -84,7 +84,6 @@ export default {
       this.selects.forEach(function(select) {
         for (let [key, value] of Object.entries(arg)) {
           if (select.name === key) {
-            console.log(key, value);
             select.selectedOption = value;
           }
         }
