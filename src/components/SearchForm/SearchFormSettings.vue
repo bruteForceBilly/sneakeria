@@ -1,6 +1,6 @@
 <template>
   <div>
-    hello form parent prop: {{ selectedOptions }}
+    Router query params passed as prop: {{ selectedOptions }}
     <slot :selects="selects"></slot>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
         {
           id: 1,
           name: "section",
-          selectedOption: "null",
+          selectedOption: null,
           options: [
             { id: 1, name: "Men", value: "men" },
             { id: 2, name: "Women", value: "women" }
@@ -24,7 +24,7 @@ export default {
         {
           id: 2,
           name: "campaigns",
-          selectedOption: "null",
+          selectedOption: null,
           options: [
             { id: 1, name: "Sale", value: "sale" },
             { id: 2, name: "Essentials", value: "essentials" },
@@ -37,7 +37,7 @@ export default {
           selectedOption: null,
           options: [
             { id: 1, name: "Shoes", value: "shoe" },
-            { id: 2, name: "T-shirt", value: "T-shirt" }
+            { id: 2, name: "T-shirt", value: "t-shirt" }
           ]
         },
         {
@@ -64,21 +64,56 @@ export default {
       ]
     };
   },
+  computed: {
+    getSelectedOptionsFromSelectInData() {
+      let resObj = {};
+      this.selects
+        .filter(function(select) {
+          if (select.selectedOption !== null) {
+            return select;
+          }
+        })
+        .forEach(function(select) {
+          return (resObj[select.name] = select.selectedOption);
+        });
+      return resObj;
+    }
+  },
   methods: {
-    updateSelectedOption() {
-      let that = this;
-      that.selects.forEach(function(select) {
-        for (let [key, value] of Object.entries(that.selectedOptions)) {
+    updateSelectedOption(arg) {
+      this.selects.forEach(function(select) {
+        for (let [key, value] of Object.entries(arg)) {
           if (select.name === key) {
             console.log(key, value);
             select.selectedOption = value;
           }
         }
       });
+    },
+    updateRouteQueryParams(argObj) {
+      return (
+        this.$router
+          .push({ path: "search", query: argObj })
+          // eslint-disable-next-line no-unused-vars
+          .catch(err => {})
+      );
     }
   },
+  beforeUpdate() {
+    this.updateRouteQueryParams(this.getSelectedOptionsFromSelectInData);
+    //this.updateSelectedOption();
+  },
   created() {
-    this.updateSelectedOption();
+    this.updateSelectedOption(this.selectedOptions);
   }
+  // watch: {
+  //   selects: {
+  //     deep: true,
+  //     immediate: false,
+  //     handler(newValue) {
+  //       this.updateSelectedOption(newValue);
+  //     }
+  //   }
+  // }
 };
 </script>
