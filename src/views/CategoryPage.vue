@@ -1,7 +1,9 @@
 <template>
   <div>
-    <p>This is Category Page {{ getSelectedOptions }}</p>
-    <SearchForm :selected-options="getSelectedOptions"></SearchForm>
+    <p>This is Category Page {{ fromHome }}</p>
+    <SearchForm
+      :selected-options="fromHome ? this.$route.query : getSelectedOptions"
+    ></SearchForm>
   </div>
 </template>
 
@@ -15,6 +17,7 @@ export default {
   components: {
     SearchForm
   },
+  props: ["fromHome"],
   data() {
     return {
       loading: false,
@@ -22,37 +25,39 @@ export default {
       error: null
     };
   },
+  beforeRouteEnter(to, from, next) {
+    if (from.name === "home") {
+      console.log(">>> from home ", from);
+      console.log(">>> this route ");
+      // this.fromHome = true;
+    } else {
+      console.log(">>> not home ", from);
+      // this.fromHome = false;
+    }
+    next();
+  },
   created() {
     this.fetchData();
-    console.log(">>> path", this.$route.path);
-    console.log(">>> pathToObj", this.pathToObject(this.$route.path));
   },
   watch: {
     $route: "fetchData"
   },
   computed: {
-    getSelectedOptions() {
-      if (
-        Object.keys(this.$route.query).length === 0 &&
-        this.$route.query.constructor === Object
-      ) {
-        return this.slugToObject(this.$route.path, [
-          "section",
-          "campaigns",
-          "category",
-          "look",
-          "brand"
-        ]);
-      } else {
-        return this.$route.query;
-      }
-    },
     buildRouteQueryString() {
       let routeQueryString = "";
       for (let [key, value] of Object.entries(this.$route.query)) {
         routeQueryString += `${key}=${value}&`;
       }
       return routeQueryString.slice(0, -1);
+    },
+    getSelectedOptions() {
+      return this.slugToObject(this.$route.path, [
+        "section",
+        "campaigns",
+        "category",
+        "look",
+        "brand"
+      ]);
     }
   },
   methods: {

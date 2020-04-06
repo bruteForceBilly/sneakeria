@@ -10,6 +10,7 @@ const routes = [
     path: "/search",
     name: "search",
     component: CategoryPage,
+    props: { fromHome: false },
     beforeEnter: (to, from, next) => {
       let res = Object.values(to.query)
         .toString()
@@ -19,9 +20,17 @@ const routes = [
   },
   {
     path: "/:id",
-    name: "result",
-    component: CategoryPage
+    name: "result", // rename to SearchResult
+    component: CategoryPage,
+    props: { fromHome: false }
   },
+  {
+    path: "/:id",
+    name: "CategoryHome",
+    component: CategoryPage,
+    props: { fromHome: true }
+  },
+
   // /:id route that takes string and splits in to query object
   {
     path: "/",

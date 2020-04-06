@@ -3,7 +3,16 @@
     <div id="nav">
       <router-link :to="{ name: 'home' }">Home</router-link>
       |
-      <router-link :to="{ name: 'result', params: { id: 'products' } }"
+      <!--
+              1 - router link to category home should be refactored so that
+              the value passed to param id is dynamic. That way we can loop out the
+              router link to navigate to a particular root section directly
+              generating a "home" for men, women etc. 
+
+              Could aso be that the easiset way is just to a if check and se if dynamic value
+              is found in section and if not handle it as "all", i.e. with products
+      -->
+      <router-link :to="{ name: 'CategoryHome', params: { id: 'products' } }"
         >Category Page</router-link
       >
     </div>
