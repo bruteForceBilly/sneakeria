@@ -37,7 +37,7 @@ export default {
           selectedOption: null,
           options: [
             { id: 1, name: "Shoes", value: "shoe" },
-            { id: 2, name: "T-shirt", value: "t-shirt" }
+            { id: 2, name: "T-shirt", value: "tshirt" }
           ]
         },
         {

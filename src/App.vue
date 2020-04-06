@@ -1,8 +1,11 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link :to="{ name: 'CategoryPage' }">Category Page</router-link>
+      <router-link :to="{ name: 'home' }">Home</router-link>
+      |
+      <router-link :to="{ name: 'result', params: { id: 'products' } }"
+        >Category Page</router-link
+      >
     </div>
     <router-view />
   </div>

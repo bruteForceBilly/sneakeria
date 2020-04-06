@@ -24,6 +24,8 @@ export default {
   },
   created() {
     this.fetchData();
+    console.log(">>> path", this.$route.path);
+    console.log(">>> pathToObj", this.pathToObject(this.$route.path));
   },
   watch: {
     $route: "fetchData"
@@ -34,7 +36,13 @@ export default {
         Object.keys(this.$route.query).length === 0 &&
         this.$route.query.constructor === Object
       ) {
-        return this.$route.path;
+        return this.slugToObject(this.$route.path, [
+          "section",
+          "campaigns",
+          "category",
+          "look",
+          "brand"
+        ]);
       } else {
         return this.$route.query;
       }
@@ -56,6 +64,28 @@ export default {
         .then(response => (this.products = response))
         .catch(err => (this.error = err.toString()))
         .finally(() => (this.loading = false));
+    },
+    pathToObject(queryString) {
+      function sort(arr, arg) {
+        return arr.filter(function(cv, i) {
+          if (i % 2 === arg) return cv;
+        });
+      }
+      let result = {};
+      let odd = sort(queryString.substr(1).split("-"), 0);
+      let even = sort(queryString.substr(1).split("-"), 1);
+      odd.forEach(function(cv, i) {
+        result[cv] = even[i];
+      });
+      return result;
+    },
+    slugToObject(slug, keys) {
+      let querySchemaObj = {};
+      let slicedKeys = keys.slice(0, slug.substr(1).split("-").length);
+      slicedKeys.forEach(function(key, i) {
+        return (querySchemaObj[key] = slug.substr(1).split("-")[i]);
+      });
+      return querySchemaObj;
     }
   }
 };

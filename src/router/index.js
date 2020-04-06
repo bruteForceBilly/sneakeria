@@ -8,7 +8,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/search",
-    name: "CategoryPage",
+    name: "search",
     component: CategoryPage,
     beforeEnter: (to, from, next) => {
       let res = Object.values(to.query)
@@ -18,8 +18,14 @@ const routes = [
     }
   },
   {
+    path: "/:id",
+    name: "result",
+    component: CategoryPage
+  },
+  // /:id route that takes string and splits in to query object
+  {
     path: "/",
-    name: "Home",
+    name: "home",
     component: Home
   }
 ];
