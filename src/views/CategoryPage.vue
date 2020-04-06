@@ -2,14 +2,15 @@
   <div>
     <p>This is Category Page {{ fromHome }}</p>
     <SearchForm
-      :selected-options="fromHome ? this.$route.query : getSelectedOptions"
+      :selected-options="fromHome ? this.$route.query : getSlugToObject"
     ></SearchForm>
+    <h1>fetchKeys: {{ keys }}</h1>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import { API_PRODUCTS } from "@/constants";
+import { API_PRODUCTS, API_LINKS } from "@/constants";
 import SearchForm from "@/components/SearchForm/SearchForm.vue";
 
 export default {
@@ -22,22 +23,13 @@ export default {
     return {
       loading: false,
       products: null,
-      error: null
+      error: null,
+      keys: []
     };
-  },
-  beforeRouteEnter(to, from, next) {
-    if (from.name === "home") {
-      console.log(">>> from home ", from);
-      console.log(">>> this route ");
-      // this.fromHome = true;
-    } else {
-      console.log(">>> not home ", from);
-      // this.fromHome = false;
-    }
-    next();
   },
   created() {
     this.fetchData();
+    this.fetchKeys(["nike", "men"]);
   },
   watch: {
     $route: "fetchData"
@@ -50,7 +42,8 @@ export default {
       }
       return routeQueryString.slice(0, -1);
     },
-    getSelectedOptions() {
+    getSlugToObject() {
+      // keys som passeras här ska bara förekomma i slugen
       return this.slugToObject(this.$route.path, [
         "section",
         "campaigns",
@@ -61,6 +54,49 @@ export default {
     }
   },
   methods: {
+    fetchKeys(argArr) {
+      let that = this;
+      // refactor from forEach to regular for loop
+      // refactor with iterators & generators??
+      // argArr.forEach(function(arg, i) {
+      //   axios
+      //     .get(API_LINKS + `/${i + 1}?_embed=options`)
+      //     .then(function(response) {
+      //       response.data.options.forEach(function(option) {
+      //         if (option.value === arg)
+      //           return that.keys.push(option.parentValue);
+      //       });
+      //     });
+      // });
+
+      for (let i = 1; i < 6; i++) {
+        // console.log(i, argArr[i]);
+        if (argArr[i] === undefined) {
+          //console.log("na");
+        } else {
+          axios
+            .get(API_LINKS + `/${i}?_embed=options`)
+            .then(function(response) {
+              response.data.options.forEach(function(option) {
+                console.log(">>>", i, option.value, Array.isArray(argArr));
+                if (option.value == argArr[i]) {
+                  return that.keys.push(option.parentValue);
+                } else {
+                  //return that.keys.push("na");
+                }
+              });
+            });
+        }
+      }
+
+      /* arr.forEach(function(cv, i) {
+        axios
+          .get(API_LINKS + `/${i}?_embed=options`)
+          .then(response => console.log(cv, response.data));
+        //.catch(err => (this.error = err.toString()))
+        //.finally(() => (this.loading = false));
+      }); */
+    },
     fetchData() {
       this.error = this.products = null;
       this.loading = true;
@@ -69,6 +105,14 @@ export default {
         .then(response => (this.products = response))
         .catch(err => (this.error = err.toString()))
         .finally(() => (this.loading = false));
+    },
+    slugToObject(slug, keys) {
+      let querySchemaObj = {};
+      let slicedKeysArr = keys.slice(0, slug.substr(1).split("-").length);
+      slicedKeysArr.forEach(function(key, i) {
+        return (querySchemaObj[key] = slug.substr(1).split("-")[i]);
+      });
+      return querySchemaObj;
     },
     pathToObject(queryString) {
       function sort(arr, arg) {
@@ -83,14 +127,6 @@ export default {
         result[cv] = even[i];
       });
       return result;
-    },
-    slugToObject(slug, keys) {
-      let querySchemaObj = {};
-      let slicedKeys = keys.slice(0, slug.substr(1).split("-").length);
-      slicedKeys.forEach(function(key, i) {
-        return (querySchemaObj[key] = slug.substr(1).split("-")[i]);
-      });
-      return querySchemaObj;
     }
   }
 };
