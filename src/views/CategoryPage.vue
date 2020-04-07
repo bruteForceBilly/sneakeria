@@ -1,16 +1,18 @@
 <template>
   <div>
-    <p>This is Category Page {{ fromHome }}</p>
+    <p>This is Category Page</p>
+    <p>fromHome: {{ fromHome }}</p>
+    api nav : {{ navigation.data }}
     <SearchForm
-      :selected-options="fromHome ? this.$route.query : getSlugToObject"
+      v-if="navigation.data"
+      :selected-options="fromHome ? {} : routeQueryObjectProp"
     ></SearchForm>
-    <h1>fetchKeys: {{ keys }}</h1>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import { API_PRODUCTS, API_LINKS } from "@/constants";
+import { API_PRODUCTS, API_SITE } from "@/constants";
 import SearchForm from "@/components/SearchForm/SearchForm.vue";
 
 export default {
@@ -21,112 +23,66 @@ export default {
   props: ["fromHome"],
   data() {
     return {
-      loading: false,
-      products: null,
-      error: null,
-      keys: []
+      products: {
+        error: null,
+        loading: null,
+        data: null
+      },
+      navigation: {
+        error: null,
+        loading: null,
+        data: null
+      }
     };
   },
-  created() {
-    this.fetchData();
-    this.fetchKeys(["nike", "men"]);
+  created: function() {
+    this.fetchProducts();
+    this.fetchNavigation();
   },
   watch: {
-    $route: "fetchData"
+    $route: ["fetchProducts"]
   },
   computed: {
+    routeQueryObjectProp() {
+      let that = this;
+      let res = {};
+      let arr = [];
+      let splittedSlug = that.$route.path.substr(1).split("-");
+      splittedSlug.forEach(function(searchItem) {
+        that.navigation.data.filter(function(obj) {
+          if (obj.values.includes(searchItem)) {
+            arr.push((res[obj.name] = searchItem));
+          }
+        });
+      });
+      return res;
+    },
     buildRouteQueryString() {
       let routeQueryString = "";
       for (let [key, value] of Object.entries(this.$route.query)) {
         routeQueryString += `${key}=${value}&`;
       }
       return routeQueryString.slice(0, -1);
-    },
-    getSlugToObject() {
-      // keys som passeras här ska bara förekomma i slugen
-      return this.slugToObject(this.$route.path, [
-        "section",
-        "campaigns",
-        "category",
-        "look",
-        "brand"
-      ]);
     }
   },
   methods: {
-    fetchKeys(argArr) {
-      let that = this;
-      // refactor from forEach to regular for loop
-      // refactor with iterators & generators??
-      // argArr.forEach(function(arg, i) {
-      //   axios
-      //     .get(API_LINKS + `/${i + 1}?_embed=options`)
-      //     .then(function(response) {
-      //       response.data.options.forEach(function(option) {
-      //         if (option.value === arg)
-      //           return that.keys.push(option.parentValue);
-      //       });
-      //     });
-      // });
-
-      for (let i = 1; i < 6; i++) {
-        // console.log(i, argArr[i]);
-        if (argArr[i] === undefined) {
-          //console.log("na");
-        } else {
-          axios
-            .get(API_LINKS + `/${i}?_embed=options`)
-            .then(function(response) {
-              response.data.options.forEach(function(option) {
-                console.log(">>>", i, option.value, Array.isArray(argArr));
-                if (option.value == argArr[i]) {
-                  return that.keys.push(option.parentValue);
-                } else {
-                  //return that.keys.push("na");
-                }
-              });
-            });
-        }
-      }
-
-      /* arr.forEach(function(cv, i) {
-        axios
-          .get(API_LINKS + `/${i}?_embed=options`)
-          .then(response => console.log(cv, response.data));
-        //.catch(err => (this.error = err.toString()))
-        //.finally(() => (this.loading = false));
-      }); */
-    },
-    fetchData() {
-      this.error = this.products = null;
-      this.loading = true;
+    fetchProducts() {
+      this.products.error = this.products.data = null;
+      this.products.loading = true;
       axios
         .get(API_PRODUCTS + "?" + this.buildRouteQueryString)
-        .then(response => (this.products = response))
-        .catch(err => (this.error = err.toString()))
-        .finally(() => (this.loading = false));
+        .then(response => (this.products.data = response.data))
+        .catch(err => (this.products.error = err.toString()))
+        .finally(() => (this.products.loading = false));
     },
-    slugToObject(slug, keys) {
-      let querySchemaObj = {};
-      let slicedKeysArr = keys.slice(0, slug.substr(1).split("-").length);
-      slicedKeysArr.forEach(function(key, i) {
-        return (querySchemaObj[key] = slug.substr(1).split("-")[i]);
-      });
-      return querySchemaObj;
-    },
-    pathToObject(queryString) {
-      function sort(arr, arg) {
-        return arr.filter(function(cv, i) {
-          if (i % 2 === arg) return cv;
-        });
-      }
-      let result = {};
-      let odd = sort(queryString.substr(1).split("-"), 0);
-      let even = sort(queryString.substr(1).split("-"), 1);
-      odd.forEach(function(cv, i) {
-        result[cv] = even[i];
-      });
-      return result;
+    fetchNavigation() {
+      this.navigation.error = this.navigation.data = null;
+      this.navigation.loading = true;
+      axios
+        .get(API_SITE)
+        .then(response => (this.navigation.data = response.data))
+        .catch(err => (this.navigation.error = err.toString()))
+        .finally(() => (this.navigation.loading = false));
     }
   }
 };

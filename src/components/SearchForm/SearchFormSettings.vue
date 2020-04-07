@@ -28,7 +28,7 @@ export default {
           options: [
             { id: 1, name: "Sale", value: "sale" },
             { id: 2, name: "Essentials", value: "essentials" },
-            { id: 3, name: "New Arrivals", value: "new arrivals" }
+            { id: 3, name: "New Arrivals", value: "new_arrivals" }
           ]
         },
         {
@@ -36,8 +36,8 @@ export default {
           name: "category",
           selectedOption: null,
           options: [
-            { id: 1, name: "Shoes", value: "shoe" },
-            { id: 2, name: "T-shirt", value: "tshirt" }
+            { id: 1, name: "Shoes", value: "shoes" },
+            { id: 2, name: "Shirts", value: "shirts" }
           ]
         },
         {
