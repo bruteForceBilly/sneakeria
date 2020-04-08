@@ -1,6 +1,5 @@
 <template>
   <div>
-    Router query params passed as prop: {{ selectedOptions }}
     <slot :selects="selects"></slot>
   </div>
 </template>
@@ -8,7 +7,11 @@
 <script>
 export default {
   name: "SearchFormSettings",
-  props: ["selectedOptions"],
+  props: {
+    selectedOptions: {
+      type: Object
+    }
+  },
   data() {
     return {
       selects: [
@@ -81,13 +84,17 @@ export default {
   },
   methods: {
     updateSelectedOption(arg) {
-      this.selects.forEach(function(select) {
-        for (let [key, value] of Object.entries(arg)) {
-          if (select.name === key) {
-            select.selectedOption = value;
+      if (Object.entries(arg).length > 0) {
+        this.selects.forEach(function(select) {
+          for (let [key, value] of Object.entries(arg)) {
+            if (select.name === key) {
+              select.selectedOption = value;
+            } // refactor so that when no prop or values are present a placeholder value is set
           }
-        }
-      });
+        });
+      } else {
+        this.selects.forEach(select => (select.selectedOption = null));
+      }
     },
     updateRouteQueryParams(argObj) {
       return (
@@ -100,19 +107,9 @@ export default {
   },
   beforeUpdate() {
     this.updateRouteQueryParams(this.getSelectedOptionsFromSelectInData);
-    //this.updateSelectedOption();
   },
   created() {
     this.updateSelectedOption(this.selectedOptions);
   }
-  // watch: {
-  //   selects: {
-  //     deep: true,
-  //     immediate: false,
-  //     handler(newValue) {
-  //       this.updateSelectedOption(newValue);
-  //     }
-  //   }
-  // }
 };
 </script>

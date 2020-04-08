@@ -12,6 +12,7 @@
             name="select.name"
             :id="select.name"
           >
+            <option value="null"> - Choose - </option>
             <option
               v-for="(option, index) in select.options"
               :key="index + option"
@@ -32,7 +33,11 @@ import SearchFormSettings from "@/components/SearchForm/SearchFormSettings";
 
 export default {
   name: "SearchForm",
-  props: ["selectedOptions"],
+  props: {
+    selectedOptions: {
+      type: Object
+    }
+  },
   components: {
     SearchFormSettings
   }
