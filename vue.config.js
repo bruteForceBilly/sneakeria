@@ -1,4 +1,8 @@
 module.exports = {
+  devServer: {
+    host: "localhost",
+    public: "http://localhost:8080"
+  },
   pages: {
     index: {
       // entry for the page
