@@ -2,8 +2,7 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <hr />
-    loading: {{ isLoading }} <br />
-    data: {{ msg }}
+    route name: {{ name }} route path: {{ path }} route query: {{ query }}
   </div>
 </template>
 
@@ -13,10 +12,7 @@ import { mapState } from "vuex";
 export default {
   name: "Home",
   computed: {
-    ...mapState("siteMap", {
-      msg: state => state.data,
-      isLoading: state => state.loading.isLoading
-    })
+    ...mapState("route", ["name", "path", "query"])
   }
 };
 </script>

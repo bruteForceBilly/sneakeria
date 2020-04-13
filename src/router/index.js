@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import CategoryPage from "../views/CategoryPage.vue";
+import store from "@/store";
 
 Vue.use(VueRouter);
 
@@ -37,6 +38,12 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  console.log(to, from);
+  store.dispatch("route/setRouteTo", to);
+  next();
 });
 
 export default router;
