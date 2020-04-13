@@ -1,19 +1,22 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <hr />
+    loading: {{ isLoading }} <br />
+    data: {{ msg }}
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-console.log(process.env.VUE_APP_TITLE);
+import { mapState } from "vuex";
 
 export default {
   name: "Home",
-  components: {
-    HelloWorld
+  computed: {
+    ...mapState("siteMap", {
+      msg: state => state.data,
+      isLoading: state => state.loading.isLoading
+    })
   }
 };
 </script>

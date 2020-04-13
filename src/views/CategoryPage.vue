@@ -21,7 +21,7 @@
 
 <script>
 import axios from "axios";
-import { API_PRODUCTS, API_SITE } from "@/constants";
+import { API_PRODUCTS } from "@/constants";
 import SearchForm from "@/components/SearchForm/SearchForm.vue";
 
 export default {
@@ -48,18 +48,20 @@ export default {
     };
   },
   created: function() {
-    this.fetchNavigation();
+    this.fetchNavigation(); // Migrate to beforeRouteEnter guard
   },
   beforeUpdate() {
-    if (!this.search) return this.buildRouteQueryParamsObject();
+    if (!this.search) return this.buildRouteQueryParamsObject(); // Migrate to beforeRouteEnter guard
   },
   watch: {
+    // refactor, dont control async with watchers
     $route: ["buildRouteQueryParamsObject"],
     queryParamsObject: ["buildRouteQueryParamsString", "buildKebabCaseSlug"],
     queryParamsString: ["fetchProducts"]
   },
   methods: {
     buildRouteQueryParamsObject() {
+      // refactor into filter kebabSlugToObjLit
       let that = this;
       let res = {};
       let arr = [];
@@ -78,6 +80,8 @@ export default {
       }
     },
     buildRouteQueryParamsString() {
+      // refactor into filter objLitToQueryParams
+      // move to mixin
       let routeQueryString = "";
       for (let [key, value] of Object.entries(this.queryParamsObject)) {
         routeQueryString += `${key}=${value}&`;
@@ -92,26 +96,26 @@ export default {
     },
     redirect() {
       let obj = { name: "result", params: { id: this.queryParamsSlug } };
-      console.log("hello from redir");
       return this.queryParamsSlug != this.$route.params.id
-        ? this.$router.push(obj)
+        ? this.$router.replace(obj)
         : null;
     },
     fetchProducts() {
+      // Move into services/http.js
       let that = this;
       this.products.error = this.products.data = null;
       this.products.loading = true;
       axios
         .get(API_PRODUCTS + "?" + this.queryParamsString)
+        .then(() => that.redirect())
         .then(response => (this.products.data = response.data))
         .catch(err => (this.products.error = err.toString()))
         .finally(function() {
-          console.log("fetch products ran");
-          that.redirect();
           that.products.loading = false;
         });
-    },
+    } /*,
     fetchNavigation() {
+      // Move into services/http.js and store in Vuex
       this.navigation.error = this.navigation.data = null;
       this.navigation.loading = true;
       axios
@@ -119,7 +123,7 @@ export default {
         .then(response => (this.navigation.data = response.data))
         .catch(err => (this.navigation.error = err.toString()))
         .finally(() => (this.navigation.loading = false));
-    }
+    } */
   }
 };
 </script>

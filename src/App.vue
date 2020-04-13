@@ -20,6 +20,19 @@
   </div>
 </template>
 
+<script>
+import { mapActions } from "vuex";
+
+export default {
+  methods: {
+    ...mapActions("siteMap", ["getSiteMap"])
+  },
+  created() {
+    this.getSiteMap();
+  }
+};
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
