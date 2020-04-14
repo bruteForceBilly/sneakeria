@@ -16,13 +16,13 @@ const routes = [
   {
     path: "/:id",
     name: "result", // rename to SearchResult
-    component: CategoryPage,
+    component: Home,
     props: { fromHome: false, search: false }
   },
   {
     path: "/:id",
     name: "CategoryHome",
-    component: CategoryPage,
+    component: Home,
     props: { fromHome: true, search: false }
   },
 
@@ -41,7 +41,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(to, from);
   store.dispatch("route/setRouteTo", to);
   next();
 });

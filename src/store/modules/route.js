@@ -1,32 +1,19 @@
 const state = {
-  // absolutePath: null
-  name: null,
-  meta: null,
-  path: null,
-  query: null,
-  params: null,
-  fullpath: null
+  to: {
+    name: null,
+    meta: null,
+    path: null,
+    query: null,
+    params: null,
+    fullpath: null
+  }
 };
 
-/*
 const getters = {
-  // make absolute path getter
-  absolutePathAsArray: absolutePath => {
-    return absolutePath.substr(1).split("-");
-  },
-  absolutePathAsObject: (state, getters) => {
-    let res = {};
-    let arr = [];
-    getters.absolutePathAsArray.forEach(function(pathItem) {
-      state.navigation.filter(function(obj) {
-        if (obj.values.includes(pathItem)) {
-          arr.push((res[obj.name] = pathItem));
-        }
-      });
-    });
-    return res;
+  toPathAsArray: state => {
+    return state.to.path.substr(1).split("-");
   }
-}; */
+};
 
 const actions = {
   setRouteTo({ commit }, to) {
@@ -37,19 +24,19 @@ const actions = {
 const mutations = {
   setRouteTo(state, to) {
     const { name, meta, path, query, params, fullPath } = to;
-    state.name = name;
-    state.meta = meta;
-    state.path = path;
-    state.query = query;
-    state.params = params;
-    state.fullPath = fullPath;
+    state.to.name = name;
+    state.to.meta = meta;
+    state.to.path = path;
+    state.to.query = query;
+    state.to.params = params;
+    state.to.fullPath = fullPath;
   }
 };
 
 export default {
   namespaced: true,
   state,
-  //getters,
+  getters,
   actions,
   mutations
 };
