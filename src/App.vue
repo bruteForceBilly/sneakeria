@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    {{ test }}
     <div id="nav">
       <router-link :to="{ name: 'home' }">Home</router-link>
       |
@@ -22,13 +21,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
 export default {
-  props: ["test"],
-  methods: {
-    ...mapActions("siteMap", ["getSiteMap"])
-  }
+  name: "App"
 };
 </script>
 

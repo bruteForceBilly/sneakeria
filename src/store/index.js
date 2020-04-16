@@ -1,35 +1,63 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import siteMap from "./modules/siteMap";
-import route from "./modules/route";
+import siteMap from "@/services/siteMap.js";
 
 Vue.use(Vuex);
 
-const myPlugin = store => {
-  store.subscribeAction({
-    after: (action, state) => {
-      if (action.type === "siteMap/getSiteMap") {
-        console.log(`after action ${action.type}`, state);
-      }
-    }
-  });
-
-  store.subscribeAction({
-    after: (action, state) => {
-      if (action.type === "route/setRouteTo") {
-        console.log(`after action ${action.type}`, state);
-      }
-    }
-  });
-};
-
 export default new Vuex.Store({
-  modules: {
-    siteMap,
-    route
+  state: () => ({
+    siteMap: {
+      data2: null
+    }
+  }),
+  actions: {
+    fetchSiteMap({ dispatch }, payload) {
+      return siteMap(data => {
+        dispatch({
+          type: "setTest",
+          JAAAAA: {
+            path: payload,
+            siteMap: data
+          }
+        });
+      });
+    },
+    setTest({ commit }, data) {
+      console.log("setTest ran");
+      commit("setTest", data);
+    }
   },
-  plugins: [myPlugin]
+  mutations: {
+    setTest(state, data) {
+      Vue.set(state.siteMap, "data2", data);
+    }
+  }
 });
+
+// .then(data => {
+//   console.log("then ran in fetch siteMap");
+//   dispatch("setTest", data);
+// });
+
+// let res = {};
+// let arr = [];
+// pathArray.forEach(pathItem => {
+//   this.state.siteMap.filter(function(obj) {
+//     if (obj.values.includes(pathItem)) {
+//       arr.push((res[obj.name] = pathItem));
+//     }
+//   });
+// });
+
+/*
+state() {
+  siteMap.get().then(data => {
+    console.log(data);
+    return {
+      test: "test"
+    };
+  });
+}, */
 
 // (state, getters) => {
 //   // refactor to use redcue instead of object like this
@@ -45,4 +73,14 @@ export default new Vuex.Store({
 //     });
 //   });
 //   return res;
+// };
+
+// const myPlugin = store => {
+//   store.subscribeAction({
+//     after: (action, state) => {
+//       if (action.type === "route/setRouteTo") {
+//         console.log(`after action ${action.type}`, state);
+//       }
+//     }
+//   });
 // };

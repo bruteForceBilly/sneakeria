@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_SITE } from "@/constants";
 import store from "@/store";
 
+// Keep & refactor for getting products later
 export default {
   getSiteMapData(cb) {
     store.dispatch({
