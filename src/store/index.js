@@ -1,35 +1,56 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import siteMap from "@/services/siteMap.js";
+import products from "@/services/products.js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: () => ({
-    siteMap: {
-      data2: null
-    }
-  }),
+  state: {
+    data: null,
+    products: null
+  },
   actions: {
     fetchSiteMap({ dispatch }, payload) {
       return siteMap(data => {
         dispatch({
-          type: "setTest",
-          JAAAAA: {
+          type: "setSiteMap",
+          data: {
             path: payload,
-            siteMap: data
+            object: data
           }
         });
       });
     },
-    setTest({ commit }, data) {
-      console.log("setTest ran");
-      commit("setTest", data);
+    setSiteMap({ dispatch, commit }, data) {
+      let res = {};
+      let arr = [];
+      data.data.path.forEach(pathItem => {
+        data.data.object.filter(function(obj) {
+          if (obj.values.includes(pathItem)) {
+            arr.push((res[obj.name] = pathItem));
+          }
+        });
+      });
+      return commit("setSiteMap", res), dispatch("fetchProducts", res);
+    },
+    fetchProducts({ commit }, payload) {
+      let routeQueryString = "";
+      for (let [key, value] of Object.entries(payload)) {
+        routeQueryString += `${key}=${value}&`;
+      }
+      return products(routeQueryString.slice(0, -1), data => {
+        commit("setProducts", data);
+      });
     }
   },
+
   mutations: {
-    setTest(state, data) {
-      Vue.set(state.siteMap, "data2", data);
+    setSiteMap(state, data) {
+      Vue.set(state, "data", data);
+    },
+    setProducts(state, data) {
+      Vue.set(state, "products", data);
     }
   }
 });

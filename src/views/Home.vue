@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    {{ test }}
+    bubba data: {{ data }} bubba products: {{ products }}
     <img alt="Vue logo" src="../assets/logo.png" />
     <hr />
   </div>
@@ -10,8 +10,11 @@
 export default {
   name: "Home",
   computed: {
-    test() {
-      return this.$store.state;
+    data() {
+      return this.$store.state.data;
+    },
+    products() {
+      return this.$store.state.products;
     }
   }
 };
