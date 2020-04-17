@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    bubba data: {{ data }} bubba products: {{ products }}
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <div v-if="searchIsCompleted">
+      <h1>holy moly we are almost there!</h1>
+    </div>
     <hr />
   </div>
 </template>
@@ -9,12 +10,12 @@
 <script>
 export default {
   name: "Home",
+  props: ["searchIsCompleted"],
   computed: {
-    data() {
-      return this.$store.state.data;
-    },
-    products() {
-      return this.$store.state.products;
+    searchFoundProductsProp() {
+      return this.$store.state.searchFoundProducts === undefined
+        ? "ooops!"
+        : this.$store.state.searchFoundProducts;
     }
   }
 };

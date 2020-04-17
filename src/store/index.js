@@ -1,56 +1,69 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import siteMap from "@/services/siteMap.js";
-import products from "@/services/products.js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    data: null,
-    products: null
+    rootData: null,
+    searchQueryParamsObject: null,
+    searchFoundProducts: null,
+    searchRequestSlugString: null
+  },
+  getters: {
+    searchQueryParamsObjectGetter: state => {
+      return state.searchQueryParamsObject;
+    },
+    searchQueryParamsString: state => {
+      // refactor so you can use pass an arg
+      let parseResult = "";
+      for (let [key, value] of Object.entries(state.searchQueryParamsObject)) {
+        parseResult += `${key}=${value}&`;
+      }
+      return parseResult.slice(0, -1);
+    }
   },
   actions: {
-    fetchSiteMap({ dispatch }, payload) {
-      return siteMap(data => {
-        dispatch({
-          type: "setSiteMap",
-          data: {
-            path: payload,
-            object: data
-          }
+    searchRequestAction({ dispatch, getters }, payload) {
+      return new Promise(resolve => {
+        siteMap(data => {
+          dispatch({
+            type: "searchQueryAction",
+            searchQueryActionData: {
+              path: payload,
+              object: data
+            }
+          });
+        }).then(() => {
+          resolve(getters.searchQueryParamsObjectGetter);
         });
       });
     },
-    setSiteMap({ dispatch, commit }, data) {
-      let res = {};
+    searchQueryAction({ commit }, rootData) {
+      let searchQueryParamsObject = {};
       let arr = [];
-      data.data.path.forEach(pathItem => {
-        data.data.object.filter(function(obj) {
+      rootData.searchQueryActionData.path.forEach(pathItem => {
+        rootData.searchQueryActionData.object.filter(function(obj) {
           if (obj.values.includes(pathItem)) {
-            arr.push((res[obj.name] = pathItem));
+            arr.push((searchQueryParamsObject[obj.name] = pathItem));
           }
         });
       });
-      return commit("setSiteMap", res), dispatch("fetchProducts", res);
-    },
-    fetchProducts({ commit }, payload) {
-      let routeQueryString = "";
-      for (let [key, value] of Object.entries(payload)) {
-        routeQueryString += `${key}=${value}&`;
-      }
-      return products(routeQueryString.slice(0, -1), data => {
-        commit("setProducts", data);
-      });
+      return commit("searchQueryMutation", searchQueryParamsObject); //, dispatch("fetchProducts", res);
     }
   },
 
   mutations: {
-    setSiteMap(state, data) {
-      Vue.set(state, "data", data);
+    // rename
+    searchRequestSlugMutation(state, searchRequestSlugString) {
+      Vue.set(state, "searchRequestSlugString", searchRequestSlugString);
     },
-    setProducts(state, data) {
-      Vue.set(state, "products", data);
+    searchQueryMutation(state, searchQueryParamsObject) {
+      Vue.set(state, "searchQueryParamsObject", searchQueryParamsObject);
+    },
+    searchFoundProductsMutation(state, searchFoundProducts) {
+      Vue.set(state, "searchFoundProducts", searchFoundProducts);
     }
   }
 });
@@ -105,3 +118,11 @@ state() {
 //     }
 //   });
 // };
+
+// searchQueryParamsString: state => {
+//   let parseResult = "";
+//   for (let [key, value] of Object.entries(state.searchQueryParamsObject)) {
+//     parseResult += `${key}=${value}&`;
+//   }
+//   return parseResult.slice(0, -1);
+// },

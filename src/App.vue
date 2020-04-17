@@ -11,10 +11,9 @@
 
               Could aso be that the easiset way is just to a if check and se if dynamic value
               is found in section and if not handle it as "all", i.e. with products
+               <router-link :to="{ name: 'CategoryHome', params: { id: 'products' } }"
+        >Category Page</router-link>
       -->
-      <router-link :to="{ name: 'CategoryHome', params: { id: 'products' } }"
-        >Category Page</router-link
-      >
     </div>
     <router-view />
   </div>

@@ -4,34 +4,64 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import CategoryPage from "../views/CategoryPage.vue";
 import store from "@/store/index.js";
+import products from "@/services/products.js";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/search",
-    name: "search",
-    component: CategoryPage,
-    props: { fromHome: false, search: true }
-  },
-  {
     path: "/:id",
-    name: "CategoryHome", // rename to SearchResult
+    name: "searchRequestRoute",
     component: Home,
-    props: { fromHome: false, search: false },
     beforeEnter: (to, from, next) => {
-      store.dispatch("fetchSiteMap", to.path.substr(1).split("-"));
-      next();
+      store.commit("searchRequestSlugMutation", to.path.substr(1));
+      store
+        .dispatch("searchRequestAction", to.path.substr(1).split("-"))
+        .then(q => {
+          console.log("hello from searchRequestRoute >>>>", typeof q, q);
+          next({ name: "searchQueryRoute", query: q });
+        });
     }
   },
-  /* {
-    path: "/:id",
-    name: "CategoryHome",
+  {
+    path: "/search",
+    name: "searchQueryRoute",
     component: Home,
-    props: { fromHome: true, search: false }
-  }, */
-
-  // /:id route that takes string and splits in to query object
+    beforeEnter: (to, from, next) => {
+      // Refactor so that the searchQueryParamsString getter takes to.query
+      // as an argument and the getter does an check to see
+      // if searchQueryParamsObject is empty
+      // is so we must build and commit a new one
+      //
+      // Why the heck does the route not redirect to result?
+      // AH! because searchRequestSlugString is not set
+      // So we need a getter that parses query params into a kebab slug
+      //
+      // God damn it this is getting hary. You need to draw this out man.
+      //
+      // Basically do a if check if from.name is searchRequestRoute
+      products(
+        from.matched.length < 1
+          ? "section=men&brand=adidas"
+          : store.getters.searchQueryParamsString,
+        data => {
+          console.log(data);
+          store.commit("searchFoundProductsMutation", data);
+        }
+      ).then(() => {
+        return next({
+          name: "searchResultRoute",
+          params: { slug: store.state.searchRequestSlugString }
+        });
+      });
+    }
+  },
+  {
+    path: "/:slug",
+    name: "searchResultRoute",
+    component: Home,
+    props: { searchIsCompleted: true }
+  },
   {
     path: "/",
     name: "home",
@@ -44,11 +74,5 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
-
-// router.beforeEach((to, from, next) => {
-//   //   store.dispatch("route/setRouteTo", to);
-//   console.log("hello from route guard", store);
-//   next();
-// });
 
 export default router;
