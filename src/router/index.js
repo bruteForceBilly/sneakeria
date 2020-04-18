@@ -10,50 +10,54 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/search",
+    name: "searchQueryRoute",
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      console.log("guard hit");
+      return new Promise((resolve, reject) => {
+        console.log("promise enter");
+
+        if (to.name === "searchRequestRoute") {
+          console.log("if enter");
+          store.dispatch(
+            "searchQueryParamsStringAction",
+            store.state.searchQueryParamsObject
+          );
+        } else if (to.name === "searchQueryRoute") {
+          console.log("else if enter");
+          store.dispatch("searchQueryParamsStringAction", to.query);
+        }
+        store.state.searchQueryParamsString === ""
+          ? reject()
+          : resolve(store.state.searchQueryParamsString);
+      })
+        .catch(() => {
+          throw new Error("Something failed");
+        })
+        .then(searchQueryParamsString => {
+          products(searchQueryParamsString, data => {
+            store.commit("searchFoundProductsMutation", data);
+          }).then(() =>
+            next({
+              name: "searchResultRoute",
+              params: { slug: store.state.searchQueryParamsKebab }
+            })
+          );
+        });
+    }
+  },
+  {
     path: "/:id",
     name: "searchRequestRoute",
     component: Home,
     beforeEnter: (to, from, next) => {
-      store.commit("searchRequestSlugMutation", to.path.substr(1));
       store
         .dispatch("searchRequestAction", to.path.substr(1).split("-"))
         .then(q => {
           console.log("hello from searchRequestRoute >>>>", typeof q, q);
           next({ name: "searchQueryRoute", query: q });
         });
-    }
-  },
-  {
-    path: "/search",
-    name: "searchQueryRoute",
-    component: Home,
-    beforeEnter: (to, from, next) => {
-      // Refactor so that the searchQueryParamsString getter takes to.query
-      // as an argument and the getter does an check to see
-      // if searchQueryParamsObject is empty
-      // is so we must build and commit a new one
-      //
-      // Why the heck does the route not redirect to result?
-      // AH! because searchRequestSlugString is not set
-      // So we need a getter that parses query params into a kebab slug
-      //
-      // God damn it this is getting hary. You need to draw this out man.
-      //
-      // Basically do a if check if from.name is searchRequestRoute
-      products(
-        from.matched.length < 1
-          ? "section=men&brand=adidas"
-          : store.getters.searchQueryParamsString,
-        data => {
-          console.log(data);
-          store.commit("searchFoundProductsMutation", data);
-        }
-      ).then(() => {
-        return next({
-          name: "searchResultRoute",
-          params: { slug: store.state.searchRequestSlugString }
-        });
-      });
     }
   },
   {

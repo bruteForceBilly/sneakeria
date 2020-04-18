@@ -8,20 +8,18 @@ export default new Vuex.Store({
   state: {
     rootData: null,
     searchQueryParamsObject: null,
-    searchFoundProducts: null,
-    searchRequestSlugString: null
+    searchQueryParamsString: null,
+    searchQueryParamsKebab: null,
+    searchFoundProducts: null
   },
   getters: {
-    searchQueryParamsObjectGetter: state => {
+    searchQueryParamsObject: state => {
       return state.searchQueryParamsObject;
     },
-    searchQueryParamsString: state => {
-      // refactor so you can use pass an arg
-      let parseResult = "";
-      for (let [key, value] of Object.entries(state.searchQueryParamsObject)) {
-        parseResult += `${key}=${value}&`;
-      }
-      return parseResult.slice(0, -1);
+    searchQueryParamsStringKebab: state => {
+      return Object.values(state.searchQueryParamsObject)
+        .toString()
+        .replace(",", "-");
     }
   },
   actions: {
@@ -29,39 +27,68 @@ export default new Vuex.Store({
       return new Promise(resolve => {
         siteMap(data => {
           dispatch({
-            type: "searchQueryAction",
-            searchQueryActionData: {
+            type: "searchQueryParamsObjectAction",
+            data: {
               path: payload,
               object: data
             }
           });
         }).then(() => {
-          resolve(getters.searchQueryParamsObjectGetter);
+          resolve(getters.searchQueryParamsObject);
         });
       });
     },
-    searchQueryAction({ commit }, rootData) {
+    searchQueryParamsObjectAction({ commit }, searchQueryAction) {
       let searchQueryParamsObject = {};
       let arr = [];
-      rootData.searchQueryActionData.path.forEach(pathItem => {
-        rootData.searchQueryActionData.object.filter(function(obj) {
+      searchQueryAction.data.path.forEach(pathItem => {
+        searchQueryAction.data.object.filter(function(obj) {
           if (obj.values.includes(pathItem)) {
             arr.push((searchQueryParamsObject[obj.name] = pathItem));
           }
         });
       });
-      return commit("searchQueryMutation", searchQueryParamsObject); //, dispatch("fetchProducts", res);
+      return commit("searchQueryParamsObjectMutation", searchQueryParamsObject);
+    },
+
+    searchQueryParamsStringAction(
+      { dispatch, commit },
+      searchQueryParamsObject
+    ) {
+      let searchQueryParamsString = "";
+
+      for (let [key, value] of Object.entries(searchQueryParamsObject)) {
+        searchQueryParamsString += `${key}=${value}&`;
+      }
+
+      dispatch("searchQueryParamsKebabAction", searchQueryParamsObject);
+
+      return commit(
+        "searchQueryParamsStringMutation",
+        searchQueryParamsString.slice(0, -1)
+      );
+    },
+
+    searchQueryParamsKebabAction({ commit }, searchQueryParamsObject) {
+      let searchQueryParamsKebab = Object.values(searchQueryParamsObject)
+        .toString()
+        .replace(",", "-");
+      return commit("searchQueryParamsKebabMutation", searchQueryParamsKebab);
     }
   },
 
   mutations: {
     // rename
-    searchRequestSlugMutation(state, searchRequestSlugString) {
-      Vue.set(state, "searchRequestSlugString", searchRequestSlugString);
-    },
-    searchQueryMutation(state, searchQueryParamsObject) {
+    searchQueryParamsObjectMutation(state, searchQueryParamsObject) {
       Vue.set(state, "searchQueryParamsObject", searchQueryParamsObject);
     },
+    searchQueryParamsStringMutation(state, searchQueryParamsString) {
+      Vue.set(state, "searchQueryParamsString", searchQueryParamsString);
+    },
+    searchQueryParamsKebabMutation(state, searchQueryParamsKebab) {
+      Vue.set(state, "searchQueryParamsKebab", searchQueryParamsKebab);
+    },
+
     searchFoundProductsMutation(state, searchFoundProducts) {
       Vue.set(state, "searchFoundProducts", searchFoundProducts);
     }
