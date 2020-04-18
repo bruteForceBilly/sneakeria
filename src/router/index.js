@@ -8,24 +8,27 @@ import products from "@/services/products.js";
 
 Vue.use(VueRouter);
 
+const setPropBoolean = function(propValue) {
+  return propValue;
+};
+
 const routes = [
   {
     path: "/search",
     name: "searchQueryRoute",
     component: Home,
+    props: {
+      loading: setPropBoolean(false),
+      searching: setPropBoolean(true)
+    },
     beforeEnter: (to, from, next) => {
-      console.log("guard hit");
       return new Promise((resolve, reject) => {
-        console.log("promise enter");
-
         if (to.name === "searchRequestRoute") {
-          console.log("if enter");
           store.dispatch(
             "searchQueryParamsStringAction",
             store.state.searchQueryParamsObject
           );
         } else if (to.name === "searchQueryRoute") {
-          console.log("else if enter");
           store.dispatch("searchQueryParamsStringAction", to.query);
         }
         store.state.searchQueryParamsString === ""
@@ -38,12 +41,12 @@ const routes = [
         .then(searchQueryParamsString => {
           products(searchQueryParamsString, data => {
             store.commit("searchFoundProductsMutation", data);
-          }).then(() =>
-            next({
+          }).then(() => {
+            return next({
               name: "searchResultRoute",
               params: { slug: store.state.searchQueryParamsKebab }
-            })
-          );
+            });
+          });
         });
     }
   },
@@ -51,11 +54,14 @@ const routes = [
     path: "/:id",
     name: "searchRequestRoute",
     component: Home,
+    props: {
+      loading: setPropBoolean(false),
+      searching: setPropBoolean(true)
+    },
     beforeEnter: (to, from, next) => {
       store
         .dispatch("searchRequestAction", to.path.substr(1).split("-"))
         .then(q => {
-          console.log("hello from searchRequestRoute >>>>", typeof q, q);
           next({ name: "searchQueryRoute", query: q });
         });
     }
@@ -64,7 +70,10 @@ const routes = [
     path: "/:slug",
     name: "searchResultRoute",
     component: Home,
-    props: { searchIsCompleted: true }
+    props: {
+      loading: setPropBoolean(false),
+      searching: setPropBoolean(false)
+    }
   },
   {
     path: "/",

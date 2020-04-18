@@ -1,18 +1,25 @@
 <template>
   <div class="home">
-    <div v-if="searchIsCompleted">
-      <h1>holy moly we are almost there!</h1>
-    </div>
     <hr />
+    <div v-if="loading === true">
+      <h1>... products is loading</h1>
+    </div>
+    <div v-else>
+      <ul>
+        <li v-for="(product, index) in products" :key="index">
+          {{ product.productTitle }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "Home",
-  props: ["searchIsCompleted"],
+  props: ["loading", "searching"],
   computed: {
-    searchFoundProductsProp() {
+    products() {
       return this.$store.state.searchFoundProducts === undefined
         ? "ooops!"
         : this.$store.state.searchFoundProducts;

@@ -31,7 +31,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: chartreuse;
+  color: SlateBlue;
 }
 
 #nav {
@@ -40,10 +40,10 @@ export default {
 
 #nav a {
   font-weight: bold;
-  color: chartreuse;
+  color: SlateBlue;
 }
 
 #nav a.router-link-exact-active {
-  color: greenyellow;
+  color: SlateBlue;
 }
 </style>
