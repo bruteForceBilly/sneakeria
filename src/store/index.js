@@ -72,7 +72,7 @@ export default new Vuex.Store({
     searchQueryParamsKebabAction({ commit }, searchQueryParamsObject) {
       let searchQueryParamsKebab = Object.values(searchQueryParamsObject)
         .toString()
-        .replace(",", "-");
+        .replace(/[,]/g, "-");
       return commit("searchQueryParamsKebabMutation", searchQueryParamsKebab);
     }
   },
