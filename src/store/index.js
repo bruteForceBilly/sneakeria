@@ -10,7 +10,8 @@ export default new Vuex.Store({
     searchQueryParamsObject: null,
     searchQueryParamsString: null,
     searchQueryParamsKebab: null,
-    searchFoundProducts: null
+    searchFoundProducts: null,
+    appMenuSettings: null
   },
   getters: {
     searchQueryParamsObject: state => {
@@ -74,6 +75,14 @@ export default new Vuex.Store({
         .toString()
         .replace(/[,]/g, "-");
       return commit("searchQueryParamsKebabMutation", searchQueryParamsKebab);
+    },
+    appMenuSettingsAction({ commit }) {
+      return siteMap(appMenuSettings => {
+        commit({
+          type: "appMenuSettingsMutation",
+          data: appMenuSettings
+        });
+      });
     }
   },
 
@@ -88,9 +97,11 @@ export default new Vuex.Store({
     searchQueryParamsKebabMutation(state, searchQueryParamsKebab) {
       Vue.set(state, "searchQueryParamsKebab", searchQueryParamsKebab);
     },
-
     searchFoundProductsMutation(state, searchFoundProducts) {
       Vue.set(state, "searchFoundProducts", searchFoundProducts);
+    },
+    appMenuSettingsMutation(state, appMenuSettings) {
+      Vue.set(state, "appMenuSettings", appMenuSettings);
     }
   }
 });

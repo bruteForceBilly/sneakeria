@@ -1,10 +1,15 @@
 /* eslint-disable no-unused-vars */
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import CategoryPage from "../views/CategoryPage.vue";
 import store from "@/store/index.js";
 import products from "@/services/products.js";
+import OldCategoryPage from "../views/OldCategoryPage.vue";
+import App from "@/App.vue";
+import Home from "../views/Home.vue";
+import About from "../views/About.vue";
+import Cart from "../views/Cart.vue";
+import Catalog from "../views/Catalog.vue";
+import siteMap from "@/services/siteMap.js";
 
 Vue.use(VueRouter);
 
@@ -14,9 +19,29 @@ const setPropBoolean = function(propValue) {
 
 const routes = [
   {
+    path: "/",
+    name: "home",
+    component: Home
+  },
+  {
+    path: "/about",
+    name: "about",
+    component: About
+  },
+  {
+    path: "/catalog", // will be refactor later to handle search
+    name: "catalog",
+    component: Catalog
+  },
+  {
+    path: "/cart",
+    name: "cart",
+    component: Cart
+  },
+  {
     path: "/search",
     name: "searchQueryRoute",
-    component: Home,
+    component: OldCategoryPage,
     props: {
       loading: setPropBoolean(false),
       searching: setPropBoolean(true)
@@ -26,7 +51,7 @@ const routes = [
         if (to.name === "searchRequestRoute") {
           store.dispatch(
             "searchQueryParamsStringAction",
-            store.state.searchQueryParamsObject
+            store.state.searchQueryPara2msObject
           );
         } else if (to.name === "searchQueryRoute") {
           store.dispatch("searchQueryParamsStringAction", to.query);
@@ -35,8 +60,8 @@ const routes = [
           ? reject()
           : resolve(store.state.searchQueryParamsString);
       })
-        .catch(() => {
-          throw new Error("Something failed");
+        .catch(err => {
+          throw new Error("Something failed", err); // I have no idea why this throws an error when hitting about directly
         })
         .then(searchQueryParamsString => {
           products(searchQueryParamsString, data => {
@@ -53,7 +78,7 @@ const routes = [
   {
     path: "/:id",
     name: "searchRequestRoute",
-    component: Home,
+    component: OldCategoryPage,
     props: {
       loading: setPropBoolean(false),
       searching: setPropBoolean(true)
@@ -69,22 +94,17 @@ const routes = [
   {
     path: "/:slug",
     name: "searchResultRoute",
-    component: Home,
+    component: OldCategoryPage,
     props: {
       loading: setPropBoolean(false),
       searching: setPropBoolean(false)
     }
-  },
-  {
-    path: "/",
-    name: "home",
-    component: Home
   }
 ];
 
 const router = new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL,
+  base: process.env.BASE_URL, // I havent set a base url?
   routes
 });
 
