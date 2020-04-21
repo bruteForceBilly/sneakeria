@@ -18,6 +18,7 @@
         </template>
       </AppMenuLayout>
     </AppMenuSettings>
+    <Test></Test>
   </div>
 </template>
 
@@ -25,13 +26,15 @@
 import AppMenuSettings from "@/components/TheAppMenu/AppMenuSettings";
 import AppMenuLayout from "@/components/TheAppMenu/AppMenuLayout";
 import NavBar from "@/components/TheAppMenu/NavBar";
+import Test from "@/components/TheAppMenu/Test";
 
 export default {
   name: "AppMenuBase",
   components: {
     AppMenuSettings,
     AppMenuLayout,
-    NavBar
+    NavBar,
+    Test
   }
 };
 </script>
