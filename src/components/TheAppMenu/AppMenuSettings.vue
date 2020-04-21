@@ -6,8 +6,6 @@
 </template>
 
 <script>
-import siteMap from "@/services/siteMap.js";
-
 export default {
   name: "AppMenuSettings",
   data() {
@@ -19,7 +17,16 @@ export default {
       }
     };
   },
-  created() {
+  computed: {
+    test() {
+      return this.$store.state.appMenuSettings.data;
+    }
+  }
+};
+</script>
+
+<!-- 
+  mounted() {
     this.appMenuSettings.loading = true;
     return new Promise((resolve, reject) => {
       siteMap(data => {
@@ -28,6 +35,6 @@ export default {
         .then(resolve())
         .catch(reject());
     }).finally((this.appMenuSettings.loading = false));
-  }
-};
-</script>
+  },
+
+-->

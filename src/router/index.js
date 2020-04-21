@@ -10,6 +10,8 @@ import About from "../views/About.vue";
 import Cart from "../views/Cart.vue";
 import Catalog from "../views/Catalog.vue";
 import siteMap from "@/services/siteMap.js";
+import axios from "axios";
+import { API_SITE } from "@/constants";
 
 Vue.use(VueRouter);
 
@@ -106,6 +108,34 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL, // I havent set a base url?
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  //return store.dispatch("siteMapDataAction");
+  store.dispatch({
+    type: "siteMapAction",
+    data: null,
+    loading: true,
+    error: null
+  });
+  return axios
+    .get(API_SITE)
+    .then(response =>
+      store.dispatch({
+        type: "siteMapAction",
+        data: response.data,
+        loading: false,
+        error: null
+      })
+    )
+    .catch(err =>
+      store.dispatch({
+        type: "siteMapAction",
+        data: err.toString(),
+        loading: false,
+        error: true
+      })
+    );
 });
 
 export default router;

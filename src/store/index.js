@@ -11,7 +11,11 @@ export default new Vuex.Store({
     searchQueryParamsString: null,
     searchQueryParamsKebab: null,
     searchFoundProducts: null,
-    appMenuSettings: null
+    siteMap: {
+      data: null,
+      loading: null,
+      error: null
+    }
   },
   getters: {
     searchQueryParamsObject: state => {
@@ -76,13 +80,9 @@ export default new Vuex.Store({
         .replace(/[,]/g, "-");
       return commit("searchQueryParamsKebabMutation", searchQueryParamsKebab);
     },
-    appMenuSettingsAction({ commit }) {
-      return siteMap(appMenuSettings => {
-        commit({
-          type: "appMenuSettingsMutation",
-          data: appMenuSettings
-        });
-      });
+
+    siteMapAction({ commit }, siteMapObject) {
+      return commit("siteMapMutation", siteMapObject);
     }
   },
 
@@ -100,8 +100,9 @@ export default new Vuex.Store({
     searchFoundProductsMutation(state, searchFoundProducts) {
       Vue.set(state, "searchFoundProducts", searchFoundProducts);
     },
-    appMenuSettingsMutation(state, appMenuSettings) {
-      Vue.set(state, "appMenuSettings", appMenuSettings);
+    siteMapMutation(state, siteMapObject) {
+      console.log("siteMapMutation", siteMapObject);
+      Vue.set(state, "siteMap", siteMapObject);
     }
   }
 });
