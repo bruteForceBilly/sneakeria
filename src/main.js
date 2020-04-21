@@ -3,6 +3,7 @@ import App from "./App.vue";
 import { sync } from "vuex-router-sync";
 import store from "./store";
 import router from "./router";
+import "./assets/css/tailwind.css";
 
 Vue.config.productionTip = false;
 
