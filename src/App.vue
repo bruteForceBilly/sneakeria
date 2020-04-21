@@ -2,9 +2,13 @@
   <div id="app">
     <p>app vue</p>
     <TheAppMenu> </TheAppMenu>
-    <router-view> </router-view>
-
-    <!-- try with transition and keep alive -->
+    <transition name="fade" mode="out-in">
+      <router-view> </router-view>
+    </transition>
+    <!-- try with transition and keep alive 
+    
+    https://github.com/vuejs/vue-router/blob/dev/examples/transitions/app.js
+    -->
   </div>
 </template>
 
@@ -20,6 +24,22 @@ export default {
 </script>
 
 <style>
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.fade-leave {
+}
+
+.fade-leave-active {
+  transition: opacity 1s ease, transform 1s ease;
+  transform: translateX(-30%);
+  opacity: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

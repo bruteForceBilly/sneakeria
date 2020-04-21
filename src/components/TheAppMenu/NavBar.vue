@@ -7,7 +7,6 @@
           :key="index + ul"
         >
           <div v-if="ul.name === featuredCategory">
-            <!-- Refactor to render component -->
             <li v-for="li in ul.values" :key="index + li">
               <router-link :to="`search?${ul.name}=${li}`">{{
                 li
