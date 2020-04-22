@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-bottom:-50px;">
+  <div>
     <AppMenuSettings v-slot:default="{ siteMapData }">
       <AppMenuLayout>
         <template v-slot:hamburger>

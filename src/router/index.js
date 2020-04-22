@@ -3,15 +3,16 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "@/store/index.js";
 import products from "@/services/products.js";
-import OldCategoryPage from "../views/OldCategoryPage.vue";
-import App from "@/App.vue";
+// import OldCategoryPage from "../views/OldCategoryPage.vue";
+// import App from "@/App.vue";
 import Home from "../views/Home.vue";
+import Dummy from "../views/Dummy.vue";
 import About from "../views/About.vue";
 import Cart from "../views/Cart.vue";
-import Catalog from "../views/Catalog.vue";
-import siteMap from "@/services/siteMap.js";
-import axios from "axios";
-import { API_SITE } from "@/constants";
+// import Catalog from "../views/Catalog.vue";
+// import siteMap from "@/services/siteMap.js";
+// import axios from "axios";
+// import { API_SITE } from "@/constants";
 
 Vue.use(VueRouter);
 
@@ -26,24 +27,9 @@ const routes = [
     component: Home
   },
   {
-    path: "/about",
-    name: "about",
-    component: About
-  },
-  {
-    path: "/catalog", // will be refactor later to handle search
-    name: "catalog",
-    component: Catalog
-  },
-  {
-    path: "/cart",
-    name: "cart",
-    component: Cart
-  },
-  {
     path: "/search",
     name: "searchQueryRoute",
-    component: OldCategoryPage,
+    component: Dummy,
     props: {
       loading: setPropBoolean(false),
       searching: setPropBoolean(true)
@@ -80,7 +66,7 @@ const routes = [
   {
     path: "/:id",
     name: "searchRequestRoute",
-    component: OldCategoryPage,
+    component: Dummy,
     props: {
       loading: setPropBoolean(false),
       searching: setPropBoolean(true)
@@ -96,11 +82,21 @@ const routes = [
   {
     path: "/:slug",
     name: "searchResultRoute",
-    component: OldCategoryPage,
+    component: Dummy,
     props: {
       loading: setPropBoolean(false),
       searching: setPropBoolean(false)
     }
+  },
+  {
+    path: "/about",
+    name: "about",
+    component: About
+  },
+  {
+    path: "/cart",
+    name: "cart",
+    component: Cart
   }
 ];
 
