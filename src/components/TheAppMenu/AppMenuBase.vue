@@ -1,21 +1,35 @@
 <template>
-  <div>
-    <AppMenuSettings>
+  <div style="margin-bottom:-50px;">
+    <AppMenuSettings v-slot:default="{ siteMapData }">
       <AppMenuLayout>
+        <template v-slot:hamburger>
+          <img src="@/assets/menu.svg" />
+        </template>
         <template v-slot:logo>
-          <router-link :to="{ name: 'home' }">
-            <img src="@/assets/logo.svg"
-          /></router-link>
+          <div>
+            <img src="@/assets/logo.svg" class="mx-auto md:mx-1" />
+          </div>
         </template>
-
+        <template v-slot:fly-out>
+          <FlyOutMenu :site-map-data="siteMapData"></FlyOutMenu>
+        </template>
         <template v-slot:navbar>
-          <NavBar featured-category="section" featured-link="about"></NavBar>
+          <FeaturedLinksBar
+            featured-category="section"
+            featured-link="about"
+            class="hidden md:inline-block"
+          ></FeaturedLinksBar>
         </template>
-        <template v-slot:modal>
-          <img src="@/assets/heart.svg" />
-          <img src="@/assets/shopping-cart.svg" />
-        </template>
-      </AppMenuLayout>
+        <template v-slot:icons>
+          <div class="flex justify-center md:justify-end">
+            <img
+              src="@/assets/help-circle.svg"
+              class="pr-2 hidden sm:inline-block"
+            />
+            <img src="@/assets/heart.svg" class="px-2 hidden sm:inline-block" />
+            <img src="@/assets/shopping-cart.svg" class="px-2" />
+          </div> </template
+      ></AppMenuLayout>
     </AppMenuSettings>
   </div>
 </template>
@@ -23,14 +37,16 @@
 <script>
 import AppMenuSettings from "@/components/TheAppMenu/AppMenuSettings";
 import AppMenuLayout from "@/components/TheAppMenu/AppMenuLayout";
-import NavBar from "@/components/TheAppMenu/NavBar";
+import FeaturedLinksBar from "@/components/TheAppMenu/FeaturedLinksBar";
+import FlyOutMenu from "@/components/TheAppMenu/FlyOutMenu";
 
 export default {
   name: "AppMenuBase",
   components: {
     AppMenuSettings,
     AppMenuLayout,
-    NavBar
+    FeaturedLinksBar,
+    FlyOutMenu
   }
 };
 </script>

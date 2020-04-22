@@ -1,23 +1,23 @@
 <template>
   <div>
     <div class="flex justify-center">
-      <navItem
+      <FeaturedLinksBarItem
         v-for="(item, index) in mock"
         :key="item + index"
         link-to="/about"
       >
-        {{ item }}</navItem
+        {{ item }}</FeaturedLinksBarItem
       >
     </div>
   </div>
 </template>
 
 <script>
-import navItem from "./NavItem.vue";
+import FeaturedLinksBarItem from "./FeaturedLinksBarItem.vue";
 export default {
-  name: "NavBarComponent",
+  name: "FeaturedLinksBar",
   components: {
-    navItem
+    FeaturedLinksBarItem
   },
   data() {
     return {

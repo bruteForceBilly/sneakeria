@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <TheAppMenu> </TheAppMenu>
-    <transition name="fade" mode="out-in">
-      <router-view> </router-view>
-    </transition>
+    <div>
+      <transition name="fade" mode="out-in">
+        <router-view> </router-view>
+      </transition>
+    </div>
     <!-- try with transition and keep alive 
     
     https://github.com/vuejs/vue-router/blob/dev/examples/transitions/app.js

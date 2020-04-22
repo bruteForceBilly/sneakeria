@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot :appMenuSettings="appMenuSettings"></slot>
+    <slot :siteMapData="siteMapData"></slot>
   </div>
 </template>
 
@@ -17,8 +17,8 @@ export default {
     };
   },
   computed: {
-    test() {
-      return this.$store.state.appMenuSettings.data;
+    siteMapData() {
+      return this.$store.state.siteMap.data;
     }
   }
 };

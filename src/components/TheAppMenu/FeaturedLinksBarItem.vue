@@ -2,7 +2,7 @@
   <div>
     <router-link
       to="/about"
-      class="no-underline text-gray-700 hover:text-teal-600 border-transparent border-b-2 hover:border-teal-600 uppercase tracking-wide font-bold text-xs py-3 mr-8"
+      class="no-underline text-black border-transparent border-b-2 hover:border-black uppercase tracking-widest font-bold text-xs py-3 mr-8"
       ><slot></slot
     ></router-link>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "NavItem",
+  name: "FeaturedLinksBarItem",
   props: ["linkTo"]
 };
 </script>
