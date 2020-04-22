@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>app menu settings</p>
     <slot :appMenuSettings="appMenuSettings"></slot>
   </div>
 </template>

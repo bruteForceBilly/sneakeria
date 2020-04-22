@@ -110,32 +110,4 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  //return store.dispatch("siteMapDataAction");
-  store.dispatch({
-    type: "siteMapAction",
-    data: null,
-    loading: true,
-    error: null
-  });
-  return axios
-    .get(API_SITE)
-    .then(response =>
-      store.dispatch({
-        type: "siteMapAction",
-        data: response.data,
-        loading: false,
-        error: null
-      })
-    )
-    .catch(err =>
-      store.dispatch({
-        type: "siteMapAction",
-        data: err.toString(),
-        loading: false,
-        error: true
-      })
-    );
-});
-
 export default router;

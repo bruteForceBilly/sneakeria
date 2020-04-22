@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-black">
+  <div class="h-screen flex justify-center items-center">
     <h1>Home</h1>
   </div>
 </template>

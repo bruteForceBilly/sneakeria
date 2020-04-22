@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <p>app vue</p>
     <TheAppMenu> </TheAppMenu>
     <transition name="fade" mode="out-in">
       <router-view> </router-view>
@@ -14,11 +13,40 @@
 
 <script>
 import TheAppMenu from "@/components/TheAppMenu/AppMenuBase";
+import axios from "axios";
+import { API_SITE } from "@/constants";
 
 export default {
   name: "App",
   components: {
     TheAppMenu
+  },
+  beforeCreate() {
+    // should be moved to service and featured category should be set from there
+    this.$store.dispatch({
+      type: "siteMapAction",
+      data: null,
+      loading: true,
+      error: null
+    });
+    return axios
+      .get(API_SITE)
+      .then(response =>
+        this.$store.dispatch({
+          type: "siteMapAction",
+          data: response.data,
+          loading: false,
+          error: null
+        })
+      )
+      .catch(err =>
+        this.$store.dispatch({
+          type: "siteMapAction",
+          data: err.toString(),
+          loading: false,
+          error: true
+        })
+      );
   }
 };
 </script>
@@ -45,7 +73,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: SlateBlue;
 }
 
 #nav {

@@ -1,20 +1,19 @@
 <template>
   <div>
-    <p>app menu base</p>
-    <AppMenuSettings v-slot:default="{ appMenuSettings }">
+    <AppMenuSettings>
       <AppMenuLayout>
         <template v-slot:logo>
           <router-link :to="{ name: 'home' }">
-            <img src="@/assets/logo.jpg"
+            <img src="@/assets/logo.svg"
           /></router-link>
         </template>
+
         <template v-slot:navbar>
-          <NavBar
-            v-if="!appMenuSettings.loading"
-            :state="{ appMenuSettings }"
-            featured-category="section"
-            featured-link="about"
-          ></NavBar>
+          <NavBar featured-category="section" featured-link="about"></NavBar>
+        </template>
+        <template v-slot:modal>
+          <img src="@/assets/heart.svg" />
+          <img src="@/assets/shopping-cart.svg" />
         </template>
       </AppMenuLayout>
     </AppMenuSettings>
