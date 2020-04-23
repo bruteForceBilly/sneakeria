@@ -89,19 +89,27 @@ export default new Vuex.Store({
   mutations: {
     // rename
     searchQueryParamsObjectMutation(state, searchQueryParamsObject) {
+      console.log(
+        "VUEX searchQueryParamsObjectMutation >>>",
+        searchQueryParamsObject
+      );
       Vue.set(state, "searchQueryParamsObject", searchQueryParamsObject);
     },
     searchQueryParamsStringMutation(state, searchQueryParamsString) {
       Vue.set(state, "searchQueryParamsString", searchQueryParamsString);
     },
     searchQueryParamsKebabMutation(state, searchQueryParamsKebab) {
+      console.log(
+        "VUEX searchQueryParamsKebabMutation >>>",
+        searchQueryParamsKebab
+      );
       Vue.set(state, "searchQueryParamsKebab", searchQueryParamsKebab);
     },
     searchFoundProductsMutation(state, searchFoundProducts) {
+      console.log("VUEX searchFoundProductsMutation >>>", searchFoundProducts);
       Vue.set(state, "searchFoundProducts", searchFoundProducts);
     },
     siteMapMutation(state, siteMapObject) {
-      console.log("siteMapMutation", siteMapObject);
       Vue.set(state, "siteMap", siteMapObject);
     }
   }

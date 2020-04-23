@@ -16,10 +16,6 @@ import Cart from "../views/Cart.vue";
 
 Vue.use(VueRouter);
 
-const setPropBoolean = function(propValue) {
-  return propValue;
-};
-
 const routes = [
   {
     path: "/",
@@ -30,20 +26,23 @@ const routes = [
     path: "/search",
     name: "searchQueryRoute",
     component: Dummy,
-    props: {
-      loading: setPropBoolean(false),
-      searching: setPropBoolean(true)
-    },
     beforeEnter: (to, from, next) => {
       return new Promise((resolve, reject) => {
         if (to.name === "searchRequestRoute") {
           store.dispatch(
             "searchQueryParamsStringAction",
-            store.state.searchQueryPara2msObject
+            store.state.searchQueryParamsObject
           );
         } else if (to.name === "searchQueryRoute") {
+          console.log("ROUTER searchQueryRoute", to.query); // try searchQueryParamsObjectMutation
           store.dispatch("searchQueryParamsStringAction", to.query);
+          store.commit("searchQueryParamsObjectMutation", to.query);
+          store.dispatch("searchQueryParamsKebabAction", to.query);
         }
+        console.log(
+          "ROUTER searchQueryParamsString",
+          store.state.searchQueryParamsString
+        );
         store.state.searchQueryParamsString === ""
           ? reject()
           : resolve(store.state.searchQueryParamsString);
@@ -52,7 +51,12 @@ const routes = [
           throw new Error("Something failed", err); // I have no idea why this throws an error when hitting about directly
         })
         .then(searchQueryParamsString => {
+          console.log(
+            "ROUTER searchQueryParamsString",
+            searchQueryParamsString
+          );
           products(searchQueryParamsString, data => {
+            console.log("ROUTER products", data);
             store.commit("searchFoundProductsMutation", data);
           }).then(() => {
             return next({
@@ -67,10 +71,6 @@ const routes = [
     path: "/:id",
     name: "searchRequestRoute",
     component: Dummy,
-    props: {
-      loading: setPropBoolean(false),
-      searching: setPropBoolean(true)
-    },
     beforeEnter: (to, from, next) => {
       store
         .dispatch("searchRequestAction", to.path.substr(1).split("-"))
@@ -83,9 +83,17 @@ const routes = [
     path: "/:slug",
     name: "searchResultRoute",
     component: Dummy,
-    props: {
-      loading: setPropBoolean(false),
-      searching: setPropBoolean(false)
+    props: () => ({
+      q: store.state.searchQueryParamsObject
+    }),
+    beforeEnter: (to, from, next) => {
+      console.log(
+        "ROUTER searchResultRoute",
+        to,
+        "ROUTER searchResultRoute store.state.searchQueryParamsObject",
+        store.state.searchQueryParamsObject
+      );
+      next();
     }
   },
   {

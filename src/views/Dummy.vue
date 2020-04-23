@@ -5,9 +5,7 @@
       <span class="font-light text-gray-600 text-xs">( 767 Products )</span>
     </h1>
     <div class="w-full bg-orange-400 mb-6">
-      <SearchForm
-        :selected-options="fromHome ? {} : queryParamsObject"
-      ></SearchForm>
+      <SearchForm :selected-options="q"></SearchForm>
     </div>
     <div class="grid gap-6">
       <div
@@ -25,6 +23,7 @@
 import SearchForm from "@/components/SearchForm/SearchForm.vue";
 export default {
   name: "Dummy",
+  props: ["q"],
   components: {
     SearchForm
   },
@@ -33,13 +32,17 @@ export default {
       return this.$store.state.searchFoundProducts === undefined
         ? ["ooops!"]
         : this.$store.state.searchFoundProducts;
-    },
-    queryParamsObject() {
-      return this.$store.getters.searchQueryParamsObject;
     }
   },
-  beforeCreate() {
-    console.log(this.$store.state.searchFoundProducts, this.queryParamsObject);
+  created() {
+    console.log(
+      "DUMMY props >>",
+      this.q,
+      "DUMMY queryParamsObject >>",
+      this.$store.state.queryParamsObject,
+      "DUMMY currentRoute >>>",
+      this.$router.currentRoute
+    );
   }
 };
 </script>

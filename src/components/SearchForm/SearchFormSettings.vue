@@ -82,8 +82,14 @@ export default {
       return resObj;
     }
   },
+  watch: {
+    selectedOptions(newValue) {
+      return this.updateSelectedOption(newValue);
+    }
+  },
   methods: {
     updateSelectedOption(arg) {
+      console.log("FORM updateSelectedOption", arg);
       if (Object.entries(arg).length > 0) {
         this.selects.forEach(function(select) {
           for (let [key, value] of Object.entries(arg)) {
@@ -105,11 +111,11 @@ export default {
       );
     }
   },
-  beforeUpdate() {
-    this.updateRouteQueryParams(this.getSelectedOptionsFromSelectInData);
-  },
   created() {
     this.updateSelectedOption(this.selectedOptions);
+  },
+  beforeUpdate() {
+    this.updateRouteQueryParams(this.getSelectedOptionsFromSelectInData);
   }
 };
 </script>
