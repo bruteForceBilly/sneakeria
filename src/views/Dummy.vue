@@ -4,7 +4,11 @@
       Dummy Catalog Page
       <span class="font-light text-gray-600 text-xs">( 767 Products )</span>
     </h1>
-    <div class="w-full h-12 bg-orange-400 mb-6"></div>
+    <div class="w-full bg-orange-400 mb-6">
+      <SearchForm
+        :selected-options="fromHome ? {} : queryParamsObject"
+      ></SearchForm>
+    </div>
     <div class="grid gap-6">
       <div
         v-for="item in products"
@@ -18,17 +22,24 @@
 </template>
 
 <script>
+import SearchForm from "@/components/SearchForm/SearchForm.vue";
 export default {
   name: "Dummy",
+  components: {
+    SearchForm
+  },
   computed: {
     products() {
       return this.$store.state.searchFoundProducts === undefined
         ? ["ooops!"]
         : this.$store.state.searchFoundProducts;
+    },
+    queryParamsObject() {
+      return this.$store.getters.searchQueryParamsObject;
     }
   },
   beforeCreate() {
-    console.log(this.$store.state.searchFoundProducts);
+    console.log(this.$store.state.searchFoundProducts, this.queryParamsObject);
   }
 };
 </script>
