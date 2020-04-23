@@ -1,16 +1,12 @@
 <template>
   <div>
     <div
-      class="w-full bg-white shadow-lg pt-6 pb-12 md:pt-4 pb-6 flex justify-start md:justify-center"
+      class="w-full bg-white shadow-lg pt-6 pb-12 md:pt-4 pb-6 flex justify-start md:justify-center px-2 md:32"
     >
       <div
-        class="flex flex-col md:flex-row justify-between text-left tracking-wide"
+        class="flex flex-grow flex-col md:flex-row justify-between text-left tracking-wide px-2 md:px-24 xl:px-64"
       >
-        <ul
-          v-for="(item, i) in siteMapData"
-          :key="i + item"
-          class="ml-12 md:mx-6"
-        >
+        <ul v-for="(item, i) in siteMapData" :key="i + item" class=" md:mx-6">
           <h3
             class="uppercase text-lg md:text-sm font-medium my-4 md:mb-2 tracking-widest"
           >
