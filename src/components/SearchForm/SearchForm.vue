@@ -8,9 +8,9 @@
         <div v-for="(select, index) in selects" :key="index + select.name">
           <label :for="select.name"> {{ select.name }} </label>
           <select
-            v-model.lazy="select.selectedOption"
-            name="select.name"
-            :id="select.name"
+            v-model="select.selectedOption"
+            :name="select.name"
+            :id="select.id"
           >
             <option value="null"> - Choose - </option>
             <option

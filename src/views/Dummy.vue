@@ -1,11 +1,13 @@
 <template>
   <div class="h-screen pt-4 px-4 sm:px-6 md:px-12 xl:px-16">
-    <h1 class="font-bold uppercase mb-8">
+    <h1 class="text-2xl font-bold uppercase mb-8">
       Dummy Catalog Page
       <span class="font-light text-gray-600 text-xs">( 767 Products )</span>
     </h1>
     <div class="w-full bg-orange-400 mb-6">
-      <SearchForm :selected-options="q"></SearchForm>
+      <SearchForm
+        :selected-options="this.$store.state.searchQueryParamsObject"
+      ></SearchForm>
     </div>
     <div class="grid gap-6">
       <div
@@ -35,14 +37,14 @@ export default {
     }
   },
   created() {
-    console.log(
-      "DUMMY props >>",
-      this.q,
-      "DUMMY queryParamsObject >>",
-      this.$store.state.queryParamsObject,
-      "DUMMY currentRoute >>>",
-      this.$router.currentRoute
-    );
+    // console.log(
+    //   "DUMMY props >>",
+    //   this.q,
+    //   "DUMMY store queryParamsObject >>",
+    //   this.$store.state.searchQueryParamsObject,
+    //   "DUMMY currentRoute >>>",
+    //   this.$router.currentRoute
+    // );
   }
 };
 </script>

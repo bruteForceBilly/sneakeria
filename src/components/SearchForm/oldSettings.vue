@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot :selects="selects"></slot>
-    prop:{{ selectedOptions }} setByRoute: {{ this.$store.state.setByRoute }}
+    prop:{{ selectedOptions }} route:{{ this.$store.state.route.params }}
   </div>
 </template>
 
@@ -69,8 +69,8 @@ export default {
     };
   },
   computed: {
-    getSelectedOptions() {
-      let selectedOptions = {};
+    getSelectedOptionsFromSelectInData() {
+      let resObj = {};
       this.selects
         .filter(function(select) {
           if (select.selectedOption !== null) {
@@ -78,22 +78,65 @@ export default {
           }
         })
         .forEach(function(select) {
-          return (selectedOptions[select.name] = select.selectedOption);
+          return (resObj[select.name] = select.selectedOption);
         });
-      return selectedOptions;
+      return resObj;
+    },
+    getCurrentRouteFromStore() {
+      return this.$store.state.route.path;
     }
   },
   watch: {
-    selects: {
+    /* selects: {
+      deep: true,
+      handler: function(newValue) {
+        console.log("FORM WATCHER selects ELEMENTS");
+        return this.updateRouteQueryParams(
+          this.getSelectedOptionsFromSelectInData
+        );
+      }
+    }, */
+    getCurrentRouteFromStore: {
+      handler: function(newValue) {
+        // this.updateSelectedOption(this.selectedOptions);
+      }
+    },
+    // this is the Prop passed rename it its confusing
+    /*selectedOptions: {
+      handler: function(newValue) {
+        console.log("FORM WATCHER selectedOptions PROP", "newValue", newValue);
+        this.updateSelectedOption(newValue);
+      }
+    },*/
+    getSelectedOptionsFromSelectInData: {
       deep: true,
       handler: function(newValue, oldValue) {
-        if (this.$store.state.setByRoute === false) {
-          return this.updateRouteQueryParams(this.getSelectedOptions);
-        }
+        this.updateRouteQueryParams(newValue);
       }
     }
   },
   methods: {
+    updateSelectedOption(arg) {
+      if (Object.entries(arg).length > 0) {
+        this.selects.forEach(function(select) {
+          for (let [key, value] of Object.entries(arg)) {
+            if (select.name === key) {
+              select.selectedOption = value;
+            }
+          }
+        });
+      } else {
+        this.selects.forEach(select => (select.selectedOption = null));
+      }
+    } /*
+    resetAndUpdate(arg, obj) {
+      let copyObj = { ...obj };
+      let copyArg = { ...arg };
+      // Mutate the copy of the currently selected options
+      // Theu should be mutated after the passed prop
+      // console log out on trigger from button
+      // Mutate the data directly
+    }, */,
     updateRouteQueryParams(argObj) {
       return (
         this.$router
@@ -106,24 +149,8 @@ export default {
       );
     }
   },
-  beforeUpdate() {
-    // check if dara are set by route
-    if (this.$store.state.setByRoute === true) {
-      // reset data
-      this.selects.forEach(select => {
-        select.selectedOption !== null ? (select.selectedOption = null) : "";
-      });
-      // set data after prop
-      this.selects.forEach(select => {
-        for (let [key, value] of Object.entries(this.selectedOptions)) {
-          if (select.name === key) {
-            select.selectedOption = value;
-          }
-        }
-      });
-      // reset set by route
-      this.$store.commit("setByRoute", false);
-    }
+  created() {
+    this.updateSelectedOption(this.selectedOptions);
   }
 };
 </script>

@@ -7,10 +7,12 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     rootData: null,
+    setByRoute: null,
     searchQueryParamsObject: null,
     searchQueryParamsString: null,
     searchQueryParamsKebab: null,
     searchFoundProducts: null,
+    searchRouteLastBeforeEnter: null,
     siteMap: {
       data: null,
       loading: null,
@@ -89,28 +91,38 @@ export default new Vuex.Store({
   mutations: {
     // rename
     searchQueryParamsObjectMutation(state, searchQueryParamsObject) {
-      console.log(
-        "VUEX searchQueryParamsObjectMutation >>>",
-        searchQueryParamsObject
-      );
+      // console.log(
+      //   "VUEX searchQueryParamsObjectMutation >>>",
+      //   searchQueryParamsObject
+      // );
       Vue.set(state, "searchQueryParamsObject", searchQueryParamsObject);
     },
     searchQueryParamsStringMutation(state, searchQueryParamsString) {
       Vue.set(state, "searchQueryParamsString", searchQueryParamsString);
     },
     searchQueryParamsKebabMutation(state, searchQueryParamsKebab) {
-      console.log(
-        "VUEX searchQueryParamsKebabMutation >>>",
-        searchQueryParamsKebab
-      );
+      // console.log(
+      //   "VUEX searchQueryParamsKebabMutation >>>",
+      //   searchQueryParamsKebab
+      // );
       Vue.set(state, "searchQueryParamsKebab", searchQueryParamsKebab);
     },
     searchFoundProductsMutation(state, searchFoundProducts) {
-      console.log("VUEX searchFoundProductsMutation >>>", searchFoundProducts);
+      //console.log("VUEX searchFoundProductsMutation >>>", searchFoundProducts);
       Vue.set(state, "searchFoundProducts", searchFoundProducts);
+    },
+    searchRouteLastBeforeEnterMutation(state, searchRouteLastBeforeEnter) {
+      // console.log(
+      //   "VUEX searchRouteLastBeforeEnterMutation >>>",
+      //   searchRouteLastBeforeEnter
+      // );
+      Vue.set(state, "searchRouteLastBeforeEnter", searchRouteLastBeforeEnter);
     },
     siteMapMutation(state, siteMapObject) {
       Vue.set(state, "siteMap", siteMapObject);
+    },
+    setByRoute(state, setByRoute) {
+      Vue.set(state, "setByRoute", setByRoute);
     }
   }
 });

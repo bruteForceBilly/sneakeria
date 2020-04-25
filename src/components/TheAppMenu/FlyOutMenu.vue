@@ -14,11 +14,24 @@
             <!-- refactor api so you can easily get ALL from section, men and women etc -->
           </h3>
           <li
+            @click="setByRoute(true)"
             v-for="(value, j) in item.values"
             :key="j + item"
             class="capitalize hover:underline hidden md:block text-xs"
           >
-            <router-link :to="`/search?${item.name}=${value}`">
+            <!-- <router-link :to="`/search?${item.name}=${value}`"> 
+            
+            { path: 'register', query: { plan: 'private' }}
+            
+            -->
+
+            <router-link
+              :to="{
+                name: 'searchQueryRoute',
+                path: 'search',
+                query: { [item.name]: value }
+              }"
+            >
               {{ value }}</router-link
             >
           </li>
@@ -31,7 +44,12 @@
 <script>
 export default {
   name: "FlyOutMenu",
-  props: ["siteMapData"]
+  props: ["siteMapData"],
+  methods: {
+    setByRoute(arg) {
+      return this.$store.commit("setByRoute", arg);
+    }
+  }
 };
 </script>
 
