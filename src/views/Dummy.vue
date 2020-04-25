@@ -35,16 +35,6 @@ export default {
         ? ["ooops!"]
         : this.$store.state.searchFoundProducts;
     }
-  },
-  created() {
-    // console.log(
-    //   "DUMMY props >>",
-    //   this.q,
-    //   "DUMMY store queryParamsObject >>",
-    //   this.$store.state.searchQueryParamsObject,
-    //   "DUMMY currentRoute >>>",
-    //   this.$router.currentRoute
-    // );
   }
 };
 </script>

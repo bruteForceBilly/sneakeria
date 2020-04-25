@@ -1,7 +1,8 @@
 <template>
   <div>
     <slot :selects="selects"></slot>
-    prop:{{ selectedOptions }} setByRoute: {{ this.$store.state.setByRoute }}
+    <span class="hidden"> {{ getSetByRoute }}</span>
+    <!-- Figure out why the reactivity breaks if you dont use in template -->
   </div>
 </template>
 
@@ -81,13 +82,16 @@ export default {
           return (selectedOptions[select.name] = select.selectedOption);
         });
       return selectedOptions;
+    },
+    getSetByRoute() {
+      return this.$store.state.setByRoute;
     }
   },
   watch: {
     selects: {
       deep: true,
       handler: function(newValue, oldValue) {
-        if (this.$store.state.setByRoute === false) {
+        if (this.getSetByRoute === false) {
           return this.updateRouteQueryParams(this.getSelectedOptions);
         }
       }
@@ -104,23 +108,30 @@ export default {
           // eslint-disable-next-line no-unused-vars
           .catch(err => {})
       );
-    }
-  },
-  beforeUpdate() {
-    // check if dara are set by route
-    if (this.$store.state.setByRoute === true) {
-      // reset data
-      this.selects.forEach(select => {
-        select.selectedOption !== null ? (select.selectedOption = null) : "";
-      });
-      // set data after prop
-      this.selects.forEach(select => {
-        for (let [key, value] of Object.entries(this.selectedOptions)) {
+    },
+    updateSelectedOption(arg) {
+      this.selects.forEach(function(select) {
+        for (let [key, value] of Object.entries(arg)) {
           if (select.name === key) {
             select.selectedOption = value;
           }
         }
       });
+    }
+  },
+  created() {
+    this.updateSelectedOption(this.selectedOptions);
+    this.$store.commit("setByRoute", false);
+  },
+  beforeUpdate() {
+    // check if dara are set by route
+    if (this.getSetByRoute === true) {
+      // reset data
+      this.selects.forEach(select => {
+        select.selectedOption !== null ? (select.selectedOption = null) : "";
+      });
+      // set data after prop
+      this.updateSelectedOption(this.selectedOptions);
       // reset set by route
       this.$store.commit("setByRoute", false);
     }
