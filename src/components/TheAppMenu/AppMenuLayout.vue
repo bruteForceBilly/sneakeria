@@ -44,7 +44,7 @@
         <div
           @mouseleave="leaveSetShow()"
           v-show="show"
-          class="absolute z-10 inset-x-0 bottom-0"
+          class="absolute z-50 inset-x-0 bottom-0"
           style="top:50px"
         >
           <slot name="fly-out">

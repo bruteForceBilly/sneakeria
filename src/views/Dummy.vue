@@ -4,12 +4,12 @@
       Dummy Catalog Page
       <span class="font-light text-gray-600 text-xs">( 767 Products )</span>
     </h1>
+
     <div class="w-full bg-orange-400 mb-6">
-      <SearchForm
-        :selected-options="this.$store.state.searchQueryParamsObject"
-      ></SearchForm>
+      <FilterDropDownMenu></FilterDropDownMenu>
     </div>
-    <div class="grid gap-6">
+
+    <div class="grid gap-6 mt-32">
       <div
         v-for="item in products"
         :key="item.productId"
@@ -22,12 +22,14 @@
 </template>
 
 <script>
-import SearchForm from "@/components/SearchForm/SearchForm.vue";
+//import SearchForm from "@/components/SearchForm/SearchForm.vue";
+import FilterDropDownMenu from "@/components/MultiSelects/FilterDropDownMenu.vue";
+
 export default {
   name: "Dummy",
   props: ["q"],
   components: {
-    SearchForm
+    FilterDropDownMenu
   },
   computed: {
     products() {
