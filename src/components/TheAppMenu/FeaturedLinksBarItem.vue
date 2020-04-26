@@ -2,7 +2,7 @@
   <div>
     <router-link
       to="/about"
-      class="no-underline text-black border-transparent border-b-2 hover:border-black uppercase tracking-widest font-bold text-xs py-3 mr-8"
+      class="no-underline text-black border-transparent border-b-2 hover:border-black uppercase tracking-widest font-bold text-sm py-3 mr-8"
       ><slot></slot
     ></router-link>
   </div>

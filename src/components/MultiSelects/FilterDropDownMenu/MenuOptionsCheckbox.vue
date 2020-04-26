@@ -4,7 +4,12 @@
     :class="checked ? 'bg-black' : 'bg-white'"
     style="border-width: 1px"
   >
-    <input type="checkbox" class="hidden" v-model="checked" />
+    <input
+      type="checkbox"
+      class="hidden"
+      :checked="checked"
+      @change="$emit('change', $event.target.checked)"
+    />
     <svg
       class="w-4 h-4 text-black pointer-events-none"
       :class="checked ? 'block text-white' : 'hidden'"
@@ -34,10 +39,27 @@
 <script>
 export default {
   name: "FilterDropDownMenuOptionsCheckbox",
-  data() {
-    return {
-      checked: false
-    };
+  model: {
+    prop: "checked",
+    event: "change"
+  },
+  props: {
+    checked: Boolean
+  },
+  computed: {
+    getChecked: {
+      get: function() {
+        return this.checked;
+      },
+      set: function(newValue) {
+        return console.log(newValue);
+      }
+    }
+  },
+  methods: {
+    check(e) {
+      console.log(e);
+    }
   }
 };
 </script>

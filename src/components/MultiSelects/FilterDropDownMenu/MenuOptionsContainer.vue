@@ -5,7 +5,7 @@
       :class="hover ? 'inline-block' : 'hidden'"
     >
       <ul class="px-1 pb-1">
-        <slot> ... waiting for content</slot>
+        <slot name="options"> ... waiting for content</slot>
       </ul>
     </div>
   </div>
@@ -14,7 +14,7 @@
 <script>
 export default {
   name: "FilterDropDownMenuOptionsContainer",
-  props: ["hover", "optionsLabel"]
+  props: ["hover"]
 };
 </script>
 

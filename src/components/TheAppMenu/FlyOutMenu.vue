@@ -17,7 +17,7 @@
             @click="setByRoute(true)"
             v-for="(value, j) in item.values"
             :key="j + item"
-            class="capitalize hover:underline hidden md:block text-xs"
+            class="capitalize hover:underline hidden md:block text-sm"
           >
             <!-- <router-link :to="`/search?${item.name}=${value}`"> 
             
