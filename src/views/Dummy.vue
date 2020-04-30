@@ -6,7 +6,7 @@
     </h1>
 
     <div class="w-full bg-orange-400 mb-6">
-      <FilterMenu></FilterMenu>
+      <FilterBar></FilterBar>
     </div>
 
     <div class="grid gap-6 mt-24">
@@ -23,13 +23,13 @@
 
 <script>
 //import SearchForm from "@/components/SearchForm/SearchForm.vue";
-import FilterMenu from "@/components/MultiSelects/FilterDropDownMenu/MenuBase.vue";
+import FilterBar from "@/components/MultiSelects/FilterDropDownMenu/FilterBar.vue";
 
 export default {
   name: "Dummy",
   props: ["q"],
   components: {
-    FilterMenu
+    FilterBar
   },
   computed: {
     products() {

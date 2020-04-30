@@ -1,52 +1,32 @@
 <template>
   <div>
-    <MenuSettings v-slot:default="{ hover }">
-      <MenuButton :hover="hover">
-        <template v-slot:menu-label>{{ item.name }}</template>
-      </MenuButton>
-      <MenuOptionsContainer :hover="hover">
-        <template v-slot:options>
-          <MenuOption
-            class="bg-red-200"
-            v-for="option in item.options"
-            :key="option.id"
-          >
-            <template v-slot:option-checkbox>
-              <!-- Figure out how to but the model for the data higher upp so you can print it out-->
-              <MenuOptionsCheckbox :checked="option.checked">
-                <template v-slot:input>
-                  <input
-                    type="checkbox"
-                    class="hidden"
-                    v-model="option.checked"
-                  />
-                </template>
-              </MenuOptionsCheckbox>
-            </template>
-            <template v-slot:option-label>{{ option.label }}</template>
-          </MenuOption>
-        </template>
-      </MenuOptionsContainer>
-    </MenuSettings>
+    <div class="absolute flex justify-start">
+      <MenuBase
+        v-for="item in selects"
+        :key="item.name"
+        :item="item"
+      ></MenuBase>
+    </div>
+    <div class="absolute mt-12 flex justify-start">
+      <div v-for="option in selectedOptions" :key="option.value" class="">
+        <button
+          class="py-2 px-4 no-underline rounded-full bg-gray-300 text-black font-sans font-semibold text-sm btn-primary focus:outline-none mr-2"
+        >
+          {{ option.label }}
+          <span class="font-thin">x</span>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import MenuSettings from "./MenuSettings.vue";
-import MenuButton from "./MenuButton.vue";
-import MenuOptionsContainer from "./MenuOptionsContainer.vue";
-import MenuOption from "./MenuOption.vue";
-import MenuOptionsCheckbox from "./MenuOptionsCheckbox.vue";
+import MenuBase from "@/components/MultiSelects/FilterDropDownMenu/MenuBase.vue";
 
 export default {
-  name: "MenuBase",
-  props: ["item"],
+  name: "FilterBar",
   components: {
-    MenuSettings,
-    MenuButton,
-    MenuOptionsContainer,
-    MenuOption,
-    MenuOptionsCheckbox
+    MenuBase
   },
   data() {
     return {
@@ -178,6 +158,17 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    selectedOptions() {
+      let arr = [];
+      this.selects.forEach(select =>
+        select.options.forEach(option =>
+          option.checked ? arr.push(option) : null
+        )
+      );
+      return arr;
+    }
   }
 };
 </script>
