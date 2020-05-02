@@ -7,14 +7,11 @@
         :item="item"
       ></MenuBase>
     </div>
-    <div class="absolute mt-12 flex justify-start">
+    <div class="absolute mt-16 flex justify-start">
       <div v-for="option in selectedOptions" :key="option.value" class="">
-        <button
-          class="py-2 px-4 no-underline rounded-full bg-gray-300 text-black font-sans font-semibold text-sm btn-primary focus:outline-none mr-2"
-        >
+        <FilterPill @click.native="deselectOptions(option.name, option.id)">
           {{ option.label }}
-          <span class="font-thin">x</span>
-        </button>
+        </FilterPill>
       </div>
     </div>
   </div>
@@ -22,11 +19,13 @@
 
 <script>
 import MenuBase from "@/components/MultiSelects/FilterDropDownMenu/MenuBase.vue";
+import FilterPill from "@/components/MultiSelects/FilterDropDownMenu/FilterPill.vue";
 
 export default {
   name: "FilterBar",
   components: {
-    MenuBase
+    MenuBase,
+    FilterPill
   },
   data() {
     return {
@@ -161,13 +160,20 @@ export default {
   },
   computed: {
     selectedOptions() {
-      let arr = [];
-      this.selects.forEach(select =>
-        select.options.forEach(option =>
-          option.checked ? arr.push(option) : null
-        )
-      );
-      return arr;
+      return this.selects
+        .map(select => select.options)
+        .flat()
+        .filter(option => option.checked);
+    }
+  },
+  methods: {
+    deselectOptions(name, id) {
+      return this.selects
+        .map(select => select.options)
+        .flat()
+        .filter(option => option.name === name)
+        .filter(option => option.id === id)
+        .forEach(el => (el.checked = false));
     }
   }
 };

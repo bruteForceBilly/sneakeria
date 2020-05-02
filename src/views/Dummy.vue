@@ -5,11 +5,11 @@
       <span class="font-light text-gray-600 text-xl">( 767 Products )</span>
     </h1>
 
-    <div class="w-full bg-orange-400 mb-6">
+    <div class="w-full bg-orange-400">
       <FilterBar></FilterBar>
     </div>
 
-    <div class="grid gap-6 mt-24">
+    <div class="grid gap-6 mt-40">
       <div
         v-for="item in products"
         :key="item.productId"

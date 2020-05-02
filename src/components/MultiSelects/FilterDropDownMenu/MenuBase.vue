@@ -6,11 +6,7 @@
       </MenuButton>
       <MenuOptionsContainer :hover="hover">
         <template v-slot:options>
-          <MenuOption
-            class="bg-red-200"
-            v-for="option in item.options"
-            :key="option.id"
-          >
+          <MenuOption v-for="option in item.options" :key="option.id">
             <template v-slot:option-checkbox>
               <!-- Figure out how to but the model for the data higher upp so you can print it out-->
               <MenuOptionsCheckbox :checked="option.checked">
