@@ -9,10 +9,17 @@
     </div>
     <div class="absolute mt-16 flex justify-start">
       <div v-for="option in selectedOptions" :key="option.value" class="">
-        <FilterPill @click.native="deselectOptions(option.name, option.id)">
+        <FilterPill
+          @click.native="
+            selectOptionsCheckToggle(
+              clickedOptionObject(option.name, option.value)
+            )
+          "
+        >
           {{ option.label }}
         </FilterPill>
       </div>
+      {{ searchQueryParamsObject }}
     </div>
   </div>
 </template>
@@ -130,7 +137,7 @@ export default {
               name: "brand",
               label: "Nike",
               value: "nike",
-              checked: true
+              checked: false
             },
             {
               id: 2,
@@ -164,16 +171,53 @@ export default {
         .map(select => select.options)
         .flat()
         .filter(option => option.checked);
+    },
+    searchQueryParamsObject() {
+      return this.$store.state.searchQueryParamsObject;
+    }
+  },
+  watch: {
+    selects: {
+      deep: true,
+      handler: function(newVal, oldVal) {
+        console.log("newval", newVal, "oldval", oldVal);
+      }
     }
   },
   methods: {
-    deselectOptions(name, id) {
-      return this.selects
-        .map(select => select.options)
-        .flat()
-        .filter(option => option.name === name)
-        .filter(option => option.id === id)
-        .forEach(el => (el.checked = false));
+    clickedOptionObject(name, value) {
+      let o = {};
+      o[name] = value;
+      return o;
+    },
+    selectOptionsCheckToggle(arg) {
+      for (let [key, value] of Object.entries(arg)) {
+        this.selects
+          .map(select => select.options)
+          .flat()
+          .filter(option => option.name === key)
+          .filter(option => option.value === value)
+          .forEach(el =>
+            !el.checked ? (el.checked = true) : (el.checked = false)
+          );
+      }
+    }
+  },
+  created() {
+    this.selectOptionsCheckToggle(this.searchQueryParamsObject);
+    this.$store.commit("setByRoute", false);
+  },
+  beforeUpdate() {
+    // check if data are set by route
+    if (this.getSetByRoute === true) {
+      // set to false
+      this.selectedOptions.forEach(el =>
+        !el.checked ? null : (el.checked = false)
+      );
+      // set data after prop
+      this.selectOptionsCheckToggle(this.searchQueryParamsObject);
+      // reset set by route
+      this.$store.commit("setByRoute", false);
     }
   }
 };
