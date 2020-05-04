@@ -8,7 +8,11 @@
       ></MenuBase>
     </div>
     <div class="absolute mt-16 flex justify-start">
-      <div v-for="option in selectedOptions" :key="option.value" class="">
+      <div
+        v-for="option in selectedOptionsElements"
+        :key="option.value"
+        class=""
+      >
         <FilterPill
           @click.native="
             selectOptionsCheckToggle(
@@ -19,7 +23,10 @@
           {{ option.label }}
         </FilterPill>
       </div>
-      {{ searchQueryParamsObject }}
+      selectedOptionsObject:
+      {{ selectedOptionsObject }} searchQueryParamsObject:
+      {{ searchQueryParamsObject }} getSetByRoute:
+      {{ getSetByRoute }}
     </div>
   </div>
 </template>
@@ -40,7 +47,6 @@ export default {
         {
           id: 1,
           name: "section",
-          selectedOptions: [],
           options: [
             {
               id: 1,
@@ -61,7 +67,6 @@ export default {
         {
           id: 2,
           name: "campaigns",
-          selectedOptions: [],
           options: [
             { id: 1, name: "campaigns", label: "Sale", value: "sale" },
             {
@@ -81,7 +86,6 @@ export default {
         {
           id: 3,
           name: "category",
-          selectedOptions: [],
           options: [
             {
               id: 1,
@@ -102,7 +106,6 @@ export default {
         {
           id: 4,
           name: "look",
-          selectedOptions: [],
           options: [
             {
               id: 1,
@@ -130,7 +133,6 @@ export default {
         {
           id: 5,
           name: "brand",
-          selectedOptions: [],
           options: [
             {
               id: 1,
@@ -166,21 +168,37 @@ export default {
     };
   },
   computed: {
-    selectedOptions() {
+    selectedOptionsElements() {
       return this.selects
         .map(select => select.options)
         .flat()
         .filter(option => option.checked);
     },
+    selectedOptionsObject() {
+      let obj = {};
+      this.selectedOptionsElements.forEach(el => {
+        for (let [key, value] of Object.entries(el)) {
+          if (key === "name") {
+            return (obj[value] = el.value);
+          }
+        }
+      });
+      return obj;
+    },
     searchQueryParamsObject() {
       return this.$store.state.searchQueryParamsObject;
+    },
+    getSetByRoute() {
+      return this.$store.state.setByRoute;
     }
   },
   watch: {
     selects: {
       deep: true,
-      handler: function(newVal, oldVal) {
-        console.log("newval", newVal, "oldval", oldVal);
+      handler: function(newValue, oldValue) {
+        if (this.getSetByRoute === false) {
+          return this.updateRouteQueryParams(this.selectedOptionsObject);
+        }
       }
     }
   },
@@ -201,6 +219,17 @@ export default {
             !el.checked ? (el.checked = true) : (el.checked = false)
           );
       }
+    },
+    updateRouteQueryParams(argObj) {
+      return (
+        this.$router
+          .push({
+            name: "searchQueryRoute",
+            query: argObj
+          })
+          // eslint-disable-next-line no-unused-vars
+          .catch(err => {})
+      );
     }
   },
   created() {
@@ -210,8 +239,8 @@ export default {
   beforeUpdate() {
     // check if data are set by route
     if (this.getSetByRoute === true) {
-      // set to false
-      this.selectedOptions.forEach(el =>
+      // reset option el with false
+      this.selectedOptionsElements.forEach(el =>
         !el.checked ? null : (el.checked = false)
       );
       // set data after prop
