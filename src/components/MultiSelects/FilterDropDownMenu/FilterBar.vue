@@ -27,6 +27,8 @@
       {{ selectedOptionsObject }} searchQueryParamsObject:
       {{ searchQueryParamsObject }} getSetByRoute:
       {{ getSetByRoute }}
+      searchQueryParamsString :
+      {{ this.$store.state.searchQueryParamsString }}
     </div>
   </div>
 </template>
@@ -187,7 +189,9 @@ export default {
     },
     searchQueryParamsObject() {
       return this.$store.state.searchQueryParamsObject;
+      //  this.$store.state.searchQueryParamsString
     },
+
     getSetByRoute() {
       return this.$store.state.setByRoute;
     }

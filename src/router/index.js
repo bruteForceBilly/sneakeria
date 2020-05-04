@@ -54,12 +54,12 @@ const routes = [
           throw new Error("Something failed", err); // I have no idea why this throws an error when hitting about directly
         })
         .then(searchQueryParamsString => {
-          // console.log(
-          //   "ROUTER searchQueryParamsString",
-          //   searchQueryParamsString
-          // );
+          console.log(
+            "ROUTER searchQueryParamsString",
+            searchQueryParamsString
+          );
           products(searchQueryParamsString, data => {
-            //console.log("ROUTER products", data);
+            console.log("ROUTER products", data);
             store.commit("searchFoundProductsMutation", data);
           }).then(() => {
             return next({

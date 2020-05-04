@@ -62,17 +62,42 @@ export default new Vuex.Store({
       { dispatch, commit },
       searchQueryParamsObject
     ) {
-      let searchQueryParamsString = "";
-
+      /*let searchQueryParamsString = "";
       for (let [key, value] of Object.entries(searchQueryParamsObject)) {
         searchQueryParamsString += `${key}=${value}&`;
       }
+      searchQueryParamsString = searchQueryParamsString
+        .replace(/[,]/g, "&")
+        .slice(0, -1);
+
+      console.log("STORE searchQueryParamsObject", searchQueryParamsObject);
+      console.log("STORE searchQueryParamsString", searchQueryParamsString);
 
       dispatch("searchQueryParamsKebabAction", searchQueryParamsObject);
 
+      return commit("searchQueryParamsStringMutation", searchQueryParamsString); */
+
+      dispatch("searchQueryParamsKebabAction", searchQueryParamsObject);
+
+      let searchQueryParamsString = function(obj) {
+        let arr = [];
+        let makeString = function(key, value) {
+          let str = `${key}=${value}`;
+          return str;
+        };
+        for (let [key, value] of Object.entries(obj)) {
+          if (Array.isArray(value)) {
+            value.forEach(cv => arr.push(makeString(key, cv)));
+          } else {
+            arr.push(makeString(key, value));
+          }
+        }
+        return arr.toString().replace(/[,]/g, "&");
+      };
+
       return commit(
         "searchQueryParamsStringMutation",
-        searchQueryParamsString.slice(0, -1)
+        searchQueryParamsString(searchQueryParamsObject)
       );
     },
 
@@ -95,6 +120,7 @@ export default new Vuex.Store({
       //   "VUEX searchQueryParamsObjectMutation >>>",
       //   searchQueryParamsObject
       // );
+      console.log("searchQueryParamsObject", searchQueryParamsObject);
       Vue.set(state, "searchQueryParamsObject", searchQueryParamsObject);
     },
     searchQueryParamsStringMutation(state, searchQueryParamsString) {
