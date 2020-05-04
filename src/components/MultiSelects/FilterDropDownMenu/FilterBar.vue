@@ -214,14 +214,27 @@ export default {
     },
     selectOptionsCheckToggle(arg) {
       for (let [key, value] of Object.entries(arg)) {
-        this.selects
-          .map(select => select.options)
-          .flat()
-          .filter(option => option.name === key)
-          .filter(option => option.value === value)
-          .forEach(el =>
-            !el.checked ? (el.checked = true) : (el.checked = false)
-          );
+        if (Array.isArray(value)) {
+          value.forEach(v => {
+            this.selects
+              .map(select => select.options)
+              .flat()
+              .filter(option => option.name === key)
+              .filter(option => option.value === v)
+              .forEach(el =>
+                !el.checked ? (el.checked = true) : (el.checked = false)
+              );
+          });
+        } else {
+          this.selects
+            .map(select => select.options)
+            .flat()
+            .filter(option => option.name === key)
+            .filter(option => option.value === value)
+            .forEach(el =>
+              !el.checked ? (el.checked = true) : (el.checked = false)
+            );
+        }
       }
     },
     updateRouteQueryParams(argObj) {
