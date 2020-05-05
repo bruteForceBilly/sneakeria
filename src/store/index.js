@@ -7,7 +7,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     rootData: null,
-    setByRoute: null,
+    setByRoute: null, // filterSetByRoute
+    filterBarNoneSelected: null,
     searchQueryParamsObject: null,
     searchQueryParamsString: null,
     searchQueryParamsKebab: null,
@@ -135,6 +136,9 @@ export default new Vuex.Store({
     },
     setByRoute(state, setByRoute) {
       Vue.set(state, "setByRoute", setByRoute);
+    },
+    filterBarNoneSelectedMutation(state, filterBarNoneSelected) {
+      Vue.set(state, "filterBarNoneSelected", filterBarNoneSelected);
     }
   }
 });

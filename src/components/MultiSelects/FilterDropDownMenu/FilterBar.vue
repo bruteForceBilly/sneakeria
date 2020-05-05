@@ -23,12 +23,6 @@
           {{ option.label }}
         </FilterPill>
       </div>
-      selectedOptionsObject:
-      {{ selectedOptionsObject }} searchQueryParamsObject:
-      {{ searchQueryParamsObject }} getSetByRoute:
-      {{ getSetByRoute }}
-      searchQueryParamsString :
-      {{ this.$store.state.searchQueryParamsString }}
     </div>
   </div>
 </template>
@@ -201,8 +195,10 @@ export default {
       deep: true,
       handler: function(newValue, oldValue) {
         if (this.getSetByRoute === false) {
-          // this id messing up al the loaded products - FIX TOMORROW!
-          return this.updateRouteQueryParams(this.selectedOptionsObject);
+          return (
+            this.updateRouteQueryParams(this.selectedOptionsObject),
+            this.$store.commit("filterBarNoneSelectedMutation", false)
+          );
         }
       }
     }
@@ -239,19 +235,32 @@ export default {
       }
     },
     updateRouteQueryParams(argObj) {
-      return (
-        this.$router
-          .push({
-            name: "searchQueryRoute",
-            query: argObj
-          })
-          // eslint-disable-next-line no-unused-vars
-          .catch(err => {})
-      );
+      if (Object.keys(argObj).length > 0) {
+        return (
+          this.$router
+            .push({
+              name: "searchQueryRoute",
+              query: argObj
+            })
+            // eslint-disable-next-line no-unused-vars
+            .catch(err => {})
+        );
+      } else {
+        return (
+          this.$router
+            .push({
+              name: "searchResultRoute",
+              params: { slug: "all" }
+            })
+            // eslint-disable-next-line no-unused-vars
+            .catch(err => {})
+        );
+      }
     }
   },
   created() {
     this.selectOptionsCheckToggle(this.searchQueryParamsObject);
+
     this.$store.commit("setByRoute", false);
   },
   beforeUpdate() {
