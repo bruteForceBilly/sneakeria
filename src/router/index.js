@@ -5,7 +5,7 @@ import store from "@/store/index.js";
 import products from "@/services/products.js";
 // import OldCategoryPage from "../views/OldCategoryPage.vue";
 // import App from "@/App.vue";
-import Home from "../views/Home.vue";
+//import Home from "../views/Home.vue";
 import Dummy from "../views/Dummy.vue";
 import About from "../views/About.vue";
 import Cart from "../views/Cart.vue";
@@ -17,10 +17,36 @@ import Cart from "../views/Cart.vue";
 Vue.use(VueRouter);
 
 const routes = [
-  {
+  /*{
     path: "/",
     name: "home",
     component: Dummy
+  },
+  {
+    path: "/all",
+    name: "all",
+    component: Dummy,
+    beforeEnter: (to, from, next) => {
+      products(to.name, data => {
+        store.commit("searchFoundProductsMutation", data);
+      }).then(() => {
+        return next();
+      });
+    }
+  }, */
+  {
+    path: "/:id",
+    name: "searchRequestRoute",
+    component: Dummy,
+    beforeEnter: (to, from, next) => {
+      //console.log("ROUTER searchRequestRoute beforeEnter", to, from);
+      store
+        .dispatch("searchRequestAction", to.path.substr(1).split("-"))
+        .then(store.commit("searchRouteLastBeforeEnterMutation", to.name))
+        .then(q => {
+          next({ name: "searchQueryRoute", query: q });
+        });
+    }
   },
   {
     path: "/search",
@@ -72,20 +98,6 @@ const routes = [
           store.commit("searchRouteLastBeforeEnterMutation", to.name)
           //console.log("ROUTER searchRouteLastBeforeEnterMutation", to.name)
         );
-    }
-  },
-  {
-    path: "/:id",
-    name: "searchRequestRoute",
-    component: Dummy,
-    beforeEnter: (to, from, next) => {
-      //console.log("ROUTER searchRequestRoute beforeEnter", to, from);
-      store
-        .dispatch("searchRequestAction", to.path.substr(1).split("-"))
-        .then(store.commit("searchRouteLastBeforeEnterMutation", to.name))
-        .then(q => {
-          next({ name: "searchQueryRoute", query: q });
-        });
     }
   },
   {

@@ -1,5 +1,8 @@
 <template>
   <div>
+    {{ this.$store.state.route }}
+    searchRouteLastBeforeEnter:
+    {{ this.$store.state.searchRouteLastBeforeEnter }}
     <div class="absolute flex justify-start">
       <MenuBase
         v-for="item in selects"
@@ -250,18 +253,21 @@ export default {
           this.$router
             .push({
               name: "searchResultRoute",
-              params: { slug: "all" }
+              params: { slug: "" }
             })
             // eslint-disable-next-line no-unused-vars
-            .catch(err => {})
+            .then(console.log(this.$router.currentRoute))
         );
       }
     }
   },
   created() {
-    this.selectOptionsCheckToggle(this.searchQueryParamsObject);
-
-    this.$store.commit("setByRoute", false);
+    if (this.$store.state.route.name === "searchResultRoute") {
+      this.selectOptionsCheckToggle(this.searchQueryParamsObject);
+    } else {
+      this.selectOptionsCheckToggle({});
+    }
+    return this.$store.commit("setByRoute", false);
   },
   beforeUpdate() {
     // check if data are set by route
