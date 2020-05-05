@@ -1,13 +1,11 @@
 <template>
   <div>
-    {{ this.$store.state.route }}
-    searchRouteLastBeforeEnter:
-    {{ this.$store.state.searchRouteLastBeforeEnter }}
     <div class="absolute flex justify-start">
       <MenuBase
         v-for="item in selects"
         :key="item.name"
         :item="item"
+        :selected="selectedOptionsObject"
       ></MenuBase>
     </div>
     <div class="absolute mt-16 flex justify-start">
@@ -252,11 +250,10 @@ export default {
         return (
           this.$router
             .push({
-              name: "searchResultRoute",
-              params: { slug: "" }
+              name: "searchResultRouteEmpty"
             })
             // eslint-disable-next-line no-unused-vars
-            .then(console.log(this.$router.currentRoute))
+            .catch(err => {})
         );
       }
     }

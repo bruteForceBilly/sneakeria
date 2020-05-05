@@ -2,24 +2,30 @@
   <div class="h-screen pt-8 px-4 sm:px-6 md:px-12 xl:px-16">
     <h1 class="text-4xl font-black uppercase mb-8">
       <span v-if="currentRoute.path === '/'">Catalog Page</span>
-      <span v-else
-        >{{ currentRoute.path }}
-        <span class="font-light text-gray-600 text-xl"
-          >( {{ searchFoundProductsLength }} Products)</span
-        >
+      <span v-else>
+        <span v-if="searchFoundProductsLength > 0">
+          {{ currentRoute.path }}
+          <span class="font-light text-gray-600 text-xl">
+            ( {{ searchFoundProductsLength }} Products )
+          </span>
+        </span>
+        <span v-else>
+          No Products Found
+        </span>
       </span>
     </h1>
 
     <div class="w-full bg-orange-400">
       <FilterBar></FilterBar>
     </div>
-    <div class="mt-40">
+    <div class="mt-24 ml-6">
       <div v-if="currentRoute.path === '/'">
-        <h1 class="text-2xl">
-          No filters selected...
+        <h1 class="text-2xl text-gray-800">
+          ...No filter is selected.
+          <router-link to="{name:all}"></router-link>
         </h1>
       </div>
-      <div v-else class="grid gap-6">
+      <div v-else class="mt-40 grid gap-6">
         <div
           v-for="item in products"
           :key="item.productId"

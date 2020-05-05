@@ -4,9 +4,13 @@
       class="outline-none relative z-10 border bg-white border-black px-3 py-1 rounded-none flex items-center min-w-32"
       :class="hover ? 'border-hover z-30' : ''"
     >
-      <span class="pr-1 font-semibold flex-1">
+      <span
+        class="pr-1 flex-1"
+        :class="[hasSelected ? 'font-black' : 'font-normal']"
+      >
         <slot name="menu-label">Menu</slot>
       </span>
+
       <span>
         <svg
           class="fill-current h-4 w-4"
@@ -26,7 +30,7 @@
 <script>
 export default {
   name: "MenuButton",
-  props: ["hover"]
+  props: ["hover", "hasSelected"]
 };
 </script>
 <style scoped>
