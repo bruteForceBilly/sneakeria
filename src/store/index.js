@@ -46,6 +46,7 @@ export default new Vuex.Store({
       });
     },
     searchQueryParamsObjectAction({ commit }, searchQueryAction) {
+      // FIX - why is there an array there if you dont return it??
       let searchQueryParamsObject = {};
       let arr = [];
       searchQueryAction.data.path.forEach(pathItem => {
@@ -62,21 +63,6 @@ export default new Vuex.Store({
       { dispatch, commit },
       searchQueryParamsObject
     ) {
-      /*let searchQueryParamsString = "";
-      for (let [key, value] of Object.entries(searchQueryParamsObject)) {
-        searchQueryParamsString += `${key}=${value}&`;
-      }
-      searchQueryParamsString = searchQueryParamsString
-        .replace(/[,]/g, "&")
-        .slice(0, -1);
-
-      console.log("STORE searchQueryParamsObject", searchQueryParamsObject);
-      console.log("STORE searchQueryParamsString", searchQueryParamsString);
-
-      dispatch("searchQueryParamsKebabAction", searchQueryParamsObject);
-
-      return commit("searchQueryParamsStringMutation", searchQueryParamsString); */
-
       dispatch("searchQueryParamsKebabAction", searchQueryParamsObject);
 
       let searchQueryParamsString = function(obj) {
@@ -120,7 +106,7 @@ export default new Vuex.Store({
       //   "VUEX searchQueryParamsObjectMutation >>>",
       //   searchQueryParamsObject
       // );
-      console.log("searchQueryParamsObject", searchQueryParamsObject);
+      // console.log("searchQueryParamsObject", searchQueryParamsObject);
       Vue.set(state, "searchQueryParamsObject", searchQueryParamsObject);
     },
     searchQueryParamsStringMutation(state, searchQueryParamsString) {

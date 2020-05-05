@@ -177,15 +177,15 @@ export default {
         .filter(option => option.checked);
     },
     selectedOptionsObject() {
-      let obj = {};
-      this.selectedOptionsElements.forEach(el => {
-        for (let [key, value] of Object.entries(el)) {
-          if (key === "name") {
-            return (obj[value] = el.value);
-          }
+      return this.selectedOptionsElements.reduce(function(previous, element) {
+        if (element.name in previous) {
+          previous[element.name] = [previous[element.name]];
+          previous[element.name].push(element.value);
+        } else {
+          previous[element.name] = element.value;
         }
-      });
-      return obj;
+        return previous;
+      }, {});
     },
     searchQueryParamsObject() {
       return this.$store.state.searchQueryParamsObject;
@@ -201,6 +201,7 @@ export default {
       deep: true,
       handler: function(newValue, oldValue) {
         if (this.getSetByRoute === false) {
+          // this id messing up al the loaded products - FIX TOMORROW!
           return this.updateRouteQueryParams(this.selectedOptionsObject);
         }
       }

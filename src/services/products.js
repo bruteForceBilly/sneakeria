@@ -6,7 +6,7 @@ export default function(q, cb) {
     .get(API_PRODUCTS + "/?" + q)
     .then(response => {
       cb(response.data);
-      console.log("PRODUCTS", q, response.data);
+      //console.log("PRODUCTS", q, response.data);
     })
     .catch(err => err.toString());
 }
