@@ -13,7 +13,7 @@ export default function(q, cb) {
   } else {
     //console.log("Q PRODUCTS", q);
     return axios
-      .get(API_PRODUCTS + "/?" + q)
+      .get(API_PRODUCTS + "?" + q)
       .then(response => {
         cb(response.data);
       })

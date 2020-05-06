@@ -121,7 +121,7 @@ export default new Vuex.Store({
       Vue.set(state, "searchQueryParamsKebab", searchQueryParamsKebab);
     },
     searchFoundProductsMutation(state, searchFoundProducts) {
-      //console.log("VUEX searchFoundProductsMutation >>>", searchFoundProducts);
+      // console.log("VUEX searchFoundProductsMutation >>>", searchFoundProducts);
       Vue.set(state, "searchFoundProducts", searchFoundProducts);
     },
     searchRouteLastBeforeEnterMutation(state, searchRouteLastBeforeEnter) {

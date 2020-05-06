@@ -5,10 +5,10 @@ const DESTINATION_FILE = "db.json";
 let products = [];
 
 // Generate Product
-for (let i = 0; i < 70; i++) {
+for (let i = 0; i < 339; i++) {
   faker.seed(i);
   products.push({
-    productId: `${i}`,
+    id: `${i}`,
     name: faker.name.firstName(),
     get productTitle() {
       return `${this.brand} ${this.look} ${this.category} ${this.name}`;

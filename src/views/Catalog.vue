@@ -44,7 +44,7 @@
       <div v-else class="grid gap-6">
         <div
           v-for="item in products"
-          :key="item.productId"
+          :key="item.id"
           class="pt-16 px-4 text-left bg-orange-300"
         >
           <p>{{ item.productTitle }}</p>

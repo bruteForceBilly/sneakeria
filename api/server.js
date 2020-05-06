@@ -12,8 +12,14 @@ server.use(middlewares);
 //   res.redirect(`/api/products`);
 // });
 
+/*
 server.get("/api/products/:key/", (req, res) => {
+  console.log(req, res);
   res.redirect(`/api/products?q=${Object.values(req.params)[0]}`);
+}); */
+
+server.get("/api/products/:id/", (req, res) => {
+  res.redirect("/api/products/" + req.params.id);
 });
 
 // // Section
