@@ -1,33 +1,38 @@
 <template>
-  <div class="h-screen pt-8 px-4 sm:px-6 md:px-12 xl:px-16">
-    <h1 class="text-4xl tracking-tighter font-black uppercase mb-8">
-      <span v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1"
-        >All Products</span
-      >
-      <span
-        v-else-if="currentRoute.name === 'all' && searchFoundProductsLength > 0"
-        >All Products
-        <span class="font-light text-gray-600 text-xl">
-          ( {{ searchFoundProductsLength }} Products )
-        </span></span
-      >
-      <span v-else>
-        <span v-if="searchFoundProductsLength > 0">
-          {{ currentRoute.path | displayPath }}
+  <div class="h-screen px-4 sm:px-6 md:px-12 xl:px-16">
+    <div class="pb-6 pt-8">
+      <h1 class="text-4xl tracking-tighter font-black uppercase">
+        <span
+          v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1"
+          >All Products</span
+        >
+        <span
+          v-else-if="
+            currentRoute.name === 'all' && searchFoundProductsLength > 0
+          "
+          >All Products
           <span class="font-light text-gray-600 text-xl">
             ( {{ searchFoundProductsLength }} Products )
+          </span></span
+        >
+        <span v-else>
+          <span v-if="searchFoundProductsLength > 0">
+            {{ currentRoute.path | displayPath }}
+            <span class="font-light text-gray-600 text-xl">
+              ( {{ searchFoundProductsLength }} Products )
+            </span>
+          </span>
+          <span v-else>
+            No Products Found
           </span>
         </span>
-        <span v-else>
-          No Products Found
-        </span>
-      </span>
-    </h1>
+      </h1>
+    </div>
 
-    <div class="w-full bg-orange-400">
+    <div class="w-full">
       <FilterBar></FilterBar>
     </div>
-    <div class="mt-20 ml-6">
+    <div class="mt-8">
       <div v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1">
         <h1 class="text-2xl text-gray-800">
           ...No filter is selected.
@@ -36,7 +41,7 @@
           </button>
         </h1>
       </div>
-      <div v-else class="mt-40 grid gap-6">
+      <div v-else class="grid gap-6">
         <div
           v-for="item in products"
           :key="item.productId"

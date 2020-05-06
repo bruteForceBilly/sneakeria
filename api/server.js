@@ -8,9 +8,9 @@ server.use(middlewares);
 
 // Search
 
-server.get("/api/products", (req, res) => {
-  res.redirect(`/api/products`);
-});
+// server.get("/api/products", (req, res) => {
+//   res.redirect(`/api/products`);
+// });
 
 server.get("/api/products/:key/", (req, res) => {
   res.redirect(`/api/products?q=${Object.values(req.params)[0]}`);

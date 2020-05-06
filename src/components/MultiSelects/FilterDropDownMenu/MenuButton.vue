@@ -1,12 +1,12 @@
 <template>
   <div>
     <button
-      class="outline-none relative z-10 border bg-white border-black px-3 py-1 rounded-none flex items-center min-w-32"
+      class="outline-none uppercase relative z-10 border bg-white border-transparent px-3 py-1 rounded-none flex items-center min-w-32"
       :class="hover ? 'border-hover z-30' : ''"
     >
       <span
         class="pr-1 flex-1"
-        :class="[hasSelected ? 'font-black' : 'font-normal']"
+        :class="[hasSelected ? 'font-black' : 'font-medium']"
       >
         <slot name="menu-label">Menu</slot>
       </span>

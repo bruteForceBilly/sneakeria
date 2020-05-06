@@ -14,36 +14,40 @@
         searchQueryParamsString {{ this.$store.state.searchQueryParamsString }}
       </li>
     </ul> -->
-    <div class="absolute flex justify-start">
-      <MenuBase
-        v-for="item in selects"
-        :key="item.name"
-        :item="item"
-        :selected="selectedOptionsObject"
-      ></MenuBase>
-    </div>
-    <div class="absolute mt-16 flex justify-start">
-      <div
-        v-for="option in selectedOptionsElements"
-        :key="option.value"
-        class=""
-      >
-        <FilterPill
-          @click.native="
-            selectOptionsCheckToggle(
-              clickedOptionObject(option.name, option.value)
-            )
-          "
-        >
-          {{ option.label }}
-        </FilterPill>
+    <div class="static">
+      <div class="relative">
+        <div class="border-t bg-white border-b py-1 w-full flex justify-start">
+          <MenuBase
+            v-for="item in selects"
+            :key="item.name"
+            :item="item"
+            :selected="selectedOptionsObject"
+          ></MenuBase>
+        </div>
       </div>
-      <FilterPill
-        v-show="selectedOptionsElements.length > 0"
-        link="true"
-        @click.native="clearAll()"
-        >Clear All</FilterPill
-      >
+      <div class="mt-4 flex justify-start">
+        <div
+          v-for="option in selectedOptionsElements"
+          :key="option.value"
+          class=""
+        >
+          <FilterPill
+            @click.native="
+              selectOptionsCheckToggle(
+                clickedOptionObject(option.name, option.value)
+              )
+            "
+          >
+            {{ option.label }}
+          </FilterPill>
+        </div>
+        <FilterPill
+          v-show="selectedOptionsElements.length > 0"
+          link="true"
+          @click.native="clearAll()"
+          >Clear All</FilterPill
+        >
+      </div>
     </div>
   </div>
 </template>
