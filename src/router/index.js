@@ -68,7 +68,7 @@ const routes = [
           //  "ROUTER searchQueryParamsString",
           //  searchQueryParamsString
           //);
-          products(searchQueryParamsString, data => {
+          products("filter", searchQueryParamsString, data => {
             //console.log("ROUTER products", data);
             store.commit("searchFoundProductsMutation", data);
           }).then(() => {

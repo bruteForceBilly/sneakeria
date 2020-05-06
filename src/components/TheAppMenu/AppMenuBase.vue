@@ -16,7 +16,7 @@
         <template v-slot:navbar>
           <FeaturedLinksBar
             featured-category="section"
-            featured-link="about"
+            featured-link="product"
             class="hidden md:inline-block"
           ></FeaturedLinksBar>
         </template>

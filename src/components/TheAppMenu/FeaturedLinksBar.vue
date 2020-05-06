@@ -4,7 +4,7 @@
       <FeaturedLinksBarItem
         v-for="(item, index) in mock"
         :key="item + index"
-        link-to="/about"
+        link-to="/product"
       >
         {{ item }}</FeaturedLinksBarItem
       >
@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      mock: ["men", "women", "about"]
+      mock: ["men", "women", "product"]
     };
   }
 };

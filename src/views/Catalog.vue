@@ -18,7 +18,7 @@
         <span v-else>
           <span v-if="searchFoundProductsLength > 0">
             {{ currentRoute.path | displayPath }}
-            <span class="font-light text-gray-600 text-xl">
+            <span class="font-light tracking-wider  text-gray-600 text-xl">
               ( {{ searchFoundProductsLength }} Products )
             </span>
           </span>
@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     loadAllProducts() {
-      products(this.currentRoute.name, data => {
+      products("route", this.currentRoute.name, data => {
         return this.$store.commit("searchFoundProductsMutation", data);
       });
     }
