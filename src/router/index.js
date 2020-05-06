@@ -5,7 +5,7 @@ import store from "@/store/index.js";
 import products from "@/services/products.js";
 // import OldCategoryPage from "../views/OldCategoryPage.vue";
 // import App from "@/App.vue";
-//import Home from "../views/Home.vue";
+import Home from "../views/Home.vue";
 import Dummy from "../views/Dummy.vue";
 import About from "../views/About.vue";
 import Cart from "../views/Cart.vue";
@@ -18,9 +18,9 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/home",
+    path: "/",
     name: "home",
-    component: Dummy
+    component: Home
   },
   {
     path: "/all",
@@ -35,20 +35,6 @@ const routes = [
       store.commit("searchRouteLastBeforeEnterMutation", to.name);
       //store.commit("filterBarNoneSelectedMutation", true);
       next();
-    }
-  },
-  {
-    path: "/:id",
-    name: "searchRequestRoute",
-    component: Dummy,
-    beforeEnter: (to, from, next) => {
-      //console.log("ROUTER searchRequestRoute beforeEnter", to, from);
-      store
-        .dispatch("searchRequestAction", to.path.substr(1).split("-"))
-        .then(store.commit("searchRouteLastBeforeEnterMutation", to.name))
-        .then(q => {
-          next({ name: "searchQueryRoute", query: q });
-        });
     }
   },
   {
@@ -104,17 +90,24 @@ const routes = [
     }
   },
   {
+    path: "/:id",
+    name: "searchRequestRoute",
+    component: Dummy,
+    beforeEnter: (to, from, next) => {
+      //console.log("ROUTER searchRequestRoute beforeEnter", to, from);
+      store
+        .dispatch("searchRequestAction", to.path.substr(1).split("-"))
+        .then(store.commit("searchRouteLastBeforeEnterMutation", to.name))
+        .then(q => {
+          next({ name: "searchQueryRoute", query: q });
+        });
+    }
+  },
+  {
     path: "/:slug",
     name: "searchResultRoute",
     component: Dummy,
     beforeEnter: (to, from, next) => {
-      // console.log(
-      //   "ROUTER searchResultRoute",
-      //   to,
-      //   "ROUTER searchResultRoute store.state.searchQueryParamsObject",
-      //   store.state.searchQueryParamsObject
-      // );
-      console.log(to, from);
       store.commit("searchRouteLastBeforeEnterMutation", to.name);
       next();
     }
