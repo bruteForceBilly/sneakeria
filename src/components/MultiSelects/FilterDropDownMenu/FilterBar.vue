@@ -1,6 +1,19 @@
 <template>
   <div>
-    route : {{ this.$store.state.route }}
+    <!-- <ul class="list-disc bg-yellow-200">
+      <li>route {{ this.$store.state.route }}</li>
+      <li>setByRoute {{ this.$store.state.setByRoute }}</li>
+      <li>
+        searchRouteLastBeforeEnter
+        {{ this.$store.state.searchRouteLastBeforeEnter }}
+      </li>
+      <li>
+        searchQueryParamsObject {{ this.$store.state.searchQueryParamsObject }}
+      </li>
+      <li>
+        searchQueryParamsString {{ this.$store.state.searchQueryParamsString }}
+      </li>
+    </ul> -->
     <div class="absolute flex justify-start">
       <MenuBase
         v-for="item in selects"
@@ -193,9 +206,11 @@ export default {
       return this.$store.state.searchQueryParamsObject;
       //  this.$store.state.searchQueryParamsString
     },
-
     getSetByRoute() {
       return this.$store.state.setByRoute;
+    },
+    route() {
+      return this.$store.state.route;
     }
   },
   watch: {
@@ -203,11 +218,15 @@ export default {
       deep: true,
       handler: function(newValue, oldValue) {
         if (this.getSetByRoute === false) {
-          return (
-            this.updateRouteQueryParams(this.selectedOptionsObject),
-            this.$store.commit("filterBarNoneSelectedMutation", false)
-          );
+          return this.updateRouteQueryParams(this.selectedOptionsObject);
+          //this.$store.commit("filterBarNoneSelectedMutation", false)
         }
+      }
+    },
+    route: {
+      deep: true,
+      handler: function(newValue, oldValue) {
+        return this.updateElements();
       }
     }
   },
@@ -266,6 +285,23 @@ export default {
             .catch(err => {})
         );
       }
+    },
+    updateElements() {
+      // check if data are set by route
+      if (this.getSetByRoute === true) {
+        // reset option el with false
+        this.selectedOptionsElements.forEach(el =>
+          !el.checked ? null : (el.checked = false)
+        );
+        // set data after prop
+        if (this.searchQueryParamsObject === null) {
+          this.selectOptionsCheckToggle({});
+        } else {
+          this.selectOptionsCheckToggle(this.searchQueryParamsObject);
+        }
+        // reset set by route
+        this.$store.commit("setByRoute", false);
+      }
     }
   },
   created() {
@@ -275,19 +311,6 @@ export default {
       this.selectOptionsCheckToggle({});
     }
     return this.$store.commit("setByRoute", false);
-  },
-  beforeUpdate() {
-    // check if data are set by route
-    if (this.getSetByRoute === true) {
-      // reset option el with false
-      this.selectedOptionsElements.forEach(el =>
-        !el.checked ? null : (el.checked = false)
-      );
-      // set data after prop
-      this.selectOptionsCheckToggle(this.searchQueryParamsObject);
-      // reset set by route
-      this.$store.commit("setByRoute", false);
-    }
   }
 };
 </script>

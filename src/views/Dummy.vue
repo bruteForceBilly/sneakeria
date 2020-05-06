@@ -1,8 +1,8 @@
 <template>
   <div class="h-screen pt-8 px-4 sm:px-6 md:px-12 xl:px-16">
-    <h1 class="text-4xl font-black uppercase mb-8">
+    <h1 class="text-4xl tracking-tighter font-black uppercase mb-8">
       <span v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1"
-        >Home</span
+        >All Products</span
       >
       <span
         v-else-if="currentRoute.name === 'all' && searchFoundProductsLength > 0"
@@ -13,7 +13,7 @@
       >
       <span v-else>
         <span v-if="searchFoundProductsLength > 0">
-          {{ currentRoute.path }}
+          {{ currentRoute.path | displayPath }}
           <span class="font-light text-gray-600 text-xl">
             ( {{ searchFoundProductsLength }} Products )
           </span>
@@ -90,6 +90,13 @@ export default {
       products(this.currentRoute.name, data => {
         return this.$store.commit("searchFoundProductsMutation", data);
       });
+    }
+  },
+  filters: {
+    displayPath: function(value) {
+      if (!value) return "";
+      value = value.toString();
+      return value.replace(/[-]/g, " ∙ ").substr(1);
     }
   }
 };

@@ -27,7 +27,13 @@ const routes = [
     name: "all",
     component: Dummy,
     beforeEnter: (to, from, next) => {
+      store.commit("searchQueryParamsObjectMutation", null);
+      store.commit("searchQueryParamsStringMutation", null);
+      store.commit("searchQueryParamsKebabMutation", null);
+      store.commit("setByRoute", true);
       store.commit("searchFoundProductsMutation", null);
+      store.commit("searchRouteLastBeforeEnterMutation", to.name);
+      //store.commit("filterBarNoneSelectedMutation", true);
       next();
     }
   },
@@ -108,6 +114,7 @@ const routes = [
       //   "ROUTER searchResultRoute store.state.searchQueryParamsObject",
       //   store.state.searchQueryParamsObject
       // );
+      console.log(to, from);
       store.commit("searchRouteLastBeforeEnterMutation", to.name);
       next();
     }
