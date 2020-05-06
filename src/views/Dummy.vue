@@ -1,7 +1,16 @@
 <template>
   <div class="h-screen pt-8 px-4 sm:px-6 md:px-12 xl:px-16">
     <h1 class="text-4xl font-black uppercase mb-8">
-      <span v-if="currentRoute.name === 'all'">All Products</span>
+      <span v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1"
+        >Home</span
+      >
+      <span
+        v-else-if="currentRoute.name === 'all' && searchFoundProductsLength > 0"
+        >All Products
+        <span class="font-light text-gray-600 text-xl">
+          ( {{ searchFoundProductsLength }} Products )
+        </span></span
+      >
       <span v-else>
         <span v-if="searchFoundProductsLength > 0">
           {{ currentRoute.path }}
@@ -18,11 +27,13 @@
     <div class="w-full bg-orange-400">
       <FilterBar></FilterBar>
     </div>
-    <div class="mt-24 ml-6">
-      <div v-if="currentRoute.path === '/'">
+    <div class="mt-20 ml-6">
+      <div v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1">
         <h1 class="text-2xl text-gray-800">
           ...No filter is selected.
-          <router-link to="{name:all}"></router-link>
+          <button @click="loadAllProducts()" class="underline">
+            View all products?
+          </button>
         </h1>
       </div>
       <div v-else class="mt-40 grid gap-6">
@@ -41,12 +52,18 @@
 <script>
 //import SearchForm from "@/components/SearchForm/SearchForm.vue";
 import FilterBar from "@/components/MultiSelects/FilterDropDownMenu/FilterBar.vue";
+import products from "@/services/products.js";
 
 export default {
   name: "Dummy",
   props: ["q"],
   components: {
     FilterBar
+  },
+  data() {
+    return {
+      loadProducts: false
+    };
   },
   computed: {
     products() {
@@ -66,6 +83,13 @@ export default {
     },
     currentRoute() {
       return this.$store.state.route;
+    }
+  },
+  methods: {
+    loadAllProducts() {
+      products(this.currentRoute.name, data => {
+        return this.$store.commit("searchFoundProductsMutation", data);
+      });
     }
   }
 };

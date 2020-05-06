@@ -27,11 +27,8 @@ const routes = [
     name: "all",
     component: Dummy,
     beforeEnter: (to, from, next) => {
-      products(to.name, data => {
-        store.commit("searchFoundProductsMutation", data);
-      }).then(() => {
-        return next();
-      });
+      store.commit("searchFoundProductsMutation", null);
+      next();
     }
   },
   {
