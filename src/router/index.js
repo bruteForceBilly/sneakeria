@@ -3,16 +3,10 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "@/store/index.js";
 import products from "@/services/products.js";
-// import OldCategoryPage from "../views/OldCategoryPage.vue";
-// import App from "@/App.vue";
 import Home from "../views/Home.vue";
-import Dummy from "../views/Dummy.vue";
+import Catalog from "../views/Catalog.vue";
 import About from "../views/About.vue";
 import Cart from "../views/Cart.vue";
-// import Catalog from "../views/Catalog.vue";
-// import siteMap from "@/services/siteMap.js";
-// import axios from "axios";
-// import { API_SITE } from "@/constants";
 
 Vue.use(VueRouter);
 
@@ -25,7 +19,7 @@ const routes = [
   {
     path: "/all",
     name: "all",
-    component: Dummy,
+    component: Catalog,
     beforeEnter: (to, from, next) => {
       store.commit("searchQueryParamsObjectMutation", null);
       store.commit("searchQueryParamsStringMutation", null);
@@ -40,7 +34,7 @@ const routes = [
   {
     path: "/search",
     name: "searchQueryRoute",
-    component: Dummy,
+    component: Catalog,
     beforeEnter: (to, from, next) => {
       // console.log(
       //   "ROUTER >>>> searchQueryRoute beforeEnter",
@@ -92,7 +86,7 @@ const routes = [
   {
     path: "/:id",
     name: "searchRequestRoute",
-    component: Dummy,
+    component: Catalog,
     beforeEnter: (to, from, next) => {
       //console.log("ROUTER searchRequestRoute beforeEnter", to, from);
       store
@@ -106,7 +100,7 @@ const routes = [
   {
     path: "/:slug",
     name: "searchResultRoute",
-    component: Dummy,
+    component: Catalog,
     beforeEnter: (to, from, next) => {
       store.commit("searchRouteLastBeforeEnterMutation", to.name);
       next();

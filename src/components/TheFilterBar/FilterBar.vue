@@ -53,8 +53,8 @@
 </template>
 
 <script>
-import MenuBase from "@/components/MultiSelects/FilterDropDownMenu/MenuBase.vue";
-import FilterPill from "@/components/MultiSelects/FilterDropDownMenu/FilterPill.vue";
+import MenuBase from "./FilterMenu/MenuBase.vue";
+import FilterPill from "./FilterPill.vue";
 
 export default {
   name: "FilterBar",
