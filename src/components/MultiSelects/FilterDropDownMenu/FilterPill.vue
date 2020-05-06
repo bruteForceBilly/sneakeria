@@ -1,14 +1,26 @@
 <template>
   <div>
     <button
-      class="py-1 px-4 no-underline rounded-full bg-gray-300 text-gray-800 font-sans font-normal text-sm lowercase btn-primary focus:outline-none mr-2"
+      class="py-1 text-gray-800 font-sans font-normal text-sm lowercase"
+      :class="[
+        link
+          ? 'px-0 mx-2 underline bg-transparent'
+          : 'px-4 no-underline bg-gray-300 btn-primary rounded-full focus:outline-none mr-2'
+      ]"
     >
-      <slot></slot>
-      <span class="font-hairline text-gray-600 ml-1">x</span>
+      <div class="inline">
+        <slot></slot>
+      </div>
+
+      <div v-show="!link" class="inline">
+        <span class="font-hairline text-gray-600 ml-1 inline">x</span>
+      </div>
     </button>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["link"]
+};
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen pt-8 px-4 sm:px-6 md:px-12 xl:px-16">
     <h1 class="text-4xl font-black uppercase mb-8">
-      <span v-if="currentRoute.path === '/'">Catalog Page</span>
+      <span v-if="currentRoute.name === 'all'">All Products</span>
       <span v-else>
         <span v-if="searchFoundProductsLength > 0">
           {{ currentRoute.path }}

@@ -1,5 +1,6 @@
 <template>
   <div>
+    route : {{ this.$store.state.route }}
     <div class="absolute flex justify-start">
       <MenuBase
         v-for="item in selects"
@@ -24,6 +25,12 @@
           {{ option.label }}
         </FilterPill>
       </div>
+      <FilterPill
+        v-show="selectedOptionsElements.length > 0"
+        link="true"
+        @click.native="clearAll()"
+        >Clear All</FilterPill
+      >
     </div>
   </div>
 </template>
@@ -205,6 +212,9 @@ export default {
     }
   },
   methods: {
+    clearAll() {
+      return this.selectedOptionsElements.forEach(el => (el.checked = false));
+    },
     clickedOptionObject(name, value) {
       let o = {};
       o[name] = value;
@@ -250,7 +260,7 @@ export default {
         return (
           this.$router
             .push({
-              name: "searchResultRouteEmpty"
+              name: "all"
             })
             // eslint-disable-next-line no-unused-vars
             .catch(err => {})

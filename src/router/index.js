@@ -22,7 +22,7 @@ const routes = [
     name: "home",
     component: Dummy
   },
-  /*{
+  {
     path: "/all",
     name: "all",
     component: Dummy,
@@ -33,7 +33,7 @@ const routes = [
         return next();
       });
     }
-  }, */
+  },
   {
     path: "/:id",
     name: "searchRequestRoute",
@@ -103,21 +103,6 @@ const routes = [
   {
     path: "/:slug",
     name: "searchResultRoute",
-    component: Dummy,
-    beforeEnter: (to, from, next) => {
-      // console.log(
-      //   "ROUTER searchResultRoute",
-      //   to,
-      //   "ROUTER searchResultRoute store.state.searchQueryParamsObject",
-      //   store.state.searchQueryParamsObject
-      // );
-      store.commit("searchRouteLastBeforeEnterMutation", to.name);
-      next();
-    }
-  },
-  {
-    path: "/",
-    name: "searchResultRouteEmpty",
     component: Dummy,
     beforeEnter: (to, from, next) => {
       // console.log(
