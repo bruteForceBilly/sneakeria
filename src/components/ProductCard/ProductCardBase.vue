@@ -24,7 +24,10 @@
         </template>
 
         <template v-slot:image>
-          <img :src="info.variants[ui.selectedVariant.sku].image" />
+          <img
+            class=" w-full object-scale-down"
+            :src="info.variants[ui.selectedVariant.sku].image"
+          />
         </template>
 
         <template v-slot:thumbs>
@@ -58,4 +61,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.max-h-half {
+  max-height: 50%;
+}
+</style>

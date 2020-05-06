@@ -1,7 +1,7 @@
 <template>
   <button
     :class="buttonStyle"
-    class="text-sm justify-center py-2 px-3 mx-2 uppercase tracking-widest leading-tight inline-block"
+    class="text-sm focus:outline-none justify-center py-2 px-3 mx-2 uppercase tracking-widest leading-tight inline-block"
   >
     <template>
       <div
@@ -35,7 +35,7 @@
           </svg>
         </div>
 
-        <div v-if="icon === 'heart'" class="flex-none">
+        <div v-if="icon === 'heart'" class="relatie flex-none text-2xl ">
           <svg
             :class="{ fillSvg: isLiked }"
             xmlns="http://www.w3.org/2000/svg"

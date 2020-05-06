@@ -5,16 +5,16 @@
         @click.native="previous"
         v-if="times > 0"
         icon="chevron-left"
-        button-style="secondary sm"
-        class="absolute z-20 top-1 left-0 mt-4"
+        button-style="secondary md"
+        class="absolute z-20 top-1 left-0 mt-6"
       >
       </ProductCardButton>
       <ProductCardButton
         @click.native="next"
         v-if="times < maxTimes"
         icon="chevron-right"
-        button-style="secondary sm"
-        class="absolute z-20 top-1 right-0 mt-4"
+        button-style="secondary md"
+        class="absolute z-20 top-1 right-0 mt-6"
       ></ProductCardButton>
     </div>
     <div class="relative">
@@ -26,9 +26,10 @@
           <div
             v-for="(variant, index) in thumbs.info.variants"
             v-bind:key="variant.sku"
-            class="flex-none inline-block h-16 w-1/4 bg-gray-300 border-solid border-b-2 border-transparent overflow-hidden hover:border-black"
+            class="flex-none opacity-50 hover:opacity-100 inline-block h-24 w-1/4 temp-bg border-solid border-b-2 border-transparent overflow-hidden hover:border-black"
           >
             <img
+              class="h-full object-contain mx-auto"
               :src="variant.image"
               @mouseover="thumbs.selectHandler(index)"
             />
@@ -77,4 +78,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.temp-bg {
+  background-color: rgba(247, 247, 247, 1);
+}
+</style>
