@@ -48,6 +48,7 @@
           class="pt-16 px-4 text-left bg-orange-300"
         >
           <p>{{ item.productTitle }}</p>
+          <Test></Test>
         </div>
       </div>
     </div>
@@ -56,13 +57,16 @@
 
 <script>
 import FilterBar from "@/components/TheFilterBar/FilterBar.vue";
+import Test from "./Test.vue";
+
 import products from "@/services/products.js";
 
 export default {
   name: "Catalog",
   props: ["q"],
   components: {
-    FilterBar
+    FilterBar,
+    Test
   },
   data() {
     return {
