@@ -36,7 +36,9 @@ export default {
     }
   },
   created() {
-    this.selectedVersion.versionId = 0;
+    this.$store.state.route.query.versionId
+      ? (this.selectedVersion.versionId = this.$store.state.route.query.versionId)
+      : (this.selectedVersion.versionId = 0);
   },
   mounted() {
     this.product.versions.forEach(version => {
