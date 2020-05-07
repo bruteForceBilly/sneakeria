@@ -5,9 +5,10 @@
     class="relative w-full bg-white overflow-hidden flex flex-row flex-no-wrap items-stretch justify-center"
   >
     <div class="flex-grow overflow-hidden max-w-half temp-bg">
-      <section
+      <!-- <section
         v-if="layout.info.variants[layout.ui.selectedVariant.sku].flairs[0]"
-      >
+      > -->
+      <section v-if="layout.product.campaigns">
         <span
           class="overflow-visible absolute z-20 top-0 m-4 inline writing-mode-rotate w-full"
         >
@@ -31,7 +32,10 @@
         </slot>
       </section>
 
-      <div v-show="hover" class="absolute bottom-0 z-50 w-1/2 overflow-hidden">
+      <div
+        class="absolute bottom-0 z-50 w-1/2 overflow-hidden"
+        :class="[hover ? 'visible' : 'invisible']"
+      >
         <slot name="thumbs"> </slot>
       </div>
     </div>

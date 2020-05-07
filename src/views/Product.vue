@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ProductCard></ProductCard>
+    <ProductCard :product="product"></ProductCard>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
       product: null
     };
   },
-  mounted() {
+  beforeCreate() {
     products("route", this.$store.state.route.params.product, data => {
       console.log(data);
       return (this.product = data);

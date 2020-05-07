@@ -1,32 +1,39 @@
 <template>
   <div class="text-3xl w-full">
-    <h6 class="text-gray-600 mt-4">{{ details.info.category }}</h6>
-    <h3 class="text-6xl ">{{ details.info.title }}</h3>
-    <h5 class="text-3xl">
-      <span
+    <h6 class="text-gray-600 mt-4 capitalize">
+      {{ details.product.productTitle }}
+    </h6>
+    <h3 class="text-6xl ">{{ details.product.name }}</h3>
+    <div class="h-16 flex justify-start items-center">
+      <div
         :class="[price.discount ? 'text-red-600' : 'text-black']"
-        class="mr-1"
+        class="mr-2 text-4xl"
       >
-        {{ price.offered | formatCurrency(this.price.currency) }}
-      </span>
-      <span v-if="price.discount" class="line-through text-gray-600 mx-1">
-        {{ price.original | formatCurrency(this.price.currency) }}
-      </span>
-      <span
-        v-if="price.discount"
-        class="text-gray-600 ml-1 rounded-full py-1 px-2 bg-gray-200"
+        <h5>{{ price.offeredAmount | formatCurrency(this.price.currency) }}</h5>
+      </div>
+      <div v-if="price.discount" class="text-gray-600">
+        <div class="line-through mx-3 text-2xl">
+          <h5>
+            {{ price.originalAmount | formatCurrency(this.price.currency) }}
+          </h5>
+        </div>
+      </div>
+
+      <div
+        class="rounded-full py-2 px-3 bg-gray-100 text-gray-500 text-sm font-black"
       >
-        SAVE {{ price.discount }}
-      </span>
-    </h5>
+        <h6>SAVE {{ discount }}</h6>
+      </div>
+    </div>
 
     <h6 class="text-gray-600 mt-1 text-2xl">
-      {{ details.info.variants.length }} Colors
+      {{ details.product.versions.length }} Colors
     </h6>
-    <!-- <p class="text-gray-500">
+
+    <!--<p class="text-gray-500">
        {{ details.info.variants[ui.selectedVariant.sku].flair }}
       {{ this.variants[this.sku].flairs }}
-    </p> -->
+    </p>  -->
   </div>
 </template>
 
@@ -38,25 +45,31 @@ export default {
   },
   computed: {
     sku() {
-      return this.details.ui.selectedVariant.sku;
+      return this.details.selectedVersion.versionId;
     },
-    variants() {
-      return this.details.info.variants;
+    versions() {
+      return this.details.product.versions;
     },
     price() {
-      return this.variants[this.sku].price;
+      return this.versions[this.sku].price;
+    },
+    discount() {
+      let percent =
+        100 -
+        Math.floor(
+          (this.price.offeredAmount / this.price.originalAmount) * 100
+        );
+      return percent < 100 ? `${percent}%` : false;
     }
   },
   filters: {
     formatCurrency: function(amount, currency) {
-      if (currency === "EUR") {
+      if (currency === "eur") {
         return "€" + amount; // + parseFloat(price_amount).toFixed(2)
-      } else if (currency === "USD") {
+      } else if (currency === "usd") {
         return "$" + amount; // + parseFloat(price_amount).toFixed(2)
       }
     }
   }
 };
 </script>
-
-<style scoped></style>

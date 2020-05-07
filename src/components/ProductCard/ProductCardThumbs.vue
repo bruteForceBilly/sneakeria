@@ -24,15 +24,16 @@
       >
         <div class="flex flex-row items-stretch">
           <div
-            v-for="(variant, index) in thumbs.info.variants"
-            v-bind:key="variant.sku"
-            class="flex-none opacity-50 hover:opacity-100 inline-block h-24 w-1/4 temp-bg border-solid border-b-2 border-transparent overflow-hidden hover:border-black"
+            v-for="(version, index) in thumbs.product.versions"
+            v-bind:key="version.versionId"
+            class="flex-none opacity-50 hover:opacity-100 inline-block pb-2 h-24 w-1/4 temp-bg border-solid border-b-2 border-transparent overflow-hidden hover:border-black"
           >
             <img
               class="h-full object-contain mx-auto"
-              :src="variant.image"
+              src="@/assets/2.png"
               @mouseover="thumbs.selectHandler(index)"
             />
+            <!-- bind :src later to product -->
           </div>
         </div>
       </div>
@@ -58,13 +59,13 @@ export default {
   },
   computed: {
     sku() {
-      return this.thumbs.ui.selectedVariant.sku;
+      return this.thumbs.selectedVariant.verionId;
     },
-    variants() {
-      return this.thumbs.info.variants;
+    versions() {
+      return this.thumbs.product.versions;
     },
     maxTimes() {
-      return Math.ceil(this.variants.length / 4) * 100 - 100;
+      return Math.ceil(this.thumbs.product.versions.length / 4) * 100 - 100;
     }
   },
   methods: {

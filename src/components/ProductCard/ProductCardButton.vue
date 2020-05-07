@@ -37,7 +37,9 @@
 
         <div v-if="icon === 'heart'" class="relatie flex-none text-2xl ">
           <svg
-            :class="{ fillSvg: isLiked }"
+            :class="[
+              state.isSelectedVersionLiked ? 'fillSvg' : 'transparentSvg'
+            ]"
             xmlns="http://www.w3.org/2000/svg"
             width="1.1em"
             height="100%"
@@ -137,19 +139,12 @@ export default {
       type: String,
       default: "loader"
     },
-    buttonState: {
+    state: {
       type: Object
     },
     buttonStyle: {
       type: String,
       default: "primary"
-    }
-  },
-  computed: {
-    isLiked() {
-      return this.buttonState.info.variants[
-        this.buttonState.ui.selectedVariant.sku
-      ].liked;
     }
   }
 };
@@ -223,6 +218,10 @@ export default {
 
 .fillSvg {
   fill: currentColor;
+}
+
+.transparentSvg {
+  fill: transparent;
 }
 
 .square {

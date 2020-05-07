@@ -1,141 +1,47 @@
 <template>
   <div>
     <slot
-      :info="info"
-      :ui="ui"
       :selectHandler="selectHandler"
       :likeHandler="likeHandler"
+      :selectedVersion="selectedVersion"
+      :likedVersions="likedVersions"
+      :isSelectedVersionLiked="isSelectedVersionLiked"
     ></slot>
   </div>
 </template>
 <script>
 export default {
+  props: ["product"],
   data() {
     return {
-      info: {
-        title: "Ultra Boost",
-        category: "Running",
-        variantAmount: null,
-        variants: [
-          {
-            sku: 1,
-            image: require("@/assets/1.png"),
-            url: "1",
-            flairs: ["news"],
-            liked: true,
-            price: {
-              currency: "EUR",
-              original: 179,
-              offered: 179,
-              get discount() {
-                let percent = Math.floor((this.offered / this.original) * 100);
-                return percent < 100 ? `${percent}%` : false;
-              }
-            }
-          },
-          {
-            sku: 2,
-            image: require("@/assets/2.png"),
-            url: "1",
-            flairs: ["ocean plastic", "news"],
-            liked: false,
-            price: {
-              currency: "EUR",
-              original: 129,
-              offered: 129,
-              get discount() {
-                let percent = Math.floor((this.offered / this.original) * 100);
-                return percent < 100 ? `${percent}%` : false;
-              }
-            }
-          },
-          {
-            sku: 3,
-            image: require("@/assets/3.png"),
-            url: "1",
-            flairs: ["sale"],
-            liked: false,
-            price: {
-              currency: "EUR",
-              original: 199,
-              offered: 119,
-              get discount() {
-                let percent = Math.floor((this.offered / this.original) * 100);
-                return percent < 100 ? `${percent}%` : false;
-              }
-            }
-          },
-          {
-            sku: 4,
-            image: require("@/assets/4.png"),
-            url: "1",
-            flairs: [null],
-            liked: false,
-            price: {
-              currency: "EUR",
-              original: 169,
-              offered: 109,
-              get discount() {
-                let percent = Math.floor((this.offered / this.original) * 100);
-                return percent < 100 ? `${percent}%` : false;
-              }
-            }
-          },
-          {
-            sku: 5,
-            image: require("@/assets/5.png"),
-            url: "1",
-            flairs: [null],
-            liked: false,
-            price: {
-              currency: "EUR",
-              original: 159,
-              offered: 159,
-              get discount() {
-                let percent = Math.floor((this.offered / this.original) * 100);
-                return percent < 100 ? `${percent}%` : false;
-              }
-            }
-          },
-          {
-            sku: 6,
-            image: require("@/assets/6.png"),
-            url: "1",
-            flairs: [null],
-            liked: false,
-            price: {
-              currency: "EUR",
-              original: 129,
-              offered: 129,
-              get discount() {
-                let percent = Math.floor((this.offered / this.original) * 100);
-                return percent < 100 ? `${percent}%` : false;
-              }
-            }
-          }
-        ]
+      selectedVersion: {
+        versionId: null
       },
-      ui: {
-        selectedVariant: {
-          sku: null
-        }
-      }
+      likedVersions: {}
     };
   },
+  computed: {
+    isSelectedVersionLiked() {
+      return this.likedVersions[this.selectedVersion.versionId];
+    }
+  },
   methods: {
-    selectHandler(variant) {
-      return (this.ui.selectedVariant.sku = variant);
+    selectHandler(version) {
+      return (this.selectedVersion.versionId = version);
     },
     likeHandler() {
-      if (this.info.variants[this.ui.selectedVariant.sku].liked === true) {
-        this.info.variants[this.ui.selectedVariant.sku].liked = false;
-      } else {
-        this.info.variants[this.ui.selectedVariant.sku].liked = true;
-      }
+      return this.isSelectedVersionLiked
+        ? (this.likedVersions[this.selectedVersion.versionId] = false)
+        : (this.likedVersions[this.selectedVersion.versionId] = true);
     }
   },
   created() {
-    this.ui.selectedVariant.sku = this.info.variants[1].sku;
+    this.selectedVersion.versionId = 0;
+  },
+  mounted() {
+    this.product.versions.forEach(version => {
+      this.$set(this.likedVersions, version.versionId, false);
+    });
   }
 };
 </script>
