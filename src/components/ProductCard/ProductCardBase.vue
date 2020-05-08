@@ -1,36 +1,24 @@
 <template>
-  <div v-if="product">
+  <div v-if="productData">
     <ProductCardSettings
-      v-bind:product="product"
+      :product-data="productData"
+      :view-context="viewContext"
       v-slot:default="{
-        selectHandler,
-        likeHandler,
-        isSelectedVersionLiked,
-        selectedVersion,
-        likedVersions
+        settings
       }"
     >
       <ProductCardLayout
-        v-bind:layout="{
-          product,
-          selectHandler,
-          likeHandler,
-          isSelectedVersionLiked,
-          selectedVersion,
-          likedVersions
+        :settings="{
+          settings
         }"
       >
         <template v-slot:favourite>
           <ProductCardButton
-            v-on:click.native="likeHandler()"
+            v-on:click.native="settings.likeHandler()"
             icon="heart"
             button-style="link square"
-            v-bind:state="{
-              selectHandler,
-              likeHandler,
-              isSelectedVersionLiked,
-              selectedVersion,
-              likedVersions
+            :settings="{
+              settings
             }"
           >
           </ProductCardButton>
@@ -45,28 +33,23 @@
         </template> -->
 
         <template v-slot:flair>
-          {{ product.campaigns }}
+          {{ productData.campaigns }}
         </template>
 
-        <template v-slot:image>
-          <img class=" w-full object-scale-down" src="@/assets/2.png" />
-        </template>
+        <!--<template v-slot:image>
+          <img class="" src="@/assets/2.png" />
+        </template> -->
 
         <template v-slot:thumbs>
           <ProductCardThumbs
-            v-bind:thumbs="{
-              product,
-              selectHandler,
-              selectedVersion,
-              likedVersions
+            v-bind:settings="{
+              settings
             }"
           />
         </template>
 
         <template v-slot:details>
-          <ProductCardDetails
-            v-bind:details="{ product, selectedVersion, likedVersions }"
-          />
+          <ProductCardDetails v-bind:settings="{ settings }" />
         </template>
       </ProductCardLayout>
     </ProductCardSettings>
@@ -82,7 +65,7 @@ import ProductCardButton from "./ProductCardButton";
 
 export default {
   name: "ProductBase",
-  props: ["product"],
+  props: ["productData", "viewContext"],
   components: {
     ProductCardSettings,
     ProductCardLayout,

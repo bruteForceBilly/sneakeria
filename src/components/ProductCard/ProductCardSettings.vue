@@ -1,17 +1,25 @@
 <template>
   <div>
     <slot
-      :selectHandler="selectHandler"
-      :likeHandler="likeHandler"
-      :selectedVersion="selectedVersion"
-      :likedVersions="likedVersions"
-      :isSelectedVersionLiked="isSelectedVersionLiked"
+      :settings="{
+        selectHandler,
+        likeHandler,
+        selectedVersion,
+        likedVersions,
+        isSelectedVersionLiked,
+        layout,
+        product
+      }"
     ></slot>
   </div>
 </template>
 <script>
 export default {
-  props: ["product"],
+  //     view: this.$mq === "sm" || this.$mq === "md" ? "card" : "jumbo",
+  props: {
+    productData: Object,
+    viewContext: String
+  },
   data() {
     return {
       selectedVersion: {
@@ -23,6 +31,17 @@ export default {
   computed: {
     isSelectedVersionLiked() {
       return this.likedVersions[this.selectedVersion.versionId];
+    },
+    layout() {
+      /* if (this.viewContext === "catalog") {
+        return "card";
+      } else {
+        return "jumbo";
+      } */
+      return "card";
+    },
+    product() {
+      return this.productData;
     }
   },
   methods: {

@@ -24,14 +24,14 @@
       >
         <div class="flex flex-row items-stretch">
           <div
-            v-for="(version, index) in thumbs.product.versions"
+            v-for="(version, index) in this.productVersions"
             v-bind:key="version.versionId"
             class="flex-none opacity-50 hover:opacity-100 inline-block pb-2 h-24 w-1/4 temp-bg border-solid border-b-2 border-transparent overflow-hidden hover:border-black"
           >
             <img
               class="h-full object-contain mx-auto"
               src="@/assets/2.png"
-              @mouseover="thumbs.selectHandler(index)"
+              @mouseover="settings.settings.selectHandler(index)"
             />
             <!-- bind :src later to product -->
           </div>
@@ -47,7 +47,7 @@ import ProductCardButton from "./ProductCardButton";
 export default {
   name: "ProductThumbs",
   props: {
-    thumbs: Object
+    settings: Object
   },
   components: {
     ProductCardButton
@@ -59,13 +59,16 @@ export default {
   },
   computed: {
     sku() {
-      return this.thumbs.selectedVariant.verionId;
+      return this.settings.settings.selectedVariant.verionId;
     },
-    versions() {
-      return this.thumbs.product.versions;
+    productVersions() {
+      return this.settings.settings.product.versions; // RENAME PROP FROM SETTINGS TO SOMETHING ELSE
     },
     maxTimes() {
-      return Math.ceil(this.thumbs.product.versions.length / 4) * 100 - 100;
+      return (
+        Math.ceil(this.settings.settings.product.versions.length / 4) * 100 -
+        100
+      );
     }
   },
   methods: {

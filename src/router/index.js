@@ -8,7 +8,6 @@ import Catalog from "../views/Catalog.vue";
 import About from "../views/About.vue";
 import Cart from "../views/Cart.vue";
 import Product from "../views/Product.vue";
-import Test from "../views/Test.vue";
 
 Vue.use(VueRouter);
 
@@ -106,8 +105,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       store.commit("searchRouteLastBeforeEnterMutation", to.name);
       next();
-    },
-    children: [{ path: "product/:id", component: Product }]
+    }
   },
   {
     path: "/about",
@@ -118,12 +116,12 @@ const routes = [
     path: "/cart",
     name: "cart",
     component: Cart
-  }
-  /*{
+  },
+  {
     path: "/product/:product",
     name: "product",
     component: Product
-  } */
+  }
 ];
 
 const router = new VueRouter({

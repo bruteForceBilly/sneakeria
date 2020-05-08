@@ -1,18 +1,18 @@
 <template>
-  <div class="text-3xl w-full">
+  <div class="text-xs w-full">
     <h6 class="text-gray-600 mt-4 capitalize">
-      {{ details.product.productTitle }}
+      {{ settings.settings.product.productTitle }}
     </h6>
-    <h3 class="text-6xl ">{{ details.product.name }}</h3>
+    <h3 class="text-3xl ">{{ settings.settings.product.name }}</h3>
     <div class="h-16 flex justify-start items-center">
       <div
         :class="[price.discount ? 'text-red-600' : 'text-black']"
-        class="mr-2 text-4xl"
+        class="mr-2 text-xl"
       >
         <h5>{{ price.offeredAmount | formatCurrency(this.price.currency) }}</h5>
       </div>
       <div v-if="price.discount" class="text-gray-600">
-        <div class="line-through mx-3 text-2xl">
+        <div class="line-through mx-3 text-xl">
           <h5>
             {{ price.originalAmount | formatCurrency(this.price.currency) }}
           </h5>
@@ -27,7 +27,7 @@
     </div>
 
     <h6 class="text-gray-600 mt-1 text-2xl">
-      {{ details.product.versions.length }} Colors
+      {{ settings.settings.product.versions.length }} Colors
     </h6>
 
     <!--<p class="text-gray-500">
@@ -41,17 +41,17 @@
 export default {
   name: "ProductDetails",
   props: {
-    details: Object
+    settings: Object
   },
   computed: {
     sku() {
-      return this.details.selectedVersion.versionId;
+      return this.settings.settings.selectedVersion.versionId;
     },
-    versions() {
-      return this.details.product.versions;
+    productVersions() {
+      return this.settings.settings.product.versions;
     },
     price() {
-      return this.versions[this.sku].price;
+      return this.productVersions[this.sku].price;
     },
     discount() {
       let percent =

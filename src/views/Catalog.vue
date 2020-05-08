@@ -42,13 +42,11 @@
         </h1>
       </div>
       <div v-else class="grid gap-6">
-        <div
-          v-for="item in products"
-          :key="item.id"
-          class="pt-16 px-4 text-left bg-orange-300"
-        >
-          <p>{{ item.productTitle }}</p>
-          <Test></Test>
+        <div v-for="product in products" :key="product.id" class="">
+          <ProductCard
+            :product-data="product"
+            view-context="catalog"
+          ></ProductCard>
         </div>
       </div>
     </div>
@@ -57,7 +55,7 @@
 
 <script>
 import FilterBar from "@/components/TheFilterBar/FilterBar.vue";
-import Test from "./Test.vue";
+import ProductCard from "@/components/ProductCard/ProductCardBase.vue";
 
 import products from "@/services/products.js";
 
@@ -66,7 +64,7 @@ export default {
   props: ["q"],
   components: {
     FilterBar,
-    Test
+    ProductCard
   },
   data() {
     return {

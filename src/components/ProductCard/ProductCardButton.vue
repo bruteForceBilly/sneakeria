@@ -38,7 +38,9 @@
         <div v-if="icon === 'heart'" class="relatie flex-none text-2xl ">
           <svg
             :class="[
-              state.isSelectedVersionLiked ? 'fillSvg' : 'transparentSvg'
+              settings.settings.isSelectedVersionLiked
+                ? 'fillSvg'
+                : 'transparentSvg'
             ]"
             xmlns="http://www.w3.org/2000/svg"
             width="1.1em"
@@ -139,7 +141,7 @@ export default {
       type: String,
       default: "loader"
     },
-    state: {
+    settings: {
       type: Object
     },
     buttonStyle: {
