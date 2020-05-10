@@ -41,7 +41,11 @@
           </button>
         </h1>
       </div>
-      <div v-else class="grid gap-6">
+      <div
+        v-else
+        :class="[this.$mq !== 'sm' ? 'grid' : 'grid-sm']"
+        class="gap-6"
+      >
         <div v-for="product in products" :key="product.id" class="">
           <ProductCard
             :product-data="product"
@@ -108,8 +112,13 @@ export default {
 };
 </script>
 
-<style lscoped>
+<style>
 .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+.grid-sm {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 }

@@ -1,18 +1,18 @@
 <template>
-  <div class="text-xs w-full">
-    <h6 class="text-gray-600 mt-4 capitalize">
+  <div class="w-full">
+    <h6 class="text-gray-600 text-vw-xs mt-4 capitalize whitespace-no-wrap">
       {{ settings.settings.product.productTitle }}
     </h6>
-    <h3 class="text-3xl ">{{ settings.settings.product.name }}</h3>
+    <h3 class="text-vw-base">{{ settings.settings.product.name }}</h3>
     <div class="h-16 flex justify-start items-center">
       <div
         :class="[price.discount ? 'text-red-600' : 'text-black']"
-        class="mr-2 text-xl"
+        class="mr-2 text-vw-lg"
       >
         <h5>{{ price.offeredAmount | formatCurrency(this.price.currency) }}</h5>
       </div>
       <div v-if="price.discount" class="text-gray-600">
-        <div class="line-through mx-3 text-xl">
+        <div class="line-through mx-3 text-base">
           <h5>
             {{ price.originalAmount | formatCurrency(this.price.currency) }}
           </h5>
@@ -20,13 +20,13 @@
       </div>
 
       <div
-        class="rounded-full py-2 px-3 bg-gray-100 text-gray-500 text-sm font-black"
+        class="rounded-full text-xs py-2 px-3 bg-gray-100 text-gray-500 font-black whitespace-no-wrap"
       >
-        <h6>SAVE {{ discount }}</h6>
+        <h6 class="">SAVE {{ discount }}</h6>
       </div>
     </div>
 
-    <h6 class="text-gray-600 mt-1 text-2xl">
+    <h6 class="text-gray-600 mt-1 text-vw-xxs">
       {{ settings.settings.product.versions.length }} Colors
     </h6>
 

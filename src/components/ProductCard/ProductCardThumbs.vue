@@ -5,7 +5,7 @@
         @click.native="previous"
         v-if="times > 0"
         icon="chevron-left"
-        button-style="secondary md"
+        button-style="secondary sm"
         class="absolute z-20 top-1 left-0 mt-6"
       >
       </ProductCardButton>
@@ -13,7 +13,7 @@
         @click.native="next"
         v-if="times < maxTimes"
         icon="chevron-right"
-        button-style="secondary md"
+        button-style="secondary sm"
         class="absolute z-20 top-1 right-0 mt-6"
       ></ProductCardButton>
     </div>
@@ -26,7 +26,7 @@
           <div
             v-for="(version, index) in this.productVersions"
             v-bind:key="version.versionId"
-            class="flex-none opacity-50 hover:opacity-100 inline-block pb-2 h-24 w-1/4 temp-bg border-solid border-b-2 border-transparent overflow-hidden hover:border-black"
+            class="flex-none opacity-50 hover:opacity-100 inline-block pb-2 h-16 w-1/4 temp-bg border-solid border-b-2 border-transparent overflow-hidden hover:border-black"
           >
             <img
               class="h-full object-contain mx-auto"
