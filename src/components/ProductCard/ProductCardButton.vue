@@ -35,7 +35,7 @@
           </svg>
         </div>
 
-        <div v-if="icon === 'heart'" class="relatie flex-none text-2xl ">
+        <div v-if="icon === 'heart'" class="relatie flex-none text-vh-xs">
           <svg
             :class="[
               settings.settings.isSelectedVersionLiked
@@ -145,7 +145,6 @@ export default {
       type: Object
     },
     buttonStyle: {
-      type: String,
       default: "primary"
     }
   }
@@ -154,7 +153,7 @@ export default {
 
 <style lang="postcss">
 .primary {
-  @apply border-2 border-black bg-yellow-200 relative text-yellow-200;
+  @apply border border-black bg-transparent relative;
 }
 
 .primary span,
@@ -169,36 +168,41 @@ export default {
   bottom: 0px;
 }
 
+.primary--call-to-action > *,
+.secondary--call-to-action > * {
+  @apply text-white font-semibold tracking-widest text-base pl-1;
+}
+
 .primary:before {
   content: "";
   background: black;
   position: absolute;
-  left: -5px;
-  right: 2px;
-  top: -5px;
+  left: -4px;
+  right: 1px;
+  top: -4px;
   bottom: 1px;
   border: 0px solid;
   z-index: 10;
 }
 
 .primary--inverted {
-  @apply border-2 border-yellow-200 bg-black relative text-black font-semibold;
+  @apply border border-yellow-200 bg-black relative text-black;
 }
 
 .primary--inverted:before {
   content: "";
   background: #fefcbf;
   position: absolute;
-  left: -5px;
-  right: 2px;
-  top: -5px;
+  left: -3px;
+  right: 1px;
+  top: -4px;
   bottom: 1px;
   border: 0px solid;
   z-index: 10;
 }
 
 .secondary {
-  @apply font-semibold border-2 border-transparent bg-yellow-200;
+  @apply border-2 border-transparent bg-yellow-200;
 }
 
 .secondary:hover {
@@ -207,7 +211,7 @@ export default {
 }
 
 .secondary--inverted {
-  @apply font-semibold border-2 border-transparent bg-black text-yellow-200;
+  @apply border-2 border-transparent bg-black text-yellow-200;
 }
 
 .link {

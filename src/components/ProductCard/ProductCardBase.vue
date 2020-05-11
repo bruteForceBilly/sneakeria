@@ -49,7 +49,20 @@
         </template>
 
         <template v-slot:details>
-          <ProductCardDetails v-bind:settings="{ settings }" />
+          <ProductCardDetails v-bind:settings="{ settings }">
+            <template v-slot:buy>
+              <ProductCardButton
+                class="float-right"
+                icon="none"
+                button-style="primary primary--call-to-action"
+                :settings="{
+                  settings
+                }"
+              >
+                buy ⟶
+              </ProductCardButton>
+            </template>
+          </ProductCardDetails>
         </template>
       </ProductCardLayout>
     </ProductCardSettings>

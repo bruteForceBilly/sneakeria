@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ProductCard :product-data="product" view-context="catalog"></ProductCard>
+    <ProductCard :product-data="product" view-context="product"></ProductCard>
   </div>
 </template>
 

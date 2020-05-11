@@ -14,6 +14,7 @@ export default new Vuex.Store({
     searchQueryParamsKebab: null,
     searchFoundProducts: null,
     searchRouteLastBeforeEnter: null,
+    selectedVersion: null,
     siteMap: {
       data: null,
       loading: null,
@@ -139,6 +140,9 @@ export default new Vuex.Store({
     },
     filterBarNoneSelectedMutation(state, filterBarNoneSelected) {
       Vue.set(state, "filterBarNoneSelected", filterBarNoneSelected);
+    },
+    selectedVersionMutation(state, selectedVersion) {
+      Vue.set(state, "selectedVersion", selectedVersion);
     }
   }
 });

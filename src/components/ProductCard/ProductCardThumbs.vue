@@ -2,7 +2,7 @@
   <div>
     <div class="relative">
       <ProductCardButton
-        @click.native="previous"
+        @mouseover.native="previous"
         v-if="times > 0"
         icon="chevron-left"
         button-style="secondary sm"
@@ -10,7 +10,7 @@
       >
       </ProductCardButton>
       <ProductCardButton
-        @click.native="next"
+        @mouseover.native="next"
         v-if="times < maxTimes"
         icon="chevron-right"
         button-style="secondary sm"
@@ -31,7 +31,15 @@
             <img
               class="h-full object-contain mx-auto"
               src="@/assets/2.png"
-              @mouseover="settings.settings.selectHandler(index)"
+              @mouseover="
+                [
+                  settings.settings.viewContext === 'product'
+                    ? settings.settings.versionLinkQueryHandler(
+                        settings.settings.selectHandler(index)
+                      )
+                    : settings.settings.selectHandler(index)
+                ]
+              "
             />
             <!-- bind :src later to product -->
           </div>
@@ -59,7 +67,7 @@ export default {
   },
   computed: {
     sku() {
-      return this.settings.settings.selectedVariant.verionId;
+      return this.settings.settings.selectedVariant.versionId;
     },
     productVersions() {
       return this.settings.settings.product.versions; // RENAME PROP FROM SETTINGS TO SOMETHING ELSE

@@ -4,11 +4,13 @@
       :settings="{
         selectHandler,
         likeHandler,
+        versionLinkQueryHandler,
         selectedVersion,
         likedVersions,
         isSelectedVersionLiked,
         layout,
-        product
+        product,
+        viewContext
       }"
     ></slot>
   </div>
@@ -33,20 +35,38 @@ export default {
       return this.likedVersions[this.selectedVersion.versionId];
     },
     layout() {
-      /* if (this.viewContext === "catalog") {
+      if (this.viewContext === "catalog") {
         return "card";
       } else {
         return "jumbo";
-      } */
-      return "card";
+      }
     },
     product() {
       return this.productData;
+    },
+    selectedVersionId() {
+      return this.selectedVersion.versionId;
     }
   },
   methods: {
     selectHandler(version) {
       return (this.selectedVersion.versionId = version);
+    },
+    versionLinkQueryHandler() {
+      if (
+        this.selectedVersion.versionId ==
+        this.$store.state.route.query.versionId
+      ) {
+        return;
+      } else {
+        this.$router.push({
+          name: "product",
+          params: { product: this.product.id },
+          query: {
+            versionId: this.selectedVersion.versionId
+          }
+        });
+      }
     },
     likeHandler() {
       return this.isSelectedVersionLiked
@@ -55,9 +75,14 @@ export default {
     }
   },
   created() {
-    this.$store.state.route.query.versionId
-      ? (this.selectedVersion.versionId = this.$store.state.route.query.versionId)
-      : (this.selectedVersion.versionId = 0);
+    if (
+      this.viewContext === "product" &&
+      this.$store.state.route.query.versionId
+    ) {
+      this.selectedVersion.versionId = this.$store.state.route.query.versionId;
+    } else {
+      this.selectedVersion.versionId = 0;
+    }
   },
   mounted() {
     this.product.versions.forEach(version => {

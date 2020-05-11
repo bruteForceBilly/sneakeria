@@ -41,16 +41,17 @@
           </button>
         </h1>
       </div>
+
       <div
         v-else
         :class="[this.$mq !== 'sm' ? 'grid' : 'grid-sm']"
         class="gap-6"
       >
         <div v-for="product in products" :key="product.id" class="">
-          <ProductCard
-            :product-data="product"
-            view-context="catalog"
-          ></ProductCard>
+          <div>
+            <ProductCard :product-data="product" view-context="catalog">
+            </ProductCard>
+          </div>
         </div>
       </div>
     </div>
@@ -76,6 +77,9 @@ export default {
     };
   },
   computed: {
+    selectedVersion() {
+      return this.$store.state.selectedVersion;
+    },
     products() {
       return this.$store.state.searchFoundProducts === undefined
         ? ["ooops!"]

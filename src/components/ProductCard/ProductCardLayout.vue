@@ -1,7 +1,6 @@
 <template>
   <article
-    v-on:mouseenter="hover = true"
-    v-on:mouseleave="hover = false"
+    v-on:click="settings.settings.versionLinkQueryHandler(1)"
     class="relative w-full flex flex-no-wrap overflow-hidden bg-white"
     :class="[
       layout === 'card'
@@ -14,6 +13,8 @@
       :class="[layout === 'card' ? 'flex flex-col' : 'flex-grow max-w-half']"
     >
       <section
+        v-on:mouseenter="hover = true"
+        v-on:mouseleave="hover = false"
         class="relative z-10 max-h-full overflow-hidden w-full flex-shrink temp-bg"
       >
         <section v-if="settings.settings.product.campaigns.length !== 0">
@@ -21,7 +22,7 @@
             class="overflow-visible absolute z-20 top-0 m-4 inline writing-mode-rotate w-full"
           >
             <h4
-              class="text-vw-xs inline bg-yellow-200 tracking-widest uppercase px-1 py-2"
+              class="text-vh-xs inline bg-yellow-200 tracking-widest uppercase px-1 py-2"
             >
               <slot name="flair"></slot>
             </h4>
@@ -36,17 +37,12 @@
 
         <div class="flex justify-center max-h-full">
           <slot name="image">
-            <img class="" src="@/assets/2.png" />
+            <img src="@/assets/2.png" />
           </slot>
         </div>
         <div
-          class="z-50 overflow-hidden"
-          :class="[
-            hover ? 'block' : 'hidden',
-            layout === 'card'
-              ? 'w-full absolute bottom-0'
-              : 'absolute bottom-0 w-1/2'
-          ]"
+          class="z-50 overflow-hidden w-full absolute bottom-0"
+          :class="[hover ? 'block' : 'hidden']"
         >
           <slot name="thumbs"> </slot>
         </div>

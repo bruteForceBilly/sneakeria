@@ -3,16 +3,22 @@
     <h6 class="text-gray-600 text-vw-xs mt-4 capitalize whitespace-no-wrap">
       {{ settings.settings.product.productTitle }}
     </h6>
-    <h3 class="text-vw-base">{{ settings.settings.product.name }}</h3>
-    <div class="h-16 flex justify-start items-center">
+    <h3
+      :class="[
+        settings.settings.layout === 'card' ? 'text-vw-base' : 'text-vw-4xl'
+      ]"
+    >
+      {{ settings.settings.product.name }}
+    </h3>
+    <div class="h-16 flex flex-wrap justify-start items-center">
       <div
         :class="[price.discount ? 'text-red-600' : 'text-black']"
-        class="mr-2 text-vw-lg"
+        class="mr-2 text-vw-base"
       >
         <h5>{{ price.offeredAmount | formatCurrency(this.price.currency) }}</h5>
       </div>
       <div v-if="price.discount" class="text-gray-600">
-        <div class="line-through mx-3 text-base">
+        <div class="line-through mx-3 text-lg">
           <h5>
             {{ price.originalAmount | formatCurrency(this.price.currency) }}
           </h5>
@@ -24,11 +30,15 @@
       >
         <h6 class="">SAVE {{ discount }}</h6>
       </div>
-    </div>
 
-    <h6 class="text-gray-600 mt-1 text-vw-xxs">
-      {{ settings.settings.product.versions.length }} Colors
-    </h6>
+      <h6 class="text-gray-600 mt-1 text-vw-xxs w-full">
+        Serial: {{ settings.settings.selectedVersion.versionId }} |
+        {{ settings.settings.product.versions.length }} Colors
+      </h6>
+      <div class="mt-6 w-full">
+        <slot name="buy">... buy button</slot>
+      </div>
+    </div>
 
     <!--<p class="text-gray-500">
        {{ details.info.variants[ui.selectedVariant.sku].flair }}
