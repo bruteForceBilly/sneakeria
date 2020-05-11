@@ -2,7 +2,7 @@
   <div>
     <div class="relative">
       <ProductCardButton
-        @mouseover.native="previous"
+        @click.native="previous"
         v-if="times > 0"
         icon="chevron-left"
         button-style="secondary sm"
@@ -10,7 +10,7 @@
       >
       </ProductCardButton>
       <ProductCardButton
-        @mouseover.native="next"
+        @click.native="next"
         v-if="times < maxTimes"
         icon="chevron-right"
         button-style="secondary sm"

@@ -1,6 +1,5 @@
 <template>
   <article
-    v-on:click="settings.settings.versionLinkQueryHandler(1)"
     class="relative w-full flex flex-no-wrap overflow-hidden bg-white"
     :class="[
       layout === 'card'
@@ -35,11 +34,13 @@
           </slot>
         </section>
 
-        <div class="flex justify-center max-h-full">
-          <slot name="image">
-            <img src="@/assets/2.png" />
-          </slot>
-        </div>
+        <section v-on:click="settings.settings.versionLinkQueryHandler(1)">
+          <div class="flex justify-center max-h-full">
+            <slot name="image">
+              <img src="@/assets/2.png" />
+            </slot>
+          </div>
+        </section>
         <div
           class="z-50 overflow-hidden w-full absolute bottom-0"
           :class="[hover ? 'block' : 'hidden']"
