@@ -8,6 +8,7 @@ import Catalog from "../views/Catalog.vue";
 import About from "../views/About.vue";
 import Cart from "../views/Cart.vue";
 import Product from "../views/Product.vue";
+import Dummy from "../views/Dummy.vue";
 
 Vue.use(VueRouter);
 
@@ -121,6 +122,11 @@ const routes = [
     path: "/product/:product",
     name: "product",
     component: Product
+  },
+  {
+    path: "/dummy/test",
+    name: "dummy",
+    component: Dummy
   }
 ];
 

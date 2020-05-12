@@ -10,6 +10,7 @@
   "dependencies": {
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "@vue/babel-preset-jsx": "^1.1.2",
+    "@vuex-orm/core": "^0.36.3",
     "core-js": "^3.6.4",
     "faker": "^4.1.0",
     "json-server": "^0.16.1",
@@ -17,7 +18,7 @@
     "vue": "^2.6.11",
     "vue-mq": "^1.0.1",
     "vue-router": "^3.1.5",
-    "vuex": "^3.1.2",
+    "vuex": "^3.4.0",
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
