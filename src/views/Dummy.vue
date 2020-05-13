@@ -1,56 +1,35 @@
 <template>
   <div>
-    <div>
-      <ul v-for="list in user.lists" :key="list.id">
-        {{
-          list.title
-        }}
-        <li v-for="item in list.items" :key="item.id">{{ item.body }}</li>
-      </ul>
+    <ManyToManyPol></ManyToManyPol>
+    <!--     <ManyToMany></ManyToMany>
+
+    <div class="float-left border">
+      {{ user.name }}
+      <input class="border" v-model="form.title" />
+      <button @click="addList">Add list</button>
+      <List v-for="list in user.lists" :key="list.id" :list="list" />
     </div>
+    <div class="float-right border">
+      <ul>
+        <li v-for="item in user.items" :key="item.id" v-text="item.body"></li>
+      </ul>
+    </div> -->
   </div>
 </template>
 
 <script>
-import User from "@/classes/User";
+//import User from "@/classes/User";
+//import List from "@/classes/List";
+//import DummyList from "./DummyList.vue";
+//import ManyToMany from "./DummyManyToMany.vue";
+import ManyToManyPol from "./ManyToManyPol";
 
 export default {
   name: "Dummy",
-  beforeMount() {
-    User.insert({
-      data: [
-        {
-          id: 28,
-          name: "luke",
-          email: "luke@luksson.com",
-          lists: [
-            {
-              id: 23,
-              title: "favourites",
-              items: [
-                { id: 11, body: "banan" },
-                { id: 12, body: "apple" }
-              ]
-            },
-            {
-              id: 24,
-              title: "carted",
-              items: [
-                { id: 13, body: "pear" },
-                { id: 14, body: "mango" }
-              ]
-            }
-          ]
-        }
-      ]
-    });
-  },
-  computed: {
-    user() {
-      return User.query()
-        .with("lists.items")
-        .find(28);
-    }
+  components: {
+    //List: DummyList
+    //ManyToMany,
+    ManyToManyPol
   }
 };
 </script>
