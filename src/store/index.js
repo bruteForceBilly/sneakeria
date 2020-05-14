@@ -15,6 +15,10 @@ import Comment from "@/classes/Comment";
 import Tag from "@/classes/Tag";
 import Taggable from "@/classes/Taggable";
 
+import Category from "@/models/Category";
+import Group from "@/models/Group";
+import Option from "@/models/Option";
+
 Vue.use(Vuex);
 
 const database = new VuexORM.Database();
@@ -31,6 +35,10 @@ database.register(Video);
 database.register(Comment);
 database.register(Tag);
 database.register(Taggable);
+
+database.register(Category);
+database.register(Group);
+database.register(Option);
 
 export default new Vuex.Store({
   plugins: [VuexORM.install(database)],
