@@ -1,130 +1,231 @@
 <template>
   <div>
-    <pre>{{ result }}</pre>
+    <pre>{{ verions }}</pre>
   </div>
 </template>
 
 <script>
-import Group from "@/models/Group";
-import Category from "@/models/Category";
+import Product from "@/models/Product";
+import Version from "@/models/Version";
 
 export default {
   name: "Dummy",
   mounted() {
-    Group.insert({
+    Product.insert({
       data: [
         {
-          id: 1,
-          name: "Section Group",
-          category_ids: [1, 2, 3, 4, 5]
-        },
-        {
-          id: 2,
-          name: "Campaigns Group",
-          category_ids: [2, 3, 4, 5]
-        },
-        {
-          id: 3,
-          name: "Category Group",
-          category_ids: [3, 4, 5]
-        },
-        {
-          id: 4,
-          name: "Look Group",
-          category_ids: [4, 5]
-        },
-        {
-          id: 5,
-          name: "Brand Group",
-          category_ids: [5]
-        }
-      ]
-    });
-    Category.insert({
-      data: [
-        {
-          id: 1,
-          name: "Section",
-          options: [
+          id: "0",
+          name: "Lexi",
+          productTitle: "nike tennis shoe Lexi",
+          section: "men",
+          campaigns: "new arrivals",
+          category: "shoe",
+          look: "tennis",
+          brand: "nike",
+          versions: [
             {
-              id: 1,
-              name: "Men"
+              id: "0",
+              color: "red",
+              price: {
+                currency: "eur",
+                originalAmount: "141",
+                offeredAmount: "41",
+                discount: "true"
+              },
+              imageUrl: {
+                small:
+                  "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+                medium:
+                  "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+              }
             },
             {
-              id: 2,
-              name: "Women"
+              id: "1",
+              color: "red",
+              price: {
+                currency: "eur",
+                originalAmount: "179",
+                offeredAmount: "63",
+                discount: "false"
+              },
+              imageUrl: {
+                small:
+                  "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+                medium:
+                  "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+              }
+            },
+            {
+              id: "2",
+              color: "red",
+              price: {
+                currency: "eur",
+                originalAmount: "113",
+                offeredAmount: "39",
+                discount: "true"
+              },
+              imageUrl: {
+                small:
+                  "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+                medium:
+                  "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+              }
+            },
+            {
+              id: "3",
+              color: "yellow",
+              price: {
+                currency: "eur",
+                originalAmount: "104",
+                offeredAmount: "26",
+                discount: "true"
+              },
+              imageUrl: {
+                small:
+                  "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+                medium:
+                  "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+              }
+            },
+            {
+              id: "4",
+              color: "green",
+              price: {
+                currency: "eur",
+                originalAmount: "171",
+                offeredAmount: "74",
+                discount: "true"
+              },
+              imageUrl: {
+                small:
+                  "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+                medium:
+                  "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+              }
+            },
+            {
+              id: "5",
+              color: "black",
+              price: {
+                currency: "eur",
+                originalAmount: "103",
+                offeredAmount: "93",
+                discount: "true"
+              },
+              imageUrl: {
+                small:
+                  "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+                medium:
+                  "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+              }
             }
           ]
         },
         {
-          id: 2,
-          name: "Campaigns",
-          options: [
+          id: "1",
+          name: "Hayden",
+          productTitle: "nike tennis shirt Hayden",
+          section: "women",
+          campaigns: "new arrivals",
+          category: "shirt",
+          look: "tennis",
+          brand: "nike",
+          versions: [
             {
-              id: 3,
-              name: "New"
+              id: "0",
+              color: "green",
+              price: {
+                currency: "eur",
+                originalAmount: "166",
+                offeredAmount: "163",
+                discount: "true"
+              },
+              imageUrl: {
+                small:
+                  "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+                medium:
+                  "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+              }
             },
             {
-              id: 4,
-              name: "Sale"
+              id: "1",
+              color: "red",
+              price: {
+                currency: "eur",
+                originalAmount: "179",
+                offeredAmount: "98",
+                discount: "true"
+              },
+              imageUrl: {
+                small:
+                  "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+                medium:
+                  "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+              }
             },
             {
-              id: 5,
-              name: "Essentials"
-            }
-          ]
-        },
-        {
-          id: 3,
-          name: "Category",
-          options: [
-            {
-              id: 6,
-              name: "Shoes"
+              id: "2",
+              color: "red",
+              price: {
+                currency: "eur",
+                originalAmount: "113",
+                offeredAmount: "38",
+                discount: "true"
+              },
+              imageUrl: {
+                small:
+                  "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+                medium:
+                  "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+              }
             },
             {
-              id: 7,
-              name: "Shirt"
-            }
-          ]
-        },
-        {
-          id: 4,
-          name: "Look",
-          options: [
-            {
-              id: 8,
-              name: "Tennis"
+              id: "3",
+              color: "yellow",
+              price: {
+                currency: "eur",
+                originalAmount: "104",
+                offeredAmount: "73",
+                discount: "true"
+              },
+              imageUrl: {
+                small:
+                  "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+                medium:
+                  "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+              }
             },
             {
-              id: 9,
-              name: "Basketball"
+              id: "4",
+              color: "green",
+              price: {
+                currency: "eur",
+                originalAmount: "171",
+                offeredAmount: "52",
+                discount: "false"
+              },
+              imageUrl: {
+                small:
+                  "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+                medium:
+                  "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+              }
             },
             {
-              id: 10,
-              name: "Soccer"
-            }
-          ]
-        },
-        {
-          id: 5,
-          name: "Brand",
-          options: [
-            {
-              id: 11,
-              name: "Adidas"
-            },
-            {
-              id: 12,
-              name: "Nike"
-            },
-            {
-              id: 13,
-              name: "Puma"
-            },
-            {
-              id: 14,
-              name: "Rebook"
+              id: "5",
+              color: "black",
+              price: {
+                currency: "eur",
+                originalAmount: "103",
+                offeredAmount: "95",
+                discount: "true"
+              },
+              imageUrl: {
+                small:
+                  "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+                medium:
+                  "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+              }
             }
           ]
         }
@@ -132,11 +233,33 @@ export default {
     });
   },
   computed: {
-    result() {
-      return Group.query()
-        .with("categories.options")
+    products() {
+      return Product.query()
+        .with("versions")
+        .get();
+    },
+    verions() {
+      return Version.query()
+        .with("product")
+        .where("color", "green")
         .get();
     }
   }
 };
+/*
+
+Get me all categories with their options (with their products) who belongs to a particular group
+
+Many products has one category
+Many options has one category
+
+One category has many of any (product or option)
+
+Options.with('categories')
+
+Options -> categories
+Products -> categories
+
+
+*/
 </script>
