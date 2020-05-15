@@ -4,6 +4,8 @@ import siteMap from "@/services/siteMap.js";
 import VuexORM from "@vuex-orm/core";
 import Product from "@/models/Product";
 import Version from "@/models/Version";
+import Category from "@/models/Category";
+import Option from "@/models/Option";
 
 Vue.use(Vuex);
 
@@ -11,6 +13,8 @@ const database = new VuexORM.Database();
 
 database.register(Product);
 database.register(Version);
+database.register(Category);
+database.register(Option);
 
 export default new Vuex.Store({
   plugins: [VuexORM.install(database)],
