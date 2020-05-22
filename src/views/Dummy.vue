@@ -1,39 +1,117 @@
 <template>
   <div>
-    <pre>{{ options }}</pre>
+    <pre>{{ catalog }}</pre>
   </div>
 </template>
 
 <script>
-import Category from "@/models/Category";
-import Option from "@/models/Option";
+// import Category from "@/models/Category";
+// import Option from "@/models/Option";
+import Level from "@/models/Level";
+import Catalog from "@/models/Catalog";
+import Group from "@/models/Group";
+import GroupLevel from "@/models/GroupLevel";
+
+console.log(Level, Group, GroupLevel);
 
 export default {
   name: "Dummy",
   mounted() {
-    Category.insert({
-      data: [
-        {
-          id: 1,
-          name: "Section",
-          options: [
-            { id: 1, name: "Men" },
-            { id: 2, name: "Women" }
-          ]
-        },
-        {
-          id: 2,
-          name: "Category",
-          options: [
-            { id: 3, name: "Shirts" },
-            { id: 4, name: "Shoes" }
-          ]
-        }
-      ]
+    Catalog.create({
+      data: {
+        levels: [
+          {
+            id: 1,
+            name: "First",
+            groups: [
+              {
+                id: 1,
+                pivot: { id: 1 }
+              },
+              {
+                id: 2,
+                pivot: { id: 2 }
+              },
+              {
+                id: 3,
+                pivot: { id: 3 }
+              }
+            ]
+          },
+          {
+            id: 2,
+            name: "Second",
+            groups: [
+              {
+                id: 2,
+                pivot: { id: 2 }
+              },
+              {
+                id: 3,
+                pivot: { id: 3 }
+              }
+            ]
+          },
+          {
+            id: 3,
+            name: "Third",
+            groups: [
+              {
+                id: 3,
+                pivot: { id: 3 }
+              }
+            ]
+          }
+        ],
+        groups: [
+          {
+            id: 1,
+            name: "Section",
+            levels: [
+              {
+                id: 1,
+                pivot: { id: 1 }
+              }
+            ]
+          },
+          {
+            id: 2,
+            name: "Campaign",
+            levels: [
+              {
+                id: 1,
+                pivot: { id: 1 }
+              },
+              {
+                id: 2,
+                pivot: { id: 2 }
+              }
+            ]
+          },
+          {
+            id: 3,
+            name: "Category",
+            levels: [
+              {
+                id: 1,
+                pivot: { id: 1 }
+              },
+              {
+                id: 2,
+                pivot: { id: 2 }
+              },
+              {
+                id: 3,
+                pivot: { id: 3 }
+              }
+            ]
+          }
+        ]
+      }
     });
   },
   computed: {
-    categories() {
+    /* categories() {
       return Category.query()
         .with("options")
         .get();
@@ -41,6 +119,11 @@ export default {
     options() {
       return Option.query()
         .with("category")
+        .get();
+    } */
+    catalog() {
+      return Catalog.query()
+        .with("levels.groups")
         .get();
     }
   }
