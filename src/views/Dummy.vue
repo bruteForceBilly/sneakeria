@@ -1,21 +1,34 @@
 <template>
   <div>
-    <pre>{{ catalog }}</pre>
+    <button v-on:click="setLevel('-', 1)">decrease 1</button>
+    <p>currentIndex: {{ currentIndex }}</p>
+    <button v-on:click="setLevel('+', 1)">increase 1</button>
+    <br />
+    {{ levels.length }}
+    <div v-for="group in currentLevel.groups" :key="group.id">
+      {{ group.name }}
+    </div>
   </div>
 </template>
 
 <script>
 // import Category from "@/models/Category";
 // import Option from "@/models/Option";
+// eslint-disable-next-line no-unused-vars
 import Level from "@/models/Level";
 import Catalog from "@/models/Catalog";
+// eslint-disable-next-line no-unused-vars
 import Group from "@/models/Group";
+// eslint-disable-next-line no-unused-vars
 import GroupLevel from "@/models/GroupLevel";
-
-console.log(Level, Group, GroupLevel);
 
 export default {
   name: "Dummy",
+  data() {
+    return {
+      currentIndex: 1
+    };
+  },
   mounted() {
     Catalog.create({
       data: {
@@ -67,6 +80,18 @@ export default {
           {
             id: 1,
             name: "Section",
+            options: [
+              {
+                id: 1,
+
+                pivot: { id: 1 }
+              },
+              {
+                id: 2,
+
+                pivot: { id: 1 }
+              }
+            ],
             levels: [
               {
                 id: 1,
@@ -77,6 +102,18 @@ export default {
           {
             id: 2,
             name: "Campaign",
+            options: [
+              {
+                id: 3,
+
+                pivot: { id: 2 }
+              },
+              {
+                id: 4,
+
+                pivot: { id: 2 }
+              }
+            ],
             levels: [
               {
                 id: 1,
@@ -91,6 +128,18 @@ export default {
           {
             id: 3,
             name: "Category",
+            options: [
+              {
+                id: 5,
+
+                pivot: { id: 3 }
+              },
+              {
+                id: 6,
+
+                pivot: { id: 3 }
+              }
+            ],
             levels: [
               {
                 id: 1,
@@ -106,24 +155,64 @@ export default {
               }
             ]
           }
+        ],
+        options: [
+          {
+            id: 1,
+            name: "Men",
+            pivot: { id: 1 }
+          },
+          {
+            id: 2,
+            name: "Women",
+            pivot: { id: 1 }
+          },
+          {
+            id: 3,
+            name: "New",
+            pivot: { id: 2 }
+          },
+          {
+            id: 4,
+            name: "Sale",
+            pivot: { id: 2 }
+          },
+          {
+            id: 5,
+            name: "Shirts",
+            pivot: { id: 3 }
+          },
+          {
+            id: 6,
+            name: "Shoes",
+            pivot: { id: 3 }
+          }
         ]
       }
     });
   },
+  methods: {
+    setLevel(o, n) {
+      if (o === "+" && this.currentIndex < this.levels.length) {
+        this.currentIndex += n;
+      } else if (o === "-" && this.currentIndex !== 1) {
+        this.currentIndex -= n;
+      }
+    }
+  },
   computed: {
-    /* categories() {
-      return Category.query()
-        .with("options")
-        .get();
+    levels() {
+      return Level.all();
     },
-    options() {
-      return Option.query()
-        .with("category")
-        .get();
-    } */
+    currentLevel() {
+      return Level.query()
+        .whereId(this.currentIndex)
+        .with("groups")
+        .first();
+    },
     catalog() {
       return Catalog.query()
-        .with("levels.groups")
+        .with("levels.groups.options")
         .get();
     }
   }

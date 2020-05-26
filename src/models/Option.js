@@ -1,5 +1,6 @@
 import { Model } from "@vuex-orm/core";
-import Category from "./Category";
+import Group from "./Group";
+import GroupOption from "./GroupOption.js";
 
 export default class Option extends Model {
   static entity = "options";
@@ -7,9 +8,10 @@ export default class Option extends Model {
     return {
       id: this.uid(null),
       name: this.attr(""),
-      category_id: this.attr(""),
+      catalog_id: this.attr(null),
+      group_id: this.attr(""),
       // Relationships
-      category: this.belongsTo(Category, "category_id")
+      groups: this.belongsToMany(Group, GroupOption, "option_id", "group_id")
     };
   }
 }

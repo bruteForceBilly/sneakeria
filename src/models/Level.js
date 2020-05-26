@@ -10,7 +10,6 @@ export default class Level extends Model {
       id: this.uid(null),
       catalog_id: this.attr(null),
       name: this.attr(""),
-      //group_ids: this.attr(null),
       // Relationships
       groups: this.belongsToMany(Group, GroupLevel, "level_id", "group_id")
     };

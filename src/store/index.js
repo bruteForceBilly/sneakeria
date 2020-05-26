@@ -11,6 +11,7 @@ import Catalog from "@/models/Catalog";
 import Level from "@/models/Level";
 import Group from "@/models/Group";
 import GroupLevel from "@/models/GroupLevel";
+import GroupOption from "@/models/GroupOption";
 
 Vue.use(Vuex);
 
@@ -24,6 +25,7 @@ database.register(Catalog);
 database.register(Level);
 database.register(Group);
 database.register(GroupLevel);
+database.register(GroupOption);
 
 export default new Vuex.Store({
   plugins: [VuexORM.install(database)],
