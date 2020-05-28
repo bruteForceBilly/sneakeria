@@ -1,6 +1,9 @@
 <template>
   <div class="h-screen px-4 sm:px-6 md:px-12 xl:px-16">
-    <div class="pb-6 pt-8">
+    <div class="pt-4">
+      <BreadCrumbsBar :selects="selects"></BreadCrumbsBar>
+    </div>
+    <div class="py-6">
       <h1 class="text-4xl tracking-tighter font-black uppercase">
         <span
           v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1"
@@ -59,6 +62,7 @@
 </template>
 
 <script>
+import BreadCrumbsBar from "@/components/TheBreadCrumbsBar/BreadCrumbsBar.vue";
 import FilterBar from "@/components/TheFilterBar/FilterBar.vue";
 import ProductCard from "@/components/ProductCard/ProductCardBase.vue";
 
@@ -68,6 +72,7 @@ export default {
   name: "Catalog",
   props: ["q"],
   components: {
+    BreadCrumbsBar,
     FilterBar,
     ProductCard
   },
