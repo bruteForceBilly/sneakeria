@@ -1,19 +1,5 @@
 <template>
   <div>
-    <!-- <ul class="list-disc bg-yellow-200">
-      <li>route {{ this.$store.state.route }}</li>
-      <li>setByRoute {{ this.$store.state.setByRoute }}</li>
-      <li>
-        searchRouteLastBeforeEnter
-        {{ this.$store.state.searchRouteLastBeforeEnter }}
-      </li>
-      <li>
-        searchQueryParamsObject {{ this.$store.state.searchQueryParamsObject }}
-      </li>
-      <li>
-        searchQueryParamsString {{ this.$store.state.searchQueryParamsString }}
-      </li>
-    </ul> -->
     <div class="static">
       <div class="relative">
         <div class="border-t bg-white border-b py-1 w-full flex justify-start">
@@ -115,7 +101,7 @@ export default {
   },
   methods: {
     clearAll() {
-      return this.selectedOptionsElements.forEach(el => (el.checked = false));
+      return this.selectedOptionsElements.forEach(el => (el.checked = false)); // redo for orm
     },
     clickedOptionObject(name, value) {
       let o = {};
@@ -129,10 +115,11 @@ export default {
             this.selects
               .map(select => select.options)
               .flat()
-              .filter(option => option.name === key) // redo for orm
-              .filter(option => option.value === v) // redo for orm
+              .filter(option => option.name === key)
+              .filter(option => option.value === v)
               .forEach(
-                el => (!el.checked ? (el.checked = true) : (el.checked = false)) // redo for orm
+                //el => (!el.checked ? (el.checked = true) : (el.checked = false)) // redo for orm
+                el => this.toggleElement(el)
               );
           });
         } else {
@@ -142,10 +129,14 @@ export default {
             .filter(option => option.name === key)
             .filter(option => option.value === value)
             .forEach(
-              el => (!el.checked ? (el.checked = true) : (el.checked = false)) // redo for orm
+              //el => (!el.checked ? (el.checked = true) : (el.checked = false)) // redo for orm
+              el => this.toggleElement(el)
             );
         }
       }
+    },
+    toggleElement(el) {
+      return !el.checked ? (el.checked = true) : (el.checked = false);
     },
     updateRouteQueryParams(argObj) {
       if (Object.keys(argObj).length > 0) {
@@ -173,8 +164,8 @@ export default {
       // check if data are set by route
       if (this.getSetByRoute === true) {
         // reset option el with false
-        this.selectedOptionsElements.forEach(el =>
-          !el.checked ? null : (el.checked = false)
+        this.selectedOptionsElements.forEach(
+          el => this.toggleElement(el) //!el.checked ? null : (el.checked = false)
         );
         // set data after prop
         if (this.searchQueryParamsObject === null) {
@@ -188,7 +179,6 @@ export default {
     }
   },
   created() {
-    console.log("prop", this.selects);
     if (this.$store.state.route.name === "searchResultRoute") {
       this.selectOptionsCheckToggle(this.searchQueryParamsObject);
     } else {

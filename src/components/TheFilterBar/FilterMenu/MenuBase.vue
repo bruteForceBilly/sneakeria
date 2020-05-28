@@ -16,6 +16,7 @@
                     class="hidden"
                     v-model="option.checked"
                   />
+                  <!-- redo for orm -->
                 </template>
               </MenuOptionsCheckbox>
             </template>

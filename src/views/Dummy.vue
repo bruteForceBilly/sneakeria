@@ -96,7 +96,6 @@ export default {
                 name: "section",
                 label: "Men",
                 value: "men",
-                checked: false,
                 pivot: { id: 1 }
               },
               {
@@ -104,7 +103,6 @@ export default {
                 name: "section",
                 label: "Women",
                 value: "women",
-                checked: false,
                 pivot: { id: 1 }
               }
             ],
@@ -154,7 +152,6 @@ export default {
                 name: "category",
                 label: "Shoes",
                 value: "shoes",
-                checked: false,
                 pivot: { id: 3 }
               },
               {
@@ -162,7 +159,6 @@ export default {
                 name: "category",
                 label: "Shirts",
                 value: "shirts",
-                checked: false,
                 pivot: { id: 3 }
               }
             ],
