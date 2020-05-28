@@ -8,6 +8,8 @@ export default class Option extends Model {
     return {
       id: this.uid(null),
       name: this.attr(""),
+      label: this.attr(""),
+      value: this.attr(""),
       catalog_id: this.attr(null),
       group_id: this.attr(""),
       // Relationships

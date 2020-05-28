@@ -62,131 +62,10 @@ export default {
     MenuBase,
     FilterPill
   },
-  data() {
-    return {
-      selects: [
-        {
-          id: 1,
-          name: "section",
-          options: [
-            {
-              id: 1,
-              name: "section",
-              label: "Men",
-              value: "men",
-              checked: false
-            },
-            {
-              id: 2,
-              name: "section",
-              label: "Women",
-              value: "women",
-              checked: false
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: "campaigns",
-          options: [
-            { id: 1, name: "campaigns", label: "Sale", value: "sale" },
-            {
-              id: 2,
-              name: "campaigns",
-              label: "Essentials",
-              value: "essentials"
-            },
-            {
-              id: 3,
-              name: "campaigns",
-              label: "New Arrivals",
-              value: "new_arrivals"
-            }
-          ]
-        },
-        {
-          id: 3,
-          name: "category",
-          options: [
-            {
-              id: 1,
-              name: "category",
-              label: "Shoes",
-              value: "shoes",
-              checked: false
-            },
-            {
-              id: 2,
-              name: "category",
-              label: "Shirts",
-              value: "shirts",
-              checked: false
-            }
-          ]
-        },
-        {
-          id: 4,
-          name: "look",
-          options: [
-            {
-              id: 1,
-              name: "look",
-              label: "Tennis",
-              value: "tennis",
-              checked: false
-            },
-            {
-              id: 2,
-              name: "look",
-              label: "Basketball",
-              value: "basketball",
-              checked: false
-            },
-            {
-              id: 3,
-              name: "look",
-              label: "Soccer",
-              value: "soccer",
-              checked: false
-            }
-          ]
-        },
-        {
-          id: 5,
-          name: "brand",
-          options: [
-            {
-              id: 1,
-              name: "brand",
-              label: "Nike",
-              value: "nike",
-              checked: false
-            },
-            {
-              id: 2,
-              name: "brand",
-              label: "Adidas",
-              value: "adidas",
-              checked: false
-            },
-            {
-              id: 3,
-              name: "brand",
-              label: "Rebook",
-              value: "rebook",
-              checked: false
-            },
-            {
-              id: 4,
-              name: "brand",
-              label: "Puma",
-              value: "puma",
-              checked: false
-            }
-          ]
-        }
-      ]
-    };
+  props: {
+    selects: {
+      type: Array
+    }
   },
   computed: {
     selectedOptionsElements() {
@@ -250,10 +129,10 @@ export default {
             this.selects
               .map(select => select.options)
               .flat()
-              .filter(option => option.name === key)
-              .filter(option => option.value === v)
-              .forEach(el =>
-                !el.checked ? (el.checked = true) : (el.checked = false)
+              .filter(option => option.name === key) // redo for orm
+              .filter(option => option.value === v) // redo for orm
+              .forEach(
+                el => (!el.checked ? (el.checked = true) : (el.checked = false)) // redo for orm
               );
           });
         } else {
@@ -262,8 +141,8 @@ export default {
             .flat()
             .filter(option => option.name === key)
             .filter(option => option.value === value)
-            .forEach(el =>
-              !el.checked ? (el.checked = true) : (el.checked = false)
+            .forEach(
+              el => (!el.checked ? (el.checked = true) : (el.checked = false)) // redo for orm
             );
         }
       }
@@ -309,6 +188,7 @@ export default {
     }
   },
   created() {
+    console.log("prop", this.selects);
     if (this.$store.state.route.name === "searchResultRoute") {
       this.selectOptionsCheckToggle(this.searchQueryParamsObject);
     } else {

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="w-full">
+      <FilterBar :selects="groupsWithOptions"></FilterBar>
+    </div>
     <button v-on:click="setLevel('-', 1)">decrease 1</button>
     <p>currentIndex: {{ currentIndex }}</p>
     <button v-on:click="setLevel('+', 1)">increase 1</button>
@@ -7,6 +10,9 @@
     {{ levels.length }}
     <div v-for="group in currentLevel.groups" :key="group.id">
       {{ group.name }}
+      <div v-for="option in group.options" :key="option.id">
+        {{ option.label }}
+      </div>
     </div>
   </div>
 </template>
@@ -21,9 +27,13 @@ import Catalog from "@/models/Catalog";
 import Group from "@/models/Group";
 // eslint-disable-next-line no-unused-vars
 import GroupLevel from "@/models/GroupLevel";
+import FilterBar from "@/components/TheFilterBar/FilterBar.vue";
 
 export default {
   name: "Dummy",
+  components: {
+    FilterBar
+  },
   data() {
     return {
       currentIndex: 1
@@ -83,12 +93,18 @@ export default {
             options: [
               {
                 id: 1,
-
+                name: "section",
+                label: "Men",
+                value: "men",
+                checked: false,
                 pivot: { id: 1 }
               },
               {
                 id: 2,
-
+                name: "section",
+                label: "Women",
+                value: "women",
+                checked: false,
                 pivot: { id: 1 }
               }
             ],
@@ -105,12 +121,16 @@ export default {
             options: [
               {
                 id: 3,
-
+                name: "campaigns",
+                label: "Sale",
+                value: "sale",
                 pivot: { id: 2 }
               },
               {
                 id: 4,
-
+                name: "campaigns",
+                label: "Essentials",
+                value: "essentials",
                 pivot: { id: 2 }
               }
             ],
@@ -131,12 +151,18 @@ export default {
             options: [
               {
                 id: 5,
-
+                name: "category",
+                label: "Shoes",
+                value: "shoes",
+                checked: false,
                 pivot: { id: 3 }
               },
               {
                 id: 6,
-
+                name: "category",
+                label: "Shirts",
+                value: "shirts",
+                checked: false,
                 pivot: { id: 3 }
               }
             ],
@@ -155,38 +181,6 @@ export default {
               }
             ]
           }
-        ],
-        options: [
-          {
-            id: 1,
-            name: "Men",
-            pivot: { id: 1 }
-          },
-          {
-            id: 2,
-            name: "Women",
-            pivot: { id: 1 }
-          },
-          {
-            id: 3,
-            name: "New",
-            pivot: { id: 2 }
-          },
-          {
-            id: 4,
-            name: "Sale",
-            pivot: { id: 2 }
-          },
-          {
-            id: 5,
-            name: "Shirts",
-            pivot: { id: 3 }
-          },
-          {
-            id: 6,
-            name: "Shoes",
-            pivot: { id: 3 }
-          }
         ]
       }
     });
@@ -204,10 +198,15 @@ export default {
     levels() {
       return Level.all();
     },
+    groupsWithOptions() {
+      return Group.query()
+        .with("options")
+        .get();
+    },
     currentLevel() {
       return Level.query()
         .whereId(this.currentIndex)
-        .with("groups")
+        .with("groups.options")
         .first();
     },
     catalog() {
