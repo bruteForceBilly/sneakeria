@@ -3,7 +3,7 @@
     <div class="pt-4">
       <BreadCrumbsBar :selects="selects"></BreadCrumbsBar>
     </div>
-    <div class="py-6">
+    <div class="pt-8 pb-12">
       <h1 class="text-4xl tracking-tighter font-black uppercase">
         <span
           v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1"
