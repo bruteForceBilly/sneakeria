@@ -10,7 +10,7 @@
           <h3
             class="uppercase text-lg md:text-sm font-medium my-4 md:mb-2 tracking-widest"
           >
-            {{ item.name }}
+            {{ item }}
             <!-- refactor api so you can easily get ALL from section, men and women etc -->
           </h3>
           <li

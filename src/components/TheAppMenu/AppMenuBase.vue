@@ -15,8 +15,7 @@
         </template>
         <template v-slot:navbar>
           <FeaturedLinksBar
-            featured-category="section"
-            featured-link="product"
+            :featured="siteMapData"
             class="hidden md:inline-block"
           ></FeaturedLinksBar>
         </template>

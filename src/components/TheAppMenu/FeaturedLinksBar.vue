@@ -2,11 +2,11 @@
   <div>
     <div class="flex justify-center">
       <FeaturedLinksBarItem
-        v-for="(item, index) in mock"
-        :key="item + index"
-        link-to="/product"
+        v-for="item in featured"
+        :key="item.id"
+        link-to="item.value"
       >
-        {{ item }}</FeaturedLinksBarItem
+        {{ item.label }}</FeaturedLinksBarItem
       >
     </div>
   </div>
@@ -19,11 +19,7 @@ export default {
   components: {
     FeaturedLinksBarItem
   },
-  data() {
-    return {
-      mock: ["men", "women", "product"]
-    };
-  }
+  props: ["featured"]
 };
 </script>
 
