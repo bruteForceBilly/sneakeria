@@ -1,6 +1,9 @@
 <template>
   <div>
-    <slot :siteMapData="featuredNavigationLinks"></slot>
+    <slot
+      :lastHovered="lastHovered"
+      :siteMapData="featuredNavigationLinks"
+    ></slot>
   </div>
 </template>
 
@@ -106,7 +109,7 @@ export default {
           ]
         },
         {
-          id: 1,
+          id: 2,
           label: "Women",
           value: "women",
           layout: "columns",
@@ -254,7 +257,8 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      lastHovered: null
     };
   },
   computed: {

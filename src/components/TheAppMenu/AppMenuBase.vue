@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppMenuSettings v-slot:default="{ siteMapData }">
+    <AppMenuSettings v-slot:default="{ siteMapData, lastHovered }">
       <AppMenuLayout>
         <template v-slot:hamburger>
           <img src="@/assets/menu.svg" />
@@ -14,10 +14,20 @@
           <FlyOutMenu :site-map-data="siteMapData"></FlyOutMenu>
         </template>
         <template v-slot:navbar>
-          <FeaturedLinksBar
-            :featured="siteMapData"
-            class="hidden md:inline-block"
-          ></FeaturedLinksBar>
+          <div class="hidden md:inline-block">
+            <div class="flex justify-center">
+              lol {{ lastHovered }}
+              <FeaturedLinksBarItem
+                v-for="item in siteMapData"
+                :key="item.value + item.id"
+                link-to="item.value"
+              >
+                <span @mouseenter="lastHovered = item.label">
+                  {{ item.label }}
+                </span>
+              </FeaturedLinksBarItem>
+            </div>
+          </div>
         </template>
         <template v-slot:icons>
           <div class="flex justify-center md:justify-end">
@@ -36,7 +46,7 @@
 <script>
 import AppMenuSettings from "@/components/TheAppMenu/AppMenuSettings";
 import AppMenuLayout from "@/components/TheAppMenu/AppMenuLayout";
-import FeaturedLinksBar from "@/components/TheAppMenu/FeaturedLinksBar";
+import FeaturedLinksBarItem from "./FeaturedLinksBarItem.vue";
 import FlyOutMenu from "@/components/TheAppMenu/FlyOutMenu";
 
 export default {
@@ -44,8 +54,8 @@ export default {
   components: {
     AppMenuSettings,
     AppMenuLayout,
-    FeaturedLinksBar,
-    FlyOutMenu
+    FlyOutMenu,
+    FeaturedLinksBarItem
   }
 };
 </script>
