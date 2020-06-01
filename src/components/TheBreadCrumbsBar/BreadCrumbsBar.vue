@@ -5,7 +5,11 @@
   >
     <div class="">
       <span class="font-black mr-2">←</span>
-      <span class="underline cursor-pointer uppercase font-black">Back</span>
+      <span
+        @click="$router.go(-1)"
+        class="underline cursor-pointer uppercase font-black"
+        >Back</span
+      >
       <span class=" mx-2">/</span>
     </div>
     <div class="">
@@ -39,9 +43,7 @@
       </template>
       <template v-else-if="index === selectedOptionsElements.length - 1">
         <div>
-          <span class="no-underline cursor-auto"
-            >{{ index }} {{ option.label }}</span
-          >
+          <span class="no-underline cursor-auto">{{ option.label }}</span>
           <span class="  mx-2"></span>
         </div>
       </template>
