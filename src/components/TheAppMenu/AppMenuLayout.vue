@@ -3,7 +3,6 @@
     <div class="relative">
       <!-- Container start -->
       <div
-        @mouseover="hoverSetShow()"
         class="border-b flex justify-between items-center"
         style="height:50px;"
       >
@@ -41,12 +40,7 @@
         </div>
 
         <!-- Flyout -->
-        <div
-          @mouseleave="leaveSetShow()"
-          v-show="show"
-          class="absolute z-50 inset-x-0 bottom-0"
-          style="top:50px"
-        >
+        <div class="absolute z-50 inset-x-0 bottom-0" style="top:50px">
           <slot name="fly-out">
             <div class="w-full shadow-lg">
               ... fly out goes here
@@ -75,7 +69,7 @@ export default {
   name: "AppMenuLayout",
   data() {
     return {
-      show: false
+      show: true
     };
   },
   computed: {

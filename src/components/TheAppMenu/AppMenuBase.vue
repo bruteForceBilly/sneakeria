@@ -1,6 +1,12 @@
 <template>
   <div>
-    <AppMenuSettings v-slot:default="{ siteMapData, lastHovered }">
+    <AppMenuSettings
+      v-slot:default="{
+        featuredNavigation,
+        selectedNavigation,
+        selectedNavigationHandler
+      }"
+    >
       <AppMenuLayout>
         <template v-slot:hamburger>
           <img src="@/assets/menu.svg" />
@@ -11,18 +17,20 @@
           </div>
         </template>
         <template v-slot:fly-out>
-          <FlyOutMenu :site-map-data="siteMapData"></FlyOutMenu>
+          <FlyOutMenu
+            :featured-navigation="featuredNavigation"
+            :selected-navigation="selectedNavigation"
+          ></FlyOutMenu>
         </template>
         <template v-slot:navbar>
           <div class="hidden md:inline-block">
             <div class="flex justify-center">
-              lol {{ lastHovered }}
               <FeaturedLinksBarItem
-                v-for="item in siteMapData"
-                :key="item.value + item.id"
+                v-for="item in featuredNavigation"
+                :key="item.id"
                 link-to="item.value"
               >
-                <span @mouseenter="lastHovered = item.label">
+                <span @mouseenter="() => selectedNavigationHandler(item)">
                   {{ item.label }}
                 </span>
               </FeaturedLinksBarItem>
@@ -56,6 +64,9 @@ export default {
     AppMenuLayout,
     FlyOutMenu,
     FeaturedLinksBarItem
+  },
+  computed: {
+    console: () => console
   }
 };
 </script>

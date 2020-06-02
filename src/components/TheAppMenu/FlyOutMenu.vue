@@ -6,36 +6,17 @@
       <div
         class="flex flex-grow flex-col md:flex-row justify-between text-left tracking-wide px-2 md:px-24 xl:px-64"
       >
-        <ul v-for="(item, i) in siteMapData" :key="i + item" class=" md:mx-6">
+        {{ selectedNavigation }}
+        <div v-for="group in selectedNavigation.groups" :key="group.id">
           <h3
-            class="uppercase text-lg md:text-sm font-medium my-4 md:mb-2 tracking-widest"
+            class="no-underline text-black border-transparent border-b-2 hover:border-black uppercase tracking-widest font-bold text-sm py-3 mr-8"
           >
-            {{ item }}
-            <!-- refactor api so you can easily get ALL from section, men and women etc -->
+            {{ group.label }}
           </h3>
-          <li
-            @click="setByRoute(true)"
-            v-for="(value, j) in item.values"
-            :key="j + item"
-            class="capitalize hover:underline hidden md:block text-sm"
-          >
-            <!-- <router-link :to="`/search?${item.name}=${value}`"> 
-            
-            { path: 'register', query: { plan: 'private' }}
-            
-            -->
-
-            <router-link
-              :to="{
-                name: 'searchQueryRoute',
-                path: 'search',
-                query: { [item.name]: value }
-              }"
-            >
-              {{ value }}</router-link
-            >
-          </li>
-        </ul>
+          <div v-for="category in group" :key="category.id">
+            <h4>{{ category.label }}</h4>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -44,7 +25,7 @@
 <script>
 export default {
   name: "FlyOutMenu",
-  props: ["siteMapData"],
+  props: ["featuredNavigation", "selectedNavigation"],
   methods: {
     setByRoute(arg) {
       return this.$store.commit("setByRoute", arg);
@@ -52,5 +33,3 @@ export default {
   }
 };
 </script>
-
-<style lang="postcss" scoped></style>

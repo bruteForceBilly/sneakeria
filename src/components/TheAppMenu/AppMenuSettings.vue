@@ -1,8 +1,9 @@
 <template>
   <div>
     <slot
-      :lastHovered="lastHovered"
-      :siteMapData="featuredNavigationLinks"
+      :selectedNavigation="selectedNavigation"
+      :selectedNavigationHandler="selectedNavigationHandler"
+      :featuredNavigation="featuredNavigation"
     ></slot>
   </div>
 </template>
@@ -12,14 +13,10 @@ export default {
   name: "AppMenuSettings",
   data() {
     return {
-      // appMenuSettings: {
-      //   data: null,
-      //   loading: null,
-      //   error: null
-      // }
-      featuredNavigationLinks: [
+      featuredNavigation: [
         {
           id: 1,
+          name: "section",
           label: "Men",
           value: "men",
           layout: "columns",
@@ -110,12 +107,13 @@ export default {
         },
         {
           id: 2,
+          name: "section",
           label: "Women",
           value: "women",
           layout: "columns",
           groups: [
             {
-              id: 1,
+              id: 3,
               label: "Women Sneakers",
               value: "women-shoes",
               categories: [
@@ -174,7 +172,7 @@ export default {
               ]
             },
             {
-              id: 1,
+              id: 4,
               label: "Women Clothing",
               value: "women-shirts",
               categories: [
@@ -199,55 +197,56 @@ export default {
           ]
         },
         {
-          id: 1,
+          id: 5,
+          name: "brand",
           label: "Brands",
           value: "brand",
           layout: "index",
           groups: [
             {
-              id: 1,
+              id: 6,
               label: "All brands",
               value: "all",
               categories: [
                 {
-                  id: 1,
+                  id: 7,
                   label: "A",
                   options: [
                     {
-                      id: 1,
+                      id: 8,
                       label: "Adidas",
                       value: "adidas"
                     }
                   ]
                 },
                 {
-                  id: 2,
+                  id: 9,
                   label: "N",
                   options: [
                     {
-                      id: 1,
+                      id: 10,
                       label: "Nike",
                       value: "nike"
                     }
                   ]
                 },
                 {
-                  id: 3,
+                  id: 11,
                   label: "P",
                   options: [
                     {
-                      id: 1,
+                      id: 12,
                       label: "Puma",
                       value: "puma"
                     }
                   ]
                 },
                 {
-                  id: 4,
+                  id: 13,
                   label: "R",
                   options: [
                     {
-                      id: 1,
+                      id: 14,
                       label: "Rebook",
                       value: "rebook"
                     }
@@ -258,27 +257,13 @@ export default {
           ]
         }
       ],
-      lastHovered: null
+      selectedNavigation: {}
     };
   },
-  computed: {
-    siteMapData() {
-      return this.$store.state.siteMap.data;
+  methods: {
+    selectedNavigationHandler(selected) {
+      return (this.selectedNavigation = selected);
     }
   }
 };
 </script>
-
-<!-- 
-  mounted() {
-    this.appMenuSettings.loading = true;
-    return new Promise((resolve, reject) => {
-      siteMap(data => {
-        this.appMenuSettings.data = data;
-      })
-        .then(resolve())
-        .catch(reject());
-    }).finally((this.appMenuSettings.loading = false));
-  },
-
--->
