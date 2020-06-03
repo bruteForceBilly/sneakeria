@@ -28,7 +28,7 @@ export default {
               categories: [
                 {
                   id: 1,
-                  label: "Men Styles",
+                  label: "Featured Styles",
                   options: [
                     {
                       id: 1,
@@ -54,7 +54,7 @@ export default {
                 },
                 {
                   id: 1,
-                  label: "Brands",
+                  label: "Featured Brands",
                   options: [
                     {
                       id: 1,
@@ -119,7 +119,7 @@ export default {
               categories: [
                 {
                   id: 1,
-                  label: "Women Styles",
+                  label: "Featured Styles",
                   options: [
                     {
                       id: 1,
@@ -145,7 +145,7 @@ export default {
                 },
                 {
                   id: 1,
-                  label: "Brands",
+                  label: "Featured Brands",
                   options: [
                     {
                       id: 1,
