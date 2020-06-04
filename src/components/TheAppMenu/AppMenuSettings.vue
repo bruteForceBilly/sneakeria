@@ -4,6 +4,10 @@
       :selectedNavigation="selectedNavigation"
       :selectedNavigationHandler="selectedNavigationHandler"
       :featuredNavigation="featuredNavigation"
+      :hoverSetShow="hoverSetShow"
+      :leaveSetShow="leaveSetShow"
+      ,
+      :show="show"
     ></slot>
   </div>
 </template>
@@ -13,6 +17,7 @@ export default {
   name: "AppMenuSettings",
   data() {
     return {
+      show: false,
       featuredNavigation: [
         {
           id: 1,
@@ -58,23 +63,13 @@ export default {
                   options: [
                     {
                       id: 1,
-                      label: "Nike",
-                      value: "men-nike"
+                      label: "Adidas",
+                      value: "men-adidas"
                     },
                     {
                       id: 2,
-                      label: "Essential",
-                      value: "men-puma"
-                    },
-                    {
-                      id: 3,
-                      label: "Basketball",
-                      value: "men-rebook"
-                    },
-                    {
-                      id: 4,
-                      label: "Tennis",
-                      value: "men-adidas"
+                      label: "Nike",
+                      value: "men-nike"
                     }
                   ]
                 }
@@ -148,24 +143,14 @@ export default {
                   label: "Featured Brands",
                   options: [
                     {
-                      id: 1,
-                      label: "Nike",
-                      value: "women-nike"
-                    },
-                    {
                       id: 2,
-                      label: "Essential",
+                      label: "Puma",
                       value: "women-puma"
                     },
                     {
                       id: 3,
-                      label: "Basketball",
+                      label: "Rebook",
                       value: "women-rebook"
-                    },
-                    {
-                      id: 4,
-                      label: "Tennis",
-                      value: "women-adidas"
                     }
                   ]
                 }
@@ -263,6 +248,25 @@ export default {
   methods: {
     selectedNavigationHandler(selected) {
       return (this.selectedNavigation = selected);
+    },
+    setByRoute(arg) {
+      return this.$store.commit("setByRoute", arg);
+    },
+    hoverSetShow() {
+      if (this.$mq === "lg" || this.$mq === "xl") return (this.show = true);
+    },
+    leaveSetShow() {
+      if (this.$mq === "lg" || this.$mq === "xl") return (this.show = false);
+    }
+  },
+  computed: {
+    mq() {
+      return this.$mq;
+    }
+  },
+  watch: {
+    mq() {
+      return (this.show = false);
     }
   }
 };

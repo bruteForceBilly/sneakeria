@@ -8,27 +8,48 @@
         class="flex flex-grow flex-row justify-center px-2 md:px-24 xl:px-64"
       >
         <div
-          class="text-left tracking-wide text-xs bg-red-300 m-4"
+          class="text-left tracking-wide text-xs m-4"
           v-for="(group, index) in selectedNavigation.groups"
           :key="group.id + '-group' + index"
         >
           <h3 class="font-black py-3 mr-8">
-            {{ group.label }}
-          </h3>
-          <div
-            v-for="(category, index) in group.categories"
-            :key="category.id + '-category' + index"
-          >
-            <h4 class="font-normal text-gray-500 uppercase py-3 mr-8">
-              {{ category.label }}
-            </h4>
-            <div
-              v-for="(option, index) in category.options"
-              :key="option.id + '-option' + index"
+            <router-link
+              :to="{ name: 'searchRequestRoute', params: { id: group.value } }"
             >
-              <h5 class="font-medium py-3 mr-8">
-                {{ option.label }}
-              </h5>
+              {{ group.label }}
+            </router-link>
+          </h3>
+          <!-- -->
+          <div class="flex flex-row">
+            <div
+              v-for="(category, index) in group.categories"
+              :key="category.id + '-category' + index"
+            >
+              <h4 class="font-normal text-gray-500 uppercase py-3 mr-8">
+                <router-link
+                  :to="{
+                    name: 'searchRequestRoute',
+                    params: { id: category.value }
+                  }"
+                >
+                  {{ category.label }}
+                </router-link>
+              </h4>
+              <div
+                v-for="(option, index) in category.options"
+                :key="option.id + '-option' + index"
+              >
+                <h5 class="font-medium py-1 mr-8 hover:underline">
+                  <router-link
+                    :to="{
+                      name: 'searchRequestRoute',
+                      params: { id: option.value }
+                    }"
+                  >
+                    {{ option.label }}
+                  </router-link>
+                </h5>
+              </div>
             </div>
           </div>
         </div>
@@ -40,11 +61,6 @@
 <script>
 export default {
   name: "FlyOutMenu",
-  props: ["featuredNavigation", "selectedNavigation"],
-  methods: {
-    setByRoute(arg) {
-      return this.$store.commit("setByRoute", arg);
-    }
-  }
+  props: ["featuredNavigation", "selectedNavigation"]
 };
 </script>

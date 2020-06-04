@@ -47,11 +47,11 @@ const routes = [
       // );
       return new Promise((resolve, reject) => {
         if (store.state.searchRouteLastBeforeEnter === "searchRequestRoute") {
-          // console.log("ROUTER IF searchRequestRoute"),
-          //   store.dispatch(
-          //     "searchQueryParamsStringAction",
-          //     store.state.searchQueryParamsObject
-          //   );
+          //console.log("ROUTER IF searchRequestRoute"),
+          store.dispatch(
+            "searchQueryParamsStringAction",
+            store.state.searchQueryParamsObject
+          );
         } else if (to.name === "searchQueryRoute") {
           //console.log("ROUTER ELSE IF searchQueryRoute", to.query); // try searchQueryParamsObjectMutation
           store.dispatch("searchQueryParamsStringAction", to.query);

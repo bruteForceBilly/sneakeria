@@ -4,7 +4,10 @@
       v-slot:default="{
         featuredNavigation,
         selectedNavigation,
-        selectedNavigationHandler
+        selectedNavigationHandler,
+        hoverSetShow,
+        leaveSetShow,
+        show
       }"
     >
       <AppMenuLayout>
@@ -18,6 +21,8 @@
         </template>
         <template v-slot:fly-out>
           <FlyOutMenu
+            v-show="show"
+            @mouseleave.native="leaveSetShow()"
             :featured-navigation="featuredNavigation"
             :selected-navigation="selectedNavigation"
           ></FlyOutMenu>
@@ -30,7 +35,12 @@
                 :key="item.id"
                 link-to="item.value"
               >
-                <span @mouseenter="() => selectedNavigationHandler(item)">
+                <span
+                  @mouseenter="
+                    selectedNavigationHandler(item);
+                    hoverSetShow();
+                  "
+                >
                   {{ item.label }}
                 </span>
               </FeaturedLinksBarItem>

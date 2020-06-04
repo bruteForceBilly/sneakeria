@@ -42,7 +42,7 @@
         <!-- Flyout -->
         <div class="absolute z-50 inset-x-0 bottom-0" style="top:50px">
           <slot name="fly-out">
-            <div class="w-full shadow-lg">
+            <div v-if="show === true" class="w-full shadow-lg">
               ... fly out goes here
             </div>
           </slot>
@@ -69,7 +69,7 @@ export default {
   name: "AppMenuLayout",
   data() {
     return {
-      show: true
+      show: false
     };
   },
   computed: {
@@ -89,12 +89,6 @@ export default {
       } else {
         return (this.show = false);
       }
-    },
-    hoverSetShow() {
-      if (this.$mq === "lg" || this.$mq === "xl") return (this.show = true);
-    },
-    leaveSetShow() {
-      if (this.$mq === "lg" || this.$mq === "xl") return (this.show = false);
     }
   }
 };
