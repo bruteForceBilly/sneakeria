@@ -7,12 +7,14 @@
         selectedNavigationHandler,
         hoverSetShow,
         leaveSetShow,
+        toggleSetShow,
+        navbarSlot,
         show
       }"
     >
       <AppMenuLayout>
         <template v-slot:hamburger>
-          <img src="@/assets/menu.svg" />
+          <img @click="toggleSetShow()" src="@/assets/menu.svg" />
         </template>
         <template v-slot:logo>
           <div>
@@ -27,9 +29,12 @@
             :selected-navigation="selectedNavigation"
           ></FlyOutMenu>
         </template>
-        <template v-slot:navbar>
-          <div class="hidden md:inline-block">
-            <div class="flex justify-center">
+        <template v-slot:[navbarSlot]>
+          <div
+            v-show="navbarSlot === 'navbar--desktop' ? true : show"
+            class="block bg-white"
+          >
+            <div class="flex flex-col md:flex-row justify-center">
               <FeaturedLinksBarItem
                 v-for="item in featuredNavigation"
                 :key="item.id"

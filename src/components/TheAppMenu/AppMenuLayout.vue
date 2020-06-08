@@ -7,10 +7,7 @@
         style="height:50px;"
       >
         <!-- Hamburger -->
-        <div
-          @click="toggleSetShow()"
-          class="float-left xl:ml-12 py-2 pl-2 pr-6 absolute z-50 md:hidden"
-        >
+        <div class="float-left xl:ml-12 py-2 pl-2 pr-6 absolute z-50 md:hidden">
           <slot name="hamburger">
             <p>... hamburger should go here</p>
           </slot>
@@ -40,18 +37,16 @@
         </div>
 
         <!-- Flyout -->
-        <div class="absolute z-50 inset-x-0 bottom-0" style="top:50px">
-          <slot name="fly-out">
-            <div v-if="show === true" class="w-full shadow-lg">
-              ... fly out goes here
-            </div>
-          </slot>
+        <div
+          class="absolute z-50 inset-x-0 bottom-0 w-full shadow-lg"
+          style="top:50px"
+        >
+          <slot name="navbar--mobile"></slot>
+          <slot name="fly-out"> </slot>
         </div>
         <!-- Featured links -->
         <div class="-mb-px">
-          <slot name="navbar">
-            <p>... featured Links goes here</p>
-          </slot>
+          <slot name="navbar--desktop"></slot>
         </div>
         <!-- Icons -->
         <div class="float-right xl:mr-12">
@@ -67,28 +62,9 @@
 <script>
 export default {
   name: "AppMenuLayout",
-  data() {
-    return {
-      show: false
-    };
-  },
   computed: {
     mq() {
       return this.$mq;
-    }
-  },
-  watch: {
-    mq() {
-      return (this.show = false);
-    }
-  },
-  methods: {
-    toggleSetShow() {
-      if (this.show === false) {
-        return (this.show = true);
-      } else {
-        return (this.show = false);
-      }
     }
   }
 };

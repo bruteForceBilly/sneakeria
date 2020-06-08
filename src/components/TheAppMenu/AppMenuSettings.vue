@@ -6,6 +6,8 @@
       :featuredNavigation="featuredNavigation"
       :hoverSetShow="hoverSetShow"
       :leaveSetShow="leaveSetShow"
+      :toggleSetShow="toggleSetShow"
+      :navbarSlot="navbarSlot"
       ,
       :show="show"
     ></slot>
@@ -256,12 +258,32 @@ export default {
       if (this.$mq === "lg" || this.$mq === "xl") return (this.show = true);
     },
     leaveSetShow() {
+      console.log("leave set show");
       if (this.$mq === "lg" || this.$mq === "xl") return (this.show = false);
+    },
+    toggleSetShow() {
+      if (this.show === false) {
+        return (this.show = true);
+      } else {
+        return (this.show = false);
+      }
     }
   },
   computed: {
     mq() {
       return this.$mq;
+    },
+    navbarSlot() {
+      if (this.mq === "sm") {
+        console.log(this.mq, "navbar--mobile");
+        return "navbar--mobile";
+      } else if (this.mq === "md") {
+        console.log(this.mq, "navbar--mobile");
+        return "navbar--mobile";
+      } else {
+        console.log(this.mq, "navbar--desktop");
+        return "navbar--desktop";
+      }
     }
   },
   watch: {
