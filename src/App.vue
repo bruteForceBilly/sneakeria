@@ -1,12 +1,14 @@
 <template>
   <div id="app">
-    <TheAppMenu> </TheAppMenu>
-    <div>
+    <TheHeader> </TheHeader>
+
+    <!-- try with transition and keep alive 
+
+     <div>
       <transition name="fade" mode="out-in">
         <router-view> </router-view>
       </transition>
     </div>
-    <!-- try with transition and keep alive 
     
     https://github.com/vuejs/vue-router/blob/dev/examples/transitions/app.js
     -->
@@ -14,14 +16,16 @@
 </template>
 
 <script>
-import TheAppMenu from "@/components/TheAppMenu/AppMenuBase";
+// import TheAppMenu from "@/components/TheAppMenu/AppMenuBase";
+import TheHeader from "@/components/TheHeader/TheHeader";
+
 import axios from "axios";
 import { API_SITE } from "@/constants";
 
 export default {
   name: "App",
   components: {
-    TheAppMenu
+    TheHeader
   },
   beforeCreate() {
     // should be moved to service and featured category should be set from there

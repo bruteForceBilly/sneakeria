@@ -70,8 +70,9 @@
             />
             <img src="@/assets/heart.svg" class="px-2 hidden sm:inline-block" />
             <img src="@/assets/shopping-cart.svg" class="px-2" />
-          </div> </template
-      ></AppMenuLayout>
+          </div>
+        </template>
+      </AppMenuLayout>
     </AppMenuSettings>
   </div>
 </template>
