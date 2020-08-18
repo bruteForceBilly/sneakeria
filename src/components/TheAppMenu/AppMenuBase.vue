@@ -8,14 +8,24 @@
         hoverSetShow,
         leaveSetShow,
         toggleSetShow,
-        navbarSlot,
-        show
+        navbarMode,
+        show,
+        shift,
+        shifted
       }"
     >
-      <AppMenuLayout>
+      <AppMenuLayout
+        :show="show"
+        :leaveSetShow="leaveSetShow"
+        :toggleSetShow="toggleSetShow"
+        :navbarMode="navbarMode"
+        :shift="shift"
+        :shifted="shifted"
+      >
         <template v-slot:hamburger>
           <img @click="toggleSetShow()" src="@/assets/menu.svg" />
         </template>
+
         <template v-slot:logo>
           <div>
             <img src="@/assets/logo.svg" class="mx-auto md:mx-1" />
@@ -24,30 +34,30 @@
         <template v-slot:fly-out>
           <FlyOutMenu
             v-show="show"
-            @mouseleave.native="leaveSetShow()"
             :featured-navigation="featuredNavigation"
             :selected-navigation="selectedNavigation"
+            :navbarMode="navbarMode"
+            :shift="shift"
+            :shifted="shifted"
           ></FlyOutMenu>
         </template>
-        <template v-slot:[navbarSlot]>
+        <template v-slot:[navbarMode]>
           <div
-            v-show="navbarSlot === 'navbar--desktop' ? true : show"
-            class="block bg-white"
+            v-if="navbarMode === 'navbar--desktop' ? true : show"
+            class="bg-white w-full"
           >
-            <div class="flex flex-col md:flex-row justify-center">
+            <div class="flex flex-wrap md:flex-row md:justify-center">
               <FeaturedLinksBarItem
                 v-for="item in featuredNavigation"
                 :key="item.id"
                 link-to="item.value"
+                :navbarMode="navbarMode"
+                :selectedNavigationHandler="selectedNavigationHandler"
+                :item="item"
+                :hoverSetShow="hoverSetShow"
+                :shift="shift"
               >
-                <span
-                  @mouseenter="
-                    selectedNavigationHandler(item);
-                    hoverSetShow();
-                  "
-                >
-                  {{ item.label }}
-                </span>
+                {{ item.label }}
               </FeaturedLinksBarItem>
             </div>
           </div>

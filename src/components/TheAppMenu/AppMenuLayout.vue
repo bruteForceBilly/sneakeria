@@ -35,19 +35,61 @@
             </div>
           </div>
         </div>
-
-        <!-- Flyout -->
-        <div
-          class="absolute z-50 inset-x-0 bottom-0 w-full shadow-lg"
-          style="top:50px"
-        >
-          <slot name="navbar--mobile"></slot>
-          <slot name="fly-out"> </slot>
-        </div>
-        <!-- Featured links -->
-        <div class="-mb-px">
-          <slot name="navbar--desktop"></slot>
-        </div>
+        <template v-if="navbarMode === 'navbar--desktop'">
+          <!-- Flyout -->
+          <div
+            class="absolute z-50 inset-x-0 bottom-0 w-full shadow-lg"
+            style="top:50px"
+          >
+            <div
+              @mouseleave="leaveSetShow()"
+              :class="[
+                show
+                  ? 'w-full bg-white shadow-lg pt-6 pb-12 md:pt-4 flex justify-start md:justify-center px-2 md:32'
+                  : ''
+              ]"
+            >
+              <slot name="fly-out"> </slot>
+            </div>
+          </div>
+          <!-- Featured links -->
+          <div class="-mb-px">
+            <slot name="navbar--desktop"></slot>
+          </div>
+        </template>
+        <template else>
+          <!-- Flyout -->
+          <div class="absolute z-50 inset-x-0 top-0">
+            <div
+              @mouseleave="leaveSetShow()"
+              :class="[show ? 'w-full overflow-hidden' : '']"
+            >
+              <div v-if="show" class="w-full absolute bg-white shadow-lg">
+                <div
+                  class="border-b flex justify-center item-center"
+                  style="height:50px"
+                >
+                  <img src="@/assets/logo.svg" class="absolute" />
+                  <img
+                    @click="toggleSetShow()"
+                    src="@/assets/x.svg"
+                    class="relative z-50 ml-auto mr-6"
+                  />
+                </div>
+                <div class="px-8 pt-4 pb-6">
+                  <slot name="navbar--mobile"></slot>
+                </div>
+              </div>
+              <div
+                class="fixed inset-0 w-full"
+                style="top:0px"
+                :style="`left:${shifted}%`"
+              >
+                <slot name="fly-out"> </slot>
+              </div>
+            </div>
+          </div>
+        </template>
         <!-- Icons -->
         <div class="float-right xl:mr-12">
           <slot name="icons">
@@ -62,6 +104,7 @@
 <script>
 export default {
   name: "AppMenuLayout",
+  props: ["show", "leaveSetShow", "toggleSetShow", "navbarMode", "shifted"],
   computed: {
     mq() {
       return this.$mq;

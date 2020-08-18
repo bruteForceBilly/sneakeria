@@ -7,9 +7,10 @@
       :hoverSetShow="hoverSetShow"
       :leaveSetShow="leaveSetShow"
       :toggleSetShow="toggleSetShow"
-      :navbarSlot="navbarSlot"
-      ,
+      :navbarMode="navbarMode"
       :show="show"
+      :shift="shift"
+      :shifted="shifted"
     ></slot>
   </div>
 </template>
@@ -20,6 +21,7 @@ export default {
   data() {
     return {
       show: false,
+      shifted: 100,
       featuredNavigation: [
         {
           id: 1,
@@ -267,13 +269,16 @@ export default {
       } else {
         return (this.show = false);
       }
+    },
+    shift(n) {
+      return (this.shifted += n);
     }
   },
   computed: {
     mq() {
       return this.$mq;
     },
-    navbarSlot() {
+    navbarMode() {
       if (this.mq === "sm") {
         console.log(this.mq, "navbar--mobile");
         return "navbar--mobile";
@@ -289,6 +294,9 @@ export default {
   watch: {
     mq() {
       return (this.show = false);
+    },
+    shifted(n) {
+      return console.log(n);
     }
   }
 };
