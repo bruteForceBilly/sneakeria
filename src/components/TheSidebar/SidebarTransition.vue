@@ -1,7 +1,7 @@
 <template>
-  <transition-group :appear="appear" :name="animation" tag="div">
+  <transition :appear="appear" :name="animation" :mode="mode" tag="div">
     <slot></slot>
-  </transition-group>
+  </transition>
 </template>
 
 <script>
@@ -13,44 +13,41 @@ export default {
     },
     appear: {
       type: Boolean
+    },
+    mode: {
+      type: String,
+      validator: function(value) {
+        return ["out-in", "in-out"].indexOf(value) !== -1;
+      }
     }
   }
 };
 </script>
 
 <style>
-.slide-fade-enter-active {
+.slide-enter-active,
+.slide-leave-active {
   transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-.slide-fade-leave-active {
-  display: none;
+.slide-enter,
+.slide-leave-to {
+  transform: translateX(-100%);
 }
-
-.slide-fade-enter,
-.slide-fade-leave-to {
-  opacity: 0;
-  transform: translateX(10%);
-}
-
-.slide-fade-enter-to,
-.slide-fade-leave {
-  opacity: 1;
+.slide-enter-to,
+.slide-leave {
   transform: translateX(0px);
 }
-.fade-enter-active {
-  transition: all 5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
-}
 
+.fade-enter-active {
+  transition: all .5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+}
 .fade-leave-active {
   display: none;
 }
-
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
 }
-
 .fade-enter-to,
 .fade-leave {
   opacity: 1;

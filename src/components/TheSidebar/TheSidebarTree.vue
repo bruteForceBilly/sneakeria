@@ -1,39 +1,44 @@
-<template>
-  <div class="h-screen bg-white text-4xl relative z-0">
-    <SidebarTransition :appear="true" animation="fade">
-      <div
+<template> 
+    <div
+        class="h-screen overflow-hidden bg-white text-4xl absolute top-0 z-50 shadow-lg"
+        :class="$mq == 'xl' || $mq == 'lg' ? 'w-1/3' : 'w-full' "
+    >
+
+    <SidebarTransitionGroup :appear="true" animation="slide-fade">
+    <div
         v-if="selected.name === node.name"
         :key="selected.name + node.name"
-        class="border-b flex justify-center items-center h-16 mb-4"
-      >
-        <span> ❦ </span>
-      </div>
-    </SidebarTransition>
-
-    <div
-      @click="$emit('toggle')"
-      class="absolute top-0 right-0 z-10 mr-6 mt-3 text-2xl"
+        class="border-b flex justify-center items-center mb-4"
+        style="height:50px;"
     >
-      <span> ✕ </span>
+        <img src="@/assets/logo.svg" />
     </div>
+    </SidebarTransitionGroup>
 
-    <SidebarTransition :appear="true" animation="slide-fade">
-      <SidebarTreeNode
-        :key="node.name"
-        class="overflow-hidden"
-        :expanded-init="true"
-        :node="node"
-        :parent="node"
-        :select="select"
-        :selected="selected"
-      />
-    </SidebarTransition>
-  </div>
+        <img
+        @click="setShow($event)"
+        src="@/assets/x.svg"
+        class="absolute z-50 top-0 right-0 mt-3 mr-5 p-1"
+        />
+
+        <SidebarTransitionGroup :appear="true" animation="slide-fade">
+        <SidebarTreeNode
+            :key="node.name"
+            class="overflow-hidden"
+            :expanded-init="true"
+            :node="node"
+            :parent="node"
+            :select="select"
+            :selected="selected"
+            :set-show="setShow"
+        />
+        </SidebarTransitionGroup>
+    </div>
 </template>
 
 <script>
 import SidebarTreeNode from "./SidebarTreeNode.vue";
-import SidebarTransition from "./SidebarTransition.vue";
+import SidebarTransitionGroup from "./SidebarTransitionGroup.vue";
 
 export default {
   name: "TheSidebarTree",
@@ -46,11 +51,17 @@ export default {
     },
     select: {
       type: Function
+    },
+    show: {
+      type: Boolean
+    },
+    setShow: {
+      type: Function
     }
   },
   components: {
     SidebarTreeNode,
-    SidebarTransition
-  }
+    SidebarTransitionGroup
+  },
 };
 </script>

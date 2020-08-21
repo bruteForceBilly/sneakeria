@@ -6,8 +6,7 @@
         :key="item.id"
         link-to="item.value"
       >
-        {{ item.label }}</FeaturedLinksBarItem
-      >
+        {{ item.label }}</FeaturedLinksBarItem>
     </div>
   </div>
 </template>
@@ -22,5 +21,3 @@ export default {
   props: ["featured"]
 };
 </script>
-
-<style lang="postcss" scoped></style>

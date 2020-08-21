@@ -1,25 +1,50 @@
 <template>
   <div>
-    <SidebarTransition animation="slide-fade">
-      <div v-if="showing && node.name != parent.name" :key="keyProp" class="">
+    <SidebarTransitionGroup animation="slide-fade">
+      <div v-if="showing && node.name != parent.name" :key="keyProp">
         <div
           v-if="expanded"
-          class="border-b flex items-center h-16 mb-2"
+          class="border-b flex items-center"
+          :class="[node.name === 'Root' ? '' : 'mb-3']"
+          style="height:50px;"
+          :key="keyProp"
           @click="[expand(), select(parent)]"
         >
-          <span class="mx-4">☚</span>
-          <span>{{ node.name }} </span>
+          <img src="@/assets/chevron-l.svg" class="mx-4" />
+          <span class="pt-1 text-lg tracking-wide font-semibold uppercase"
+            >{{ node.label }}
+          </span>
         </div>
 
         <div
           v-else-if="hasChildren"
           @click="[expand(), select(node)]"
-          class="ml-8"
+          :key="keyProp"
+          class="flex justify-between items-center mr-5"
+          :class="[
+            parent.name === 'Root' ? 'ml-8 font-semibold uppercase' : 'ml-16'
+          ]"
         >
-          {{ node.name }}<span class="mx-4">☛</span>
+          <span class="text-lg tracking-wider py-2">{{ node.label }}</span>
+          <img src="@/assets/chevron-r.svg" class="pb-1" />
         </div>
 
-        <span v-else class="ml-8">{{ node.name }}</span>
+        <div
+          v-else
+          :key="keyProp"
+          class="flex justify-between items-center ml-16 mr-5"
+        >
+          <span @click="setShow($event)" class="text-lg tracking-wider py-2">
+            <router-link
+              :to="{
+                name: 'searchRequestRoute',
+                params: { id: node.value }
+              }"
+            >
+              {{ node.label }}
+            </router-link>
+          </span>
+        </div>
       </div>
 
       <div v-if="expanded" :key="keyProp + 'children'">
@@ -30,19 +55,20 @@
           :parent="node"
           :select="select"
           :selected="selected"
+          :set-show="setShow"
         />
       </div>
-    </SidebarTransition>
+    </SidebarTransitionGroup>
   </div>
 </template>
 
 <script>
-import SidebarTransition from "./SidebarTransition.vue";
+import SidebarTransitionGroup from "./SidebarTransitionGroup.vue";
 
 export default {
   name: "SidebarTreeNode",
   components: {
-    SidebarTransition
+    SidebarTransitionGroup
   },
   props: {
     node: {
@@ -60,6 +86,9 @@ export default {
     expandedInit: {
       type: Boolean,
       default: false
+    },
+    setShow: {
+      type: Function
     }
   },
   data() {
