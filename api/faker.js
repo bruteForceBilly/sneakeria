@@ -17,10 +17,10 @@ for (let i = 0; i < 339; i++) {
     campaigns: faker.random.arrayElement([
       "sale",
       "essentials",
-      "new arrivals",
+      "new",
       ""
     ]),
-    category: faker.random.arrayElement(["shoe", "shirt"]),
+    category: faker.random.arrayElement(["clothing", "shoes"]),
     look: faker.random.arrayElement(["tennis", "basketball", "soccer"]),
     brand: faker.random.arrayElement(["nike", "adidas", "rebook", "puma"]),
     versions: []

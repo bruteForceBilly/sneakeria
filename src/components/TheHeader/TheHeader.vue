@@ -30,7 +30,7 @@
 import TheHeaderSettings from "./TheHeaderSettings";
 import TheHeaderLayout from "./TheHeaderLayout";
 import TheSidebar from "@/components/TheSidebar/TheSidebar";
-import HeaderNav from "@/components/HeaderNav/HeaderNav.vue";
+import HeaderNav from "./HeaderNav/HeaderNav.vue";
 
 export default {
   name: "TheHeader",

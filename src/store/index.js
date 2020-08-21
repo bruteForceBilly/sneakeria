@@ -1,34 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import siteMap from "@/services/siteMap.js";
-import VuexORM from "@vuex-orm/core";
-import Product from "@/models/Product";
-import Version from "@/models/Version";
-import Category from "@/models/Category";
-import Option from "@/models/Option";
-
-import Catalog from "@/models/Catalog";
-import Level from "@/models/Level";
-import Group from "@/models/Group";
-import GroupLevel from "@/models/GroupLevel";
-import GroupOption from "@/models/GroupOption";
 
 Vue.use(Vuex);
 
-const database = new VuexORM.Database();
-
-database.register(Product);
-database.register(Version);
-database.register(Category);
-database.register(Option);
-database.register(Catalog);
-database.register(Level);
-database.register(Group);
-database.register(GroupLevel);
-database.register(GroupOption);
-
 export default new Vuex.Store({
-  plugins: [VuexORM.install(database)],
   state: {
     rootData: null,
     setByRoute: null, // filterSetByRoute

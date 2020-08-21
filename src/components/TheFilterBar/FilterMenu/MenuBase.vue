@@ -2,7 +2,7 @@
   <div>
     <MenuSettings v-slot:default="{ hover }">
       <MenuButton :hover="hover" :hasSelected="hasSelected">
-        <template v-slot:menu-label>{{ item.name }}</template>
+        <template v-slot:menu-label>{{ item.name }} </template>
       </MenuButton>
       <MenuOptionsContainer :hover="hover">
         <template v-slot:options>

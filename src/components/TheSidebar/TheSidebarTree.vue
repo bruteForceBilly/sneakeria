@@ -1,7 +1,7 @@
 <template> 
     <div
         class="h-screen overflow-hidden bg-white text-4xl absolute top-0 z-50 shadow-lg"
-        :class="$mq == 'xl' || $mq == 'lg' ? 'w-1/3' : 'w-full' "
+        :class="$mq == 'xl' || $mq == 'lg' ? 'w-1/2' : 'w-full' "
     >
 
     <SidebarTransitionGroup :appear="true" animation="slide-fade">

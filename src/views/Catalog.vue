@@ -83,6 +83,7 @@ export default {
         {
           id: 1,
           name: "section",
+          label: "Section",
           options: [
             {
               id: 1,
@@ -102,7 +103,29 @@ export default {
         },
         {
           id: 2,
+          name: "category",
+          label: "Category", 
+          options: [
+            {
+              id: 1,
+              name: "category",
+              label: "Shoes",
+              value: "shoes",
+              checked: false
+            },
+            {
+              id: 2,
+              name: "category",
+              label: "Clothing",
+              value: "clothing",
+              checked: false
+            }
+          ]
+        },
+        {
+          id: 3,
           name: "campaigns",
+          label: "Campaigns",
           options: [
             { id: 1, name: "campaigns", label: "Sale", value: "sale" },
             {
@@ -115,33 +138,14 @@ export default {
               id: 3,
               name: "campaigns",
               label: "New Arrivals",
-              value: "new_arrivals"
-            }
-          ]
-        },
-        {
-          id: 3,
-          name: "category",
-          options: [
-            {
-              id: 1,
-              name: "category",
-              label: "Shoes",
-              value: "shoes",
-              checked: false
-            },
-            {
-              id: 2,
-              name: "category",
-              label: "Shirts",
-              value: "shirts",
-              checked: false
+              value: "new"
             }
           ]
         },
         {
           id: 4,
           name: "look",
+          label: "Look",
           options: [
             {
               id: 1,
@@ -169,6 +173,7 @@ export default {
         {
           id: 5,
           name: "brand",
+          label: "Brand",
           options: [
             {
               id: 1,
