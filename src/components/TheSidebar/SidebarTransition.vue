@@ -39,7 +39,7 @@ export default {
 }
 
 .fade-enter-active {
-  transition: all .5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
 }
 .fade-leave-active {
   display: none;

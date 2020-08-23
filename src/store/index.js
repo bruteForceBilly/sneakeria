@@ -19,6 +19,10 @@ export default new Vuex.Store({
       data: null,
       loading: null,
       error: null
+    },
+    apiProduct: {
+      sliceStart: 0,
+      sliceEnd: 12
     }
   },
   getters: {
@@ -143,6 +147,10 @@ export default new Vuex.Store({
     },
     selectedVersionMutation(state, selectedVersion) {
       Vue.set(state, "selectedVersion", selectedVersion);
+    },
+    apiProductMutation(state) {
+      Vue.set(state.apiProduct, "sliceStart", +10);
+      Vue.set(state.apiProduct, "sliceEnd", +10);
     }
   }
 });

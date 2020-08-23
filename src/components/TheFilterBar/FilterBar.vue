@@ -55,10 +55,11 @@ export default {
   },
   computed: {
     selectedOptionsElements() {
-      return this.selects
+      let selectedOptionsElements = this.selects
         .map(select => select.options)
         .flat()
         .filter(option => option.checked);
+      return selectedOptionsElements;
     },
     selectedOptionsObject() {
       return this.selectedOptionsElements.reduce(function(previous, element) {
@@ -76,6 +77,7 @@ export default {
       //  this.$store.state.searchQueryParamsString
     },
     getSetByRoute() {
+      //console.log("getSetByRoute", this.$store.state.setByRoute)
       return this.$store.state.setByRoute;
     },
     route() {
@@ -87,6 +89,7 @@ export default {
       deep: true,
       handler: function(newValue, oldValue) {
         if (this.getSetByRoute === false) {
+          //console.log("watch selects - selectedOptionsObject", this.selectedOptionsObject)
           return this.updateRouteQueryParams(this.selectedOptionsObject);
           //this.$store.commit("filterBarNoneSelectedMutation", false)
         }
@@ -161,6 +164,7 @@ export default {
       }
     },
     updateElements() {
+      //console.log("update elements", this.selectedOptionsElements)
       // check if data are set by route
       if (this.getSetByRoute === true) {
         // reset option el with false

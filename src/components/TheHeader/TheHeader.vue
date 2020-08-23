@@ -17,11 +17,9 @@
         <template v-slot:icons>
           <HeaderNav mode="icons"></HeaderNav>
         </template>
-
       </TheHeaderLayout>
 
-    <TheSidebar :show="show" :set-show="setShow"></TheSidebar>
-
+      <TheSidebar :show="show" :set-show="setShow"></TheSidebar>
     </TheHeaderSettings>
   </div>
 </template>

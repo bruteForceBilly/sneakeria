@@ -1,39 +1,38 @@
-<template> 
-    <div
-        class="h-screen overflow-hidden bg-white text-4xl absolute top-0 z-50 shadow-lg"
-        :class="$mq == 'xl' || $mq == 'lg' ? 'w-1/2' : 'w-full' "
-    >
-
+<template>
+  <div
+    class="h-screen overflow-hidden bg-white text-4xl absolute top-0 z-50 shadow-lg"
+    :class="$mq == 'xl' || $mq == 'lg' ? 'w-1/2' : 'w-full'"
+  >
     <SidebarTransitionGroup :appear="true" animation="slide-fade">
-    <div
+      <div
         v-if="selected.name === node.name"
         :key="selected.name + node.name"
         class="border-b flex justify-center items-center mb-4"
         style="height:50px;"
-    >
+      >
         <img src="@/assets/logo.svg" />
-    </div>
+      </div>
     </SidebarTransitionGroup>
 
-        <img
-        @click="setShow($event)"
-        src="@/assets/x.svg"
-        class="absolute z-50 top-0 right-0 mt-3 mr-5 p-1"
-        />
+    <img
+      @click="setShow($event)"
+      src="@/assets/x.svg"
+      class="absolute z-50 top-0 right-0 mt-2 mr-5 p-1"
+    />
 
-        <SidebarTransitionGroup :appear="true" animation="slide-fade">
-        <SidebarTreeNode
-            :key="node.name"
-            class="overflow-hidden"
-            :expanded-init="true"
-            :node="node"
-            :parent="node"
-            :select="select"
-            :selected="selected"
-            :set-show="setShow"
-        />
-        </SidebarTransitionGroup>
-    </div>
+    <SidebarTransitionGroup :appear="true" animation="slide-fade">
+      <SidebarTreeNode
+        :key="node.name"
+        class="overflow-hidden"
+        :expanded-init="true"
+        :node="node"
+        :parent="node"
+        :select="select"
+        :selected="selected"
+        :set-show="setShow"
+      />
+    </SidebarTransitionGroup>
+  </div>
 </template>
 
 <script>
@@ -62,6 +61,6 @@ export default {
   components: {
     SidebarTreeNode,
     SidebarTransitionGroup
-  },
+  }
 };
 </script>

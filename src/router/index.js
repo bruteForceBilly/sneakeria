@@ -46,32 +46,43 @@ const routes = [
       // );
       return new Promise((resolve, reject) => {
         if (store.state.searchRouteLastBeforeEnter === "searchRequestRoute") {
-          //console.log("ROUTER IF searchRequestRoute"),
+          // console.log("ROUTER IF searchRequestRoute"),
           store.dispatch(
             "searchQueryParamsStringAction",
             store.state.searchQueryParamsObject
           );
         } else if (to.name === "searchQueryRoute") {
-          //console.log("ROUTER ELSE IF searchQueryRoute", to.query); // try searchQueryParamsObjectMutation
+          // console.log("ROUTER ELSE IF searchQueryRoute", to.query); // try searchQueryParamsObjectMutation
           store.dispatch("searchQueryParamsStringAction", to.query);
           store.commit("searchQueryParamsObjectMutation", to.query);
         }
         store.state.searchQueryParamsString === ""
           ? reject()
           : resolve(store.state.searchQueryParamsString);
+
+        store.dispatch(
+          "searchQueryParamsStringAction",
+          store.state.searchQueryParamsObject
+        );
       })
         .catch(err => {
           throw new Error("Something failed", err); // I have no idea why this throws an error when hitting about directly
         })
         .then(searchQueryParamsString => {
-          //console.log(
-          //  "ROUTER searchQueryParamsString",
-          //  searchQueryParamsString
-          //);
-          products("filter", searchQueryParamsString, 0, 10,  data => {
-            //console.log("ROUTER products", data);
-            store.commit("searchFoundProductsMutation", data);
-          }).then(() => {
+          // console.log(
+          //   "ROUTER searchQueryParamsString",
+          //   searchQueryParamsString
+          // );
+          products(
+            "filter",
+            searchQueryParamsString,
+            store.state.apiProduct.sliceStart,
+            store.state.apiProduct.sliceEnd,
+            data => {
+              //console.log("ROUTER products", data);
+              store.commit("searchFoundProductsMutation", data);
+            }
+          ).then(() => {
             return next({
               name: "searchResultRoute",
               params: { slug: store.state.searchQueryParamsKebab }
@@ -80,7 +91,7 @@ const routes = [
         })
         .then(
           store.commit("searchRouteLastBeforeEnterMutation", to.name)
-          //console.log("ROUTER searchRouteLastBeforeEnterMutation", to.name)
+          // console.log("ROUTER searchRouteLastBeforeEnterMutation", to.name)
         );
     }
   },
@@ -89,7 +100,7 @@ const routes = [
     name: "searchRequestRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      //console.log("ROUTER searchRequestRoute beforeEnter", to, from);
+      // console.log("ROUTER searchRequestRoute beforeEnter", to, from);
       store
         .dispatch("searchRequestAction", to.path.substr(1).split("-"))
         .then(store.commit("searchRouteLastBeforeEnterMutation", to.name))
@@ -103,6 +114,7 @@ const routes = [
     name: "searchResultRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
+      // console.log("LOOOK searchResultRoute", 'to >>>', to, 'from >>>>', from)
       store.commit("searchRouteLastBeforeEnterMutation", to.name);
       next();
     }
@@ -121,7 +133,7 @@ const routes = [
     path: "/product/:product",
     name: "product",
     component: Product
-  },
+  }
 ];
 
 const router = new VueRouter({

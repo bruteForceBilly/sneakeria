@@ -1,18 +1,16 @@
 <template>
   <div>
-    
     <TheSidebarSettings v-slot:default="{ node, selected, select }">
-
-        <SidebarTransition :appear="true" animation="slide">
-            <TheSidebarTree
-            v-if="show"
-            :set-show="setShow"
-            :node="node"
-            :selected="selected"
-            :select="select"
-            />
-        </SidebarTransition>
-        </TheSidebarSettings>
+      <SidebarTransition :appear="true" animation="slide">
+        <TheSidebarTree
+          v-if="show"
+          :set-show="setShow"
+          :node="node"
+          :selected="selected"
+          :select="select"
+        />
+      </SidebarTransition>
+    </TheSidebarSettings>
   </div>
 </template>
 

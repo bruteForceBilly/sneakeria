@@ -32,10 +32,14 @@
           </slot>
         </div>
 
-        <div v-if="show" class="block w-full h-screen absolute inset-0 z-20 bg-gray-900 opacity-25">
-            <span class="text-white text-xs fixed bottom-0 right-0 m-8">made with ❤️ by bruteForceBilly</span>
+        <div
+          v-if="show"
+          class="block w-full h-screen absolute inset-0 z-20 bg-gray-900 opacity-25"
+        >
+          <span class="text-white text-xs fixed bottom-0 right-0 m-8"
+            >made with ❤️ by bruteForceBilly</span
+          >
         </div>
-
       </div>
     </div>
   </div>

@@ -34,7 +34,10 @@
           :key="keyProp"
           class="flex justify-between items-center ml-16 mr-5"
         >
-          <span @click="setShow($event)" class="text-lg tracking-wider py-2">
+          <span
+            @click="[setByRoute(true), setShow($event)]"
+            class="text-lg tracking-wider py-2"
+          >
             <router-link
               :to="{
                 name: 'searchRequestRoute',
@@ -100,6 +103,9 @@ export default {
   methods: {
     expand() {
       return (this.expanded = !this.expanded);
+    },
+    setByRoute(arg) {
+      return this.$store.commit("setByRoute", arg);
     }
   },
   computed: {
