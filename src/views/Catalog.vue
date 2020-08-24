@@ -50,7 +50,11 @@
         :class="[this.$mq !== 'sm' ? 'grid' : 'grid-sm']"
         class="gap-6"
       >
-        <div v-for="product in products" :key="product.id" class="">
+        <div
+          v-for="product in catalogLoadedProducts"
+          :key="product.id"
+          class=""
+        >
           <div>
             <ProductCard :product-data="product" view-context="catalog">
             </ProductCard>
@@ -58,11 +62,24 @@
         </div>
       </div>
     </div>
-    <button
-      class="float-right my-16 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-    >
-      Load more
-    </button>
+
+    <div v-if="searchFoundProductsLength > 12" class="block text-center mt-16">
+      Showing {{ catalogLoadedProducts.length }} of
+      {{ searchFoundProductsLength }} products <br />
+      <meter
+        min="0"
+        :max="searchFoundProductsLength"
+        :value="catalogLoadedProducts.length"
+      >
+      </meter>
+
+      <button
+        @click="catalogLoadCountCommit"
+        class="block mx-auto mt-6 py-1 text-gray-800 font-sans font-normal text-sm px-4 no-underline bg-gray-300 btn-primary rounded-full focus:outline-none"
+      >
+        Load More
+      </button>
+    </div>
   </div>
 </template>
 
@@ -217,10 +234,17 @@ export default {
     selectedVersion() {
       return this.$store.state.selectedVersion;
     },
+    catalogLoadedProducts() {
+      return this.$store.getters.catalogLoadedProducts;
+    },
     products() {
       return this.$store.state.searchFoundProducts === undefined
         ? ["ooops!"]
         : this.$store.state.searchFoundProducts;
+      // return this.$store.state.catalogLoadedProducts === undefined
+      //   ? console.log("ERROR", this.$store.state.catalogLoadedProducts)
+      //   : this.$store.state.catalogLoadedProducts;
+      //return this.$store.state.searchQueryParamsObject;
     },
     searchFoundProductsLength() {
       if (
@@ -241,8 +265,12 @@ export default {
       products("route", this.currentRoute.name, data => {
         return this.$store.commit("searchFoundProductsMutation", data);
       });
+    },
+    catalogLoadCountCommit() {
+      return this.$store.commit("catalogLoadCountMutation");
     }
   },
+
   filters: {
     displayPath: function(value) {
       if (!value) return "";

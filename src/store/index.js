@@ -7,8 +7,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     rootData: null,
-    setByRoute: null, // filterSetByRoute
-    filterBarNoneSelected: null,
+    setByRoute: null,
+    catalogLoadCount: 0,
+    catalogLoadLimit: 12,
+    filterBarNoneSelected: null, // delete ?
     searchQueryParamsObject: null,
     searchQueryParamsString: null,
     searchQueryParamsKebab: null,
@@ -19,10 +21,6 @@ export default new Vuex.Store({
       data: null,
       loading: null,
       error: null
-    },
-    apiProduct: {
-      sliceStart: 0,
-      sliceEnd: 12
     }
   },
   getters: {
@@ -33,6 +31,13 @@ export default new Vuex.Store({
       return Object.values(state.searchQueryParamsObject)
         .toString()
         .replace(",", "-");
+    },
+    catalogLoadedProducts: state => {
+      let end = state.catalogLoadCount * 12 + 12;
+      let result = !state.searchFoundProducts
+        ? {}
+        : state.searchFoundProducts.slice(0, end);
+      return result;
     }
   },
   actions: {
@@ -148,9 +153,13 @@ export default new Vuex.Store({
     selectedVersionMutation(state, selectedVersion) {
       Vue.set(state, "selectedVersion", selectedVersion);
     },
-    apiProductMutation(state) {
-      Vue.set(state.apiProduct, "sliceStart", +10);
-      Vue.set(state.apiProduct, "sliceEnd", +10);
+    catalogLoadCountMutation(state) {
+      state.catalogLoadCount++;
+      //Vue.set(state, "catalogLoadCount", ++);
+    },
+    catalogLoadCountResetMutation(state) {
+      state.catalogLoadCount = 0;
+      //Vue.set(state, "catalogLoadCount", ++);
     }
   }
 });

@@ -73,16 +73,10 @@ const routes = [
           //   "ROUTER searchQueryParamsString",
           //   searchQueryParamsString
           // );
-          products(
-            "filter",
-            searchQueryParamsString,
-            store.state.apiProduct.sliceStart,
-            store.state.apiProduct.sliceEnd,
-            data => {
-              //console.log("ROUTER products", data);
-              store.commit("searchFoundProductsMutation", data);
-            }
-          ).then(() => {
+          products("filter", searchQueryParamsString, data => {
+            //console.log("ROUTER products", data);
+            store.commit("searchFoundProductsMutation", data);
+          }).then(() => {
             return next({
               name: "searchResultRoute",
               params: { slug: store.state.searchQueryParamsKebab }
@@ -101,6 +95,7 @@ const routes = [
     component: Catalog,
     beforeEnter: (to, from, next) => {
       // console.log("ROUTER searchRequestRoute beforeEnter", to, from);
+      store.commit("catalogLoadCountResetMutation");
       store
         .dispatch("searchRequestAction", to.path.substr(1).split("-"))
         .then(store.commit("searchRouteLastBeforeEnterMutation", to.name))
