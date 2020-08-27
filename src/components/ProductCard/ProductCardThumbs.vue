@@ -67,7 +67,7 @@ export default {
   },
   computed: {
     sku() {
-      return this.settings.settings.selectedVariant.versionId;
+      return this.settings.settings.selectedVariant.id;
     },
     productVersions() {
       return this.settings.settings.product.versions; // RENAME PROP FROM SETTINGS TO SOMETHING ELSE

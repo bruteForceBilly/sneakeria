@@ -32,7 +32,7 @@
       </div>
 
       <h6 class="text-gray-600 mt-1 text-vw-xxs w-full">
-        Serial: {{ settings.settings.selectedVersion.versionId }} |
+        Serial: {{ settings.settings.selectedVersion.id }} |
         {{ settings.settings.product.versions.length }} Colors
       </h6>
       <div class="mt-6 w-full">
@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     sku() {
-      return this.settings.settings.selectedVersion.versionId;
+      return this.settings.settings.selectedVersion.id;
     },
     productVersions() {
       return this.settings.settings.product.versions;

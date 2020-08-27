@@ -4,34 +4,13 @@ const DESTINATION_FILE = "db.json";
 
 let products = [];
 
-// Generate Product
-for (let i = 0; i < 339; i++) {
-  faker.seed(i);
-  products.push({
-    id: `${i}`,
-    name: faker.name.firstName(),
-    get productTitle() {
-      return `${this.brand} ${this.look} ${this.category} ${this.name}`;
-    },
-    section: faker.random.arrayElement(["men", "women"]),
-    campaigns: faker.random.arrayElement([
-      "sale",
-      "essentials",
-      "new",
-      ""
-    ]),
-    category: faker.random.arrayElement(["clothing", "shoes"]),
-    look: faker.random.arrayElement(["tennis", "basketball", "soccer"]),
-    brand: faker.random.arrayElement(["nike", "adidas", "rebook", "puma"]),
-    versions: []
-  });
-}
-// Generate Product Versions
-products.forEach(function(product) {
+const makeVersions = function(i) {
+  let result = [];
   for (let j = 0; j < 6; j++) {
     faker.seed(j);
-    product.versions.push({
-      versionId: `${j}`,
+    result.push({
+      id: `${j}`,
+      product_id: `${i}`,
       color: faker.random.arrayElement([
         "white",
         "black",
@@ -60,7 +39,26 @@ products.forEach(function(product) {
       }
     });
   }
-});
+  return result;
+};
+
+// Generate Product
+for (let i = 0; i < 339; i++) {
+  faker.seed(i);
+  products.push({
+    id: `${i}`,
+    name: faker.name.firstName(),
+    get productTitle() {
+      return `${this.brand} ${this.look} ${this.category} ${this.name}`;
+    },
+    section: faker.random.arrayElement(["men", "women"]),
+    campaigns: faker.random.arrayElement(["sale", "essentials", "new", ""]),
+    category: faker.random.arrayElement(["clothing", "shoes"]),
+    look: faker.random.arrayElement(["tennis", "basketball", "soccer"]),
+    brand: faker.random.arrayElement(["nike", "adidas", "rebook", "puma"]),
+    versions: makeVersions(i)
+  });
+}
 
 let jsonProducts = JSON.stringify(products);
 

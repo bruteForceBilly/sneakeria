@@ -36,6 +36,25 @@
       <FilterBar :selects="selects"></FilterBar>
     </div>
     <div class="mt-8">
+      <div
+        @click="sortSettings = { sort: 'PriceMax', order: 'Ascending' }"
+        class="m-2 hover:underline"
+      >
+        Sort by Max Price (low - high)
+      </div>
+      <div
+        @click="sortSettings = { sort: 'PriceMax', order: 'Descending' }"
+        class="m-2 hover:underline"
+      >
+        Sort by Max Price (high - low)
+      </div>
+      <div
+        @click="sortSettings = { sort: 'Default', order: 'Default' }"
+        class="m-2 hover:underline"
+      >
+        Sort by Default
+      </div>
+
       <div v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1">
         <h1 class="text-2xl text-gray-800">
           ...No filter is selected.
@@ -51,11 +70,12 @@
         class="gap-6"
       >
         <div
-          v-for="product in catalogLoadedProducts"
+          v-for="product in sortSelect(sortSettings)"
           :key="product.id"
           class=""
         >
           <div>
+            {{ product.sortRank }}
             <ProductCard :product-data="product" view-context="catalog">
             </ProductCard>
           </div>
@@ -64,12 +84,12 @@
     </div>
 
     <div v-if="searchFoundProductsLength > 12" class="block text-center mt-16">
-      Showing {{ catalogLoadedProducts.length }} of
+      Showing {{ loadedProducts.length }} of
       {{ searchFoundProductsLength }} products <br />
       <meter
         min="0"
         :max="searchFoundProductsLength"
-        :value="catalogLoadedProducts.length"
+        :value="loadedProducts.length"
       >
       </meter>
 
@@ -101,6 +121,7 @@ export default {
   data() {
     return {
       loadProducts: false,
+      sortSettings: { sort: "Default", order: "Default" },
       selects: [
         {
           id: 1,
@@ -234,17 +255,37 @@ export default {
     selectedVersion() {
       return this.$store.state.selectedVersion;
     },
-    catalogLoadedProducts() {
+    loadedProducts() {
       return this.$store.getters.catalogLoadedProducts;
+    },
+    loadedProductsSortedPriceMax() {
+      let copyLoadedProducts = [...this.loadedProducts];
+      copyLoadedProducts.forEach(product => {
+        let maxPriceObj = product.versions.reduce(
+          (max, version) => (max > version.price.offeredAmount ? max : version),
+          null
+        );
+        product.maxPrice = maxPriceObj.price.offeredAmount;
+        return;
+      });
+      return copyLoadedProducts;
+    },
+    loadedProductsSortedPriceMaxAscending() {
+      let sortedMaxAscending = [...this.loadedProductsSortedPriceMax].sort(
+        (a, b) => a.maxPrice - b.maxPrice
+      );
+      return sortedMaxAscending;
+    },
+    loadedProductsSortedPriceMaxDescending() {
+      let sortedMaxDescending = [...this.loadedProductsSortedPriceMax].sort(
+        (b, a) => a.maxPrice - b.maxPrice
+      );
+      return sortedMaxDescending;
     },
     products() {
       return this.$store.state.searchFoundProducts === undefined
         ? ["ooops!"]
         : this.$store.state.searchFoundProducts;
-      // return this.$store.state.catalogLoadedProducts === undefined
-      //   ? console.log("ERROR", this.$store.state.catalogLoadedProducts)
-      //   : this.$store.state.catalogLoadedProducts;
-      //return this.$store.state.searchQueryParamsObject;
     },
     searchFoundProductsLength() {
       if (
@@ -261,6 +302,11 @@ export default {
     }
   },
   methods: {
+    sortSelect({ sort, order } = { sort: "Default", order: "Default" }) {
+      return sort == "Default"
+        ? this.loadedProducts
+        : this["loadedProductsSorted" + sort + order];
+    }, // loadedProductsSortedPriceAscending
     loadAllProducts() {
       products("route", this.currentRoute.name, data => {
         return this.$store.commit("searchFoundProductsMutation", data);
@@ -277,6 +323,16 @@ export default {
       value = value.toString();
       return value.replace(/[-]/g, " ∙ ").substr(1);
     }
+  },
+  beforeUpdate() {
+    //return this.loadedProductsSorted;
+    /* let test = this.loadedProductsSorted.map(lp => lp.versions);
+    return test.forEach((cv, i) =>
+      console.log(
+        i,
+        cv.forEach(y => console.log(y.price.offeredAmount))
+      )
+    ); */
   }
 };
 </script>

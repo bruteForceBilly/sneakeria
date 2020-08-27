@@ -25,14 +25,14 @@ export default {
   data() {
     return {
       selectedVersion: {
-        versionId: null
+        id: null
       },
       likedVersions: {}
     };
   },
   computed: {
     isSelectedVersionLiked() {
-      return this.likedVersions[this.selectedVersion.versionId];
+      return this.likedVersions[this.selectedVersion.id];
     },
     layout() {
       if (this.viewContext === "catalog") {
@@ -45,33 +45,30 @@ export default {
       return this.productData;
     },
     selectedVersionId() {
-      return this.selectedVersion.versionId;
+      return this.selectedVersion.id;
     }
   },
   methods: {
     selectHandler(version) {
-      return (this.selectedVersion.versionId = version);
+      return (this.selectedVersion.id = version);
     },
     versionLinkQueryHandler() {
-      if (
-        this.selectedVersion.versionId ==
-        this.$store.state.route.query.versionId
-      ) {
+      if (this.selectedVersion.id == this.$store.state.route.query.versionId) {
         return;
       } else {
         this.$router.push({
           name: "product",
           params: { product: this.product.id },
           query: {
-            versionId: this.selectedVersion.versionId
+            versionId: this.selectedVersion.id
           }
         });
       }
     },
     likeHandler() {
       return this.isSelectedVersionLiked
-        ? (this.likedVersions[this.selectedVersion.versionId] = false)
-        : (this.likedVersions[this.selectedVersion.versionId] = true);
+        ? (this.likedVersions[this.selectedVersion.id] = false)
+        : (this.likedVersions[this.selectedVersion.id] = true);
     }
   },
   created() {
@@ -79,14 +76,14 @@ export default {
       this.viewContext === "product" &&
       this.$store.state.route.query.versionId
     ) {
-      this.selectedVersion.versionId = this.$store.state.route.query.versionId;
+      this.selectedVersion.id = this.$store.state.route.query.versionId;
     } else {
-      this.selectedVersion.versionId = 0;
+      this.selectedVersion.id = 0;
     }
   },
   mounted() {
     this.product.versions.forEach(version => {
-      this.$set(this.likedVersions, version.versionId, false);
+      this.$set(this.likedVersions, version.id, false);
     });
   }
 };
