@@ -1,58 +1,72 @@
 <template>
   <div>
-    <div class="static">
-      <div class="relative">
-        <div class="border-t bg-white border-b py-1 w-full flex justify-start">
-          <MenuBase
-            v-for="item in selects"
-            :key="item.name"
-            :item="item"
-            :selected="selectedOptionsObject"
-          ></MenuBase>
-        </div>
-      </div>
-      <div class="mt-4 flex justify-start">
-        <div
-          v-for="option in selectedOptionsElements"
-          :key="option.value"
-          class=""
-        >
-          <FilterPill
-            @click.native="
-              selectOptionsCheckToggle(
-                clickedOptionObject(option.name, option.value)
-              )
-            "
+    <FilterBarSettings
+      :selects="selects"
+      v-slot:default="{
+        baseSettings
+      }"
+    >
+      <div class="static">
+        <div class="relative">
+          <div
+            class="border-t bg-white border-b py-1 w-full flex justify-start"
           >
-            {{ option.label }}
-          </FilterPill>
+            <MenuBase
+              :componentSettings="baseSettings"
+              v-for="item in baseSettings.selects"
+              :key="item.name"
+              :item="item"
+              :selected="baseSettings.selectedOptionsObject"
+            ></MenuBase>
+          </div>
         </div>
-        <FilterPill
-          v-show="selectedOptionsElements.length > 0"
-          link="true"
-          @click.native="clearAll()"
-          >Clear All</FilterPill
-        >
+        <div class="mt-4 flex justify-start">
+          <div
+            v-for="option in baseSettings.selectedOptionsElements"
+            :key="option.value"
+            class=""
+          >
+            <FilterPill
+              @click.native="
+                baseSettings.selectOptionsCheckToggle(
+                  baseSettings.clickedOptionObject(option.name, option.value)
+                )
+              "
+            >
+              {{ option.label }}
+            </FilterPill>
+          </div>
+          <FilterPill
+            v-show="baseSettings.selectedOptionsElements.length > 0"
+            link="true"
+            @click.native="baseSettings.clearAll()"
+            >Clear All</FilterPill
+          >
+        </div>
       </div>
-    </div>
+    </FilterBarSettings>
   </div>
 </template>
 
 <script>
 import MenuBase from "./FilterMenu/MenuBase.vue";
 import FilterPill from "./FilterPill.vue";
+import FilterBarSettings from "./FilterBarSettings.vue";
 
 export default {
   name: "FilterBar",
   components: {
     MenuBase,
-    FilterPill
+    FilterPill,
+    FilterBarSettings
   },
   props: {
     selects: {
       type: Array
     }
-  },
+  }
+
+  /*
   computed: {
     selectedOptionsElements() {
       let selectedOptionsElements = this.selects
@@ -190,5 +204,6 @@ export default {
     }
     return this.$store.commit("setByRoute", false);
   }
+  */
 };
 </script>

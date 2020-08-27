@@ -37,7 +37,7 @@ import MenuOptionsCheckbox from "./MenuOptionsCheckbox.vue";
 
 export default {
   name: "MenuBase",
-  props: ["item", "selected"],
+  props: ["item", "selected", "componentSettings"],
   components: {
     MenuSettings,
     MenuButton,
@@ -47,7 +47,9 @@ export default {
   },
   computed: {
     hasSelected() {
-      return Object.keys(this.selected).includes(this.item.name);
+      return Object.keys(this.componentSettings.baseSettings.selected).includes(
+        this.item.name
+      );
     }
   }
 };
