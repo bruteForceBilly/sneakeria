@@ -16,7 +16,13 @@
               v-for="item in baseSettings.selects"
               :key="item.name"
               :item="item"
-              :selected="baseSettings.selectedOptionsObject"
+            ></MenuBase>
+            <MenuBase
+              class="ml-auto"
+              :componentSettings="baseSettings"
+              v-for="item in baseSettings.sorts"
+              :key="item.name"
+              :item="item"
             ></MenuBase>
           </div>
         </div>

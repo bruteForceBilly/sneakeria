@@ -1,8 +1,10 @@
 <template>
   <div>
+    <!-- ADD SORT BY SETTINGS HERE FROM CATALOG -->
     <slot
       :baseSettings="{
         selects,
+        sorts,
         selectedOptionsElements,
         selectedOptionsObject,
         searchQueryParamsObject,
@@ -28,6 +30,33 @@ export default {
     sortState: {
       type: Object
     }
+  },
+  data() {
+    return {
+      sorts: [
+        {
+          id: 1,
+          name: "sortBy",
+          label: "Sort By",
+          options: [
+            {
+              id: 1,
+              name: "sortBy",
+              label: "Price (low - high)",
+              value: "priceAscending",
+              checked: false
+            },
+            {
+              id: 2,
+              name: "sortBy",
+              label: "Price (high - low)",
+              value: "priceDescending",
+              checked: false
+            }
+          ]
+        }
+      ]
+    };
   },
   computed: {
     selectedOptionsElements() {
@@ -165,6 +194,9 @@ export default {
       this.selectOptionsCheckToggle({});
     }
     return this.$store.commit("setByRoute", false);
+  },
+  beforeUpdate() {
+    return console.log("hello", this.selectedOptionsObject);
   }
 };
 </script>

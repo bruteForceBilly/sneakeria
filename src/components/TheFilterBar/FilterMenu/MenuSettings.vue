@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "FilterDropDownMenuSettings",
+  name: "MenuSettings",
   data() {
     return {
       hover: false

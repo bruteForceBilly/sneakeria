@@ -2,7 +2,7 @@
   <div>
     <MenuSettings v-slot:default="{ hover }">
       <MenuButton :hover="hover" :hasSelected="hasSelected">
-        <template v-slot:menu-label>{{ item.name }} </template>
+        <template v-slot:menu-label>{{ item.label }} </template>
       </MenuButton>
       <MenuOptionsContainer :hover="hover">
         <template v-slot:options>
@@ -37,7 +37,7 @@ import MenuOptionsCheckbox from "./MenuOptionsCheckbox.vue";
 
 export default {
   name: "MenuBase",
-  props: ["item", "selected", "componentSettings"],
+  props: ["item", "componentSettings"],
   components: {
     MenuSettings,
     MenuButton,
@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     hasSelected() {
-      return Object.keys(this.componentSettings.baseSettings.selected).includes(
+      return Object.keys(this.componentSettings.selectedOptionsObject).includes(
         this.item.name
       );
     }
