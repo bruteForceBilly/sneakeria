@@ -5,6 +5,8 @@
       :baseSettings="{
         selects,
         sorts,
+        sortSettings,
+        sortSettingsHandler,
         selectedOptionsElements,
         selectedOptionsObject,
         searchQueryParamsObject,
@@ -88,6 +90,9 @@ export default {
     }
   },
   methods: {
+    sortSettingsHandler(arg) {
+      return (this.sortSettings = arg);
+    },
     clearAll() {
       return this.selectedOptionsElements.forEach(el => (el.checked = false)); // redo for orm
     },
@@ -183,6 +188,9 @@ export default {
       handler: function(newValue, oldValue) {
         return this.updateElements();
       }
+    },
+    sortSettings: {
+      handler: newValue => console.log("sort watch", newValue)
     }
   },
   created() {

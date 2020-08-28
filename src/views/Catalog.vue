@@ -33,7 +33,7 @@
     </div>
 
     <div class="w-full">
-      <FilterBar :selects="selects"></FilterBar>
+      <TheCatalogFilterBar :selects="selects"></TheCatalogFilterBar>
     </div>
     <div class="mt-8">
       <div
@@ -69,6 +69,7 @@
         :class="[this.$mq !== 'sm' ? 'grid' : 'grid-sm']"
         class="gap-6"
       >
+        <!-- Fire off event from filter bar and make a listener that set payload here -->
         <div
           v-for="product in sortSelect(sortSettings)"
           :key="product.id"
@@ -105,7 +106,7 @@
 
 <script>
 import BreadCrumbsBar from "@/components/TheBreadCrumbsBar/BreadCrumbsBar.vue";
-import FilterBar from "@/components/TheFilterBar/FilterBar.vue";
+import TheCatalogFilterBar from "@/components/TheCatalogFilterBar/TheCatalogFilterBar.vue";
 import ProductCard from "@/components/ProductCard/ProductCardBase.vue";
 
 import products from "@/services/products.js";
@@ -115,7 +116,7 @@ export default {
   props: ["q"],
   components: {
     BreadCrumbsBar,
-    FilterBar,
+    TheCatalogFilterBar,
     ProductCard
   },
   data() {

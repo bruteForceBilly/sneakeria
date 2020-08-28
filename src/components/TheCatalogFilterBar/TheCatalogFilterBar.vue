@@ -16,6 +16,7 @@
               v-for="item in baseSettings.selects"
               :key="item.name"
               :item="item"
+              type="checkbox"
             ></CatalogFilterBarDropDownMenu>
 
             <CatalogFilterBarDropDownMenu
@@ -23,6 +24,7 @@
               :componentSettings="baseSettings"
               :key="baseSettings.sorts.name"
               :item="baseSettings.sorts[0]"
+              type="sort"
             ></CatalogFilterBarDropDownMenu>
           </div>
         </div>
@@ -55,8 +57,8 @@
 </template>
 
 <script>
-import CatalogFilterBarDropDownMenu from "./CatalogFilterBarDropDownMenu/CatalogFilterBarDropDownMenu.vue";
-import CatalogFilterBarSelectedFiltersItem from "./CatalogFilterBarSelectedFilters/CatalogFilterBarSelectedFiltersItem.vue";
+import CatalogFilterBarDropDownMenu from "./DropDownMenu/CatalogFilterBarDropDownMenu.vue";
+import CatalogFilterBarSelectedFiltersItem from "./SelectedFilters/CatalogFilterBarSelectedFiltersItem.vue";
 import TheCatalogFilterBarSettings from "./TheCatalogFilterBarSettings.vue";
 
 export default {

@@ -17,18 +17,27 @@
               <!-- Figure out how to but the model for the data higher upp so you can print it out-->
               <CatalogFilterBarDropDownMenuItemCheckbox
                 :checked="option.checked"
+                v-if="type === 'checkbox'"
               >
                 <template v-slot:input>
                   <input
-                    type="checkbox"
+                    v-if="type === 'checkbox'"
                     class="hidden"
                     v-model="option.checked"
                   />
-                  <!-- redo for orm -->
                 </template>
               </CatalogFilterBarDropDownMenuItemCheckbox>
             </template>
-            <template v-slot:option-label>{{ option.label }}</template>
+
+            <template v-slot:option-label>
+              <div
+                v-if="type === 'sort'"
+                @click="componentSettings.sortSettingsHandler(option.value)"
+              >
+                {{ option.label }}
+              </div>
+              <div v-else>{{ option.label }}</div>
+            </template>
           </CatalogFilterBarDropDownMenuItem>
         </template>
       </CatalogFilterBarDropDownMenuContainer>
@@ -45,7 +54,7 @@ import CatalogFilterBarDropDownMenuItemCheckbox from "./CatalogFilterBarDropDown
 
 export default {
   name: "CatalogFilterBarDropDownMenu",
-  props: ["item", "componentSettings"],
+  props: ["item", "type", "componentSettings"],
   components: {
     CatalogFilterBarDropDownMenuSettings,
     CatalogFilterBarDropDownMenuButton,

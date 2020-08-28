@@ -3,10 +3,10 @@
     <li class="my-4">
       <label class="custom-label flex">
         <div>
-          <slot name="option-checkbox"> Checkbox </slot>
+          <slot name="option-checkbox"></slot>
         </div>
         <span class="font-semibold select-none">
-          <slot name="option-label"> Label </slot>
+          <slot name="option-label"></slot>
         </span>
       </label>
     </li>
