@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="position-after-height bg-white inline-block z-20 absolute w-40 border-black outline-none border px-3 py-1 bg-white rounded-none"
+      class="position-after-height inline-block z-20 absolute w-40 border-black outline-none border px-3 py-1 bg-white rounded-none"
       :class="hover ? 'inline-block' : 'hidden'"
     >
       <ul class="px-1 pb-1">

@@ -26,13 +26,11 @@ export default {
   props: {
     selects: {
       type: Array
-    },
-    sortState: {
-      type: Object
     }
   },
   data() {
     return {
+      sortSettings: { sort: "Default", order: "Default" },
       sorts: [
         {
           id: 1,
@@ -43,14 +41,14 @@ export default {
               id: 1,
               name: "sortBy",
               label: "Price (low - high)",
-              value: "priceAscending",
+              value: { sort: "PriceMax", order: "Ascending" },
               checked: false
             },
             {
               id: 2,
               name: "sortBy",
               label: "Price (high - low)",
-              value: "priceDescending",
+              value: { sort: "PriceMax", order: "Descending" },
               checked: false
             }
           ]
@@ -196,7 +194,7 @@ export default {
     return this.$store.commit("setByRoute", false);
   },
   beforeUpdate() {
-    return console.log("hello", this.selectedOptionsObject);
+    return console.log("sort", this.sortSettings);
   }
 };
 </script>
