@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "MenuSettings",
+  name: "CatalogFilterBarDropDownMenuSettings",
   data() {
     return {
       hover: false

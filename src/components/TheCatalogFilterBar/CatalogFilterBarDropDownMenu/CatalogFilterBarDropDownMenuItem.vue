@@ -15,6 +15,6 @@
 
 <script>
 export default {
-  name: "FilterDropDownMenuOption"
+  name: "CatalogFilterBarDropDownMenuItem"
 };
 </script>

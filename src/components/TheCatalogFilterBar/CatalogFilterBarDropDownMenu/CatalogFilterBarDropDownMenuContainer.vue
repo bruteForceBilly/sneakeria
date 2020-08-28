@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "FilterDropDownMenuOptionsContainer",
+  name: "CatalogFilterBarDropDownMenuContainer",
   props: ["hover"]
 };
 </script>

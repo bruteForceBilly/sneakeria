@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: "MenuButton",
+  name: "CatalogFilterBarDropDownMenuButton",
   props: ["hover", "hasSelected"]
 };
 </script>

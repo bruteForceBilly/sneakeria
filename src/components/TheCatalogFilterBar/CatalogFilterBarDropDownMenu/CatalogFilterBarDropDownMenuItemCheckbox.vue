@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: "FilterDropDownMenuOptionsCheckbox",
+  name: "CatalogFilterBarDropDownMenuItemCheckbox",
   props: {
     checked: Boolean
   }
