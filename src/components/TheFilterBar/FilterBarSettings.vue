@@ -192,9 +192,6 @@ export default {
       this.selectOptionsCheckToggle({});
     }
     return this.$store.commit("setByRoute", false);
-  },
-  beforeUpdate() {
-    return console.log("sort", this.sortSettings);
   }
 };
 </script>

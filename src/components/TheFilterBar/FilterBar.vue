@@ -20,9 +20,8 @@
             <MenuBase
               class="ml-auto"
               :componentSettings="baseSettings"
-              v-for="item in baseSettings.sorts"
-              :key="item.name"
-              :item="item"
+              :key="baseSettings.sorts.name"
+              :item="baseSettings.sorts[0]"
             ></MenuBase>
           </div>
         </div>
