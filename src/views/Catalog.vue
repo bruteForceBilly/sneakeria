@@ -36,25 +36,6 @@
       <TheCatalogFilterBar :selects="selects"></TheCatalogFilterBar>
     </div>
     <div class="mt-8">
-      <div
-        @click="sortSettings = { sort: 'PriceMax', order: 'Ascending' }"
-        class="m-2 hover:underline"
-      >
-        Sort by Max Price (low - high)
-      </div>
-      <div
-        @click="sortSettings = { sort: 'PriceMax', order: 'Descending' }"
-        class="m-2 hover:underline"
-      >
-        Sort by Max Price (high - low)
-      </div>
-      <div
-        @click="sortSettings = { sort: 'Default', order: 'Default' }"
-        class="m-2 hover:underline"
-      >
-        Sort by Default
-      </div>
-
       <div v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1">
         <h1 class="text-2xl text-gray-800">
           ...No filter is selected.
@@ -71,7 +52,7 @@
       >
         <!-- Fire off event from filter bar and make a listener that set payload here -->
         <div
-          v-for="product in sortSelect(sortSettings)"
+          v-for="product in sortSelect(catalogSortSetting)"
           :key="product.id"
           class=""
         >
@@ -255,6 +236,9 @@ export default {
   computed: {
     selectedVersion() {
       return this.$store.state.selectedVersion;
+    },
+    catalogSortSetting() {
+      return this.$store.state.catalogSortSetting;
     },
     loadedProducts() {
       return this.$store.getters.catalogLoadedProducts;

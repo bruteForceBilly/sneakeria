@@ -16,8 +16,8 @@
             <template v-slot:option-checkbox>
               <!-- Figure out how to but the model for the data higher upp so you can print it out-->
               <CatalogFilterBarDropDownMenuItemCheckbox
-                :checked="option.checked"
                 v-if="type === 'checkbox'"
+                :checked="option.checked"
               >
                 <template v-slot:input>
                   <input

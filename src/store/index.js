@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     rootData: null,
     setByRoute: null,
+    catalogSortSetting: { sort: "Default", order: "Default" },
     catalogLoadCount: 0,
     catalogLoadLimit: 12,
     filterBarNoneSelected: null, // delete ?
@@ -152,6 +153,9 @@ export default new Vuex.Store({
     },
     selectedVersionMutation(state, selectedVersion) {
       Vue.set(state, "selectedVersion", selectedVersion);
+    },
+    catalogSortSettingMutation(state, arg) {
+      Vue.set(state, "catalogSortSetting", arg);
     },
     catalogLoadCountMutation(state) {
       state.catalogLoadCount++;

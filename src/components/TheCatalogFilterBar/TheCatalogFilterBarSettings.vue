@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     sortSettingsHandler(arg) {
-      return (this.sortSettings = arg);
+      return this.$store.commit("catalogSortSettingMutation", arg);
     },
     clearAll() {
       return this.selectedOptionsElements.forEach(el => (el.checked = false)); // redo for orm
@@ -188,9 +188,6 @@ export default {
       handler: function(newValue, oldValue) {
         return this.updateElements();
       }
-    },
-    sortSettings: {
-      handler: newValue => console.log("sort watch", newValue)
     }
   },
   created() {
