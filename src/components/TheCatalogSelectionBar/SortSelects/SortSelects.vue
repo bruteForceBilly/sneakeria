@@ -1,0 +1,43 @@
+<template>
+  <div>
+    <div>
+      <Menu
+        v-for="item in sorts"
+        :key="item.name"
+        :item-name="item.name"
+        :item-label="item.label"
+      >
+        <template v-slot:menu-items>
+          <MenuOption v-for="option in item.options" :key="option.id">
+            <template v-slot:option-label>
+              <div @click="sortSettingsHandler(option.value)">
+                {{ option.label }}
+              </div>
+            </template>
+          </MenuOption>
+        </template>
+      </Menu>
+    </div>
+  </div>
+</template>
+<script>
+import Menu from "../DropDownMenu/Menu.vue";
+import MenuOption from "../DropDownMenu/MenuOption.vue";
+
+export default {
+  props: {
+    sorts: {
+      type: Array
+    }
+  },
+  components: {
+    Menu,
+    MenuOption
+  },
+  methods: {
+    sortSettingsHandler(arg) {
+      return this.$store.commit("catalogSortSettingMutation", arg);
+    }
+  }
+};
+</script>

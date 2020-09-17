@@ -33,7 +33,7 @@
     </div>
 
     <div class="w-full">
-      <SelectionBar></SelectionBar>
+      <SelectionBar :selects="selects"></SelectionBar>
     </div>
     <div class="mt-8">
       <div v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1">

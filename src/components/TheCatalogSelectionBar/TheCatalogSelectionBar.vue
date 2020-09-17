@@ -1,33 +1,30 @@
 <template>
   <div>
     <Settings
+      :selects="selects"
       v-slot:default="{
-        baseSettings
+        settings
       }"
     >
       <div class="static">
         <div class="relative">
-          <div class="border-t bg-white border-b py-1 w-full">
+          <div
+            class="border-t bg-white border-b py-1 w-full flex justify-start"
+          >
             <FilterSelects
-              :selected-options-object="baseSettings.selectedOptionsObject"
-              :selects="baseSettings.selects"
+              :selected-options-object="settings.selectedOptionsObject"
+              :selects="settings.selects"
             ></FilterSelects>
-            <!--
-            <CatalogFilterBarDropDownMenu
-              class="ml-auto"
-              :componentSettings="baseSettings"
-              :key="baseSettings.sorts.name"
-              :item="baseSettings.sorts[0]"
-              type="sort"
-            ></CatalogFilterBarDropDownMenu> -->
+
+            <SortSelects class="ml-auto" :sorts="settings.sorts"></SortSelects>
           </div>
         </div>
         <div class="mt-4 flex justify-start">
           <TheSelectedOptions
-            :toggler="baseSettings.selectOptionsCheckToggle"
-            :clicked="baseSettings.clickedOptionObject"
-            :selected="baseSettings.selectedOptionsElements"
-            :resetter="baseSettings.clearAll"
+            :toggler="settings.selectOptionsCheckToggle"
+            :clicked="settings.clickedOptionObject"
+            :selected="settings.selectedOptionsElements"
+            :resetter="settings.clearAll"
           ></TheSelectedOptions>
 
           <!-- <div
@@ -59,6 +56,7 @@
 
 <script>
 import FilterSelects from "./FilterSelects/FilterSelects.vue";
+import SortSelects from "./SortSelects/SortSelects.vue";
 import TheSelectedOptions from "./TheSelectedOptions/TheSelectedOptions.vue";
 import Settings from "./TheCatalogSelectionBarSettings.vue";
 
@@ -66,8 +64,14 @@ export default {
   name: "TheCatalogSelectionBar",
   components: {
     FilterSelects,
+    SortSelects,
     TheSelectedOptions,
     Settings
+  },
+  props: {
+    selects: {
+      type: Array
+    }
   }
 };
 </script>

@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div class="w-full flex justify-start">
+    <div>
       <Menu
         v-for="item in selects"
         :key="item.name"
-        :item="item"
+        :item-name="item.name"
+        :item-label="item.label"
         :selected-options-object="selectedOptionsObject"
       >
         <template v-slot:menu-items>
