@@ -33,7 +33,7 @@
     </div>
 
     <div class="w-full">
-      <TheCatalogFilterBar :selects="selects"></TheCatalogFilterBar>
+      <SelectionBar></SelectionBar>
     </div>
     <div class="mt-8">
       <div v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1">
@@ -87,7 +87,7 @@
 
 <script>
 import BreadCrumbsBar from "@/components/TheBreadCrumbsBar/BreadCrumbsBar.vue";
-import TheCatalogFilterBar from "@/components/TheCatalogFilterBar/TheCatalogFilterBar.vue";
+import SelectionBar from "@/components/TheCatalogSelectionBar/TheCatalogSelectionBar.vue";
 import ProductCard from "@/components/ProductCard/ProductCardBase.vue";
 
 import products from "@/services/products.js";
@@ -97,7 +97,7 @@ export default {
   props: ["q"],
   components: {
     BreadCrumbsBar,
-    TheCatalogFilterBar,
+    SelectionBar,
     ProductCard
   },
   data() {

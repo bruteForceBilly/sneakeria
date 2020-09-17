@@ -1,35 +1,36 @@
 <template>
   <div>
-    <TheCatalogFilterBarSettings
-      :selects="selects"
+    <Settings
       v-slot:default="{
         baseSettings
       }"
     >
       <div class="static">
         <div class="relative">
-          <div
-            class="border-t bg-white border-b py-1 w-full flex justify-start"
-          >
-            <CatalogFilterBarDropDownMenu
-              :componentSettings="baseSettings"
-              v-for="item in baseSettings.selects"
-              :key="item.name"
-              :item="item"
-              type="checkbox"
-            ></CatalogFilterBarDropDownMenu>
-
+          <div class="border-t bg-white border-b py-1 w-full">
+            <FilterSelects
+              :selected-options-object="baseSettings.selectedOptionsObject"
+              :selects="baseSettings.selects"
+            ></FilterSelects>
+            <!--
             <CatalogFilterBarDropDownMenu
               class="ml-auto"
               :componentSettings="baseSettings"
               :key="baseSettings.sorts.name"
               :item="baseSettings.sorts[0]"
               type="sort"
-            ></CatalogFilterBarDropDownMenu>
+            ></CatalogFilterBarDropDownMenu> -->
           </div>
         </div>
         <div class="mt-4 flex justify-start">
-          <div
+          <TheSelectedOptions
+            :toggler="baseSettings.selectOptionsCheckToggle"
+            :clicked="baseSettings.clickedOptionObject"
+            :selected="baseSettings.selectedOptionsElements"
+            :resetter="baseSettings.clearAll"
+          ></TheSelectedOptions>
+
+          <!-- <div
             v-for="option in baseSettings.selectedOptionsElements"
             :key="option.value"
             class=""
@@ -49,29 +50,24 @@
             link="true"
             @click.native="baseSettings.clearAll()"
             >Clear All</CatalogFilterBarSelectedFiltersItem
-          >
+          > -->
         </div>
       </div>
-    </TheCatalogFilterBarSettings>
+    </Settings>
   </div>
 </template>
 
 <script>
-import CatalogFilterBarDropDownMenu from "./DropDownMenu/CatalogFilterBarDropDownMenu.vue";
-import CatalogFilterBarSelectedFiltersItem from "./SelectedFilters/CatalogFilterBarSelectedFiltersItem.vue";
-import TheCatalogFilterBarSettings from "./TheCatalogFilterBarSettings.vue";
+import FilterSelects from "./FilterSelects/FilterSelects.vue";
+import TheSelectedOptions from "./TheSelectedOptions/TheSelectedOptions.vue";
+import Settings from "./TheCatalogSelectionBarSettings.vue";
 
 export default {
-  name: "TheCatalogFilterBar",
+  name: "TheCatalogSelectionBar",
   components: {
-    CatalogFilterBarDropDownMenu,
-    CatalogFilterBarSelectedFiltersItem,
-    TheCatalogFilterBarSettings
-  },
-  props: {
-    selects: {
-      type: Array
-    }
+    FilterSelects,
+    TheSelectedOptions,
+    Settings
   }
 };
 </script>
