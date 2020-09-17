@@ -3,35 +3,10 @@
     <div class="pt-4">
       <BreadCrumbsBar :selects="selects"></BreadCrumbsBar>
     </div>
-    <div class="pt-8 pb-12">
-      <h1 class="text-4xl tracking-tighter font-black uppercase">
-        <span
-          v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1"
-          >All Products</span
-        >
-        <span
-          v-else-if="
-            currentRoute.name === 'all' && searchFoundProductsLength > 0
-          "
-          >All Products
-          <span class="font-light tracking-wider text-gray-600 text-xl">
-            ( {{ searchFoundProductsLength }} Products )
-          </span></span
-        >
-        <span v-else>
-          <span v-if="searchFoundProductsLength > 0">
-            {{ currentRoute.path | displayPath }}
-            <span class="font-light tracking-wider  text-gray-600 text-xl">
-              ( {{ searchFoundProductsLength }} Products )
-            </span>
-          </span>
-          <span v-else>
-            No Products Found
-          </span>
-        </span>
-      </h1>
-    </div>
-
+    <DisplayTitle
+      :current-route="currentRoute"
+      :search-found-products-length="searchFoundProductsLength"
+    ></DisplayTitle>
     <div class="w-full">
       <SelectionBar :selects="selects"></SelectionBar>
     </div>
@@ -89,6 +64,7 @@
 import BreadCrumbsBar from "@/components/TheBreadCrumbsBar/BreadCrumbsBar.vue";
 import SelectionBar from "@/components/TheCatalogSelectionBar/TheCatalogSelectionBar.vue";
 import ProductCard from "@/components/ProductCard/ProductCardBase.vue";
+import DisplayTitle from "@/components/CatalogDisplayTitle.vue";
 
 import products from "@/services/products.js";
 
@@ -98,7 +74,8 @@ export default {
   components: {
     BreadCrumbsBar,
     SelectionBar,
-    ProductCard
+    ProductCard,
+    DisplayTitle
   },
   data() {
     return {
@@ -299,14 +276,6 @@ export default {
     },
     catalogLoadCountCommit() {
       return this.$store.commit("catalogLoadCountMutation");
-    }
-  },
-
-  filters: {
-    displayPath: function(value) {
-      if (!value) return "";
-      value = value.toString();
-      return value.replace(/[-]/g, " ∙ ").substr(1);
     }
   },
   beforeUpdate() {
