@@ -6,7 +6,7 @@
 
 <script>
 import products from "@/services/products.js";
-import ProductCard from "@/components/ProductCard/ProductCardBase.vue";
+import ProductCard from "@/components/Catalog/ProductCard/ProductCardBase.vue";
 
 export default {
   name: "Product",
