@@ -8,18 +8,14 @@
       </transition>
     </div>
 
-    <!-- try with transition and keep alive 
-
-     
-    
+    <!-- try with transition and keep alive     
     https://github.com/vuejs/vue-router/blob/dev/examples/transitions/app.js
     -->
   </div>
 </template>
 
 <script>
-// import TheAppMenu from "@/components/TheAppMenu/AppMenuBase";
-import TheHeader from "@/components/TheHeader/TheHeader";
+import TheHeader from "@/components/App/TheHeader/TheHeader";
 
 import axios from "axios";
 import { API_SITE } from "@/constants";

@@ -27,7 +27,7 @@
 <script>
 import TheHeaderSettings from "./TheHeaderSettings";
 import TheHeaderLayout from "./TheHeaderLayout";
-import TheSidebar from "@/components/TheSidebar/TheSidebar";
+import TheSidebar from "@/components/App/TheSidebar/TheSidebar";
 import HeaderNav from "./HeaderNav/HeaderNav.vue";
 
 export default {

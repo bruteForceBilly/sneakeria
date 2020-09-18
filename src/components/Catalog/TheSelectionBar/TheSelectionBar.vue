@@ -58,7 +58,7 @@
 import FilterSelects from "./FilterSelects/FilterSelects.vue";
 import SortSelects from "./SortSelects/SortSelects.vue";
 import TheSelectedOptions from "./TheSelectedOptions/TheSelectedOptions.vue";
-import Settings from "./TheCatalogSelectionBarSettings.vue";
+import Settings from "./TheSelectionBarSettings.vue";
 
 export default {
   name: "TheCatalogSelectionBar",

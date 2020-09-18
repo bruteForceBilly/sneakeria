@@ -6,7 +6,6 @@ import products from "@/services/products.js";
 import Home from "../views/Home.vue";
 import Catalog from "../views/Catalog.vue";
 import About from "../views/About.vue";
-import Cart from "../views/Cart.vue";
 import Product from "../views/Product.vue";
 
 Vue.use(VueRouter);
@@ -118,11 +117,6 @@ const routes = [
     path: "/about",
     name: "about",
     component: About
-  },
-  {
-    path: "/cart",
-    name: "cart",
-    component: Cart
   },
   {
     path: "/product/:product",
