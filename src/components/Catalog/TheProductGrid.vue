@@ -10,7 +10,11 @@
     </div>
 
     <div v-else :class="[this.$mq !== 'sm' ? 'grid' : 'grid-sm']" class="gap-6">
-      <div v-for="product in sortSelect(setting)" :key="product.id" class="">
+      <div
+        v-for="product in sortSelect(sortSetting)"
+        :key="product.id"
+        class=""
+      >
         <div>
           {{ product.sortRank }}
           <ProductCard :product-data="product" view-context="catalog">
@@ -23,8 +27,8 @@
 
 <script>
 import ProductCard from "@/components/Catalog/ProductCard/ProductCardBase.vue";
-import products from "@/services/products.js";
-import { mapState, mapGetters } from "vuex";
+import PRODUCT_SERVICE from "@/services/products.js";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
@@ -42,51 +46,24 @@ export default {
     }
   },
   computed: {
-    ...mapState("sort", ["setting"]),
-    ...mapGetters("sort", {
-      products: "products",
-      priceAscending: "priceMaxAscending",
-      priceDescending: "priceMaxDescending"
+    ...mapState("sort", {
+      sortSetting: state => state.setting
+    }),
+    ...mapGetters("sort", ["PriceMaxAscending", "PriceMaxDescending"]),
+    ...mapActions("sort", {
+      settingAction: state =>
+        state.dispatch("settingAction", { sort: "Default", order: "Default" })
     }),
     selectedVersion() {
       return this.$store.state.selectedVersion;
     }
-    // products() {
-    //   return this.$store.state.searchFoundProducts === undefined
-    //     ? ["ooops!"]
-    //     : this.$store.state.searchFoundProducts;
-    // },
-    // loadedProductsSortedPriceMax() {
-    //   let copyLoadedProducts = [...this.loadedProducts];
-    //   copyLoadedProducts.forEach(product => {
-    //     let maxPriceObj = product.versions.reduce(
-    //       (max, version) => (max > version.price.offeredAmount ? max : version),
-    //       null
-    //     );
-    //     product.maxPrice = maxPriceObj.price.offeredAmount;
-    //     return;
-    //   });
-    //   return copyLoadedProducts;
-    // },
-    // loadedProductsSortedPriceMaxAscending() {
-    //   let sortedMaxAscending = [...this.loadedProductsSortedPriceMax].sort(
-    //     (a, b) => a.maxPrice - b.maxPrice
-    //   );
-    //   return sortedMaxAscending;
-    // },
-    // loadedProductsSortedPriceMaxDescending() {
-    //   let sortedMaxDescending = [...this.loadedProductsSortedPriceMax].sort(
-    //     (b, a) => a.maxPrice - b.maxPrice
-    //   );
-    //   return sortedMaxDescending;
-    // }
   },
   methods: {
     sortSelect({ sort, order } = { sort: "Default", order: "Default" }) {
-      return sort == "Default" ? this.products : this.products;
+      return sort == "Default" ? this.loadedProducts : this[sort + order];
     },
     loadAllProducts() {
-      products("route", this.currentRoute.name, data => {
+      PRODUCT_SERVICE("route", this.currentRoute.name, data => {
         return this.$store.commit("searchFoundProductsMutation", data);
       });
     }
