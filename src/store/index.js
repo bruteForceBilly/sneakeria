@@ -1,17 +1,19 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import siteMap from "@/services/siteMap.js";
+import load from "./modules/load.js";
+import sort from "./modules/sort.js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  modules: {
+    load,
+    sort
+  },
   state: {
     rootData: null,
     setByRoute: null,
-    catalogSortSetting: { sort: "Default", order: "Default" },
-    catalogLoadCount: 0,
-    catalogLoadLimit: 12,
-    filterBarNoneSelected: null, // delete ?
     searchQueryParamsObject: null,
     searchQueryParamsString: null,
     searchQueryParamsKebab: null,
@@ -33,12 +35,15 @@ export default new Vuex.Store({
         .toString()
         .replace(",", "-");
     },
-    catalogLoadedProducts: state => {
-      let end = state.catalogLoadCount * 12 + 12;
-      let result = !state.searchFoundProducts
-        ? {}
-        : state.searchFoundProducts.slice(0, end);
-      return result;
+    searchFoundProductsLength: state => {
+      if (
+        state.searchFoundProducts === null ||
+        state.searchFoundProducts.length < 1
+      ) {
+        return 0;
+      } else {
+        return state.searchFoundProducts.length;
+      }
     }
   },
   actions: {
@@ -148,22 +153,8 @@ export default new Vuex.Store({
     setByRoute(state, setByRoute) {
       Vue.set(state, "setByRoute", setByRoute);
     },
-    filterBarNoneSelectedMutation(state, filterBarNoneSelected) {
-      Vue.set(state, "filterBarNoneSelected", filterBarNoneSelected);
-    },
     selectedVersionMutation(state, selectedVersion) {
       Vue.set(state, "selectedVersion", selectedVersion);
-    },
-    catalogSortSettingMutation(state, arg) {
-      Vue.set(state, "catalogSortSetting", arg);
-    },
-    catalogLoadCountMutation(state) {
-      state.catalogLoadCount++;
-      //Vue.set(state, "catalogLoadCount", ++);
-    },
-    catalogLoadCountResetMutation(state) {
-      state.catalogLoadCount = 0;
-      //Vue.set(state, "catalogLoadCount", ++);
     }
   }
 });

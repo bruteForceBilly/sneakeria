@@ -179,7 +179,6 @@ export default {
         if (this.getSetByRoute === false) {
           //console.log("watch selects - selectedOptionsObject", this.selectedOptionsObject)
           return this.updateRouteQueryParams(this.selectedOptionsObject);
-          //this.$store.commit("filterBarNoneSelectedMutation", false)
         }
       }
     },

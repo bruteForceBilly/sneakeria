@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     sortSettingsHandler(arg) {
-      return this.$store.commit("catalogSortSettingMutation", arg);
+      return this.$store.dispatch("sort/settingAction", arg);
     }
   }
 };

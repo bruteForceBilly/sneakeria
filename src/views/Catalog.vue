@@ -3,21 +3,21 @@
     <BreadCrumbsBar class="pt-8" :selects="selects"></BreadCrumbsBar>
 
     <DisplayTitle
-      :current-route="currentRoute"
+      :current-route="route"
       :search-found-products-length="searchFoundProductsLength"
     ></DisplayTitle>
 
     <SelectionBar :selects="selects"></SelectionBar>
 
     <ProductGrid
-      :loaded-products="loadedProducts"
-      :current-route="currentRoute"
+      :loaded-products="products"
+      :current-route="route"
       :search-found-products-length="searchFoundProductsLength"
     ></ProductGrid>
 
     <LoadMoreButton
       :search-found-products-length="searchFoundProductsLength"
-      :loaded-products="loadedProducts"
+      :loaded-products="products"
     ></LoadMoreButton>
   </div>
 </template>
@@ -28,6 +28,7 @@ import SelectionBar from "@/components/Catalog/TheSelectionBar/TheSelectionBar.v
 import DisplayTitle from "@/components/Catalog/TheDisplayTitle.vue";
 import ProductGrid from "@/components/Catalog/TheProductGrid.vue";
 import LoadMoreButton from "@/components/Catalog/LoadMoreButton.vue";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "Catalog",
@@ -171,22 +172,9 @@ export default {
     };
   },
   computed: {
-    loadedProducts() {
-      return this.$store.getters.catalogLoadedProducts;
-    },
-    searchFoundProductsLength() {
-      if (
-        this.$store.state.searchFoundProducts === null ||
-        this.$store.state.searchFoundProducts.length < 1
-      ) {
-        return 0;
-      } else {
-        return this.$store.state.searchFoundProducts.length;
-      }
-    },
-    currentRoute() {
-      return this.$store.state.route;
-    }
+    ...mapGetters("load", ["products"]),
+    ...mapGetters(["searchFoundProductsLength"]),
+    ...mapState(["route"])
   }
 };
 </script>

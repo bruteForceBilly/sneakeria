@@ -10,7 +10,7 @@
     </meter>
 
     <button
-      @click="catalogLoadCountCommit"
+      @click="countIncrement"
       class="block mx-auto mt-6 py-1 text-gray-800 font-sans font-normal text-sm px-4 no-underline bg-gray-300 btn-primary rounded-full focus:outline-none"
     >
       Load More
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   props: {
     searchFoundProductsLength: {
@@ -28,10 +30,6 @@ export default {
       type: Array
     }
   },
-  methods: {
-    catalogLoadCountCommit() {
-      return this.$store.commit("catalogLoadCountMutation");
-    }
-  }
+  methods: mapActions("load", ["countIncrement"])
 };
 </script>

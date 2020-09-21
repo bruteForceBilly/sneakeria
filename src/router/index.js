@@ -27,7 +27,6 @@ const routes = [
       store.commit("setByRoute", true);
       store.commit("searchFoundProductsMutation", null);
       store.commit("searchRouteLastBeforeEnterMutation", to.name);
-      //store.commit("filterBarNoneSelectedMutation", true);
       next();
     }
   },
@@ -94,7 +93,7 @@ const routes = [
     component: Catalog,
     beforeEnter: (to, from, next) => {
       // console.log("ROUTER searchRequestRoute beforeEnter", to, from);
-      store.commit("catalogLoadCountResetMutation");
+      store.commit("load/countReset");
       store
         .dispatch("searchRequestAction", to.path.substr(1).split("-"))
         .then(store.commit("searchRouteLastBeforeEnterMutation", to.name))
