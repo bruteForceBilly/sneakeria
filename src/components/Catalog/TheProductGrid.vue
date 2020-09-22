@@ -64,7 +64,7 @@ export default {
     },
     loadAllProducts() {
       PRODUCT_SERVICE("route", this.currentRoute.name, data => {
-        return this.$store.commit("searchFoundProductsMutation", data);
+        return this.$store.commit("search/searchFoundProductsMutation", data);
       });
     }
   }

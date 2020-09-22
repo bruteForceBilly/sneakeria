@@ -5,7 +5,6 @@ import store from "@/store/index.js";
 import products from "@/services/products.js";
 import Home from "../views/Home.vue";
 import Catalog from "../views/Catalog.vue";
-import About from "../views/About.vue";
 import Product from "../views/Product.vue";
 
 Vue.use(VueRouter);
@@ -21,12 +20,12 @@ const routes = [
     name: "all",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      store.commit("searchQueryParamsObjectMutation", null);
-      store.commit("searchQueryParamsStringMutation", null);
-      store.commit("searchQueryParamsKebabMutation", null);
+      store.commit("search/searchQueryParamsObjectMutation", null);
+      store.commit("search/searchQueryParamsStringMutation", null);
+      store.commit("search/searchQueryParamsKebabMutation", null);
       store.commit("setByRoute", true);
-      store.commit("searchFoundProductsMutation", null);
-      store.commit("searchRouteLastBeforeEnterMutation", to.name);
+      store.commit("search/searchFoundProductsMutation", null);
+      store.commit("search/searchRouteLastBeforeEnterMutation", to.name);
       next();
     }
   },
@@ -43,24 +42,26 @@ const routes = [
       //   from
       // );
       return new Promise((resolve, reject) => {
-        if (store.state.searchRouteLastBeforeEnter === "searchRequestRoute") {
+        if (
+          store.state.search.searchRouteLastBeforeEnter === "searchRequestRoute"
+        ) {
           // console.log("ROUTER IF searchRequestRoute"),
           store.dispatch(
-            "searchQueryParamsStringAction",
-            store.state.searchQueryParamsObject
+            "search/searchQueryParamsStringAction",
+            store.state.search.searchQueryParamsObject
           );
         } else if (to.name === "searchQueryRoute") {
           // console.log("ROUTER ELSE IF searchQueryRoute", to.query); // try searchQueryParamsObjectMutation
-          store.dispatch("searchQueryParamsStringAction", to.query);
-          store.commit("searchQueryParamsObjectMutation", to.query);
+          store.dispatch("search/searchQueryParamsStringAction", to.query);
+          store.commit("search/searchQueryParamsObjectMutation", to.query);
         }
-        store.state.searchQueryParamsString === ""
+        store.state.search.searchQueryParamsString === ""
           ? reject()
-          : resolve(store.state.searchQueryParamsString);
+          : resolve(store.state.search.searchQueryParamsString);
 
         store.dispatch(
-          "searchQueryParamsStringAction",
-          store.state.searchQueryParamsObject
+          "search/searchQueryParamsStringAction",
+          store.state.search.searchQueryParamsObject // check if this object exist?
         );
       })
         .catch(err => {
@@ -73,16 +74,16 @@ const routes = [
           // );
           products("filter", searchQueryParamsString, data => {
             //console.log("ROUTER products", data);
-            store.commit("searchFoundProductsMutation", data);
+            store.commit("search/searchFoundProductsMutation", data);
           }).then(() => {
             return next({
               name: "searchResultRoute",
-              params: { slug: store.state.searchQueryParamsKebab }
+              params: { slug: store.state.search.searchQueryParamsKebab }
             });
           });
         })
         .then(
-          store.commit("searchRouteLastBeforeEnterMutation", to.name)
+          store.commit("search/searchRouteLastBeforeEnterMutation", to.name)
           // console.log("ROUTER searchRouteLastBeforeEnterMutation", to.name)
         );
     }
@@ -95,8 +96,10 @@ const routes = [
       // console.log("ROUTER searchRequestRoute beforeEnter", to, from);
       store.commit("load/countReset");
       store
-        .dispatch("searchRequestAction", to.path.substr(1).split("-"))
-        .then(store.commit("searchRouteLastBeforeEnterMutation", to.name))
+        .dispatch("search/searchRequestAction", to.path.substr(1).split("-"))
+        .then(
+          store.commit("search/searchRouteLastBeforeEnterMutation", to.name)
+        )
         .then(q => {
           next({ name: "searchQueryRoute", query: q });
         });
@@ -108,15 +111,17 @@ const routes = [
     component: Catalog,
     beforeEnter: (to, from, next) => {
       // console.log("LOOOK searchResultRoute", 'to >>>', to, 'from >>>>', from)
-      store.commit("searchRouteLastBeforeEnterMutation", to.name);
+      store.commit("search/searchRouteLastBeforeEnterMutation", to.name);
       next();
     }
   },
-  {
-    path: "/about",
-    name: "about",
-    component: About
-  },
+  // {
+  //   path: "/about",.catch(err => {
+  //     throw new Error("Something failed", err); // I have no idea why this throws an error when hitting about directly
+  //   })
+  //   name: "about",
+  //   component: About
+  // },
   {
     path: "/product/:product",
     name: "product",

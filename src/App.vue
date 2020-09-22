@@ -28,7 +28,7 @@ export default {
   beforeCreate() {
     // should be moved to service and featured category should be set from there
     this.$store.dispatch({
-      type: "siteMapAction",
+      type: "search/siteMapAction",
       data: null,
       loading: true,
       error: null
@@ -37,7 +37,7 @@ export default {
       .get(API_SITE)
       .then(response =>
         this.$store.dispatch({
-          type: "siteMapAction",
+          type: "search/siteMapAction",
           data: response.data,
           loading: false,
           error: null
@@ -45,7 +45,7 @@ export default {
       )
       .catch(err =>
         this.$store.dispatch({
-          type: "siteMapAction",
+          type: "search/siteMapAction",
           data: err.toString(),
           loading: false,
           error: true

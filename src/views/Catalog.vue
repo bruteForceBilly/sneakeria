@@ -173,7 +173,7 @@ export default {
   },
   computed: {
     ...mapGetters("load", ["products"]),
-    ...mapGetters(["searchFoundProductsLength"]),
+    ...mapGetters("search", ["searchFoundProductsLength"]),
     ...mapState(["route"])
   }
 };

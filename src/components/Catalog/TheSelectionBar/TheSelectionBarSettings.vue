@@ -79,7 +79,7 @@ export default {
       //   "searchQueryParamsObject",
       //   this.$store.state.searchQueryParamsObject
       // );
-      return this.$store.state.searchQueryParamsObject;
+      return this.$store.state.search.searchQueryParamsObject;
       //  this.$store.state.searchQueryParamsString
     },
     getSetByRoute() {
