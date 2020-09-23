@@ -49,22 +49,24 @@ export default {
     ...mapState("sort", {
       sortSetting: state => state.setting
     }),
-    ...mapGetters("sort", ["PriceMaxAscending", "PriceMaxDescending"]),
+    ...mapGetters("sort", ["priceMaxAscending", "priceMaxDescending"]),
     ...mapActions("sort", {
       settingAction: state =>
-        state.dispatch("settingAction", { sort: "Default", order: "Default" })
+        state.dispatch("settingAction", { sort: "default", order: "default" })
     }),
     selectedVersion() {
       return this.$store.state.selectedVersion;
     }
   },
   methods: {
-    sortSelect({ sort, order } = { sort: "Default", order: "Default" }) {
-      return sort == "Default" ? this.loadedProducts : this[sort + order];
+    sortSelect({ sort, order } = { sort: "default", order: "default" }) {
+      return sort == "default"
+        ? this.loadedProducts
+        : this[sort + (order[0].toUpperCase() + order.slice(1))]; // Handle camelCase in getter
     },
     loadAllProducts() {
       PRODUCT_SERVICE("route", this.currentRoute.name, data => {
-        return this.$store.commit("search/searchFoundProductsMutation", data);
+        return this.$store.commit("search/foundProductsMutation", data);
       });
     }
   }

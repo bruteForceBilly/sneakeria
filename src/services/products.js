@@ -3,7 +3,6 @@ import { API_PRODUCTS } from "@/constants";
 // Refactor so it also takes an option var called o to link it to the right if
 // Route, Filter, Slice, Sort, Full-text search
 
-
 export default function(o, q, cb) {
   if (o === "route" && q === "all") {
     //console.log("ALL PRODUCTS", q);

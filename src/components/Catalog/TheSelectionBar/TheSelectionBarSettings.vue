@@ -75,15 +75,9 @@ export default {
       }, {});
     },
     searchQueryParamsObject() {
-      // console.log(
-      //   "searchQueryParamsObject",
-      //   this.$store.state.searchQueryParamsObject
-      // );
-      return this.$store.state.search.searchQueryParamsObject;
-      //  this.$store.state.searchQueryParamsString
+      return this.$store.state.search.queryParamsObject;
     },
     getSetByRoute() {
-      //console.log("getSetByRoute", this.$store.state.setByRoute);
       return this.$store.state.setByRoute;
     },
     route() {
@@ -92,7 +86,6 @@ export default {
   },
   methods: {
     clearAll() {
-      //console.log("clear all", this.selectedOptionsElements);
       return this.selectedOptionsElements.forEach(el => (el.checked = false)); // redo for orm
     },
     clickedOptionObject(name, value) {
@@ -109,10 +102,7 @@ export default {
               .flat()
               .filter(option => option.name === key)
               .filter(option => option.value === v)
-              .forEach(
-                //el => (!el.checked ? (el.checked = true) : (el.checked = false)) // redo for orm
-                el => this.toggleElement(el)
-              );
+              .forEach(el => this.toggleElement(el));
           });
         } else {
           this.selects
@@ -120,10 +110,7 @@ export default {
             .flat()
             .filter(option => option.name === key)
             .filter(option => option.value === value)
-            .forEach(
-              //el => (!el.checked ? (el.checked = true) : (el.checked = false)) // redo for orm
-              el => this.toggleElement(el)
-            );
+            .forEach(el => this.toggleElement(el));
         }
       }
     },

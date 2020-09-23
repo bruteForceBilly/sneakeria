@@ -4,7 +4,7 @@
 
     <DisplayTitle
       :current-route="route"
-      :search-found-products-length="searchFoundProductsLength"
+      :search-found-products-length="foundProductsLength"
     ></DisplayTitle>
 
     <SelectionBar :selects="selects"></SelectionBar>
@@ -12,11 +12,11 @@
     <ProductGrid
       :loaded-products="products"
       :current-route="route"
-      :search-found-products-length="searchFoundProductsLength"
+      :search-found-products-length="foundProductsLength"
     ></ProductGrid>
 
     <LoadMoreButton
-      :search-found-products-length="searchFoundProductsLength"
+      :search-found-products-length="foundProductsLength"
       :loaded-products="products"
     ></LoadMoreButton>
   </div>
@@ -173,7 +173,7 @@ export default {
   },
   computed: {
     ...mapGetters("load", ["products"]),
-    ...mapGetters("search", ["searchFoundProductsLength"]),
+    ...mapGetters("search", ["foundProductsLength"]),
     ...mapState(["route"])
   }
 };

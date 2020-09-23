@@ -1,12 +1,16 @@
 const state = () => ({
-  setting: { sort: "Default", order: "Default" }
+  setting: { sort: "default", order: "default" }
 });
 
 const actions = {
   settingAction: ({ commit }, settingParameters) => {
-    // Rename option.value in sort selects component so that you dont have to use
-    // this akward CapitalCasing when selecting getters
-    return commit("settingMutation", settingParameters);
+    const formattedSettingParameters = Object.fromEntries(
+      Object.entries(settingParameters).map(([k, v]) => [
+        k,
+        v[0].toLowerCase() + v.slice(1)
+      ])
+    );
+    return commit("settingMutation", formattedSettingParameters);
   }
 };
 
@@ -17,7 +21,7 @@ const mutations = {
 };
 
 const getters = {
-  PriceMax: (state, getters, rootSate, rootGetters) => {
+  priceMax: (state, getters, rootSate, rootGetters) => {
     let copyProducts = [...rootGetters["load/products"]];
     copyProducts.forEach(product => {
       let maxPriceObj = product.versions.reduce(
@@ -29,11 +33,11 @@ const getters = {
     });
     return copyProducts;
   },
-  PriceMaxAscending: (state, getters) => {
-    return [...getters.PriceMax].sort((a, b) => a.maxPrice - b.maxPrice);
+  priceMaxAscending: (state, getters) => {
+    return [...getters.priceMax].sort((a, b) => a.maxPrice - b.maxPrice);
   },
-  PriceMaxDescending: (state, getters) => {
-    return [...getters.PriceMax].sort((b, a) => a.maxPrice - b.maxPrice);
+  priceMaxDescending: (state, getters) => {
+    return [...getters.priceMax].sort((b, a) => a.maxPrice - b.maxPrice);
   }
 };
 

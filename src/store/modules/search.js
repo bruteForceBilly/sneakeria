@@ -1,12 +1,13 @@
+import axios from "axios";
+import { API_SITE } from "@/constants";
 import Vue from "vue";
-import siteMap from "@/services/siteMap.js";
 
 const state = () => ({
-  searchQueryParamsObject: null,
-  searchQueryParamsString: null,
-  searchQueryParamsKebab: null,
-  searchFoundProducts: null,
-  searchRouteLastBeforeEnter: null,
+  queryParamsObject: null,
+  queryParamsString: null,
+  queryParamsKebab: null,
+  foundProducts: null,
+  routeLastBeforeEnter: null,
   siteMap: {
     data: null,
     loading: null,
@@ -15,63 +16,66 @@ const state = () => ({
 });
 
 const getters = {
-  searchQueryParamsObject: state => {
-    return state.searchQueryParamsObject;
+  queryParamsObject: state => {
+    return state.queryParamsObject;
   },
-  searchQueryParamsStringKebab: state => {
-    return Object.values(state.searchQueryParamsObject)
+  queryParamsStringKebab: state => {
+    // BUG leaves a , anyway sometimes!
+    return Object.values(state.queryParamsObject)
       .toString()
       .replace(",", "-");
   },
-  searchFoundProducts: state => {
-    return state.searchFoundProducts;
+  foundProducts: state => {
+    return state.foundProducts;
   },
-  searchFoundProductsLength: state => {
-    if (
-      state.searchFoundProducts === null ||
-      state.searchFoundProducts.length < 1
-    ) {
+  foundProductsLength: state => {
+    if (state.foundProducts === null || state.foundProducts.length < 1) {
       return 0;
     } else {
-      return state.searchFoundProducts.length;
+      return state.foundProducts.length;
     }
   }
 };
 
 const actions = {
-  searchRequestAction({ dispatch, getters }, payload) {
+  serviceRequestAction({ dispatch, getters }, payload) {
+    const getSiteMap = function(cb) {
+      return axios
+        .get(API_SITE)
+        .then(response => cb(response.data))
+        .catch(err => cb(err.toString()));
+    };
     return new Promise(resolve => {
-      siteMap(data => {
+      getSiteMap(data => {
         dispatch({
-          type: "searchQueryParamsObjectAction",
+          type: "queryParamsObjectAction",
           data: {
             path: payload,
             object: data
           }
         });
       }).then(() => {
-        resolve(getters.searchQueryParamsObject);
+        resolve(getters.queryParamsObject);
       });
     });
   },
-  searchQueryParamsObjectAction({ commit }, searchQueryAction) {
-    // FIX - why is there an array there if you dont return it??
-    let searchQueryParamsObject = {};
+  queryParamsObjectAction({ commit }, queryAction) {
+    let queryParamsObject = {};
     let arr = [];
-    searchQueryAction.data.path.forEach(pathItem => {
-      searchQueryAction.data.object.filter(function(obj) {
+    queryAction.data.path.forEach(pathItem => {
+      queryAction.data.object.filter(function(obj) {
         if (obj.values.includes(pathItem)) {
-          arr.push((searchQueryParamsObject[obj.name] = pathItem));
+          arr.push((queryParamsObject[obj.name] = pathItem));
         }
       });
     });
-    return commit("searchQueryParamsObjectMutation", searchQueryParamsObject);
+    return commit("queryParamsObjectMutation", queryParamsObject);
   },
 
-  searchQueryParamsStringAction({ dispatch, commit }, searchQueryParamsObject) {
-    dispatch("searchQueryParamsKebabAction", searchQueryParamsObject);
+  queryParamsStringAction({ dispatch, commit }, queryParamsObject) {
+    dispatch("queryParamsKebabAction", queryParamsObject);
 
-    let searchQueryParamsString = function(obj) {
+    let queryParamsString = function(obj) {
       let arr = [];
       let makeString = function(key, value) {
         let str = `${key}=${value}`;
@@ -88,38 +92,37 @@ const actions = {
     };
 
     return commit(
-      "searchQueryParamsStringMutation",
-      searchQueryParamsString(searchQueryParamsObject)
+      "queryParamsStringMutation",
+      queryParamsString(queryParamsObject)
     );
   },
 
-  searchQueryParamsKebabAction({ commit }, searchQueryParamsObject) {
-    let searchQueryParamsKebab = Object.values(searchQueryParamsObject)
+  queryParamsKebabAction({ commit }, queryParamsObject) {
+    let queryParamsKebab = Object.values(queryParamsObject)
       .toString()
       .replace(/[,]/g, "-");
-    return commit("searchQueryParamsKebabMutation", searchQueryParamsKebab);
+    return commit("queryParamsKebabMutation", queryParamsKebab);
   },
-
   siteMapAction({ commit }, siteMapObject) {
     return commit("siteMapMutation", siteMapObject);
   }
 };
 
 const mutations = {
-  searchQueryParamsObjectMutation(state, searchQueryParamsObject) {
-    Vue.set(state, "searchQueryParamsObject", searchQueryParamsObject);
+  queryParamsObjectMutation(state, queryParamsObject) {
+    Vue.set(state, "queryParamsObject", queryParamsObject);
   },
-  searchQueryParamsStringMutation(state, searchQueryParamsString) {
-    Vue.set(state, "searchQueryParamsString", searchQueryParamsString);
+  queryParamsStringMutation(state, queryParamsString) {
+    Vue.set(state, "queryParamsString", queryParamsString);
   },
-  searchQueryParamsKebabMutation(state, searchQueryParamsKebab) {
-    Vue.set(state, "searchQueryParamsKebab", searchQueryParamsKebab);
+  queryParamsKebabMutation(state, queryParamsKebab) {
+    Vue.set(state, "queryParamsKebab", queryParamsKebab);
   },
-  searchFoundProductsMutation(state, searchFoundProducts) {
-    Vue.set(state, "searchFoundProducts", searchFoundProducts);
+  foundProductsMutation(state, foundProducts) {
+    Vue.set(state, "foundProducts", foundProducts);
   },
-  searchRouteLastBeforeEnterMutation(state, searchRouteLastBeforeEnter) {
-    Vue.set(state, "searchRouteLastBeforeEnter", searchRouteLastBeforeEnter);
+  routeLastBeforeEnterMutation(state, routeLastBeforeEnter) {
+    Vue.set(state, "routeLastBeforeEnter", routeLastBeforeEnter);
   },
   siteMapMutation(state, siteMapObject) {
     Vue.set(state, "siteMap", siteMapObject);

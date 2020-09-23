@@ -35,8 +35,8 @@ export default {
     MenuOption
   },
   methods: {
-    sortSettingsHandler(arg) {
-      return this.$store.dispatch("sort/settingAction", arg);
+    sortSettingsHandler(optionValue) {
+      return this.$store.dispatch("sort/settingAction", optionValue);
     }
   }
 };
