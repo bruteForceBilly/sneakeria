@@ -133,4 +133,11 @@ const router = new VueRouter({
   routes,
 });
 
+// router.afterEach((to, from) => {
+//   if (process.env.NODE_ENV === "development") {
+//     console.log("ROUTER TO:\n", to);
+//     console.log("FROM:\n", from);
+//   }
+// });
+
 export default router;
