@@ -32,31 +32,31 @@ import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
-    ProductCard
+    ProductCard,
   },
   props: {
     currentRoute: {
-      type: Object
+      type: Object,
     },
     searchFoundProductsLength: {
-      type: Number
+      type: Number,
     },
     loadedProducts: {
-      type: Array
-    }
+      type: Array,
+    },
   },
   computed: {
     ...mapState("sort", {
-      sortSetting: state => state.setting
+      sortSetting: (state) => state.setting,
     }),
     ...mapGetters("sort", ["priceMaxAscending", "priceMaxDescending"]),
     ...mapActions("sort", {
-      settingAction: state =>
-        state.dispatch("settingAction", { sort: "default", order: "default" })
+      settingAction: (state) =>
+        state.dispatch("settingAction", { sort: "default", order: "default" }),
     }),
     selectedVersion() {
       return this.$store.state.selectedVersion;
-    }
+    },
   },
   methods: {
     sortSelect({ sort, order } = { sort: "default", order: "default" }) {
@@ -65,11 +65,11 @@ export default {
         : this[sort + (order[0].toUpperCase() + order.slice(1))]; // Handle camelCase in getter
     },
     loadAllProducts() {
-      PRODUCT_SERVICE("route", this.currentRoute.name, data => {
+      PRODUCT_SERVICE("route", this.currentRoute.name, (data) => {
         return this.$store.commit("search/foundProductsMutation", data);
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

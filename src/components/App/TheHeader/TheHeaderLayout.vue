@@ -4,7 +4,7 @@
       <!-- Container start -->
       <div
         class="border-b flex justify-start items-center"
-        style="height:50px;"
+        style="height: 50px"
       >
         <!-- Sidebar Toggle Icon -->
         <div class="p-2 ml-2 mr-8">
@@ -52,7 +52,7 @@ export default {
   computed: {
     mq() {
       return this.$mq;
-    }
-  }
+    },
+  },
 };
 </script>

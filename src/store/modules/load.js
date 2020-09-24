@@ -1,6 +1,6 @@
 const state = () => ({
   count: 0,
-  limit: 12
+  limit: 12,
 });
 
 const getters = {
@@ -10,7 +10,7 @@ const getters = {
       ? []
       : rootGetters["search/foundProducts"].slice(0, end);
     return result;
-  }
+  },
 };
 
 const mutations = {
@@ -19,12 +19,12 @@ const mutations = {
   },
   countReset(state) {
     state.count = 0;
-  }
+  },
 };
 
 export default {
   namespaced: true,
   state,
   getters,
-  mutations
+  mutations,
 };

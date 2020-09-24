@@ -3,7 +3,7 @@
     <Settings
       :selects="selects"
       v-slot:default="{
-        settings
+        settings,
       }"
     >
       <div class="static">
@@ -66,12 +66,12 @@ export default {
     FilterSelects,
     SortSelects,
     TheSelectedOptions,
-    Settings
+    Settings,
   },
   props: {
     selects: {
-      type: Array
-    }
-  }
+      type: Array,
+    },
+  },
 };
 </script>

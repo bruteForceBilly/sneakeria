@@ -6,7 +6,7 @@
           v-if="expanded"
           class="border-b flex items-center"
           :class="[node.name === 'Root' ? '' : 'mb-3']"
-          style="height:50px;"
+          style="height: 50px"
           :key="keyProp"
           @click="[expand(), select(parent)]"
         >
@@ -22,7 +22,7 @@
           :key="keyProp"
           class="flex justify-between items-center mr-5"
           :class="[
-            parent.name === 'Root' ? 'ml-8 font-semibold uppercase' : 'ml-16'
+            parent.name === 'Root' ? 'ml-8 font-semibold uppercase' : 'ml-16',
           ]"
         >
           <span class="text-lg tracking-wider py-2">{{ node.label }}</span>
@@ -41,7 +41,7 @@
             <router-link
               :to="{
                 name: 'searchRequestRoute',
-                params: { id: node.value }
+                params: { id: node.value },
               }"
             >
               {{ node.label }}
@@ -71,33 +71,33 @@ import SidebarTransitionGroup from "./SidebarTransitionGroup.vue";
 export default {
   name: "SidebarTreeNode",
   components: {
-    SidebarTransitionGroup
+    SidebarTransitionGroup,
   },
   props: {
     node: {
-      type: Object
+      type: Object,
     },
     parent: {
-      type: Object
+      type: Object,
     },
     select: {
-      type: Function
+      type: Function,
     },
     selected: {
-      type: Object
+      type: Object,
     },
     expandedInit: {
       type: Boolean,
-      default: false
+      default: false,
     },
     setShow: {
-      type: Function
-    }
+      type: Function,
+    },
   },
   data() {
     return {
       expanded: this.expandedInit,
-      showing: true
+      showing: true,
     };
   },
   methods: {
@@ -106,7 +106,7 @@ export default {
     },
     setByRoute(arg) {
       return this.$store.commit("setByRoute", arg);
-    }
+    },
   },
   computed: {
     keyProp() {
@@ -114,15 +114,15 @@ export default {
     },
     hasChildren() {
       return this.node.children;
-    }
+    },
   },
   watch: {
-    selected: function(newVal) {
+    selected: function (newVal) {
       this.node.name === newVal.name ||
-      newVal.children.map(child => child.name).includes(this.node.name)
+      newVal.children.map((child) => child.name).includes(this.node.name)
         ? (this.showing = true)
         : (this.showing = false);
-    }
-  }
+    },
+  },
 };
 </script>

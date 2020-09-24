@@ -4,9 +4,7 @@
     :class="checked ? 'bg-black' : 'bg-white'"
     style="border-width: 1px"
   >
-    <slot name="input">
-      ... input goes here
-    </slot>
+    <slot name="input"> ... input goes here </slot>
     <svg
       class="w-4 h-4 text-black pointer-events-none"
       :class="checked ? 'block text-white' : 'hidden'"
@@ -20,7 +18,7 @@
         font-weight="none"
         font-size="none"
         text-anchor="none"
-        style="mix-blend-mode:normal"
+        style="mix-blend-mode: normal"
       >
         <path d="M0 172V0h172v172z" />
         <path
@@ -37,8 +35,8 @@
 export default {
   name: "CatalogFilterBarDropDownMenuItemCheckbox",
   props: {
-    checked: Boolean
-  }
+    checked: Boolean,
+  },
 };
 </script>
 

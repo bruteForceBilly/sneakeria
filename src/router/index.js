@@ -13,7 +13,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
+    component: Home,
   },
   {
     path: "/all",
@@ -27,7 +27,7 @@ const routes = [
       store.commit("search/foundProductsMutation", null);
       store.commit("search/routeLastBeforeEnterMutation", to.name);
       next();
-    }
+    },
   },
   {
     path: "/search",
@@ -64,21 +64,21 @@ const routes = [
           store.state.search.queryParamsObject // check if this object exist?
         );
       })
-        .catch(err => {
+        .catch((err) => {
           throw new Error("Something failed", err); // I have no idea why this throws an error when hitting about directly
         })
-        .then(searchQueryParamsString => {
+        .then((searchQueryParamsString) => {
           // console.log(
           //   "ROUTER searchQueryParamsString",
           //   searchQueryParamsString
           // );
-          products("filter", searchQueryParamsString, data => {
+          products("filter", searchQueryParamsString, (data) => {
             //console.log("ROUTER products", data);
             store.commit("search/foundProductsMutation", data);
           }).then(() => {
             return next({
               name: "searchResultRoute",
-              params: { slug: store.state.search.queryParamsKebab }
+              params: { slug: store.state.search.queryParamsKebab },
             });
           });
         })
@@ -86,7 +86,7 @@ const routes = [
           store.commit("search/routeLastBeforeEnterMutation", to.name)
           // console.log("ROUTER searchRouteLastBeforeEnterMutation", to.name)
         );
-    }
+    },
   },
   {
     path: "/:id",
@@ -98,10 +98,10 @@ const routes = [
       store
         .dispatch("search/serviceRequestAction", to.path.substr(1).split("-"))
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
-        .then(q => {
+        .then((q) => {
           next({ name: "searchQueryRoute", query: q });
         });
-    }
+    },
   },
   {
     path: "/:slug",
@@ -111,7 +111,7 @@ const routes = [
       // console.log("LOOOK searchResultRoute", 'to >>>', to, 'from >>>>', from)
       store.commit("search/routeLastBeforeEnterMutation", to.name);
       next();
-    }
+    },
   },
   // {
   //   path: "/about",.catch(err => {
@@ -123,14 +123,14 @@ const routes = [
   {
     path: "/product/:product",
     name: "product",
-    component: Product
-  }
+    component: Product,
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL, // I havent set a base url?
-  routes
+  routes,
 });
 
 export default router;

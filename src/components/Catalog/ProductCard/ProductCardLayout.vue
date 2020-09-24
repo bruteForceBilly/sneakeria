@@ -4,7 +4,7 @@
     :class="[
       layout === 'card'
         ? 'flex-col flex-no-wrap'
-        : 'flex-row items-stretch justify-center'
+        : 'flex-row items-stretch justify-center',
     ]"
   >
     <div
@@ -64,18 +64,18 @@
 <script>
 export default {
   props: {
-    settings: Object
+    settings: Object,
   },
   data() {
     return {
-      hover: false
+      hover: false,
     };
   },
   computed: {
     layout() {
       return this.settings.settings.layout;
-    }
-  }
+    },
+  },
 };
 </script>
 

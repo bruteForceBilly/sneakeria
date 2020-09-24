@@ -40,7 +40,7 @@
             :class="[
               settings.settings.isSelectedVersionLiked
                 ? 'fillSvg'
-                : 'transparentSvg'
+                : 'transparentSvg',
             ]"
             xmlns="http://www.w3.org/2000/svg"
             width="1.1em"
@@ -139,15 +139,15 @@ export default {
   props: {
     icon: {
       type: String,
-      default: "loader"
+      default: "loader",
     },
     settings: {
-      type: Object
+      type: Object,
     },
     buttonStyle: {
-      default: "primary"
-    }
-  }
+      default: "primary",
+    },
+  },
 };
 </script>
 

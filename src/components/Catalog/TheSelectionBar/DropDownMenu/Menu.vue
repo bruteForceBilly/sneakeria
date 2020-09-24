@@ -25,33 +25,33 @@ export default {
   props: {
     itemName: {
       type: String,
-      required: false
+      required: false,
     },
     itemLabel: {
       type: String,
-      required: false
+      required: false,
     },
     selectedOptionsObject: {
       type: Object,
       required: false,
-      default: function() {
+      default: function () {
         return {};
-      }
-    }
+      },
+    },
   },
   components: {
     MenuButton,
-    MenuContainer
+    MenuContainer,
   },
   data() {
     return {
-      hover: false
+      hover: false,
     };
   },
   computed: {
     hasSelected() {
       return Object.keys(this.selectedOptionsObject).includes(this.itemName);
-    }
-  }
+    },
+  },
 };
 </script>

@@ -27,7 +27,7 @@
                 <router-link
                   :to="{
                     name: 'searchRequestRoute',
-                    params: { id: category.value }
+                    params: { id: category.value },
                   }"
                 >
                   {{ category.label }}
@@ -41,7 +41,7 @@
                   <router-link
                     :to="{
                       name: 'searchRequestRoute',
-                      params: { id: option.value }
+                      params: { id: option.value },
                     }"
                   >
                     {{ option.label }}
@@ -56,7 +56,7 @@
     <template else>
       <div class="bg-white h-screen flex flex-grow flex-row justify-center">
         <div class="w-full">
-          <div class="border-b flex items-center mb-4" style="height:50px">
+          <div class="border-b flex items-center mb-4" style="height: 50px">
             <img src="@/assets/chevron-l.svg" class="mx-4" />
             <h1
               @click="shift(100)"
@@ -75,7 +75,7 @@
               <router-link
                 :to="{
                   name: 'searchRequestRoute',
-                  params: { id: group.value }
+                  params: { id: group.value },
                 }"
               >
                 {{ group.label }}
@@ -98,7 +98,7 @@
                     <router-link
                       :to="{
                         name: 'searchRequestRoute',
-                        params: { id: option.value }
+                        params: { id: option.value },
                       }"
                     >
                       {{ option.label }}
@@ -122,7 +122,7 @@ export default {
     "featuredNavigation",
     "selectedNavigation",
     "shift",
-    "shifted"
-  ]
+    "shifted",
+  ],
 };
 </script>

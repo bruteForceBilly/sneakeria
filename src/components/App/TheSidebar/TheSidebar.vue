@@ -24,15 +24,15 @@ export default {
   components: {
     TheSidebarSettings,
     TheSidebarTree,
-    SidebarTransition
+    SidebarTransition,
   },
   props: {
     show: {
-      type: Boolean
+      type: Boolean,
     },
     setShow: {
-      type: Function
-    }
-  }
+      type: Function,
+    },
+  },
 };
 </script>

@@ -10,7 +10,7 @@
         isSelectedVersionLiked,
         layout,
         product,
-        viewContext
+        viewContext,
       }"
     ></slot>
   </div>
@@ -20,14 +20,14 @@ export default {
   //     view: this.$mq === "sm" || this.$mq === "md" ? "card" : "jumbo",
   props: {
     productData: Object,
-    viewContext: String
+    viewContext: String,
   },
   data() {
     return {
       selectedVersion: {
-        id: null
+        id: null,
       },
-      likedVersions: {}
+      likedVersions: {},
     };
   },
   computed: {
@@ -46,7 +46,7 @@ export default {
     },
     selectedVersionId() {
       return this.selectedVersion.id;
-    }
+    },
   },
   methods: {
     selectHandler(version) {
@@ -60,8 +60,8 @@ export default {
           name: "product",
           params: { product: this.product.id },
           query: {
-            versionId: this.selectedVersion.id
-          }
+            versionId: this.selectedVersion.id,
+          },
         });
       }
     },
@@ -69,7 +69,7 @@ export default {
       return this.isSelectedVersionLiked
         ? (this.likedVersions[this.selectedVersion.id] = false)
         : (this.likedVersions[this.selectedVersion.id] = true);
-    }
+    },
   },
   created() {
     if (
@@ -82,9 +82,9 @@ export default {
     }
   },
   mounted() {
-    this.product.versions.forEach(version => {
+    this.product.versions.forEach((version) => {
       this.$set(this.likedVersions, version.id, false);
     });
-  }
+  },
 };
 </script>

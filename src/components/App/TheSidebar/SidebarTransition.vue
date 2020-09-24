@@ -9,18 +9,18 @@ export default {
   name: "SidebarTransition",
   props: {
     animation: {
-      type: String
+      type: String,
     },
     appear: {
-      type: Boolean
+      type: Boolean,
     },
     mode: {
       type: String,
-      validator: function(value) {
+      validator: function (value) {
         return ["out-in", "in-out"].indexOf(value) !== -1;
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 

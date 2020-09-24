@@ -14,7 +14,7 @@
         selectOptionsCheckToggle,
         toggleElement,
         updateRouteQueryParams,
-        updateElements
+        updateElements,
       }"
     ></slot>
   </div>
@@ -25,8 +25,8 @@ export default {
   name: "TheCatalogSelectionBarSettings",
   props: {
     selects: {
-      type: Array
-    }
+      type: Array,
+    },
   },
   data() {
     return {
@@ -41,30 +41,30 @@ export default {
               name: "sortBy",
               label: "Price (low - high)",
               value: { sort: "PriceMax", order: "Ascending" },
-              checked: false
+              checked: false,
             },
             {
               id: 2,
               name: "sortBy",
               label: "Price (high - low)",
               value: { sort: "PriceMax", order: "Descending" },
-              checked: false
-            }
-          ]
-        }
-      ]
+              checked: false,
+            },
+          ],
+        },
+      ],
     };
   },
   computed: {
     selectedOptionsElements() {
       let selectedOptionsElements = this.selects
-        .map(select => select.options)
+        .map((select) => select.options)
         .flat()
-        .filter(option => option.checked);
+        .filter((option) => option.checked);
       return selectedOptionsElements;
     },
     selectedOptionsObject() {
-      return this.selectedOptionsElements.reduce(function(previous, element) {
+      return this.selectedOptionsElements.reduce(function (previous, element) {
         if (element.name in previous) {
           previous[element.name] = [previous[element.name]];
           previous[element.name].push(element.value);
@@ -82,11 +82,11 @@ export default {
     },
     route() {
       return this.$store.state.route;
-    }
+    },
   },
   methods: {
     clearAll() {
-      return this.selectedOptionsElements.forEach(el => (el.checked = false)); // redo for orm
+      return this.selectedOptionsElements.forEach((el) => (el.checked = false)); // redo for orm
     },
     clickedOptionObject(name, value) {
       let o = {};
@@ -96,21 +96,21 @@ export default {
     selectOptionsCheckToggle(arg) {
       for (let [key, value] of Object.entries(arg)) {
         if (Array.isArray(value)) {
-          value.forEach(v => {
+          value.forEach((v) => {
             this.selects
-              .map(select => select.options)
+              .map((select) => select.options)
               .flat()
-              .filter(option => option.name === key)
-              .filter(option => option.value === v)
-              .forEach(el => this.toggleElement(el));
+              .filter((option) => option.name === key)
+              .filter((option) => option.value === v)
+              .forEach((el) => this.toggleElement(el));
           });
         } else {
           this.selects
-            .map(select => select.options)
+            .map((select) => select.options)
             .flat()
-            .filter(option => option.name === key)
-            .filter(option => option.value === value)
-            .forEach(el => this.toggleElement(el));
+            .filter((option) => option.name === key)
+            .filter((option) => option.value === value)
+            .forEach((el) => this.toggleElement(el));
         }
       }
     },
@@ -123,19 +123,19 @@ export default {
           this.$router
             .push({
               name: "searchQueryRoute",
-              query: argObj
+              query: argObj,
             })
             // eslint-disable-next-line no-unused-vars
-            .catch(err => {})
+            .catch((err) => {})
         );
       } else {
         return (
           this.$router
             .push({
-              name: "all"
+              name: "all",
             })
             // eslint-disable-next-line no-unused-vars
-            .catch(err => {})
+            .catch((err) => {})
         );
       }
     },
@@ -145,7 +145,7 @@ export default {
       if (this.getSetByRoute === true) {
         // reset option el with false
         this.selectedOptionsElements.forEach(
-          el => this.toggleElement(el) //!el.checked ? null : (el.checked = false)
+          (el) => this.toggleElement(el) //!el.checked ? null : (el.checked = false)
         );
         // set data after prop
         if (this.searchQueryParamsObject === null) {
@@ -156,25 +156,25 @@ export default {
         // reset set by route
         this.$store.commit("setByRoute", false);
       }
-    }
+    },
   },
   watch: {
     selects: {
       deep: true,
-      handler: function(newValue, oldValue) {
+      handler: function (newValue, oldValue) {
         //console.log(newValue);
         if (this.getSetByRoute === false) {
           //console.log("watch selects - selectedOptionsObject", this.selectedOptionsObject)
           return this.updateRouteQueryParams(this.selectedOptionsObject);
         }
-      }
+      },
     },
     route: {
       deep: true,
-      handler: function(newValue, oldValue) {
+      handler: function (newValue, oldValue) {
         return this.updateElements();
-      }
-    }
+      },
+    },
   },
   created() {
     if (this.$store.state.route.name === "searchResultRoute") {
@@ -183,6 +183,6 @@ export default {
       this.selectOptionsCheckToggle({});
     }
     return this.$store.commit("setByRoute", false);
-  }
+  },
 };
 </script>

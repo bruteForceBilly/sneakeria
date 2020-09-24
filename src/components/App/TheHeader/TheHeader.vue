@@ -36,8 +36,8 @@ export default {
     TheHeaderSettings,
     TheHeaderLayout,
     TheSidebar,
-    HeaderNav
-  }
+    HeaderNav,
+  },
 };
 </script>
 

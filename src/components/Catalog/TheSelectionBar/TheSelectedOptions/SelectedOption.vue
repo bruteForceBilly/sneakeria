@@ -5,7 +5,7 @@
       :class="[
         link
           ? 'px-0 mx-2 underline bg-transparent'
-          : 'px-4 no-underline bg-gray-300 btn-primary rounded-full focus:outline-none mr-2'
+          : 'px-4 no-underline bg-gray-300 btn-primary rounded-full focus:outline-none mr-2',
       ]"
     >
       <div class="inline">
@@ -21,6 +21,6 @@
 
 <script>
 export default {
-  props: ["link"]
+  props: ["link"],
 };
 </script>

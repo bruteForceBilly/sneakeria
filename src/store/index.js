@@ -12,12 +12,12 @@ export default new Vuex.Store({
   modules: {
     search,
     load,
-    sort
+    sort,
   },
   state: {
     rootData: null,
     setByRoute: null,
-    selectedVersion: null
+    selectedVersion: null,
   },
   mutations: {
     setByRoute(state, setByRoute) {
@@ -25,6 +25,6 @@ export default new Vuex.Store({
     },
     selectedVersionMutation(state, selectedVersion) {
       Vue.set(state, "selectedVersion", selectedVersion);
-    }
-  }
+    },
+  },
 });

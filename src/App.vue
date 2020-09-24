@@ -23,7 +23,7 @@ import { API_SITE } from "@/constants";
 export default {
   name: "App",
   components: {
-    TheHeader
+    TheHeader,
   },
   beforeCreate() {
     // should be moved to service and featured category should be set from there
@@ -31,27 +31,27 @@ export default {
       type: "search/siteMapAction",
       data: null,
       loading: true,
-      error: null
+      error: null,
     });
     return axios
       .get(API_SITE)
-      .then(response =>
+      .then((response) =>
         this.$store.dispatch({
           type: "search/siteMapAction",
           data: response.data,
           loading: false,
-          error: null
+          error: null,
         })
       )
-      .catch(err =>
+      .catch((err) =>
         this.$store.dispatch({
           type: "search/siteMapAction",
           data: err.toString(),
           loading: false,
-          error: true
+          error: true,
         })
       );
-  }
+  },
 };
 </script>
 

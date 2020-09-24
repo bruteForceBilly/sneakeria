@@ -25,12 +25,12 @@ module.exports = {
         "vw-4xl": "calc(1vw + 2.25rem)",
         "vw-5xl": "calc(1vw + 3rem)",
         "vw-6xl": "calc(1vw + 4rem)",
-        "vw-7xl": "calc(1vw + 5rem)"
-      }
-    }
+        "vw-7xl": "calc(1vw + 5rem)",
+      },
+    },
   },
   variants: {
-    margin: ["even", "odd"]
+    margin: ["even", "odd"],
   },
-  plugins: []
+  plugins: [],
 };

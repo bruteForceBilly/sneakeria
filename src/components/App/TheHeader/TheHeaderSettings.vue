@@ -11,7 +11,7 @@ export default {
   name: "TheHeaderSettings",
   data() {
     return {
-      show: false
+      show: false,
     };
   },
   methods: {
@@ -34,7 +34,7 @@ export default {
         default:
           console.log("setShow switch arg not found", event);
       }
-    }
+    },
   },
   computed: {
     mq() {
@@ -44,12 +44,12 @@ export default {
       return this.mq === "sm" || this.mq === "md"
         ? "screen--mobile"
         : "screen--desktop";
-    }
+    },
   },
   watch: {
     mq() {
       return (this.show = false);
-    }
-  }
+    },
+  },
 };
 </script>

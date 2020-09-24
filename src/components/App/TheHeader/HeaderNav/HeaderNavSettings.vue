@@ -13,46 +13,46 @@ export default {
           {
             name: "Men",
             label: "Men",
-            value: "men"
+            value: "men",
           },
           {
             name: "Women",
             label: "Women",
-            value: "women"
+            value: "women",
           },
           {
             name: "New",
             label: "New",
-            value: "new"
+            value: "new",
           },
           {
             name: "Essentials",
             label: "Essentials",
-            value: "essentials"
-          }
+            value: "essentials",
+          },
         ],
         icons: [
           {
             name: "Help",
             label: "help",
             value: "help",
-            src: "help-circle.svg"
+            src: "help-circle.svg",
           },
           {
             name: "Whishlist",
             label: "Whishlist",
             value: "whishlist",
-            src: "heart.svg"
+            src: "heart.svg",
           },
           {
             name: "Cart",
             label: "Cart",
             value: "cart",
-            src: "shopping-cart.svg"
-          }
-        ]
-      }
+            src: "shopping-cart.svg",
+          },
+        ],
+      },
     };
-  }
+  },
 };
 </script>

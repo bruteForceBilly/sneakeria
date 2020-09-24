@@ -18,13 +18,11 @@
         <span v-else>
           <span v-if="searchFoundProductsLength > 0">
             {{ currentRoute.path | displayPath }}
-            <span class="font-light tracking-wider  text-gray-600 text-xl">
+            <span class="font-light tracking-wider text-gray-600 text-xl">
               ( {{ searchFoundProductsLength }} Products )
             </span>
           </span>
-          <span v-else>
-            No Products Found
-          </span>
+          <span v-else> No Products Found </span>
         </span>
       </h1>
     </div>
@@ -35,19 +33,19 @@
 export default {
   props: {
     searchFoundProductsLength: {
-      type: Number
+      type: Number,
     },
     currentRoute: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   filters: {
-    displayPath: function(value) {
+    displayPath: function (value) {
       if (!value) return "";
       value = value.toString();
       return value.replace(/[-]/g, " ∙ ").substr(1);
-    }
-  }
+    },
+  },
 };
 </script>
 

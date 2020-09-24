@@ -27,17 +27,17 @@ import MenuOption from "../DropDownMenu/MenuOption.vue";
 export default {
   props: {
     sorts: {
-      type: Array
-    }
+      type: Array,
+    },
   },
   components: {
     Menu,
-    MenuOption
+    MenuOption,
   },
   methods: {
     sortSettingsHandler(optionValue) {
       return this.$store.dispatch("sort/settingAction", optionValue);
-    }
-  }
+    },
+  },
 };
 </script>

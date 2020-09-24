@@ -23,23 +23,23 @@ export default {
   props: {
     toggler: {
       type: Function,
-      required: true
+      required: true,
     },
     clicked: {
       type: Function,
-      required: true
+      required: true,
     },
     selected: {
       type: Array,
-      required: true
+      required: true,
     },
     resetter: {
       type: Function,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
-    SelectedOption
-  }
+    SelectedOption,
+  },
 };
 </script>

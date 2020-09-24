@@ -37,7 +37,7 @@
                     ? settings.settings.versionLinkQueryHandler(
                         settings.settings.selectHandler(index)
                       )
-                    : settings.settings.selectHandler(index)
+                    : settings.settings.selectHandler(index),
                 ]
               "
             />
@@ -55,14 +55,14 @@ import ProductCardButton from "./ProductCardButton";
 export default {
   name: "ProductThumbs",
   props: {
-    settings: Object
+    settings: Object,
   },
   components: {
-    ProductCardButton
+    ProductCardButton,
   },
   data() {
     return {
-      times: 0
+      times: 0,
     };
   },
   computed: {
@@ -77,7 +77,7 @@ export default {
         Math.ceil(this.settings.settings.product.versions.length / 4) * 100 -
         100
       );
-    }
+    },
   },
   methods: {
     next() {
@@ -85,8 +85,8 @@ export default {
     },
     previous() {
       return (this.times -= 100);
-    }
-  }
+    },
+  },
 };
 </script>
 

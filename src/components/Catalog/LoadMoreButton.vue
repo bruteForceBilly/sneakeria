@@ -6,8 +6,7 @@
       min="0"
       :max="searchFoundProductsLength"
       :value="loadedProducts.length"
-    >
-    </meter>
+    ></meter>
 
     <button
       @click="countIncrement"
@@ -24,14 +23,14 @@ import { mapMutations } from "vuex";
 export default {
   props: {
     searchFoundProductsLength: {
-      type: Number
+      type: Number,
     },
     loadedProducts: {
-      type: Array
-    }
+      type: Array,
+    },
   },
   methods: {
-    ...mapMutations("load", ["countIncrement"])
-  }
+    ...mapMutations("load", ["countIncrement"]),
+  },
 };
 </script>

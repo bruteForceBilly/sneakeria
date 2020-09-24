@@ -9,12 +9,12 @@ export default {
   name: "SidebarTransitionGroup",
   props: {
     animation: {
-      type: String
+      type: String,
     },
     appear: {
-      type: Boolean
-    }
-  }
+      type: Boolean,
+    },
+  },
 };
 </script>
 

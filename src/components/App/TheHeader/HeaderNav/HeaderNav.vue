@@ -30,23 +30,23 @@ import HeaderNavSettings from "./HeaderNavSettings.vue";
 
 export default {
   components: {
-    HeaderNavSettings
+    HeaderNavSettings,
   },
   props: {
     flyOut: {
-      type: Boolean
+      type: Boolean,
     },
     mode: {
       type: String,
-      validator: function(value) {
+      validator: function (value) {
         return ["icons", "links"].indexOf(value) !== -1;
-      }
-    }
+      },
+    },
   },
   methods: {
     setByRoute(arg) {
       return this.$store.commit("setByRoute", arg);
-    }
-  }
+    },
+  },
 };
 </script>

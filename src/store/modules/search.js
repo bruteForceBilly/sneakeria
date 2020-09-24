@@ -11,48 +11,46 @@ const state = () => ({
   siteMap: {
     data: null,
     loading: null,
-    error: null
-  }
+    error: null,
+  },
 });
 
 const getters = {
-  queryParamsObject: state => {
+  queryParamsObject: (state) => {
     return state.queryParamsObject;
   },
-  queryParamsStringKebab: state => {
+  queryParamsStringKebab: (state) => {
     // BUG leaves a , anyway sometimes!
-    return Object.values(state.queryParamsObject)
-      .toString()
-      .replace(",", "-");
+    return Object.values(state.queryParamsObject).toString().replace(",", "-");
   },
-  foundProducts: state => {
+  foundProducts: (state) => {
     return state.foundProducts;
   },
-  foundProductsLength: state => {
+  foundProductsLength: (state) => {
     if (state.foundProducts === null || state.foundProducts.length < 1) {
       return 0;
     } else {
       return state.foundProducts.length;
     }
-  }
+  },
 };
 
 const actions = {
   serviceRequestAction({ dispatch, getters }, payload) {
-    const getSiteMap = function(cb) {
+    const getSiteMap = function (cb) {
       return axios
         .get(API_SITE)
-        .then(response => cb(response.data))
-        .catch(err => cb(err.toString()));
+        .then((response) => cb(response.data))
+        .catch((err) => cb(err.toString()));
     };
-    return new Promise(resolve => {
-      getSiteMap(data => {
+    return new Promise((resolve) => {
+      getSiteMap((data) => {
         dispatch({
           type: "queryParamsObjectAction",
           data: {
             path: payload,
-            object: data
-          }
+            object: data,
+          },
         });
       }).then(() => {
         resolve(getters.queryParamsObject);
@@ -62,8 +60,8 @@ const actions = {
   queryParamsObjectAction({ commit }, queryAction) {
     let queryParamsObject = {};
     let arr = [];
-    queryAction.data.path.forEach(pathItem => {
-      queryAction.data.object.filter(function(obj) {
+    queryAction.data.path.forEach((pathItem) => {
+      queryAction.data.object.filter(function (obj) {
         if (obj.values.includes(pathItem)) {
           arr.push((queryParamsObject[obj.name] = pathItem));
         }
@@ -75,15 +73,15 @@ const actions = {
   queryParamsStringAction({ dispatch, commit }, queryParamsObject) {
     dispatch("queryParamsKebabAction", queryParamsObject);
 
-    let queryParamsString = function(obj) {
+    let queryParamsString = function (obj) {
       let arr = [];
-      let makeString = function(key, value) {
+      let makeString = function (key, value) {
         let str = `${key}=${value}`;
         return str;
       };
       for (let [key, value] of Object.entries(obj)) {
         if (Array.isArray(value)) {
-          value.forEach(cv => arr.push(makeString(key, cv)));
+          value.forEach((cv) => arr.push(makeString(key, cv)));
         } else {
           arr.push(makeString(key, value));
         }
@@ -105,7 +103,7 @@ const actions = {
   },
   siteMapAction({ commit }, siteMapObject) {
     return commit("siteMapMutation", siteMapObject);
-  }
+  },
 };
 
 const mutations = {
@@ -126,7 +124,7 @@ const mutations = {
   },
   siteMapMutation(state, siteMapObject) {
     Vue.set(state, "siteMap", siteMapObject);
-  }
+  },
 };
 
 export default {
@@ -134,5 +132,5 @@ export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 };

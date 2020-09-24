@@ -1,5 +1,5 @@
 const state = () => ({
-  setting: { sort: "default", order: "default" }
+  setting: { sort: "default", order: "default" },
 });
 
 const actions = {
@@ -7,23 +7,23 @@ const actions = {
     const formattedSettingParameters = Object.fromEntries(
       Object.entries(settingParameters).map(([k, v]) => [
         k,
-        v[0].toLowerCase() + v.slice(1)
+        v[0].toLowerCase() + v.slice(1),
       ])
     );
     return commit("settingMutation", formattedSettingParameters);
-  }
+  },
 };
 
 const mutations = {
   settingMutation(state, arg) {
     state.setting = arg;
-  }
+  },
 };
 
 const getters = {
   priceMax: (state, getters, rootSate, rootGetters) => {
     let copyProducts = [...rootGetters["load/products"]];
-    copyProducts.forEach(product => {
+    copyProducts.forEach((product) => {
       let maxPriceObj = product.versions.reduce(
         (max, version) => (max > version.price.offeredAmount ? max : version),
         null
@@ -38,7 +38,7 @@ const getters = {
   },
   priceMaxDescending: (state, getters) => {
     return [...getters.priceMax].sort((b, a) => a.maxPrice - b.maxPrice);
-  }
+  },
 };
 
 export default {
@@ -46,5 +46,5 @@ export default {
   state,
   actions,
   mutations,
-  getters
+  getters,
 };

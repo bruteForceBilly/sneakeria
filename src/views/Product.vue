@@ -11,18 +11,18 @@ import ProductCard from "@/components/Catalog/ProductCard/ProductCardBase.vue";
 export default {
   name: "Product",
   components: {
-    ProductCard
+    ProductCard,
   },
   data() {
     return {
-      product: null
+      product: null,
     };
   },
   beforeCreate() {
-    products("route", this.$store.state.route.params.product, data => {
+    products("route", this.$store.state.route.params.product, (data) => {
       console.log(data);
       return (this.product = data);
     });
-  }
+  },
 };
 </script>

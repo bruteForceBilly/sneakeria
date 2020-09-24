@@ -38,19 +38,19 @@ import MenuOptionCheckbox from "../DropDownMenu/MenuOptionCheckbox.vue";
 export default {
   props: {
     selects: {
-      type: Array
+      type: Array,
     },
     selectedOptionsObject: {
       type: Object,
-      default: function() {
+      default: function () {
         return {};
-      }
-    }
+      },
+    },
   },
   components: {
     Menu,
     MenuOption,
-    MenuOptionCheckbox
-  }
+    MenuOptionCheckbox,
+  },
 };
 </script>

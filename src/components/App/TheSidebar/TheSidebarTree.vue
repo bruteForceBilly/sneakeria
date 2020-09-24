@@ -8,7 +8,7 @@
         v-if="selected.name === node.name"
         :key="selected.name + node.name"
         class="border-b flex justify-center items-center mb-4"
-        style="height:50px;"
+        style="height: 50px"
       >
         <img src="@/assets/logo.svg" />
       </div>
@@ -43,24 +43,24 @@ export default {
   name: "TheSidebarTree",
   props: {
     node: {
-      type: Object
+      type: Object,
     },
     selected: {
-      type: Object
+      type: Object,
     },
     select: {
-      type: Function
+      type: Function,
     },
     show: {
-      type: Boolean
+      type: Boolean,
     },
     setShow: {
-      type: Function
-    }
+      type: Function,
+    },
   },
   components: {
     SidebarTreeNode,
-    SidebarTransitionGroup
-  }
+    SidebarTransitionGroup,
+  },
 };
 </script>

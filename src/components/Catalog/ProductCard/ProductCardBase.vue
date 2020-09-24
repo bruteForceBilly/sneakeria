@@ -4,12 +4,12 @@
       :product-data="productData"
       :view-context="viewContext"
       v-slot:default="{
-        settings
+        settings,
       }"
     >
       <ProductCardLayout
         :settings="{
-          settings
+          settings,
         }"
       >
         <template v-slot:favourite>
@@ -18,7 +18,7 @@
             icon="heart"
             button-style="link square"
             :settings="{
-              settings
+              settings,
             }"
           >
           </ProductCardButton>
@@ -43,7 +43,7 @@
         <template v-slot:thumbs>
           <ProductCardThumbs
             v-bind:settings="{
-              settings
+              settings,
             }"
           />
         </template>
@@ -56,7 +56,7 @@
                 icon="none"
                 button-style="primary primary--call-to-action"
                 :settings="{
-                  settings
+                  settings,
                 }"
               >
                 buy ⟶
@@ -84,8 +84,8 @@ export default {
     ProductCardLayout,
     ProductCardDetails,
     ProductCardThumbs,
-    ProductCardButton
-  }
+    ProductCardButton,
+  },
 };
 </script>
 

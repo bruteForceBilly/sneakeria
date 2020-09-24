@@ -5,7 +5,7 @@
     </h6>
     <h3
       :class="[
-        settings.settings.layout === 'card' ? 'text-vw-base' : 'text-vw-4xl'
+        settings.settings.layout === 'card' ? 'text-vw-base' : 'text-vw-4xl',
       ]"
     >
       {{ settings.settings.product.name }}
@@ -51,7 +51,7 @@
 export default {
   name: "ProductDetails",
   props: {
-    settings: Object
+    settings: Object,
   },
   computed: {
     sku() {
@@ -70,16 +70,16 @@ export default {
           (this.price.offeredAmount / this.price.originalAmount) * 100
         );
       return percent < 100 ? `${percent}%` : false;
-    }
+    },
   },
   filters: {
-    formatCurrency: function(amount, currency) {
+    formatCurrency: function (amount, currency) {
       if (currency === "eur") {
         return "€" + amount; // + parseFloat(price_amount).toFixed(2)
       } else if (currency === "usd") {
         return "$" + amount; // + parseFloat(price_amount).toFixed(2)
       }
-    }
-  }
+    },
+  },
 };
 </script>

@@ -38,7 +38,7 @@ export default {
     SelectionBar,
     DisplayTitle,
     ProductGrid,
-    LoadMoreButton
+    LoadMoreButton,
   },
   data() {
     return {
@@ -53,16 +53,16 @@ export default {
               name: "section",
               label: "Men",
               value: "men",
-              checked: false
+              checked: false,
             },
             {
               id: 2,
               name: "section",
               label: "Women",
               value: "women",
-              checked: false
-            }
-          ]
+              checked: false,
+            },
+          ],
         },
         {
           id: 2,
@@ -74,16 +74,16 @@ export default {
               name: "category",
               label: "Shoes",
               value: "shoes",
-              checked: false
+              checked: false,
             },
             {
               id: 2,
               name: "category",
               label: "Clothing",
               value: "clothing",
-              checked: false
-            }
-          ]
+              checked: false,
+            },
+          ],
         },
         {
           id: 3,
@@ -95,15 +95,15 @@ export default {
               id: 2,
               name: "campaigns",
               label: "Essentials",
-              value: "essentials"
+              value: "essentials",
             },
             {
               id: 3,
               name: "campaigns",
               label: "New Arrivals",
-              value: "new"
-            }
-          ]
+              value: "new",
+            },
+          ],
         },
         {
           id: 4,
@@ -115,23 +115,23 @@ export default {
               name: "look",
               label: "Tennis",
               value: "tennis",
-              checked: false
+              checked: false,
             },
             {
               id: 2,
               name: "look",
               label: "Basketball",
               value: "basketball",
-              checked: false
+              checked: false,
             },
             {
               id: 3,
               name: "look",
               label: "Soccer",
               value: "soccer",
-              checked: false
-            }
-          ]
+              checked: false,
+            },
+          ],
         },
         {
           id: 5,
@@ -143,38 +143,38 @@ export default {
               name: "brand",
               label: "Nike",
               value: "nike",
-              checked: false
+              checked: false,
             },
             {
               id: 2,
               name: "brand",
               label: "Adidas",
               value: "adidas",
-              checked: false
+              checked: false,
             },
             {
               id: 3,
               name: "brand",
               label: "Rebook",
               value: "rebook",
-              checked: false
+              checked: false,
             },
             {
               id: 4,
               name: "brand",
               label: "Puma",
               value: "puma",
-              checked: false
-            }
-          ]
-        }
-      ]
+              checked: false,
+            },
+          ],
+        },
+      ],
     };
   },
   computed: {
     ...mapGetters("load", ["products"]),
     ...mapGetters("search", ["foundProductsLength"]),
-    ...mapState(["route"])
-  }
+    ...mapState(["route"]),
+  },
 };
 </script>
