@@ -20,61 +20,51 @@
     </div>
     <div v-for="(option, index) in selectedOptionsElements" :key="option.value">
       <template v-if="index === 0">
-        <div class="">
-          <span
-            @click="toggleIndexSuccseedors(index)"
-            class="cursor-pointer"
-            :class="[
-              selectedOptionsElements.length === 1
-                ? 'no-underline'
-                : 'underline',
-            ]"
-          >
-            {{ option.label }}</span
-          >
-          <span
-            class="mx-2"
-            :class="[
-              selectedOptionsElements.length === 1 ? 'invisible' : 'visible',
-            ]"
-            >/</span
-          >
-        </div>
+        <span
+          @click="toggleIndexSuccseedors(index)"
+          class="cursor-pointer"
+          :class="[
+            selectedOptionsElements.length === 1 ? 'no-underline' : 'underline',
+          ]"
+        >
+          {{ option.label }}</span
+        >
+        <span
+          class="mx-2"
+          :class="[
+            selectedOptionsElements.length === 1 ? 'invisible' : 'visible',
+          ]"
+          >/</span
+        >
       </template>
       <template v-else-if="index === selectedOptionsElements.length - 1">
-        <div>
-          <span class="no-underline cursor-auto">{{ option.label }}</span>
-          <span class="mx-2"></span>
-        </div>
+        <span class="no-underline cursor-auto">{{ option.label }}</span>
+        <span class="mx-2"></span>
       </template>
       <template v-else-if="index > 0 && index % 2">
-        <div class="">
-          <span
-            @click="toggleIndexSuccseedors(index)"
-            class="cursor-pointer underline"
-          >
-            {{ option.label }}</span
-          >
-          <span class="mx-2">/</span>
-        </div>
+        <span
+          @click="toggleIndexSuccseedors(index)"
+          class="cursor-pointer underline"
+        >
+          {{ option.label }}</span
+        >
+        <span class="mx-2">/</span>
       </template>
       <template v-else>
-        <div class="">
-          <span
-            @click="
-              selectOptionsCheckToggle(
-                clickedOptionObject(
-                  selectedOptionsElements[index + 1].name,
-                  selectedOptionsElements[index + 1].value
-                )
+        <span
+          @click="
+            selectOptionsCheckToggle(
+              clickedOptionObject(
+                selectedOptionsElements[index + 1].name,
+                selectedOptionsElements[index + 1].value
               )
-            "
-            class="underline cursor-pointer"
-          >
-            {{ option.label }}</span
-          >
-          <span class="mx-2">/</span>
-        </div>
+            )
+          "
+          class="underline cursor-pointer"
+        >
+          {{ option.label }}</span
+        >
+        <span class="mx-2">/</span>
       </template>
     </div>
   </div>

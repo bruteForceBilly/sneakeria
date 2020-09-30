@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import search from "./modules/search.js";
 import load from "./modules/load.js";
 import sort from "./modules/sort.js";
+import navigation from "./modules/navigation.js";
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     search,
     load,
     sort,
+    navigation,
   },
   state: {
     rootData: null,
