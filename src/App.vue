@@ -26,6 +26,7 @@ export default {
     TheHeader,
   },
   beforeCreate() {
+    let that = this;
     // should be moved to service and featured category should be set from there
     this.$store.dispatch({
       type: "search/siteMapAction",
@@ -35,22 +36,22 @@ export default {
     });
     return axios
       .get(API_SITE)
-      .then((response) =>
-        this.$store.dispatch({
+      .then(function (response) {
+        that.$store.dispatch({
           type: "search/siteMapAction",
           data: response.data,
           loading: false,
           error: null,
-        })
-      )
-      .catch((err) =>
-        this.$store.dispatch({
+        });
+      })
+      .catch(function (err) {
+        return that.$store.dispatch({
           type: "search/siteMapAction",
           data: err.toString(),
           loading: false,
           error: true,
-        })
-      );
+        });
+      });
   },
 };
 </script>
