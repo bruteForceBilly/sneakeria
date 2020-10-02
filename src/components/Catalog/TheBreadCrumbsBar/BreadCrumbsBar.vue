@@ -14,18 +14,19 @@
     <router-link to="all">
       <span class="underline cursor-pointer">Home</span>
     </router-link>
+
     <span class="mx-2">/</span>
 
     <div v-for="(option, index) in selectedOptionsElements" :key="option.value">
       <template v-if="index === 0">
-        <span
+        <a
           @click="toggleIndexSuccseedors(index)"
           class="cursor-pointer"
           :class="[
             selectedOptionsElements.length === 1 ? 'no-underline' : 'underline',
           ]"
         >
-          {{ option.label }}</span
+          {{ option.label }}</a
         >
         <span
           class="mx-2"
@@ -36,15 +37,15 @@
         >
       </template>
       <template v-else-if="index === selectedOptionsElements.length - 1">
-        <span class="no-underline cursor-auto">{{ option.label }}</span>
+        <a class="no-underline cursor-auto">{{ option.label }}</a>
         <span class="mx-2"></span>
       </template>
       <template v-else-if="index > 0 && index % 2">
-        <span
+        <a
           @click="toggleIndexSuccseedors(index)"
           class="cursor-pointer underline"
         >
-          {{ option.label }}</span
+          {{ option.label }}</a
         >
         <span class="mx-2">/</span>
       </template>

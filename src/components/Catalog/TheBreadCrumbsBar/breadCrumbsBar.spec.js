@@ -16,7 +16,7 @@ const selects = [
         name: "select-a",
         label: "Option A",
         value: "option-a",
-        checked: false,
+        checked: true,
       },
       {
         id: 2,
@@ -44,9 +44,26 @@ const selects = [
         name: "select-b",
         label: "Option B",
         value: "option-b",
-        checked: false,
+        checked: true,
       },
     ],
+  },
+];
+
+const checkedOptions = [
+  {
+    id: 1,
+    name: "select-a",
+    label: "Option A",
+    value: "option-a",
+    checked: true,
+  },
+  {
+    id: 2,
+    name: "select-b",
+    label: "Option B",
+    value: "option-b",
+    checked: true,
   },
 ];
 
@@ -76,5 +93,13 @@ describe("TheBreadCrumbsBar", () => {
   });
   it("renders a home button", async () => {
     expect(wrapper.text()).toContain("Home");
+  });
+  it("every selected option is selected", async () => {
+    expect(wrapper.vm.selectedOptionsElements).toEqual(checkedOptions);
+  });
+  it("every selected option is rendered as link", async () => {
+    expect(wrapper.findAll("a").length).toBe(
+      wrapper.vm.selectedOptionsElements.length
+    );
   });
 });
