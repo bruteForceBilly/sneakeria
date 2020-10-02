@@ -1,57 +1,21 @@
 <template>
   <div id="app">
     <TheHeader> </TheHeader>
-
     <div>
       <transition name="fade" mode="out-in">
         <router-view> </router-view>
       </transition>
     </div>
-
-    <!-- try with transition and keep alive     
-    https://github.com/vuejs/vue-router/blob/dev/examples/transitions/app.js
-    -->
   </div>
 </template>
 
 <script>
 import TheHeader from "@/components/App/TheHeader/TheHeader";
 
-import axios from "axios";
-import { API_SITE } from "@/constants";
-
 export default {
   name: "App",
   components: {
     TheHeader,
-  },
-  beforeCreate() {
-    let that = this;
-    // should be moved to service and featured category should be set from there
-    this.$store.dispatch({
-      type: "search/siteMapAction",
-      data: null,
-      loading: true,
-      error: null,
-    });
-    return axios
-      .get(API_SITE)
-      .then(function (response) {
-        that.$store.dispatch({
-          type: "search/siteMapAction",
-          data: response.data,
-          loading: false,
-          error: null,
-        });
-      })
-      .catch(function (err) {
-        return that.$store.dispatch({
-          type: "search/siteMapAction",
-          data: err.toString(),
-          loading: false,
-          error: true,
-        });
-      });
   },
 };
 </script>

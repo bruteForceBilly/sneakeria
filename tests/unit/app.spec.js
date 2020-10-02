@@ -1,34 +1,32 @@
-import Vuex from "vuex";
-import store from "@/store";
 import { createLocalVue, shallowMount } from "@vue/test-utils";
-import Component from "@/App.vue";
+import App from "@/App.vue";
 
 let wrapper;
 
 const localVue = createLocalVue();
-localVue.use(Vuex, store);
 
-const wrapperFactory = (localVue, store) => {
-  return shallowMount(Component, {
+const wrapperFactory = (localVue) => {
+  return shallowMount(App, {
     localVue,
-    store,
     propsData: {},
     mocks: {},
     stubs: ["router-link", "router-view"],
-    methods: {},
   });
 };
 
 beforeEach(() => {
-  wrapper = wrapperFactory(localVue, store);
+  wrapper = wrapperFactory(localVue);
 });
 
 afterEach(() => {
   wrapper.destroy();
 });
 
-describe("Component", () => {
-  test("is a Vue instance", () => {
+describe("App.vue", () => {
+  it("is a Vue instance", () => {
     expect(wrapper.isVueInstance).toBeTruthy();
+  });
+  it("is renders TheHeader", () => {
+    expect(wrapper.findComponent({ name: "TheHeader" }).exists()).toBe(true);
   });
 });
