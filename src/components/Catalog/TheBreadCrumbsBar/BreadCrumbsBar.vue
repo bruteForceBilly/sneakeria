@@ -3,21 +3,19 @@
     v-if="selects"
     class="flex flex-row items-center py-1 text-gray-800 font-sans font-normal text-sm capitalize tracking-widest"
   >
-    <div class="">
-      <span class="font-black mr-2">←</span>
-      <span
-        @click="$router.go(-1)"
-        class="underline cursor-pointer uppercase font-black"
-        >Back</span
-      >
-      <span class="mx-2">/</span>
-    </div>
-    <div class="">
-      <router-link to="all">
-        <span class="underline cursor-pointer">Home</span>
-      </router-link>
-      <span class="mx-2">/</span>
-    </div>
+    <span class="font-black mr-2">←</span>
+    <span
+      @click="$router.go(-1)"
+      class="underline cursor-pointer uppercase font-black"
+      >Back</span
+    >
+    <span class="mx-2">/</span>
+
+    <router-link to="all">
+      <span class="underline cursor-pointer">Home</span>
+    </router-link>
+    <span class="mx-2">/</span>
+
     <div v-for="(option, index) in selectedOptionsElements" :key="option.value">
       <template v-if="index === 0">
         <span
