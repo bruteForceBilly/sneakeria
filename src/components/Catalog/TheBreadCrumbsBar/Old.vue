@@ -70,8 +70,6 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-
 export default {
   name: "TheBreadCrumbBar",
   props: {
@@ -80,11 +78,14 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("navigation", ["selectedOptionsElements"]),
+    selectedOptionsElements() {
+      return this.selects
+        .map((select) => select.options)
+        .flat()
+        .filter((option) => option.checked);
+    },
   },
   methods: {
-    ...mapActions("navigation", ["selectOptionsCheckToggle"]),
-
     toggleIndexSuccseedors(index) {
       let indexSuccseedors = this.selectedOptionsElements.splice(index + 1);
       return indexSuccseedors.forEach((o) => {
@@ -93,11 +94,34 @@ export default {
         );
       });
     },
-
     clickedOptionObject(name, value) {
       let o = {};
       o[name] = value;
       return o;
+    },
+    selectOptionsCheckToggle(arg) {
+      for (let [key, value] of Object.entries(arg)) {
+        if (Array.isArray(value)) {
+          value.forEach((v) => {
+            this.selects
+              .map((select) => select.options)
+              .flat()
+              .filter((option) => option.name === key)
+              .filter((option) => option.value === v)
+              .forEach((el) => this.toggleElement(el));
+          });
+        } else {
+          this.selects
+            .map((select) => select.options)
+            .flat()
+            .filter((option) => option.name === key)
+            .filter((option) => option.value === value)
+            .forEach((el) => this.toggleElement(el));
+        }
+      }
+    },
+    toggleElement(el) {
+      return !el.checked ? (el.checked = true) : (el.checked = false);
     },
   },
 };

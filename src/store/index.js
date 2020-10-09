@@ -7,8 +7,6 @@ import navigation from "./modules/navigation.js";
 
 Vue.use(Vuex);
 
-// handle logs and errors in a module
-
 export default new Vuex.Store({
   modules: {
     search,

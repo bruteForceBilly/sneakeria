@@ -128,7 +128,71 @@ const state = () => ({
   ],
 });
 
+const getters = {
+  selectedOptionsElements: (state) => {
+    return state.selects
+      .map((select) => select.options)
+      .flat()
+      .filter((option) => option.checked);
+  },
+  selectedOptionsObject: (state, getters) => {
+    return getters.selectedOptionsElements.reduce(function (previous, element) {
+      if (element.name in previous) {
+        previous[element.name] = [previous[element.name]];
+        previous[element.name].push(element.value);
+      } else {
+        previous[element.name] = element.value;
+      }
+      return previous;
+    }, {});
+  },
+};
+
+const actions = {
+  clearAll({ commit, state, getters }) {
+    return getters.selectedOptionsObject.forEach((el) =>
+      commit("toggleElementMutation", el)
+    );
+  },
+  selectOptionsCheckToggle({ commit, state }, clickedOptionObject) {
+    for (let [key, value] of Object.entries(clickedOptionObject)) {
+      if (Array.isArray(value)) {
+        value.forEach((cv) => {
+          state.selects
+            .map((select) => select.options)
+            .flat()
+            .filter((option) => option.name === key)
+            .filter((option) => option.value === cv)
+            .forEach((el) => ("toggleElement", el));
+        });
+      } else {
+        state.selects
+          .map((select) => select.options)
+          .flat()
+          .filter((option) => option.name === key)
+          .filter((option) => option.value === value)
+          .forEach((el) => commit("toggleElement", el));
+      }
+    }
+  },
+};
+
+const mutations = {
+  toggleElement(state, el) {
+    let foundElement = state.selects
+      .find((select) => select.name === el.name)
+      .options.find((option) => option.value === el.value);
+
+    return !foundElement.checked
+      ? (foundElement.checked = true)
+      : (foundElement.checked = false);
+  },
+};
+
 export default {
   namespaced: true,
   state,
+  getters,
+  actions,
+  mutations,
 };

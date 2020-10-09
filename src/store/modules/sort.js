@@ -1,5 +1,28 @@
 const state = () => ({
   setting: { sort: "default", order: "default" },
+  sorts: [
+    {
+      id: 1,
+      name: "sortBy",
+      label: "Sort By",
+      options: [
+        {
+          id: 1,
+          name: "sortBy",
+          label: "Price (low - high)",
+          value: { sort: "PriceMax", order: "Ascending" },
+          checked: false,
+        },
+        {
+          id: 2,
+          name: "sortBy",
+          label: "Price (high - low)",
+          value: { sort: "PriceMax", order: "Descending" },
+          checked: false,
+        },
+      ],
+    },
+  ],
 });
 
 const actions = {

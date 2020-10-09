@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "TheCatalogSelectionBarSettings",
   props: {
@@ -28,51 +30,13 @@ export default {
       type: Array,
     },
   },
-  data() {
-    return {
-      sorts: [
-        {
-          id: 1,
-          name: "sortBy",
-          label: "Sort By",
-          options: [
-            {
-              id: 1,
-              name: "sortBy",
-              label: "Price (low - high)",
-              value: { sort: "PriceMax", order: "Ascending" },
-              checked: false,
-            },
-            {
-              id: 2,
-              name: "sortBy",
-              label: "Price (high - low)",
-              value: { sort: "PriceMax", order: "Descending" },
-              checked: false,
-            },
-          ],
-        },
-      ],
-    };
-  },
   computed: {
-    selectedOptionsElements() {
-      let selectedOptionsElements = this.selects
-        .map((select) => select.options)
-        .flat()
-        .filter((option) => option.checked);
-      return selectedOptionsElements;
-    },
-    selectedOptionsObject() {
-      return this.selectedOptionsElements.reduce(function (previous, element) {
-        if (element.name in previous) {
-          previous[element.name] = [previous[element.name]];
-          previous[element.name].push(element.value);
-        } else {
-          previous[element.name] = element.value;
-        }
-        return previous;
-      }, {});
+    ...mapGetters("navigation", [
+      "selectedOptionsElements",
+      "selectedOptionsObject",
+    ]),
+    sorts() {
+      return this.$store.state.sort.sorts;
     },
     searchQueryParamsObject() {
       return this.$store.state.search.queryParamsObject;
@@ -85,59 +49,25 @@ export default {
     },
   },
   methods: {
-    clearAll() {
-      return this.selectedOptionsElements.forEach((el) => (el.checked = false)); // redo for orm
-    },
+    ...mapActions("navigation", [
+      "clearAll",
+      "selectOptionsCheckToggle",
+      "toggleElement",
+    ]),
     clickedOptionObject(name, value) {
       let o = {};
       o[name] = value;
       return o;
     },
-    selectOptionsCheckToggle(arg) {
-      for (let [key, value] of Object.entries(arg)) {
-        if (Array.isArray(value)) {
-          value.forEach((v) => {
-            this.selects
-              .map((select) => select.options)
-              .flat()
-              .filter((option) => option.name === key)
-              .filter((option) => option.value === v)
-              .forEach((el) => this.toggleElement(el));
-          });
-        } else {
-          this.selects
-            .map((select) => select.options)
-            .flat()
-            .filter((option) => option.name === key)
-            .filter((option) => option.value === value)
-            .forEach((el) => this.toggleElement(el));
-        }
-      }
-    },
     toggleElement(el) {
       return !el.checked ? (el.checked = true) : (el.checked = false);
     },
     updateRouteQueryParams(argObj) {
-      if (Object.keys(argObj).length > 0) {
-        return (
-          this.$router
-            .push({
-              name: "searchQueryRoute",
-              query: argObj,
-            })
-            // eslint-disable-next-line no-unused-vars
-            .catch((err) => {})
-        );
-      } else {
-        return (
-          this.$router
-            .push({
-              name: "all",
-            })
-            // eslint-disable-next-line no-unused-vars
-            .catch((err) => {})
-        );
-      }
+      Object.keys(argObj).length > 0
+        ? this.$router
+            .push({ name: "searchQueryRoute", query: argObj })
+            .catch((failure) => {})
+        : this.$router.push({ name: "all" }).catch((err) => {});
     },
     updateElements() {
       //console.log("update elements", this.selectedOptionsElements)

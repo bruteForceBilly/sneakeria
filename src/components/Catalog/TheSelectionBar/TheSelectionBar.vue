@@ -26,28 +26,6 @@
             :selected="settings.selectedOptionsElements"
             :resetter="settings.clearAll"
           ></TheSelectedOptions>
-
-          <!-- <div
-            v-for="option in baseSettings.selectedOptionsElements"
-            :key="option.value"
-            class=""
-          >
-            <CatalogFilterBarSelectedFiltersItem
-              @click.native="
-                baseSettings.selectOptionsCheckToggle(
-                  baseSettings.clickedOptionObject(option.name, option.value)
-                )
-              "
-            >
-              {{ option.label }}
-            </CatalogFilterBarSelectedFiltersItem>
-          </div>
-          <CatalogFilterBarSelectedFiltersItem
-            v-show="baseSettings.selectedOptionsElements.length > 0"
-            link="true"
-            @click.native="baseSettings.clearAll()"
-            >Clear All</CatalogFilterBarSelectedFiltersItem
-          > -->
         </div>
       </div>
     </Settings>
