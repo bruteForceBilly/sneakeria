@@ -17,63 +17,22 @@
 
     <span class="mx-2">/</span>
 
-    <div v-for="(option, index) in selectedOptionsElements" :key="option.value">
-      <template v-if="index === 0">
-        <a
-          @click="toggleIndexSuccseedors(index)"
-          class="cursor-pointer"
-          :class="[
-            selectedOptionsElements.length === 1 ? 'no-underline' : 'underline',
-          ]"
-        >
-          {{ option.label }}</a
-        >
-        <span
-          class="mx-2"
-          :class="[
-            selectedOptionsElements.length === 1 ? 'invisible' : 'visible',
-          ]"
-          >/</span
-        >
-      </template>
-      <template v-else-if="index === selectedOptionsElements.length - 1">
-        <a class="no-underline cursor-auto">{{ option.label }}</a>
-        <span class="mx-2"></span>
-      </template>
-      <template v-else-if="index > 0 && index % 2">
-        <a
-          @click="toggleIndexSuccseedors(index)"
-          class="cursor-pointer underline"
-        >
-          {{ option.label }}</a
-        >
-        <span class="mx-2">/</span>
-      </template>
-      <template v-else>
-        <a
-          @click="
-            selectOptionsCheckToggle(
-              clickedOptionObject(
-                selectedOptionsElements[index + 1].name,
-                selectedOptionsElements[index + 1].value
-              )
-            )
-          "
-          class="underline cursor-pointer"
-        >
-          {{ option.label }}</a
-        >
-        <span class="mx-2">/</span>
-      </template>
-    </div>
+    <Crumbs :selects="selects" />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import Crumbs from "./Crumbs.vue";
+
+//      v-on:toggle-index-succseedors="toggleIndexSuccseedors($event)"
+//v-on:crumbs-toggle="selectOptionsCheckToggle($event)"
 
 export default {
   name: "TheBreadCrumbBar",
+  components: {
+    Crumbs,
+  },
   props: {
     selects: {
       type: Array,
@@ -84,7 +43,6 @@ export default {
   },
   methods: {
     ...mapActions("navigation", ["selectOptionsCheckToggle"]),
-
     toggleIndexSuccseedors(index) {
       let indexSuccseedors = this.selectedOptionsElements.splice(index + 1);
       return indexSuccseedors.forEach((o) => {
