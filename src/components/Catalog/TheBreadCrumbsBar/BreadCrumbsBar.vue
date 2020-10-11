@@ -22,11 +22,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
 import Crumbs from "./Crumbs.vue";
-
-//      v-on:toggle-index-succseedors="toggleIndexSuccseedors($event)"
-//v-on:crumbs-toggle="selectOptionsCheckToggle($event)"
 
 export default {
   name: "TheBreadCrumbBar",
@@ -36,26 +32,6 @@ export default {
   props: {
     selects: {
       type: Array,
-    },
-  },
-  computed: {
-    ...mapGetters("navigation", ["selectedOptionsElements"]),
-  },
-  methods: {
-    ...mapActions("navigation", ["selectOptionsCheckToggle"]),
-    toggleIndexSuccseedors(index) {
-      let indexSuccseedors = this.selectedOptionsElements.splice(index + 1);
-      return indexSuccseedors.forEach((o) => {
-        this.selectOptionsCheckToggle(
-          this.clickedOptionObject(o.name, o.value)
-        );
-      });
-    },
-
-    clickedOptionObject(name, value) {
-      let o = {};
-      o[name] = value;
-      return o;
     },
   },
 };

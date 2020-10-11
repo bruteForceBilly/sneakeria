@@ -1,8 +1,63 @@
-<script>
-import { mapGetters } from "vuex";
+<template>
+  <div
+    v-if="selects"
+    class="flex flex-row items-center py-1 text-gray-800 font-sans font-normal text-sm capitalize tracking-widest"
+  >
+    <div v-for="(option, index) in selectedOptionsElements" :key="option.value">
+      <template v-if="index === 0">
+        <a
+          @click="toggleIndexAndSuccseedors(index)"
+          class="cursor-pointer"
+          :class="[
+            selectedOptionsElements.length === 1 ? 'no-underline' : 'underline',
+          ]"
+        >
+          {{ option.label }}</a
+        >
+        <span
+          class="mx-2"
+          :class="[
+            selectedOptionsElements.length === 1 ? 'invisible' : 'visible',
+          ]"
+          >/</span
+        >
+      </template>
+      <template v-else-if="index === selectedOptionsElements.length - 1">
+        <a class="no-underline cursor-auto">{{ option.label }}</a>
+        <span class="mx-2"></span>
+      </template>
+      <template v-else-if="index > 0 && index % 2">
+        <a
+          @click="toggleIndexAndSuccseedors(index)"
+          class="cursor-pointer underline"
+        >
+          {{ option.label }}</a
+        >
+        <span class="mx-2">/</span>
+      </template>
+      <template v-else>
+        <a
+          @click="
+            toggleIndex({
+              name: selectedOptionsElements[index + 1].name,
+              value: selectedOptionsElements[index + 1].value,
+            })
+          "
+          class="underline cursor-pointer"
+        >
+          {{ option.label }}</a
+        >
+        <span class="mx-2">/</span>
+      </template>
+    </div>
+  </div>
+</template>
 
+<script>
+import { mapGetters, mapActions } from "vuex";
+// rewrite a new getter that only returns the last value of each category
 export default {
-  name: "Crumbs",
+  name: "TheBreadCrumbBar",
   props: {
     selects: {
       type: Array,
@@ -12,76 +67,11 @@ export default {
     ...mapGetters("navigation", ["selectedOptionsElements"]),
   },
   methods: {
-    clickedOptionObject(name, value) {
-      let o = {};
-      o[name] = value;
-      return o;
-    },
-  },
-  render: function (h) {
-    if (this.selectedOptionsElements.length) {
-      const labelFormatTemplate = function (
-        label,
-        event,
-        underline = true,
-        slashCharacter = true,
-        slashVisibility = true
-      ) {
-        return (
-          <div class="inline">
-            <a
-              onClick={event ? event : ""}
-              class={`cursor-pointer ${underline ? "underline" : ""}`}
-            >
-              {label}
-            </a>
-            <span class={`mx-2 ${slashVisibility ? "visible" : "invisible"}`}>
-              {slashCharacter ? "/" : ""}
-            </span>
-          </div>
-        );
-      };
-      const labelFormat = (label, index) => {
-        const singleItem = !!(this.selectedOptionsElements.length === 1);
-        if (index === 0) {
-          return labelFormatTemplate(
-            label,
-            this.$emit("toggle-index-succseedors", index),
-            singleItem ? false : true,
-            singleItem ? false : true
-          );
-        } else if (index === this.selectedOptionsElements.length - 1) {
-          return labelFormatTemplate(label, false, false, false);
-        } else if (index > 0 && index % 2) {
-          return labelFormatTemplate(
-            label,
-            this.$emit("toggle-index-succseedors", index)
-          );
-        } else {
-          return labelFormatTemplate(
-            label,
-            this.$emit(
-              "crumbs-toggle",
-              this.clickedOptionObject(
-                this.selectedOptionsElements[index + 1].name,
-                this.selectedOptionsElements[index + 1].value
-              )
-            )
-          );
-        }
-      };
-      return (
-        <ul>
-          {this.selectedOptionsElements.map((el, index) => (
-            <li class="inline" key={el.value}>
-              {labelFormat(el.label, index)}
-            </li>
-          ))}
-        </ul>
-      );
-    } else {
-      return h("p", "No items found.");
-    }
+    ...mapActions("navigation", [
+      "toggleIndex",
+      "toggleIndexAndSuccseedors",
+      "selectOptionsCheckToggle",
+    ]),
   },
 };
 </script>

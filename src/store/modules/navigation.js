@@ -149,6 +149,20 @@ const getters = {
 };
 
 const actions = {
+  toggleIndex({ dispatch }, { name, value }) {
+    let options = {};
+    options[name] = value;
+    return dispatch("selectOptionsCheckToggle", options);
+  },
+  toggleIndexAndSuccseedors({ dispatch, getters }, index) {
+    let indexSuccseedors = getters.selectedOptionsElements.splice(index + 1);
+    indexSuccseedors.forEach(function (cv) {
+      return dispatch("toggleIndex", {
+        name: cv.name,
+        value: cv.value,
+      });
+    });
+  },
   clearAll({ commit, state, getters }) {
     return getters.selectedOptionsObject.forEach((el) =>
       commit("toggleElementMutation", el)
@@ -178,6 +192,9 @@ const actions = {
 };
 
 const mutations = {
+  clickedOptionObjectMutation(state, object) {
+    return (state.clickedOption = object);
+  },
   toggleElement(state, el) {
     let foundElement = state.selects
       .find((select) => select.name === el.name)
