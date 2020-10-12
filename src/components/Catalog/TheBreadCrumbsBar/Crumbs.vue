@@ -55,7 +55,6 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-// rewrite a new getter that only returns the last value of each category
 export default {
   name: "TheBreadCrumbBar",
   props: {
