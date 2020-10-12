@@ -4,7 +4,7 @@ const DESTINATION_FILE = "db.json";
 
 let products = [];
 
-const makeVersions = function(i) {
+const makeVersions = function (i) {
   let result = [];
   for (let j = 0; j < 6; j++) {
     faker.seed(j);
@@ -17,7 +17,7 @@ const makeVersions = function(i) {
         "red",
         "yellow",
         "blue",
-        "green"
+        "green",
       ]),
       price: {
         currency: "eur",
@@ -29,14 +29,14 @@ const makeVersions = function(i) {
         },
         get discount() {
           return this.offeredAmount < this.originalAmount ? "false" : "true";
-        }
+        },
       },
       imageUrl: {
         small:
           "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
         medium:
-          "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
-      }
+          "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial",
+      },
     });
   }
   return result;
@@ -56,13 +56,13 @@ for (let i = 0; i < 339; i++) {
     category: faker.random.arrayElement(["clothing", "shoes"]),
     look: faker.random.arrayElement(["tennis", "basketball", "soccer"]),
     brand: faker.random.arrayElement(["nike", "adidas", "rebook", "puma"]),
-    versions: makeVersions(i)
+    versions: makeVersions(i),
   });
 }
 
 let jsonProducts = JSON.stringify(products);
 
-fs.writeFile(DESTINATION_FILE, jsonProducts, function(err) {
+fs.writeFile(DESTINATION_FILE, jsonProducts, function (err) {
   if (err) throw err;
   console.log(`Saved ${jsonProducts} fake data to ${DESTINATION_FILE}`);
 });
