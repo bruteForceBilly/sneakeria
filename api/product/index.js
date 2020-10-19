@@ -1,6 +1,14 @@
-const { newProduct } = require("./factories/product.js");
-const util = require("util");
+const fs = require("fs");
+const { newProducts } = require("./factories/product.js");
 
-let test = newProduct(1);
+let output = newProducts(1);
+let outputJson = JSON.stringify(output);
 
-console.log(util.inspect(test));
+const writeJson = function (jsonData, destFileName) {
+  return fs.writeFile(destFileName, jsonData, function (err) {
+    if (err) return console.log(err);
+    console.log("wrote " + destFileName);
+  });
+};
+
+writeJson(outputJson, "output.json");

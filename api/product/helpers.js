@@ -1,19 +1,24 @@
 const { catalogModel } = require("./models.js");
 
-const findByName = function (name) {
+const getGroupByName = function (name) {
   return catalogModel.groups.filter((group) => group.name === name)[0];
 };
 
-const pickIndex = function (arr = null) {
+// RENAME TO RANDOM INDEX
+const getIndex = function (arr = null) {
   if (arr === null) return console.error("You must pass an array");
   return Math.floor(Math.random() * arr.length);
 };
 
-const pickOption = function (name) {
-  return findByName(name).options[pickIndex(findByName(name).options)];
+function getRandomNumberBetween(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+const getOption = function (name) {
+  return getGroupByName(name).options[getIndex(getGroupByName(name).options)];
 };
 
-const randomSlice = function (arr = []) {
+const getRandomSlice = function (arr = []) {
   if (!Array.isArray(arr)) return console.error("You must pass an Array");
   let shuffled = null;
   shuffled = (arr) => {
@@ -22,26 +27,19 @@ const randomSlice = function (arr = []) {
       .sort((a, b) => a.sort - b.sort)
       .map((a) => a.value);
   };
-  return shuffled(arr).slice(pickIndex(arr));
+  return shuffled(arr).slice(getIndex(arr));
 };
 
-// make(n)(factory)
-const make = function (amount) {
-  return function (thing) {
-    if (!(thing instanceof Function))
-      return console.error("Thing not a function");
-    let arr = [];
-    for (let i = 0; i < amount; i++) {
-      arr.push(thing());
-    }
-    return arr;
-  };
+const repeat = function (func, times) {
+  func(times);
+  times && --times && repeat(func, times);
 };
 
 module.exports = {
-  findByName: findByName,
-  pickOption: pickOption,
-  pickIndex: pickIndex,
-  randomSlice: randomSlice,
-  make: make,
+  getGroupByName: getGroupByName,
+  getRandomNumberBetween: getRandomNumberBetween,
+  getOption: getOption,
+  getIndex: getIndex,
+  getRandomSlice: getRandomSlice,
+  repeat: repeat,
 };

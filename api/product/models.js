@@ -6,12 +6,10 @@ const catalogModel = {
       options: [
         {
           id: 1,
-          groupId: 1,
           name: "men",
         },
         {
           id: 2,
-          groupId: 1,
           name: "women",
         },
       ],
@@ -22,13 +20,91 @@ const catalogModel = {
       options: [
         {
           id: 1,
-          groupId: 2,
           name: "shoes",
         },
         {
           id: 2,
-          groupId: 2,
           name: "clothing",
+          attributes: [
+            {
+              id: 1,
+              name: "product type",
+              attributes: [
+                {
+                  id: 1,
+                  name: "hoodies",
+                  attributes: [
+                    {
+                      id: 1,
+                      name: "style",
+                      attributes: [
+                        {
+                          id: 1,
+                          name: "Pullover",
+                        },
+                        {
+                          id: 2,
+                          name: "Zip Up",
+                        },
+                        {
+                          id: 3,
+                          name: "Fleece",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  id: 2,
+                  name: "t-shirts",
+                  attributes: [
+                    {
+                      id: 1,
+                      name: "style",
+                      attributes: [
+                        {
+                          id: 1,
+                          name: "longsleeve",
+                        },
+                        {
+                          id: 2,
+                          name: "sleeveless",
+                        },
+                        {
+                          id: 3,
+                          name: "graphic tees",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  id: 3,
+                  name: "trousers",
+                  attributes: [
+                    {
+                      id: 1,
+                      name: "style",
+                      attributes: [
+                        {
+                          id: 1,
+                          name: "chinos",
+                        },
+                        {
+                          id: 2,
+                          name: "jeans",
+                        },
+                        {
+                          id: 3,
+                          name: "sweat pants",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
       ],
     },
@@ -38,17 +114,14 @@ const catalogModel = {
       options: [
         {
           id: 1,
-          groupId: 3,
           name: "sale",
         },
         {
           id: 2,
-          groupId: 3,
           name: "essentials",
         },
         {
           id: 3,
-          groupId: 3,
           name: "new",
         },
       ],
@@ -59,18 +132,31 @@ const catalogModel = {
       options: [
         {
           id: 1,
-          groupId: 4,
           name: "tennis",
         },
         {
           id: 2,
-          groupId: 4,
           name: "basketball",
         },
         {
           id: 3,
-          groupId: 4,
-          name: "soccer",
+          name: "fotball",
+          attributes: [
+            {
+              id: 1,
+              name: "field",
+              attributes: [
+                {
+                  id: 1,
+                  name: "outdoor",
+                },
+                {
+                  id: 2,
+                  name: "indoor",
+                },
+              ],
+            },
+          ],
         },
       ],
     },
@@ -80,22 +166,18 @@ const catalogModel = {
       options: [
         {
           id: 1,
-          groupId: 5,
           name: "nike",
         },
         {
           id: 2,
-          groupId: 5,
           name: "adidas",
         },
         {
           id: 3,
-          groupId: 5,
           name: "rebook",
         },
         {
           id: 4,
-          groupId: 5,
           name: "puma",
         },
       ],
@@ -103,9 +185,28 @@ const catalogModel = {
   ],
 };
 
+const colors = [
+  "white",
+  "black",
+  "grey",
+  "blue",
+  "green",
+  "brown",
+  "red",
+  "beige",
+  "yellow",
+  "burgundy",
+  "orange",
+  "pink",
+  "gold",
+  "silver",
+  "purple",
+];
+
 const groupNames = catalogModel.groups.map((group) => group.name);
 
 module.exports = {
   groupNames: groupNames,
+  colors: colors,
   catalogModel: catalogModel,
 };
