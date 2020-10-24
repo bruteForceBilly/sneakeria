@@ -1,7 +1,8 @@
 const { colors } = require("../models.js");
-const { repeat, getRandomNumberBetween } = require("../helpers.js");
+const { make, random } = require("../helpers/index.js");
 const { newDate } = require("./date.js");
 const { newPrice } = require("./price.js");
+const { newSizes } = require("./size.js");
 
 const versionFactory = function ({
   id = null,
@@ -9,6 +10,7 @@ const versionFactory = function ({
   dateRelease = null,
   color = null,
   price = null,
+  sizes = null,
   imageUrl = null,
 }) {
   return {
@@ -17,12 +19,13 @@ const versionFactory = function ({
     dateRelease,
     color,
     price,
+    sizes,
     imageUrl,
   };
 };
 
 const getColor = function () {
-  return colors[getRandomNumberBetween(0, colors.length)];
+  return colors[random.numberBetween(0, colors.length)];
 };
 
 const newVersion = function (versionId, productId) {
@@ -32,6 +35,7 @@ const newVersion = function (versionId, productId) {
     dateRelease: newDate(),
     color: getColor(),
     price: newPrice(),
+    sizes: newSizes(),
     imageUrl: {
       small:
         "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
@@ -43,9 +47,9 @@ const newVersion = function (versionId, productId) {
 
 const newVersions = function (productId) {
   let result = [];
-  repeat(function (times) {
+  make.repeat(function (times) {
     result.push(newVersion(times, productId));
-  }, getRandomNumberBetween(1, 6));
+  }, random.numberBetween(1, 6));
   return result.sort(function (a, b) {
     return a.id - b.id;
   });

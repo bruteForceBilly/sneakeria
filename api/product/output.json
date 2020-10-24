@@ -1,1 +1,128 @@
-[{"id":1,"name":"adidas tennis shoes","section":{"id":2,"name":"women"},"campaigns":[{"id":3,"name":"new"},{"id":2,"name":"essentials"},{"id":1,"name":"sale"}],"category":[{"id":1,"name":"shoes"}],"look":[{"id":1,"name":"tennis"}],"brand":{"id":2,"name":"adidas"},"versions":[{"id":1,"product_id":1,"dateRelease":"2019-10-07","color":"orange","price":{"amountOriginal":272,"amountOffered":272,"discount":false},"imageUrl":{"small":"https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial","medium":"https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"}},{"id":2,"product_id":1,"dateRelease":"2020-03-03","color":"white","price":{"amountOriginal":112,"amountOffered":30,"discount":true},"imageUrl":{"small":"https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial","medium":"https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"}},{"id":3,"product_id":1,"dateRelease":"2020-11-20","color":"gold","price":{"amountOriginal":118,"amountOffered":118,"discount":false},"imageUrl":{"small":"https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial","medium":"https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"}},{"id":4,"product_id":1,"dateRelease":"2020-12-23","color":"green","price":{"amountOriginal":63,"amountOffered":38,"discount":true},"imageUrl":{"small":"https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial","medium":"https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"}},{"id":5,"product_id":1,"dateRelease":"2019-07-24","color":"gold","price":{"amountOriginal":296,"amountOffered":296,"discount":false},"imageUrl":{"small":"https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial","medium":"https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"}}]}]
+[
+  {
+    "id": 1,
+    "name": "puma [object Object] [object Object]",
+    "section": { "id": 2, "name": "women" },
+    "campaigns": [
+      { "id": 3, "name": "new" },
+      { "id": 1, "name": "sale" },
+      { "id": 2, "name": "essentials" }
+    ],
+    "category": [
+      {
+        "id": 2,
+        "name": "clothing",
+        "attributes": [
+          {
+            "id": 1,
+            "name": "product type",
+            "attributes": [
+              {
+                "id": 3,
+                "name": "trousers",
+                "attributes": [
+                  {
+                    "id": 1,
+                    "name": "style",
+                    "attributes": [{ "id": 2, "name": "jeans" }]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "look": [
+      {
+        "id": 3,
+        "name": "fotball",
+        "attributes": [
+          {
+            "id": 1,
+            "name": "field",
+            "attributes": [{ "id": 1, "name": "outdoor" }]
+          }
+        ]
+      }
+    ],
+    "brand": { "id": 4, "name": "puma" },
+    "versions": [
+      {
+        "id": 1,
+        "product_id": 1,
+        "dateRelease": "2019-05-12",
+        "color": "blue",
+        "price": {
+          "amountOriginal": 146,
+          "amountOffered": 146,
+          "discount": false
+        },
+        "sizes": [
+          { "size": 37, "stockAvailability": true },
+          { "size": 38, "stockAvailability": true },
+          { "size": 39, "stockAvailability": true },
+          { "size": 40, "stockAvailability": true },
+          { "size": 41, "stockAvailability": false },
+          { "size": 42, "stockAvailability": false },
+          { "size": 43, "stockAvailability": false },
+          { "size": 44, "stockAvailability": true }
+        ],
+        "imageUrl": {
+          "small": "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+          "medium": "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+        }
+      },
+      {
+        "id": 2,
+        "product_id": 1,
+        "dateRelease": "2019-03-09",
+        "color": "blue",
+        "price": {
+          "amountOriginal": 204,
+          "amountOffered": 101,
+          "discount": true
+        },
+        "sizes": [
+          { "size": 37, "stockAvailability": false },
+          { "size": 38, "stockAvailability": false },
+          { "size": 39, "stockAvailability": false },
+          { "size": 40, "stockAvailability": false },
+          { "size": 41, "stockAvailability": true },
+          { "size": 42, "stockAvailability": false },
+          { "size": 43, "stockAvailability": true },
+          { "size": 44, "stockAvailability": true }
+        ],
+        "imageUrl": {
+          "small": "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+          "medium": "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+        }
+      },
+      {
+        "id": 3,
+        "product_id": 1,
+        "dateRelease": "2019-11-08",
+        "color": "white",
+        "price": {
+          "amountOriginal": 299,
+          "amountOffered": 299,
+          "discount": false
+        },
+        "sizes": [
+          { "size": 37, "stockAvailability": false },
+          { "size": 38, "stockAvailability": true },
+          { "size": 39, "stockAvailability": false },
+          { "size": 40, "stockAvailability": true },
+          { "size": 41, "stockAvailability": false },
+          { "size": 42, "stockAvailability": true },
+          { "size": 43, "stockAvailability": true },
+          { "size": 44, "stockAvailability": true }
+        ],
+        "imageUrl": {
+          "small": "https://imgplaceholder.com/57x50/e5e298/000000?font-size=12&font-family=arial",
+          "medium": "https://imgplaceholder.com/230x230/f4f1a3/000000?text=230+x+230&font-family=arial"
+        }
+      }
+    ]
+  }
+]

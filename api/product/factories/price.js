@@ -1,4 +1,4 @@
-const { getRandomNumberBetween } = require("../helpers.js");
+const { random } = require("../helpers/index.js");
 
 const getAmountOffered = function (amountOrginal) {
   if (Math.random() < 0.4) {
@@ -28,7 +28,7 @@ const priceFactory = function ({ amountOriginal = null }) {
 
 const newPrice = () =>
   priceFactory({
-    amountOriginal: getRandomNumberBetween(45, 299),
+    amountOriginal: random.numberBetween(45, 299),
   });
 
 module.exports = {

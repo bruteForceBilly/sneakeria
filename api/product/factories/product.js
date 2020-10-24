@@ -1,9 +1,6 @@
-const {
-  repeat,
-  getGroupByName,
-  getOption,
-  getRandomSlice,
-} = require("../helpers.js");
+/* eslint-disable no-unused-vars */
+
+const { make, random, getters } = require("../helpers/index.js");
 const { newVersions } = require("./version.js");
 const { newOption } = require("./option.js");
 
@@ -17,27 +14,11 @@ const productFactory = function ({
   brand = null,
   versions = null,
 }) {
-  const getName = function (n) {
-    const QUERY = "attributes";
-    let names = [];
-    const run = function (n, q) {
-      if (Array.isArray(n)) {
-        return n.forEach((cv) => {
-          names.push(cv.name);
-          run(cv, q);
-        });
-      }
-      if (q in n) {
-        return run(n[q], q);
-      } else {
-        return n.name;
-      }
-    };
-    run(n, QUERY);
-    return names[names.length - 1];
-  };
-  let nameResult = brand.name + " " + getName(look) + " " + getName(category);
-  name = nameResult.toLowerCase();
+  name = `${brand.name} ${getters.lastDeepChild(look)} ${getters.lastDeepChild(
+    category
+  )}`;
+  name.toLowerCase();
+
   return {
     id,
     name,
@@ -53,17 +34,17 @@ const productFactory = function ({
 const newProduct = (n) =>
   productFactory({
     id: n,
-    section: getOption("section"),
-    campaigns: getRandomSlice(getGroupByName("campaigns").options),
-    category: newOption("category"),
-    look: newOption("look"),
-    brand: getOption("brand"),
+    section: random.childFromParentsChildren("section", "options"),
+    campaigns: random.sliver(getters.groupByName("campaigns").options),
+    category: newOption("category", "attributes"),
+    look: newOption("look", "attributes"),
+    brand: random.childFromParentsChildren("brand", "options"),
     versions: newVersions(n),
   });
 
 const newProducts = function (n) {
   let result = [];
-  repeat(function (n) {
+  make.repeat(function (n) {
     return result.push(newProduct(n));
   }, n);
   return result.sort(function (a, b) {
