@@ -14,11 +14,12 @@ const productFactory = function ({
   brand = null,
   versions = null,
 }) {
-  name = `${brand.name} ${getters.lastDeepChild(look)} ${getters.lastDeepChild(
-    category
-  )}`;
-  name.toLowerCase();
+  // name = `${brand.name} ${getters
+  //   .lastDeepChild(look)
+  //   .toString()} ${getters.lastDeepChild(category).toString()}`;
+  // name.toLowerCase();
 
+  name = brand.name + " product";
   return {
     id,
     name,

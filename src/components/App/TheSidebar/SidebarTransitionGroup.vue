@@ -20,7 +20,7 @@ export default {
 
 <style>
 .slide-fade-enter-active {
-  transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 1.5s ease;
 }
 
 .slide-fade-leave-active {
@@ -39,7 +39,7 @@ export default {
   transform: translateX(0px);
 }
 .fade-enter-active {
-  transition: all 5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+  transition: all 5s ease 0.5s;
 }
 
 .fade-leave-active {

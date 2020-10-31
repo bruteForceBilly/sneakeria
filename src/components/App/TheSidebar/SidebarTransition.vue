@@ -27,7 +27,7 @@ export default {
 <style>
 .slide-enter-active,
 .slide-leave-active {
-  transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 1.5s ease;
 }
 .slide-enter,
 .slide-leave-to {
@@ -39,7 +39,7 @@ export default {
 }
 
 .fade-enter-active {
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+  transition: all 0.5s ease 0.5s;
 }
 .fade-leave-active {
   display: none;
