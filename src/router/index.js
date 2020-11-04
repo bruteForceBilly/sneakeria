@@ -37,7 +37,7 @@ const routes = [
       // console.log(
       //   "ROUTER >>>> searchQueryRoute beforeEnter",
       //   "to >>",
-      //   to,
+      //   to.query,
       //   "from >>>",
       //   from
       // );
@@ -51,10 +51,11 @@ const routes = [
             store.state.search.queryParamsObject
           );
         } else if (to.name === "searchQueryRoute") {
-          // console.log("ROUTER ELSE IF searchQueryRoute", to.query); // try searchQueryParamsObjectMutation
+          //console.log("ROUTER ELSE IF searchQueryRoute", to); // try searchQueryParamsObjectMutation
           store.dispatch("search/queryParamsStringAction", to.query);
           store.commit("search/queryParamsObjectMutation", to.query);
         }
+
         store.state.search.queryParamsString === ""
           ? reject()
           : resolve(store.state.search.queryParamsString);
@@ -93,7 +94,6 @@ const routes = [
     name: "searchRequestRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      // console.log("ROUTER searchRequestRoute beforeEnter", to, from);
       store.commit("load/countReset");
       store
         .dispatch("search/serviceRequestAction", to.path.substr(1).split("-"))

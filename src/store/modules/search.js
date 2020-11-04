@@ -8,6 +8,7 @@ const state = () => ({
   queryParamsKebab: null,
   foundProducts: null,
   routeLastBeforeEnter: null,
+  getSiteDataActionData: null,
   siteMap: {
     data: null,
     loading: null,
@@ -36,7 +37,24 @@ const getters = {
 };
 
 const actions = {
-  serviceRequestAction({ dispatch, getters }, payload) {
+  getSiteDataAction({ commit, state }) {
+    const getSiteMap = function (cb) {
+      return axios
+        .get(API_SITE)
+        .then((response) => cb(response.data))
+        .catch((err) => cb(err.toString()));
+    };
+
+    return new Promise((resolve) => {
+      getSiteMap((data) => {
+        commit("getSiteDataActionMutation", data);
+      }).then(() => {
+        resolve(state.getSiteDataActionData);
+        //resolve(getters.queryParamsObject);
+      });
+    });
+  },
+  serviceRequestAction({ dispatch, state }, payload) {
     const getSiteMap = function (cb) {
       return axios
         .get(API_SITE)
@@ -45,25 +63,29 @@ const actions = {
     };
     return new Promise((resolve) => {
       getSiteMap((data) => {
+        //console.log("STORE serviceRequestAction getSiteMap", data);
         dispatch({
           type: "queryParamsObjectAction",
           data: {
             path: payload,
-            object: data,
+            object: data, // chnage to prop in state that instead should be fetch once on app load
           },
         });
       }).then(() => {
-        resolve(getters.queryParamsObject);
+        resolve(state.queryParamsObject);
       });
     });
   },
   queryParamsObjectAction({ commit }, queryAction) {
+    let dataPathArray = queryAction.data.path;
+    let dataSiteObjectsArray = queryAction.data.object; // refactor so that this is called and set in state on app load
     let queryParamsObject = {};
     let arr = [];
-    queryAction.data.path.forEach((pathItem) => {
-      queryAction.data.object.filter(function (obj) {
-        if (obj.values.includes(pathItem)) {
-          arr.push((queryParamsObject[obj.name] = pathItem));
+    dataPathArray.forEach((item) => {
+      dataSiteObjectsArray.filter((cv) => {
+        let names = cv.options.map((cv) => cv.name);
+        if (names.includes(item)) {
+          arr.push((queryParamsObject[cv.name] = item));
         }
       });
     });
@@ -107,6 +129,10 @@ const actions = {
 };
 
 const mutations = {
+  getSiteDataActionMutation(state, data) {
+    Vue.set(state, "getSiteDataActionData", data);
+  },
+
   queryParamsObjectMutation(state, queryParamsObject) {
     Vue.set(state, "queryParamsObject", queryParamsObject);
   },

@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-
 const { make, random, getters } = require("../helpers/index.js");
 const { newVersions } = require("./version.js");
 const { newOption } = require("./option.js");
@@ -14,12 +13,24 @@ const productFactory = function ({
   brand = null,
   versions = null,
 }) {
-  // name = `${brand.name} ${getters
-  //   .lastDeepChild(look)
-  //   .toString()} ${getters.lastDeepChild(category).toString()}`;
-  // name.toLowerCase();
+  const nameFactory = function (arg, type) {
+    if (Array.isArray(arg) && type === Array) {
+      let result = arg.map((cv) => cv.name);
+      return result;
+    } else if (Array.isArray(arg) && type === String) {
+      let result = arg.map((cv) => cv.name);
+      return result.shift();
+    } else {
+      return arg.name;
+    }
+  };
 
   name = brand.name + " product";
+  section = nameFactory(section, String);
+  campaigns = nameFactory(campaigns, Array);
+  category = nameFactory(category, String);
+  look = nameFactory(look, String);
+  brand = nameFactory(brand, String);
   return {
     id,
     name,

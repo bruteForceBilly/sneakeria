@@ -44,6 +44,9 @@ export default {
     },
   },
   methods: {
+    log(arg) {
+      return console.log(arg);
+    },
     setByRoute(arg) {
       return this.$store.commit("setByRoute", arg);
     },

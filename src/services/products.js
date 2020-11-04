@@ -21,7 +21,7 @@ export default function (o, q, cb) {
       })
       .catch((err) => err.toString());
   } else if (o === "filter") {
-    //console.log("Q PRODUCTS", q);
+    console.log("product service Q PRODUCTS", q);
     return axios
       .get(API_PRODUCTS + "?" + q)
       .then((response) => {

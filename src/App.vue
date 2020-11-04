@@ -17,6 +17,9 @@ export default {
   components: {
     TheHeader,
   },
+  beforeMount() {
+    return this.$store.dispatch("search/getSiteDataAction");
+  },
 };
 </script>
 
