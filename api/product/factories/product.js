@@ -13,30 +13,19 @@ const productFactory = function ({
   brand = null,
   versions = null,
 }) {
-  const nameFactory = function (arg, type) {
-    if (Array.isArray(arg) && type === Array) {
-      let result = arg.map((cv) => cv.name);
-      return result;
-    } else if (Array.isArray(arg) && type === String) {
-      let result = arg.map((cv) => cv.name);
-      return result.shift();
-    } else {
-      return arg.name;
-    }
-  };
+  let productType;
 
   name = brand.name + " product";
-  section = nameFactory(section, String);
-  campaigns = nameFactory(campaigns, Array);
-  category = nameFactory(category, String);
-  look = nameFactory(look, String);
-  brand = nameFactory(brand, String);
+  section = section.name;
+  campaigns = campaigns.map((cv) => cv.name);
+  brand = brand.name;
   return {
     id,
     name,
     section,
     campaigns,
     category,
+    productType,
     look,
     brand,
     versions,

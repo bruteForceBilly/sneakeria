@@ -57,12 +57,14 @@ export default {
     clickedOptionObject(name, value) {
       let o = {};
       o[name] = value;
+      console.log("clickedOptionObject", o);
       return o;
     },
     toggleElement(el) {
       return !el.checked ? (el.checked = true) : (el.checked = false);
     },
     updateRouteQueryParams(argObj) {
+      console.log(argObj);
       Object.keys(argObj).length > 0
         ? this.$router
             .push({ name: "searchQueryRoute", query: argObj })

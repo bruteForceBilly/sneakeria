@@ -5,7 +5,7 @@ const { site, catalog } = require("./models.js");
 let output = {
   site: site.groups,
   catalog: catalog.groups,
-  products: newProducts(399),
+  products: newProducts(5),
 };
 
 let outputJson = JSON.stringify(output);

@@ -204,20 +204,23 @@ const state = () => ({
       options: [
         {
           id: 1,
-          name: "tennis",
+          name: "look",
           label: "Tennis",
+          value: "tennis",
           checked: false,
         },
         {
           id: 2,
-          name: "basketball",
+          name: "look",
           label: "Basketball",
+          value: "basketball",
           checked: false,
         },
         {
           id: 3,
-          name: "fotball",
+          name: "look",
           label: "Fotball",
+          value: "fotball",
           checked: false,
           attributes: [
             {
@@ -251,7 +254,6 @@ const state = () => ({
       id: 5,
       name: "brand",
       label: "Brand",
-      value: "brand",
       options: [
         {
           id: 1,
@@ -294,6 +296,7 @@ const getters = {
       .filter((option) => option.checked);
   },
   selectedOptionsObject: (state, getters) => {
+    console.log(getters.selectedOptionsElements);
     return getters.selectedOptionsElements.reduce(function (previous, element) {
       if (element.name in previous) {
         previous[element.name] = [previous[element.name]];

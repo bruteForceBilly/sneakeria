@@ -1,20 +1,33 @@
 /* eslint-disable no-unused-vars */
+const util = require("util");
 
 const { random, getters } = require("../helpers/index.js");
 
+let i = 0;
 const optionFactory = function (name, query) {
-  let options = getters.groupByName(name).options;
-  let index = Math.floor(Math.random() * (options.length - 1 + 1) + 0);
-  let el = options[index];
-  options.splice(0, options.length, el);
+  i++;
 
-  return options.reduce(function (acc, cv) {
-    acc.push(random.deepChild(cv, query));
-    return acc;
-  }, []);
+  let options = getters.groupByName(name).options;
+
+  const randomInt = function (min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  };
+
+  const r = (arg) => randomInt(0, arg.length);
+
+  const findRandomElement = (arg) => {
+    let q = r(arg);
+    return arg.find((el, i) => q === i);
+  };
+
+  let el = () => findRandomElement(options);
+
+  return random.deepChild(el(), query);
 };
 
-const newOption = (name, query) => optionFactory(name, query);
+const newOption = (name, query) => {
+  return optionFactory(name, query);
+};
 
 module.exports = {
   newOption: newOption,
