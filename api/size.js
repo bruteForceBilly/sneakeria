@@ -1,8 +1,8 @@
-const { make, random } = require("../helpers/index.js");
+const { repeat, randomNumberBetween } = require("./helpers.js");
 
 const generateRandomParameters = function (n) {
   let size = n + 36;
-  let stockAvailability = random.numberBetween(0, 3) > 1 ? true : false;
+  let stockAvailability = randomNumberBetween(0, 3) > 1 ? true : false;
   return {
     size: size,
     stockAvailability: stockAvailability,
@@ -20,7 +20,7 @@ const newSize = (n) => sizeFactory(generateRandomParameters(n));
 
 const newSizes = function () {
   let result = [];
-  make.repeat(function (n) {
+  repeat(function (n) {
     result.push(newSize(n));
   }, 8);
   return result.sort(function (a, b) {

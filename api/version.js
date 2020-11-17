@@ -1,12 +1,14 @@
-const { colors } = require("../models.js");
-const { make, random } = require("../helpers/index.js");
+const { colors } = require("./data.js");
+
+const { repeat, randomElement, randomNumberBetween } = require("./helpers.js");
+
 const { newDate } = require("./date.js");
 const { newPrice } = require("./price.js");
 const { newSizes } = require("./size.js");
 
 const versionFactory = function ({
   id = null,
-  product_id = null,
+  productId = null,
   dateRelease = null,
   color = null,
   price = null,
@@ -15,7 +17,7 @@ const versionFactory = function ({
 }) {
   return {
     id,
-    product_id,
+    productId,
     dateRelease,
     color,
     price,
@@ -24,16 +26,12 @@ const versionFactory = function ({
   };
 };
 
-const getColor = function () {
-  return colors[random.numberBetween(0, colors.length)];
-};
-
 const newVersion = function (versionId, productId) {
   return versionFactory({
     id: versionId,
-    product_id: productId,
+    productId: productId,
     dateRelease: newDate(),
-    color: getColor(),
+    color: randomElement(colors),
     price: newPrice(),
     sizes: newSizes(),
     imageUrl: {
@@ -47,9 +45,9 @@ const newVersion = function (versionId, productId) {
 
 const newVersions = function (productId) {
   let result = [];
-  make.repeat(function (times) {
+  repeat(function (times) {
     result.push(newVersion(times, productId));
-  }, random.numberBetween(1, 6));
+  }, randomNumberBetween(1, 6));
   return result.sort(function (a, b) {
     return a.id - b.id;
   });

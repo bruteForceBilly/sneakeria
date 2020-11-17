@@ -1,9 +1,9 @@
-const { random } = require("../helpers/index.js");
+const { randomNumberBetween } = require("./helpers.js");
 
 const generateRandomParameters = function () {
-  let dd = random.numberBetween(1, 31);
-  let mm = random.numberBetween(0, 12);
-  let yyyy = random.numberBetween(2019, 2021);
+  let dd = randomNumberBetween(1, 31);
+  let mm = randomNumberBetween(0, 12);
+  let yyyy = randomNumberBetween(2021, 2019);
   return {
     dd: dd,
     mm: mm,

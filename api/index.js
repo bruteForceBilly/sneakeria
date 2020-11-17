@@ -1,11 +1,11 @@
 const fs = require("fs");
-const { newProducts } = require("./factories/product.js");
-const { site, catalog } = require("./models.js");
+
+const { newProducts } = require("./product.js");
+const { catalog } = require("./data.js");
 
 let output = {
-  site: site.groups,
-  catalog: catalog.groups,
-  products: newProducts(5),
+  site: catalog.groups,
+  products: newProducts(399),
 };
 
 let outputJson = JSON.stringify(output);
@@ -17,4 +17,4 @@ const writeJson = function (jsonData, destFileName) {
   });
 };
 
-writeJson(outputJson, "output.json");
+writeJson(outputJson, "db.json");
