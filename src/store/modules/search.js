@@ -1,5 +1,4 @@
-import axios from "axios";
-import { API_SITE } from "@/constants";
+import getCatalog from "@/services/catalog.js";
 import Vue from "vue";
 
 const state = () => ({
@@ -8,12 +7,6 @@ const state = () => ({
   queryParamsKebab: null,
   foundProducts: null,
   routeLastBeforeEnter: null,
-  getSiteDataActionData: null,
-  siteMap: {
-    data: null,
-    loading: null,
-    error: null,
-  },
 });
 
 const getters = {
@@ -37,33 +30,11 @@ const getters = {
 };
 
 const actions = {
-  getSiteDataAction({ commit, state }) {
-    const getSiteMap = function (cb) {
-      return axios
-        .get(API_SITE)
-        .then((response) => cb(response.data))
-        .catch((err) => cb(err.toString()));
-    };
-
-    return new Promise((resolve) => {
-      getSiteMap((data) => {
-        commit("getSiteDataActionMutation", data);
-      }).then(() => {
-        resolve(state.getSiteDataActionData);
-        //resolve(getters.queryParamsObject);
-      });
-    });
-  },
+  // searchRequestAction
   serviceRequestAction({ dispatch, state }, payload) {
-    const getSiteMap = function (cb) {
-      return axios
-        .get(API_SITE)
-        .then((response) => cb(response.data))
-        .catch((err) => cb(err.toString()));
-    };
     return new Promise((resolve) => {
-      getSiteMap((data) => {
-        //console.log("STORE serviceRequestAction getSiteMap", data);
+      getCatalog((data) => {
+        //console.log("STORE serviceRequestAction getCatalog", data);
         dispatch({
           type: "queryParamsObjectAction",
           data: {
@@ -77,18 +48,22 @@ const actions = {
     });
   },
   queryParamsObjectAction({ commit }, queryAction) {
-    let dataPathArray = queryAction.data.path;
-    let dataSiteObjectsArray = queryAction.data.object; // refactor so that this is called and set in state on app load
-    let queryParamsObject = {};
-    let arr = [];
-    dataPathArray.forEach((item) => {
-      dataSiteObjectsArray.filter((cv) => {
-        let names = cv.options.map((cv) => cv.name);
-        if (names.includes(item)) {
-          arr.push((queryParamsObject[cv.name] = item));
-        }
-      });
-    });
+    const { path, object } = queryAction.data;
+    let queryParamsObject = object
+      .reduce(function (acc, cv) {
+        path.forEach((item) => {
+          if (cv.options.map((option) => option.value).includes(item)) {
+            const { name } = cv;
+            acc.push({ [name]: item });
+          }
+        });
+
+        return acc;
+      }, [])
+      .pop();
+
+    console.log(queryParamsObject);
+
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
 
@@ -123,16 +98,9 @@ const actions = {
       .replace(/[,]/g, "-");
     return commit("queryParamsKebabMutation", queryParamsKebab);
   },
-  siteMapAction({ commit }, siteMapObject) {
-    return commit("siteMapMutation", siteMapObject);
-  },
 };
 
 const mutations = {
-  getSiteDataActionMutation(state, data) {
-    Vue.set(state, "getSiteDataActionData", data);
-  },
-
   queryParamsObjectMutation(state, queryParamsObject) {
     Vue.set(state, "queryParamsObject", queryParamsObject);
   },
@@ -147,9 +115,6 @@ const mutations = {
   },
   routeLastBeforeEnterMutation(state, routeLastBeforeEnter) {
     Vue.set(state, "routeLastBeforeEnter", routeLastBeforeEnter);
-  },
-  siteMapMutation(state, siteMapObject) {
-    Vue.set(state, "siteMap", siteMapObject);
   },
 };
 

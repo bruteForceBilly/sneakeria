@@ -1,3 +1,5 @@
+// rename to products?
+
 const state = () => ({
   groups: null,
 });

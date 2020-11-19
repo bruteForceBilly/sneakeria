@@ -1,291 +1,5 @@
 const state = () => ({
-  selects: [
-    {
-      id: 1,
-      name: "section",
-      label: "Section",
-      options: [
-        {
-          id: 1,
-          name: "section",
-          label: "Men",
-          value: "men",
-          checked: false,
-        },
-        {
-          id: 2,
-          name: "section",
-          label: "Women",
-          value: "women",
-          checked: false,
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "category",
-      label: "Category",
-      options: [
-        {
-          id: 1,
-          name: "category",
-          label: "Shoes",
-          value: "shoes",
-          checked: false,
-        },
-        {
-          id: 2,
-          name: "category",
-          label: "Clothing",
-          value: "clothing",
-          checked: false,
-          attributes: [
-            {
-              id: 1,
-              name: "clothing",
-              label: "Product Type",
-              value: "product-type",
-              attributes: [
-                {
-                  id: 1,
-                  name: "product-type",
-                  label: "Hoodies",
-                  value: "hoodies",
-                  checked: false,
-                  attributes: [
-                    {
-                      id: 1,
-                      name: "hoodies",
-                      label: "Style",
-                      value: "style",
-                      checked: false,
-                      attributes: [
-                        {
-                          id: 1,
-                          name: "style",
-                          label: "Pullover",
-                          value: "pullover",
-                          checked: false,
-                        },
-                        {
-                          id: 2,
-                          name: "zip up",
-                          label: "Zip Up",
-                          value: "zip up",
-                          checked: false,
-                        },
-                        {
-                          id: 3,
-                          name: "fleece",
-                          label: "Fleece",
-                          value: "fleece",
-                          checked: false,
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  id: 2,
-                  name: "product-type",
-                  label: "T-shirts",
-                  value: "t-shirts",
-                  checked: false,
-                  attributes: [
-                    {
-                      id: 1,
-                      name: "T-shirts",
-                      label: "Style",
-                      value: "style",
-                      checked: false,
-                      attributes: [
-                        {
-                          id: 1,
-                          name: "style",
-                          label: "Longsleeve",
-                          value: "longsleeve",
-                          checked: false,
-                        },
-                        {
-                          id: 2,
-                          name: "style",
-                          label: "Sleeveless",
-                          value: "sleevless",
-                          checked: false,
-                        },
-                        {
-                          id: 3,
-                          name: "style",
-                          label: "Graphic Tees",
-                          value: "graphic tees",
-                          checked: false,
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  id: 3,
-                  name: "product-type",
-                  label: "Trousers",
-                  value: "trousers",
-                  checked: false,
-                  attributes: [
-                    {
-                      id: 1,
-                      name: "trousers",
-                      label: "Style",
-                      value: "style",
-                      checked: false,
-                      attributes: [
-                        {
-                          id: 1,
-                          name: "style",
-                          label: "Chinos",
-                          value: "chinos",
-                          checked: false,
-                        },
-                        {
-                          id: 2,
-                          name: "style",
-                          label: "Jeans",
-                          value: "jeans",
-                          checked: false,
-                        },
-                        {
-                          id: 3,
-                          name: "style",
-                          label: "Sweat Pants",
-                          value: "sweat-pants",
-                          checked: false,
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: "campaigns",
-      label: "Campaigns",
-      options: [
-        {
-          id: 1,
-          name: "campaigns",
-          label: "Sale",
-          value: "sale",
-          checked: false,
-        },
-        {
-          id: 2,
-          name: "campaigns",
-          label: "Essentials",
-          value: "essentials",
-          checked: false,
-        },
-        {
-          id: 3,
-          name: "campaigns",
-          label: "New Arrivals",
-          value: "new",
-          checked: false,
-        },
-      ],
-    },
-    {
-      id: 4,
-      name: "look",
-      label: "Look",
-      options: [
-        {
-          id: 1,
-          name: "look",
-          label: "Tennis",
-          value: "tennis",
-          checked: false,
-        },
-        {
-          id: 2,
-          name: "look",
-          label: "Basketball",
-          value: "basketball",
-          checked: false,
-        },
-        {
-          id: 3,
-          name: "look",
-          label: "Fotball",
-          value: "fotball",
-          checked: false,
-          attributes: [
-            {
-              id: 1,
-              name: "fotball",
-              label: "Field",
-              value: "field",
-              checked: false,
-              attributes: [
-                {
-                  id: 1,
-                  name: "fotball",
-                  label: "Outdoor",
-                  value: "outdoor",
-                  checked: false,
-                },
-                {
-                  id: 2,
-                  name: "fotball",
-                  label: "Indoor",
-                  value: "indoor",
-                  checked: false,
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 5,
-      name: "brand",
-      label: "Brand",
-      options: [
-        {
-          id: 1,
-          name: "brand",
-          label: "Nike",
-          value: "nike",
-          checked: false,
-        },
-        {
-          id: 2,
-          name: "brand",
-          label: "Adidas",
-          value: "adidas",
-          checked: false,
-        },
-        {
-          id: 3,
-          name: "brand",
-          label: "Rebook",
-          value: "rebook",
-          checked: false,
-        },
-        {
-          id: 4,
-          name: "brand",
-          label: "Puma",
-          value: "puma",
-          checked: false,
-        },
-      ],
-    },
-  ],
+  selects: [],
 });
 
 const getters = {
@@ -296,7 +10,6 @@ const getters = {
       .filter((option) => option.checked);
   },
   selectedOptionsObject: (state, getters) => {
-    console.log(getters.selectedOptionsElements);
     return getters.selectedOptionsElements.reduce(function (previous, element) {
       if (element.name in previous) {
         previous[element.name] = [previous[element.name]];
@@ -310,6 +23,23 @@ const getters = {
 };
 
 const actions = {
+  setSelectsAction({ commit }, catalog) {
+    const recur = function (n) {
+      if (Array.isArray(n)) {
+        n.forEach((cv) => recur(cv));
+      } else if (Object.values(n).some((cv) => Array.isArray(cv))) {
+        Object.values(n)
+          .filter((cv) => Array.isArray(cv))
+          .forEach((cv) => recur(cv));
+      } else {
+        n.checked = false;
+      }
+    };
+    recur(catalog);
+    console.log("catalog", catalog);
+    return commit("setSelectsMutation", catalog);
+  },
+
   toggleIndex({ dispatch }, { name, value }) {
     let options = {};
     options[name] = value;
@@ -353,6 +83,11 @@ const actions = {
 };
 
 const mutations = {
+  setSelectsMutation(state, selects) {
+    console.log("setSelectsMutation", selects);
+    return (state.selects = selects);
+  },
+
   clickedOptionObjectMutation(state, object) {
     return (state.clickedOption = object);
   },

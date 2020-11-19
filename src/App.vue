@@ -18,7 +18,7 @@ export default {
     TheHeader,
   },
   beforeMount() {
-    return this.$store.dispatch("search/getSiteDataAction");
+    return this.$store.dispatch("services/catalogAction");
   },
 };
 </script>

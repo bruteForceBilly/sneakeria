@@ -4,7 +4,7 @@ const { newProducts } = require("./product.js");
 const { catalog } = require("./data.js");
 
 let output = {
-  site: catalog.groups,
+  catalog: catalog,
   products: newProducts(399),
 };
 

@@ -198,185 +198,313 @@ const colors = [
   "purple",
 ];
 
-const catalog = {
-  groups: [
-    {
-      id: 1,
-      name: "section",
-      many: false,
-      options: [
-        {
-          id: 1,
-          name: "men",
-        },
-        {
-          id: 2,
-          name: "women",
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "category",
-      many: false,
-      options: [
-        {
-          id: 1,
-          name: "shoes",
-        },
-        {
-          id: 2,
-          name: "clothing",
-          attributes: [
-            {
-              id: 1,
-              name: "product type",
-              attributes: [
-                {
-                  id: 1,
-                  name: "hoodies",
-                  attributes: [
-                    {
-                      id: 1,
-                      name: "style",
-                      attributes: [
-                        {
-                          id: 1,
-                          name: "Pullover",
-                        },
-                        {
-                          id: 2,
-                          name: "Zip Up",
-                        },
-                        {
-                          id: 3,
-                          name: "Fleece",
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  id: 2,
-                  name: "t-shirts",
-                  attributes: [
-                    {
-                      id: 1,
-                      name: "style",
-                      attributes: [
-                        {
-                          id: 1,
-                          name: "longsleeve",
-                        },
-                        {
-                          id: 2,
-                          name: "sleeveless",
-                        },
-                        {
-                          id: 3,
-                          name: "graphic tees",
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  id: 3,
-                  name: "trousers",
-                  attributes: [
-                    {
-                      id: 1,
-                      name: "style",
-                      attributes: [
-                        {
-                          id: 1,
-                          name: "chinos",
-                        },
-                        {
-                          id: 2,
-                          name: "jeans",
-                        },
-                        {
-                          id: 3,
-                          name: "sweat pants",
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: "campaigns",
-      many: true,
-      options: [
-        {
-          id: 1,
-          name: "sale",
-        },
-        {
-          id: 2,
-          name: "essentials",
-        },
-        {
-          id: 3,
-          name: "new",
-        },
-      ],
-    },
-    {
-      id: 4,
-      name: "look",
-      many: false,
-      options: [
-        {
-          id: 1,
-          name: "tennis",
-        },
-        {
-          id: 2,
-          name: "basketball",
-        },
-        {
-          id: 3,
-          name: "fotball",
-        },
-        {
-          id: 4,
-          name: "street",
-        },
-      ],
-    },
-    {
-      id: 5,
-      name: "brand",
-      many: false,
-      options: [
-        {
-          id: 1,
-          name: "nike",
-        },
-        {
-          id: 2,
-          name: "adidas",
-        },
-        {
-          id: 3,
-          name: "rebook",
-        },
-        {
-          id: 4,
-          name: "puma",
-        },
-      ],
-    },
-  ],
-};
+const catalog = [
+  {
+    id: 1,
+    name: "section",
+    label: "Section",
+    value: null,
+    multiple: false,
+    options: [
+      {
+        id: 1,
+        groupId: 1,
+        name: "section",
+        label: "Men",
+        value: "men",
+      },
+      {
+        id: 2,
+        groupId: 1,
+        name: "section",
+        label: "Women",
+        value: "women",
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "category",
+    label: "Category",
+    value: null,
+    multiple: false,
+    options: [
+      {
+        id: 1,
+        groupId: 2,
+        name: "category",
+        label: "Shoes",
+        value: "shoes",
+        attributes: [
+          {
+            id: 1,
+            optionId: 1,
+            name: "shoes",
+            label: "Product Types",
+            value: null,
+            multiple: false,
+            options: [
+              {
+                id: 1,
+                attributeId: 1,
+                optionId: 1,
+                name: "productType",
+                label: "Boots",
+                value: "boots",
+              },
+              {
+                id: 2,
+                attributeId: 1,
+                optionId: 1,
+                name: "productType",
+                label: "Sandals",
+                value: "sandals",
+              },
+              {
+                id: 3,
+                attributeId: 1,
+                optionId: 1,
+                name: "productType",
+                label: "Sneakers",
+                value: "sneakers",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 2,
+        groupId: 2,
+        name: "category",
+        label: "Clothing",
+        value: "clothing",
+        attributes: [
+          {
+            id: 1,
+            optionId: 2,
+            name: "category",
+            label: "Product Types",
+            value: null,
+            multiple: false,
+            options: [
+              {
+                id: 1,
+                attributeId: 1,
+                optionId: 2,
+                name: "productType",
+                label: "Hoodies",
+                value: "hoodies",
+              },
+              {
+                id: 2,
+                attributeId: 1,
+                optionId: 2,
+                name: "productType",
+                label: "T-shirts",
+                value: "t-shirts",
+              },
+              {
+                id: 3,
+                attributeId: 1,
+                optionId: 2,
+                name: "productType",
+                label: "Trousers",
+                value: "trousers",
+              },
+            ],
+          },
+          {
+            id: 2,
+            optionId: 2,
+            name: "category",
+            label: "Style",
+            value: null,
+            multiple: true,
+            options: [
+              {
+                id: 1,
+                attributeId: 2,
+                optionId: 2,
+                productTypeId: 1,
+                name: "styleType",
+                label: "Pullover",
+                value: "pullover",
+              },
+              {
+                id: 2,
+                attributeId: 2,
+                optionId: 2,
+                productTypeId: 1,
+                name: "styleType",
+                label: "Zip up",
+                value: "zip-up",
+              },
+              {
+                id: 3,
+                attributeId: 2,
+                optionId: 2,
+                productTypeId: 1,
+                name: "styleType",
+                label: "Fleece",
+                value: "fleece",
+              },
+              {
+                id: 4,
+                attributeId: 2,
+                optionId: 2,
+                productTypeId: 2,
+                name: "styleType",
+                label: "Longsleeve",
+                value: "longsleeve",
+              },
+              {
+                id: 5,
+                attributeId: 2,
+                optionId: 2,
+                productTypeId: 2,
+                name: "styleType",
+                label: "Sleeveless",
+                value: "sleeveless",
+              },
+              {
+                id: 6,
+                attributeId: 2,
+                optionId: 2,
+                productTypeId: 2,
+                name: "styleType",
+                label: "Graphic T-shirts",
+                value: "graphic-tees",
+              },
+              {
+                id: 7,
+                attributeId: 2,
+                optionId: 2,
+                productTypeId: 3,
+                name: "styleType",
+                label: "Chinos",
+                value: "chinos",
+              },
+              {
+                id: 8,
+                attributeId: 2,
+                optionId: 2,
+                productTypeId: 3,
+                name: "styleType",
+                label: "Jeans",
+                value: "jeans",
+              },
+              {
+                id: 9,
+                attributeId: 2,
+                optionId: 2,
+                productTypeId: 3,
+                name: "styleType",
+                label: "Sweat Pants",
+                value: "sweat-pants",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "campaigns",
+    label: "Campaigns",
+    value: null,
+    multiple: true,
+    options: [
+      {
+        id: 1,
+        groupId: 3,
+        name: "campaigns",
+        label: "Sale",
+        value: "sale",
+      },
+      {
+        id: 2,
+        groupId: 3,
+        name: "campaigns",
+        label: "Essentials",
+        value: "essentials",
+      },
+      {
+        id: 3,
+        groupId: 3,
+        name: "campaigns",
+        label: "New Arrivals",
+        value: "new",
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: "look",
+    label: "Look",
+    value: null,
+    multiple: false,
+    options: [
+      {
+        id: 1,
+        groupId: 4,
+        name: "look",
+        label: "Tennis",
+        value: "tennis",
+      },
+      {
+        id: 2,
+        groupId: 4,
+        name: "look",
+        label: "Basketball",
+        value: "basketball",
+      },
+      {
+        id: 3,
+        groupId: 4,
+        name: "look",
+        label: "Soccer",
+        value: "soccer",
+      },
+    ],
+  },
+  {
+    id: 5,
+    name: "brand",
+    label: "Brand",
+    multiple: false,
+    options: [
+      {
+        id: 1,
+        groupId: 5,
+        name: "brand",
+        label: "Nike",
+        value: "nike",
+      },
+      {
+        id: 2,
+        groupId: 5,
+        name: "brand",
+        label: "Adidas",
+        value: "adidas",
+      },
+      {
+        id: 3,
+        groupId: 5,
+        name: "brand",
+        label: "Rebook",
+        value: "rebook",
+      },
+      {
+        id: 4,
+        groupId: 5,
+        name: "brand",
+        label: "Puma",
+        value: "puma",
+      },
+    ],
+  },
+];
 
 module.exports = {
   catalog: catalog,
