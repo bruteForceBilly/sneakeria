@@ -19,28 +19,30 @@ const productFactory = function ({
   section = section.name;
   campaigns = campaigns.map((campaign) => campaign.name);
 
-  let getRandomProductType = function () {
-    return randomElement(optionProductTypes(this.name)).name;
+  let getRandomProductType = function (arg) {
+    return randomElement(optionProductTypes(arg.name));
   };
 
   let getRandomStyleType = function (arg) {
     return randomElement(productTypeStyleTypes(arg));
   };
 
-  category = {
-    name: category.name,
-    productType: getRandomProductType.call(category),
-    get styleType() {
-      let res = getRandomStyleType(this.productType);
-      return res && res.name ? res.name : null;
-    },
+  let productType = getRandomProductType(category).name;
+  let styleType = (arg) => {
+    let res = getRandomStyleType(arg);
+    return res && res.name ? res.name : null;
   };
+
+  category = category.name;
+  styleType = styleType(productType);
 
   return {
     id,
     section,
     campaigns,
     category,
+    productType,
+    styleType,
     look,
     brand,
     versions,

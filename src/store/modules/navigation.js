@@ -1,13 +1,16 @@
+import Vue from "vue";
+
 const state = () => ({
-  selects: [],
+  selects: null,
 });
 
 const getters = {
   selectedOptionsElements: (state) => {
-    return state.selects
+    let optionsCheked = state.selects
       .map((select) => select.options)
       .flat()
-      .filter((option) => option.checked);
+      .filter((cv) => cv.checked);
+    return optionsCheked;
   },
   selectedOptionsObject: (state, getters) => {
     return getters.selectedOptionsElements.reduce(function (previous, element) {
@@ -24,19 +27,6 @@ const getters = {
 
 const actions = {
   setSelectsAction({ commit }, catalog) {
-    const recur = function (n) {
-      if (Array.isArray(n)) {
-        n.forEach((cv) => recur(cv));
-      } else if (Object.values(n).some((cv) => Array.isArray(cv))) {
-        Object.values(n)
-          .filter((cv) => Array.isArray(cv))
-          .forEach((cv) => recur(cv));
-      } else {
-        n.checked = false;
-      }
-    };
-    recur(catalog);
-    console.log("catalog", catalog);
     return commit("setSelectsMutation", catalog);
   },
 
@@ -84,8 +74,8 @@ const actions = {
 
 const mutations = {
   setSelectsMutation(state, selects) {
-    console.log("setSelectsMutation", selects);
-    return (state.selects = selects);
+    //console.log("setSelectsMutation", selects);
+    return Vue.set(state, "selects", selects);
   },
 
   clickedOptionObjectMutation(state, object) {

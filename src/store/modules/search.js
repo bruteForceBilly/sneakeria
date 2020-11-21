@@ -32,6 +32,7 @@ const getters = {
 const actions = {
   // searchRequestAction
   serviceRequestAction({ dispatch, state }, payload) {
+    console.log("queryAction", payload);
     return new Promise((resolve) => {
       getCatalog((data) => {
         //console.log("STORE serviceRequestAction getCatalog", data);
@@ -62,7 +63,7 @@ const actions = {
       }, [])
       .pop();
 
-    console.log(queryParamsObject);
+    console.log("obj", queryParamsObject);
 
     return commit("queryParamsObjectMutation", queryParamsObject);
   },

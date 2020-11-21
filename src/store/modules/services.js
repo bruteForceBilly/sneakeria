@@ -11,6 +11,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getCatalog((data) => {
         commit("catalogMutation", data);
+
         dispatch("navigation/setSelectsAction", data, { root: true });
       })
         .then(() => {

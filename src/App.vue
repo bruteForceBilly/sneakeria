@@ -17,8 +17,8 @@ export default {
   components: {
     TheHeader,
   },
-  beforeMount() {
-    return this.$store.dispatch("services/catalogAction");
+  beforeCreate() {
+    return; //this.$store.dispatch("services/catalogAction");
   },
 };
 </script>

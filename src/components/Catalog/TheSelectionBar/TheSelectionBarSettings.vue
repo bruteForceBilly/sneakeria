@@ -96,7 +96,10 @@ export default {
       handler: function (newValue, oldValue) {
         //console.log(newValue);
         if (this.getSetByRoute === false) {
-          //console.log("watch selects - selectedOptionsObject", this.selectedOptionsObject)
+          console.log(
+            "watch selects - selectedOptionsObject",
+            this.selectedOptionsObject
+          );
           return this.updateRouteQueryParams(this.selectedOptionsObject);
         }
       },
