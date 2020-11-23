@@ -11,7 +11,6 @@ const state = () => ({
 
 const getters = {
   queryParamsObject: (state) => {
-    console.log(state.queryParamsObject);
     return state.queryParamsObject;
   },
   queryParamsStringKebab: (state) => {

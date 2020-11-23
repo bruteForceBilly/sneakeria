@@ -100,10 +100,10 @@ const routes = [
         .dispatch("search/serviceRequestAction", to.path.substr(1).split("-"))
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
         .then((q) => {
-          console.log(q);
+          console.log("store", store.state.search.queryParamsObject);
           next({
             name: "searchQueryRoute",
-            query: q,
+            query: { section: "men" },
           });
         });
     },
