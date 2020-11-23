@@ -67,26 +67,17 @@ const actions = {
   queryParamsStringAction({ dispatch, commit }, queryParamsObject) {
     dispatch("queryParamsKebabAction", queryParamsObject);
 
-    let queryParamsString = function (obj) {
-      let arr = [];
-      let makeString = function (key, value) {
-        let str = `${key}=${value}`;
-        return str;
-      };
-      for (let [key, value] of Object.entries(obj)) {
-        if (Array.isArray(value)) {
-          value.forEach((cv) => arr.push(makeString(key, cv)));
-        } else {
-          arr.push(makeString(key, value));
+    let queryParamsString = queryParamsObject
+      .reduce(function (acc, cv) {
+        let str;
+        for (const [key, value] of Object.entries(cv)) {
+          str = `${key}=${value}&`;
         }
-      }
-      return arr.toString().replace(/[,]/g, "&");
-    };
+        return acc.concat(str);
+      }, "")
+      .slice(0, -1);
 
-    return commit(
-      "queryParamsStringMutation",
-      queryParamsString(queryParamsObject)
-    );
+    return commit("queryParamsStringMutation", queryParamsString);
   },
 
   queryParamsKebabAction({ commit }, queryParamsObject) {

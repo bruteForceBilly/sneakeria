@@ -56,6 +56,8 @@ const routes = [
           store.commit("search/queryParamsObjectMutation", to.query);
         }
 
+        console.log(store.state.search.queryParamsString);
+
         store.state.search.queryParamsString === ""
           ? reject()
           : resolve(store.state.search.queryParamsString);
