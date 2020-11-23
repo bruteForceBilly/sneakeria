@@ -96,12 +96,15 @@ const routes = [
     beforeEnter: (to, from, next) => {
       //store.dispatch("services/catalogAction");
       store.commit("load/countReset");
-      console.log("route", to.path);
       store
         .dispatch("search/serviceRequestAction", to.path.substr(1).split("-"))
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
         .then((q) => {
-          next({ name: "searchQueryRoute", query: q });
+          console.log(q);
+          next({
+            name: "searchQueryRoute",
+            query: q,
+          });
         });
     },
   },

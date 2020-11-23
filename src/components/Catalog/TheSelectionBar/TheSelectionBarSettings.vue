@@ -57,14 +57,14 @@ export default {
     clickedOptionObject(name, value) {
       let o = {};
       o[name] = value;
-      console.log("clickedOptionObject", o);
+      //console.log("clickedOptionObject", o);
       return o;
     },
     toggleElement(el) {
       return !el.checked ? (el.checked = true) : (el.checked = false);
     },
     updateRouteQueryParams(argObj) {
-      console.log(argObj);
+      //console.log(argObj);
       Object.keys(argObj).length > 0
         ? this.$router
             .push({ name: "searchQueryRoute", query: argObj })
@@ -96,10 +96,7 @@ export default {
       handler: function (newValue, oldValue) {
         //console.log(newValue);
         if (this.getSetByRoute === false) {
-          console.log(
-            "watch selects - selectedOptionsObject",
-            this.selectedOptionsObject
-          );
+          //console.log("watch selects - selectedOptionsObject", this.selectedOptionsObject);
           return this.updateRouteQueryParams(this.selectedOptionsObject);
         }
       },

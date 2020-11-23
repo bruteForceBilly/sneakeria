@@ -11,6 +11,7 @@ const state = () => ({
 
 const getters = {
   queryParamsObject: (state) => {
+    console.log(state.queryParamsObject);
     return state.queryParamsObject;
   },
   queryParamsStringKebab: (state) => {
@@ -32,10 +33,10 @@ const getters = {
 const actions = {
   // searchRequestAction
   serviceRequestAction({ dispatch, state }, payload) {
-    console.log("queryAction", payload);
+    //console.log("queryAction", payload);
     return new Promise((resolve) => {
       getCatalog((data) => {
-        //console.log("STORE serviceRequestAction getCatalog", data);
+        //console.log("STORE serviceRequestAction getCatalog", data, payload);
         dispatch({
           type: "queryParamsObjectAction",
           data: {
@@ -50,20 +51,16 @@ const actions = {
   },
   queryParamsObjectAction({ commit }, queryAction) {
     const { path, object } = queryAction.data;
-    let queryParamsObject = object
-      .reduce(function (acc, cv) {
-        path.forEach((item) => {
-          if (cv.options.map((option) => option.value).includes(item)) {
-            const { name } = cv;
-            acc.push({ [name]: item });
-          }
-        });
+    let queryParamsObject = object.reduce(function (acc, cv) {
+      path.forEach((item) => {
+        if (cv.options.map((option) => option.value).includes(item)) {
+          const { name } = cv;
+          acc.push({ [name]: item });
+        }
+      });
 
-        return acc;
-      }, [])
-      .pop();
-
-    console.log("obj", queryParamsObject);
+      return acc;
+    }, []);
 
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
