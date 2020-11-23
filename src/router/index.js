@@ -94,7 +94,7 @@ const routes = [
     name: "searchRequestRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      store.dispatch("services/catalogAction");
+      //store.dispatch("services/catalogAction");
       store.commit("load/countReset");
       console.log("route", to.path);
       store

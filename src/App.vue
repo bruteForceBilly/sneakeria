@@ -18,7 +18,7 @@ export default {
     TheHeader,
   },
   beforeCreate() {
-    return; //this.$store.dispatch("services/catalogAction");
+    return this.$store.dispatch("services/catalogAction");
   },
 };
 </script>
