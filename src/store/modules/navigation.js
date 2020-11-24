@@ -338,6 +338,27 @@ const state = () => ({
 });
 
 const getters = {
+  selectsAllOptions: (state) => {
+    let allOptions = state.selects.reduce(function (acc, cv) {
+      const recur = (n, q) => {
+        if (Object.keys(n).includes(q)) {
+          acc.push(n);
+        }
+
+        if (Object.values(n).some((val) => Array.isArray(val))) {
+          Object.values(n)
+            .filter((val) => Array.isArray(val))
+            .flat()
+            .forEach((el) => recur(el, q));
+        }
+      };
+
+      recur(cv, "checked");
+      return acc;
+    }, []);
+
+    return allOptions;
+  },
   selectedOptionsElements: (state) => {
     let optionsCheked = state.selects
       .map((select) => select.options)
@@ -378,27 +399,10 @@ const actions = {
       commit("toggleElementMutation", el)
     );
   },
-  selectOptionsCheckToggle({ commit, state }, clickedOptionObject) {
+  selectOptionsCheckToggle({ commit, state, getters }, clickedOptionObject) {
     // move all option to its own getter
-    let allOptions = state.selects.reduce(function (acc, cv) {
-      const recur = (n, q) => {
-        if (Object.keys(n).includes(q)) {
-          acc.push(n);
-        }
 
-        if (Object.values(n).some((val) => Array.isArray(val))) {
-          Object.values(n)
-            .filter((val) => Array.isArray(val))
-            .flat()
-            .forEach((el) => recur(el, q));
-        }
-      };
-
-      recur(cv, "checked");
-      return acc;
-    }, []);
-
-    let mappedOptions = allOptions.reduce(function (acc, cv) {
+    let mappedOptions = getters.reduce(function (acc, cv) {
       clickedOptionObject.forEach((object) => {
         for (const [key, value] of Object.entries(object)) {
           if (cv.name === key && cv.value === value) {
