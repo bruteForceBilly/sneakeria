@@ -338,8 +338,8 @@ const state = () => ({
 });
 
 const getters = {
-  selectsAllOptions: (state) => {
-    let allOptions = state.selects.reduce(function (acc, cv) {
+  allOptions: (state) => {
+    let res = state.selects.reduce(function (acc, cv) {
       const recur = (n, q) => {
         if (Object.keys(n).includes(q)) {
           acc.push(n);
@@ -357,14 +357,14 @@ const getters = {
       return acc;
     }, []);
 
-    return allOptions;
+    return res;
   },
-  selectedOptionsElements: (state) => {
-    let optionsCheked = state.selects
-      .map((select) => select.options)
-      .flat()
-      .filter((cv) => cv.checked);
-    return optionsCheked;
+  selectedOptionsElements: (state, getters) => {
+    // let optionsCheked = state.selects
+    //   .map((select) => select.options)
+    //   .flat()
+    //   .filter((cv) => cv.checked);
+    return getters.allOptions.filter((option) => option.checked);
   },
   selectedOptionsObject: (state, getters) => {
     return getters.selectedOptionsElements.reduce(function (previous, element) {
@@ -400,9 +400,7 @@ const actions = {
     );
   },
   selectOptionsCheckToggle({ commit, state, getters }, clickedOptionObject) {
-    // move all option to its own getter
-
-    let mappedOptions = getters.reduce(function (acc, cv) {
+    let mappedOptions = getters.allOptions.reduce(function (acc, cv) {
       clickedOptionObject.forEach((object) => {
         for (const [key, value] of Object.entries(object)) {
           if (cv.name === key && cv.value === value) {
