@@ -61,6 +61,8 @@ export default {
       return o;
     },
     toggleElement(el) {
+      console.log("toggle", el.checked);
+      debugger;
       return !el.checked ? (el.checked = true) : (el.checked = false);
     },
     updateRouteQueryParams(argObj) {
@@ -94,7 +96,7 @@ export default {
     selects: {
       deep: true,
       handler: function (newValue, oldValue) {
-        //console.log(newValue);
+        console.log("watch newvalue", newValue);
         if (this.getSetByRoute === false) {
           //console.log("watch selects - selectedOptionsObject", this.selectedOptionsObject);
           return this.updateRouteQueryParams(this.selectedOptionsObject);

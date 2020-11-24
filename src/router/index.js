@@ -56,8 +56,6 @@ const routes = [
           store.commit("search/queryParamsObjectMutation", to.query);
         }
 
-        console.log(store.state.search.queryParamsString);
-
         store.state.search.queryParamsString === ""
           ? reject()
           : resolve(store.state.search.queryParamsString);
@@ -96,15 +94,12 @@ const routes = [
     name: "searchRequestRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      //store.dispatch("services/catalogAction");
+      store.dispatch("services/catalogAction");
       store.commit("load/countReset");
       store
         .dispatch("search/serviceRequestAction", to.path.substr(1).split("-"))
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
         .then((q) => {
-          console.log("store", store.state.search.queryParamsObject, q, {
-            ...q,
-          });
           next({
             name: "searchQueryRoute",
             query: q,
