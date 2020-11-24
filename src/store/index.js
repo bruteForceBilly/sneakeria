@@ -4,7 +4,6 @@ import search from "./modules/search.js";
 import load from "./modules/load.js";
 import sort from "./modules/sort.js";
 import navigation from "./modules/navigation.js";
-import services from "./modules/services.js";
 
 Vue.use(Vuex);
 
@@ -14,7 +13,6 @@ export default new Vuex.Store({
     load,
     sort,
     navigation,
-    services,
   },
   state: {
     rootData: null,

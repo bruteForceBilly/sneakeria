@@ -1,7 +1,340 @@
-import Vue from "vue";
-
 const state = () => ({
-  selects: null,
+  selects: [
+    {
+      id: 1,
+      name: "section",
+      label: "Section",
+      value: null,
+      multiple: false,
+      options: [
+        {
+          id: 1,
+          groupId: 1,
+          checked: false,
+          name: "section",
+          label: "Men",
+          value: "men",
+        },
+        {
+          id: 2,
+          groupId: 1,
+          checked: false,
+          name: "section",
+          label: "Women",
+          value: "women",
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "category",
+      label: "Category",
+      value: null,
+      multiple: false,
+      options: [
+        {
+          id: 1,
+          groupId: 2,
+          checked: false,
+          name: "category",
+          label: "Shoes",
+          value: "shoes",
+          attributes: [
+            {
+              id: 1,
+              optionId: 1,
+              name: "shoes",
+              label: "Product Types",
+              value: null,
+              multiple: false,
+              options: [
+                {
+                  id: 1,
+                  attributeId: 1,
+                  optionId: 1,
+                  checked: false,
+                  name: "productType",
+                  label: "Boots",
+                  value: "boots",
+                },
+                {
+                  id: 2,
+                  attributeId: 1,
+                  optionId: 1,
+                  checked: false,
+                  name: "productType",
+                  label: "Sandals",
+                  value: "sandals",
+                },
+                {
+                  id: 3,
+                  attributeId: 1,
+                  optionId: 1,
+                  checked: false,
+                  name: "productType",
+                  label: "Sneakers",
+                  value: "sneakers",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: 2,
+          groupId: 2,
+          checked: false,
+          name: "category",
+          label: "Clothing",
+          value: "clothing",
+          attributes: [
+            {
+              id: 1,
+              optionId: 2,
+              name: "category",
+              label: "Product Types",
+              value: null,
+              multiple: false,
+              options: [
+                {
+                  id: 1,
+                  attributeId: 1,
+                  optionId: 2,
+                  checked: false,
+                  name: "productType",
+                  label: "Hoodies",
+                  value: "hoodies",
+                },
+                {
+                  id: 2,
+                  attributeId: 1,
+                  optionId: 2,
+                  checked: false,
+                  name: "productType",
+                  label: "T-shirts",
+                  value: "t-shirts",
+                },
+                {
+                  id: 3,
+                  attributeId: 1,
+                  optionId: 2,
+                  checked: false,
+                  name: "productType",
+                  label: "Trousers",
+                  value: "trousers",
+                },
+              ],
+            },
+            {
+              id: 2,
+              optionId: 2,
+              name: "category",
+              label: "Style",
+              value: null,
+              multiple: true,
+              options: [
+                {
+                  id: 1,
+                  attributeId: 2,
+                  optionId: 2,
+                  productTypeId: 1,
+                  checked: false,
+                  name: "styleType",
+                  label: "Pullover",
+                  value: "pullover",
+                },
+                {
+                  id: 2,
+                  attributeId: 2,
+                  optionId: 2,
+                  productTypeId: 1,
+                  checked: false,
+                  name: "styleType",
+                  label: "Zip up",
+                  value: "zip-up",
+                },
+                {
+                  id: 3,
+                  attributeId: 2,
+                  optionId: 2,
+                  productTypeId: 1,
+                  checked: false,
+                  name: "styleType",
+                  label: "Fleece",
+                  value: "fleece",
+                },
+                {
+                  id: 4,
+                  attributeId: 2,
+                  optionId: 2,
+                  productTypeId: 2,
+                  checked: false,
+                  name: "styleType",
+                  label: "Longsleeve",
+                  value: "longsleeve",
+                },
+                {
+                  id: 5,
+                  attributeId: 2,
+                  optionId: 2,
+                  productTypeId: 2,
+                  checked: false,
+                  name: "styleType",
+                  label: "Sleeveless",
+                  value: "sleeveless",
+                },
+                {
+                  id: 6,
+                  attributeId: 2,
+                  optionId: 2,
+                  productTypeId: 2,
+                  checked: false,
+                  name: "styleType",
+                  label: "Graphic T-shirts",
+                  value: "graphic-tees",
+                },
+                {
+                  id: 7,
+                  attributeId: 2,
+                  optionId: 2,
+                  productTypeId: 3,
+                  checked: false,
+                  name: "styleType",
+                  label: "Chinos",
+                  value: "chinos",
+                },
+                {
+                  id: 8,
+                  attributeId: 2,
+                  optionId: 2,
+                  productTypeId: 3,
+                  checked: false,
+                  name: "styleType",
+                  label: "Jeans",
+                  value: "jeans",
+                },
+                {
+                  id: 9,
+                  attributeId: 2,
+                  optionId: 2,
+                  productTypeId: 3,
+                  checked: false,
+                  name: "styleType",
+                  label: "Sweat Pants",
+                  value: "sweat-pants",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: "campaigns",
+      label: "Campaigns",
+      value: null,
+      multiple: true,
+      options: [
+        {
+          id: 1,
+          groupId: 3,
+          checked: false,
+          name: "campaigns",
+          label: "Sale",
+          value: "sale",
+        },
+        {
+          id: 2,
+          groupId: 3,
+          checked: false,
+          name: "campaigns",
+          label: "Essentials",
+          value: "essentials",
+        },
+        {
+          id: 3,
+          groupId: 3,
+          checked: false,
+          name: "campaigns",
+          label: "New Arrivals",
+          value: "new",
+        },
+      ],
+    },
+    {
+      id: 4,
+      name: "look",
+      label: "Look",
+      value: null,
+      multiple: false,
+      options: [
+        {
+          id: 1,
+          groupId: 4,
+          checked: false,
+          name: "look",
+          label: "Tennis",
+          value: "tennis",
+        },
+        {
+          id: 2,
+          groupId: 4,
+          checked: false,
+          name: "look",
+          label: "Basketball",
+          value: "basketball",
+        },
+        {
+          id: 3,
+          groupId: 4,
+          checked: false,
+          name: "look",
+          label: "Soccer",
+          value: "soccer",
+        },
+      ],
+    },
+    {
+      id: 5,
+      name: "brand",
+      label: "Brand",
+      multiple: false,
+      options: [
+        {
+          id: 1,
+          groupId: 5,
+          checked: false,
+          name: "brand",
+          label: "Nike",
+          value: "nike",
+        },
+        {
+          id: 2,
+          groupId: 5,
+          checked: false,
+          name: "brand",
+          label: "Adidas",
+          value: "adidas",
+        },
+        {
+          id: 3,
+          groupId: 5,
+          checked: false,
+          name: "brand",
+          label: "Rebook",
+          value: "rebook",
+        },
+        {
+          id: 4,
+          groupId: 5,
+          checked: false,
+          name: "brand",
+          label: "Puma",
+          value: "puma",
+        },
+      ],
+    },
+  ],
 });
 
 const getters = {
@@ -26,10 +359,6 @@ const getters = {
 };
 
 const actions = {
-  setSelectsAction({ commit }, catalog) {
-    return commit("setSelectsMutation", catalog);
-  },
-
   toggleIndex({ dispatch }, { name, value }) {
     let options = {};
     options[name] = value;
@@ -50,34 +379,42 @@ const actions = {
     );
   },
   selectOptionsCheckToggle({ commit, state }, clickedOptionObject) {
-    for (let [key, value] of Object.entries(clickedOptionObject)) {
-      if (Array.isArray(value)) {
-        value.forEach((cv) => {
-          state.selects
-            .map((select) => select.options)
+    // move all option to its own getter
+    let allOptions = state.selects.reduce(function (acc, cv) {
+      const recur = (n, q) => {
+        if (Object.keys(n).includes(q)) {
+          acc.push(n);
+        }
+
+        if (Object.values(n).some((val) => Array.isArray(val))) {
+          Object.values(n)
+            .filter((val) => Array.isArray(val))
             .flat()
-            .filter((option) => option.name === key)
-            .filter((option) => option.value === cv)
-            .forEach((el) => ("toggleElement", el));
-        });
-      } else {
-        state.selects
-          .map((select) => select.options)
-          .flat()
-          .filter((option) => option.name === key)
-          .filter((option) => option.value === value)
-          .forEach((el) => commit("toggleElement", el));
-      }
-    }
+            .forEach((el) => recur(el, q));
+        }
+      };
+
+      recur(cv, "checked");
+      return acc;
+    }, []);
+
+    let mappedOptions = allOptions.reduce(function (acc, cv) {
+      clickedOptionObject.forEach((object) => {
+        for (const [key, value] of Object.entries(object)) {
+          if (cv.name === key && cv.value === value) {
+            acc.push(cv);
+          }
+        }
+      });
+
+      return acc;
+    }, []);
+
+    return mappedOptions.forEach((el) => commit("toggleElement", el));
   },
 };
 
 const mutations = {
-  setSelectsMutation(state, selects) {
-    //console.log("setSelectsMutation", selects);
-    return Vue.set(state, "selects", selects);
-  },
-
   clickedOptionObjectMutation(state, object) {
     return (state.clickedOption = object);
   },
@@ -85,7 +422,6 @@ const mutations = {
     let foundElement = state.selects
       .find((select) => select.name === el.name)
       .options.find((option) => option.value === el.value);
-
     return !foundElement.checked
       ? (foundElement.checked = true)
       : (foundElement.checked = false);

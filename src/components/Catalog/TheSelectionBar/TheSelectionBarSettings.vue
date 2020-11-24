@@ -61,8 +61,6 @@ export default {
       return o;
     },
     toggleElement(el) {
-      console.log("toggle", el.checked);
-      debugger;
       return !el.checked ? (el.checked = true) : (el.checked = false);
     },
     updateRouteQueryParams(argObj) {
@@ -111,6 +109,7 @@ export default {
     },
   },
   created() {
+    console.log("settings created", this.searchQueryParamsObject);
     if (this.$store.state.route.name === "searchResultRoute") {
       this.selectOptionsCheckToggle(this.searchQueryParamsObject);
     } else {

@@ -94,7 +94,6 @@ const routes = [
     name: "searchRequestRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      store.dispatch("services/catalogAction");
       store.commit("load/countReset");
       store
         .dispatch("search/serviceRequestAction", to.path.substr(1).split("-"))
