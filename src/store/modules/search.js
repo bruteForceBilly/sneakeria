@@ -49,19 +49,34 @@ const actions = {
   },
   queryParamsObjectAction({ commit }, queryAction) {
     const { path, array } = queryAction.data;
-    let queryParamsObject = Object.assign(
-      {},
-      ...array.reduce(function (acc, cv) {
-        path.forEach((item) => {
-          if (cv.options.map((option) => option.value).includes(item)) {
-            const { name } = cv;
-            acc.push({ [name]: item });
-          }
-        });
 
-        return acc;
-      }, [])
-    );
+    let queryParamsObjectArray = array.reduce(function (acc, cv) {
+      path.forEach((val) => {
+        if (cv.options.map((option) => option.value).includes(val)) {
+          const { name } = cv;
+          acc.push({ [name]: [val] });
+        }
+      });
+      return acc;
+    }, []);
+
+    let queryParamsObject = queryParamsObjectArray.reduce(function (
+      prev,
+      next
+    ) {
+      let prevKeys = Object.keys(prev);
+      let nextKey = Object.keys(next).pop();
+
+      if (prevKeys.includes(nextKey)) {
+        prev[nextKey].push(next[nextKey].pop());
+      } else {
+        prev = { ...prev, ...next };
+      }
+
+      return prev;
+    },
+    {});
+
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
 
