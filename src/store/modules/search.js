@@ -76,7 +76,6 @@ const actions = {
       return prev;
     },
     {});
-
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
 
@@ -86,7 +85,9 @@ const actions = {
     let queryParamsString = "";
 
     for (const [key, value] of Object.entries(queryParamsObject)) {
-      queryParamsString += `${key}=${value}&`;
+      value.forEach((val) => {
+        queryParamsString += `${key}=${val}&`;
+      });
     }
 
     return commit("queryParamsStringMutation", queryParamsString.slice(0, -1));
