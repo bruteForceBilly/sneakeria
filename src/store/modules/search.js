@@ -78,11 +78,9 @@ const actions = {
   },
 
   queryParamsKebabAction({ commit }, queryParamsObject) {
-    let arr = queryParamsObject.reduce(function (acc, cv) {
-      acc.push(Object.values(cv));
-      return acc.flat();
-    }, []);
-    let queryParamsKebab = arr.toString().replace(/[,]/g, "-");
+    let queryParamsKebab = Object.values(queryParamsObject)
+      .toString()
+      .replace(/[,]/g, "-");
     return commit("queryParamsKebabMutation", queryParamsKebab);
   },
 };
