@@ -51,7 +51,7 @@ const routes = [
             store.state.search.queryParamsObject
           );
         } else if (to.name === "searchQueryRoute") {
-          console.log("ROUTER ELSE IF searchQueryRoute", to, from); // try searchQueryParamsObjectMutation
+          //console.log("ROUTER ELSE IF searchQueryRoute", to, from); // try searchQueryParamsObjectMutation
           store.dispatch("search/queryParamsStringAction", to.query);
           store.commit("search/queryParamsObjectMutation", to.query);
         }
@@ -100,7 +100,7 @@ const routes = [
         .dispatch("search/serviceRequestAction", pathArrayOfStrings)
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
         .then((q) => {
-          console.log("searchRequestRoute then q", q);
+          //console.log("searchRequestRoute then q", q);
           next({
             name: "searchQueryRoute",
             query: q,

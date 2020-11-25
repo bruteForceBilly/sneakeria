@@ -5,7 +5,7 @@ const { catalog } = require("./data.js");
 
 let output = {
   catalog: catalog,
-  products: newProducts(199),
+  products: newProducts(399),
 };
 
 let outputJson = JSON.stringify(output);

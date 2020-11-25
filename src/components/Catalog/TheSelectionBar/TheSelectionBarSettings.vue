@@ -95,7 +95,7 @@ export default {
     selects: {
       deep: true,
       handler: function (newValue, oldValue) {
-        console.log("watch newvalue", newValue);
+        //console.log("watch newvalue", newValue);
         if (this.getSetByRoute === false) {
           //console.log("watch selects - selectedOptionsObject", this.selectedOptionsObject);
           return this.updateRouteQueryParams(this.selectedOptionsObject);
@@ -111,7 +111,6 @@ export default {
   },
   created() {
     if (this.$store.state.route.name === "searchResultRoute") {
-      console.log("created IF", this.searchQueryParamsObject);
       this.selectOptionsCheckToggle(this.searchQueryParamsObject);
     } else {
       console.log("created ELSE");
