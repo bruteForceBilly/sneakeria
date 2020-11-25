@@ -111,8 +111,10 @@ export default {
   },
   created() {
     if (this.$store.state.route.name === "searchResultRoute") {
+      console.log("created IF", this.searchQueryParamsObject);
       this.selectOptionsCheckToggle(this.searchQueryParamsObject);
     } else {
+      console.log("created ELSE");
       this.selectOptionsCheckToggle({});
     }
     return this.$store.commit("setByRoute", false);

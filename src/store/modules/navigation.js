@@ -402,13 +402,11 @@ const actions = {
   },
   selectOptionsCheckToggle({ commit, state, getters }, clickedOptionObject) {
     let mappedOptions = getters.allOptions.reduce(function (acc, cv) {
-      clickedOptionObject.forEach((object) => {
-        for (const [key, value] of Object.entries(object)) {
-          if (cv.name === key && cv.value === value) {
-            acc.push(cv);
-          }
+      for (const [key, value] of Object.entries(clickedOptionObject)) {
+        if (cv.name === key && cv.value === value) {
+          acc.push(cv);
         }
-      });
+      }
 
       return acc;
     }, []);
