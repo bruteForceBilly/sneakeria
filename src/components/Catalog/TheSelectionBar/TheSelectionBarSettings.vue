@@ -64,12 +64,13 @@ export default {
       return !el.checked ? (el.checked = true) : (el.checked = false);
     },
     updateRouteQueryParams(argObj) {
-      //console.log(argObj);
-      Object.keys(argObj).length > 0
-        ? this.$router
-            .push({ name: "searchQueryRoute", query: argObj })
-            .catch((failure) => {})
-        : this.$router.push({ name: "all" }).catch((err) => {});
+      if (Object.keys(argObj).length > 0) {
+        this.$router
+          .push({ name: "searchQueryRoute", query: argObj })
+          .catch((failure) => {});
+      } else {
+        this.$router.push({ name: "all" }).catch((err) => {});
+      }
     },
     updateElements() {
       //console.log("update elements", this.selectedOptionsElements)
@@ -109,7 +110,6 @@ export default {
     },
   },
   created() {
-    console.log("settings created", this.searchQueryParamsObject);
     if (this.$store.state.route.name === "searchResultRoute") {
       this.selectOptionsCheckToggle(this.searchQueryParamsObject);
     } else {

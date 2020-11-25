@@ -31,16 +31,15 @@ const getters = {
 
 const actions = {
   // searchRequestAction
-  serviceRequestAction({ dispatch, state }, payload) {
-    //console.log("queryAction", payload);
+  serviceRequestAction({ dispatch, state }, pathArrayOfStrings) {
     return new Promise((resolve) => {
       getCatalog((data) => {
         //console.log("STORE serviceRequestAction getCatalog", data, payload);
         dispatch({
           type: "queryParamsObjectAction",
           data: {
-            path: payload,
-            object: data, // chnage to prop in state that instead should be fetch once on app load
+            path: pathArrayOfStrings,
+            array: data, // chnage to prop in state that instead should be fetch once on app load
           },
         });
       }).then(() => {
@@ -49,35 +48,33 @@ const actions = {
     });
   },
   queryParamsObjectAction({ commit }, queryAction) {
-    const { path, object } = queryAction.data;
-    let queryParamsObject = object.reduce(function (acc, cv) {
-      path.forEach((item) => {
-        if (cv.options.map((option) => option.value).includes(item)) {
-          const { name } = cv;
-          acc.push({ [name]: item });
-        }
-      });
+    const { path, array } = queryAction.data;
+    let queryParamsObject = Object.assign(
+      {},
+      ...array.reduce(function (acc, cv) {
+        path.forEach((item) => {
+          if (cv.options.map((option) => option.value).includes(item)) {
+            const { name } = cv;
+            acc.push({ [name]: item });
+          }
+        });
 
-      return acc;
-    }, []);
-
+        return acc;
+      }, [])
+    );
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
 
   queryParamsStringAction({ dispatch, commit }, queryParamsObject) {
     dispatch("queryParamsKebabAction", queryParamsObject);
 
-    let queryParamsString = queryParamsObject
-      .reduce(function (acc, cv) {
-        let str;
-        for (const [key, value] of Object.entries(cv)) {
-          str = `${key}=${value}&`;
-        }
-        return acc.concat(str);
-      }, "")
-      .slice(0, -1);
+    let queryParamsString = "";
 
-    return commit("queryParamsStringMutation", queryParamsString);
+    for (const [key, value] of Object.entries(queryParamsObject)) {
+      queryParamsString += `${key}=${value}&`;
+    }
+
+    return commit("queryParamsStringMutation", queryParamsString.slice(0, -1));
   },
 
   queryParamsKebabAction({ commit }, queryParamsObject) {
