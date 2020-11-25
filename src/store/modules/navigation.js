@@ -360,14 +360,13 @@ const getters = {
     return res;
   },
   selectedOptionsElements: (state, getters) => {
-    // let optionsCheked = state.selects
-    //   .map((select) => select.options)
-    //   .flat()
-    //   .filter((cv) => cv.checked);
     return getters.allOptions.filter((option) => option.checked);
   },
   selectedOptionsObject: (state, getters) => {
-    return getters.selectedOptionsElements.reduce(function (previous, element) {
+    let res = getters.selectedOptionsElements.reduce(function (
+      previous,
+      element
+    ) {
       if (element.name in previous) {
         previous[element.name] = [previous[element.name]];
         previous[element.name].push(element.value);
@@ -375,7 +374,9 @@ const getters = {
         previous[element.name] = element.value;
       }
       return previous;
-    }, {});
+    },
+    {});
+    return res;
   },
 };
 
