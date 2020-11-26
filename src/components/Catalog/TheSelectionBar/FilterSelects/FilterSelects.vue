@@ -4,8 +4,7 @@
       <Menu
         v-for="item in selects"
         :key="item.name"
-        :item-name="item.name"
-        :item-label="item.label"
+        :item="item"
         :selected-options-object="selectedOptionsObject"
       >
         <template v-slot:menu-items>
@@ -24,7 +23,7 @@
                 </template>
               </component>
             </template>
-            <template v-slot:option-label>
+            <template v-if="item.inputType !== 'color'" v-slot:option-label>
               {{ option.label }}
             </template>
           </MenuOption>

@@ -4,8 +4,8 @@
     @mouseover="hover = true"
     @mouseleave="hover = false"
   >
-    <MenuButton v-if="itemLabel" :hover="hover" :hasSelected="hasSelected">
-      <template v-slot:menu-label> {{ itemLabel }} </template>
+    <MenuButton v-if="item.label" :hover="hover" :hasSelected="hasSelected">
+      <template v-slot:menu-label> {{ item.label }} </template>
     </MenuButton>
 
     <MenuContainer :hover="hover">
@@ -23,13 +23,8 @@ import MenuContainer from "./MenuContainer.vue";
 export default {
   name: "CatalogSelectionBarDropDownMenu",
   props: {
-    itemName: {
-      type: String,
-      required: false,
-    },
-    itemLabel: {
-      type: String,
-      required: false,
+    item: {
+      type: Object,
     },
     selectedOptionsObject: {
       type: Object,
@@ -50,7 +45,7 @@ export default {
   },
   computed: {
     hasSelected() {
-      return Object.keys(this.selectedOptionsObject).includes(this.itemName);
+      return Object.keys(this.selectedOptionsObject).includes(this.item.name);
     },
   },
 };

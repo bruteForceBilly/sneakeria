@@ -1,12 +1,7 @@
 <template>
   <div>
     <div>
-      <Menu
-        v-for="item in sorts"
-        :key="item.name"
-        :item-name="item.name"
-        :item-label="item.label"
-      >
+      <Menu v-for="item in sorts" :key="item.name" :item="item">
         <template v-slot:menu-items>
           <MenuOption v-for="option in item.options" :key="option.id">
             <template v-slot:option-label>
