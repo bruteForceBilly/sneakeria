@@ -356,11 +356,11 @@ const getters = {
       recur(cv, "checked");
       return acc;
     }, []);
-
     return res;
   },
   selectedOptionsElements: (state, getters) => {
-    return getters.allOptions.filter((option) => option.checked);
+    let res = getters.allOptions.filter((option) => option.checked);
+    return res;
   },
   selectedOptionsObject: (state, getters) => {
     let res = getters.selectedOptionsElements.reduce(function (
@@ -403,14 +403,12 @@ const actions = {
   selectOptionsCheckToggle({ commit, state, getters }, clickedOptionObject) {
     let mappedOptions = getters.allOptions.reduce(function (acc, cv) {
       for (const [key, value] of Object.entries(clickedOptionObject)) {
-        if (cv.name === key && cv.value === value) {
+        if (cv.name === key && value.includes(cv.value)) {
           acc.push(cv);
         }
       }
-
       return acc;
     }, []);
-
     return mappedOptions.forEach((el) => commit("toggleElement", el));
   },
 };
