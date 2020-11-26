@@ -35,12 +35,12 @@ const routes = [
     component: Catalog,
     beforeEnter: (to, from, next) => {
       // console.log(
-      //   "ROUTER >>>> searchQueryRoute beforeEnter",
-      //   "to >>",
-      //   to.query,
-      //   "from >>>",
-      //   from
-      // );
+      // "ROUTER >>>> searchQueryRoute beforeEnter",
+      // "to query >>",
+      // to.query
+      // "from >>>",
+      // from
+      //);
       return new Promise((resolve, reject) => {
         if (
           store.state.search.searchRouteLastBeforeEnter === "searchRequestRoute"
@@ -113,7 +113,7 @@ const routes = [
     name: "searchResultRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      // console.log("LOOOK searchResultRoute", 'to >>>', to, 'from >>>>', from)
+      console.log("LOOOK searchResultRoute", "to >>>", to, "from >>>>", from);
       store.commit("search/routeLastBeforeEnterMutation", to.name);
       next();
     },

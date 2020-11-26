@@ -64,7 +64,6 @@ export default {
       return !el.checked ? (el.checked = true) : (el.checked = false);
     },
     updateRouteQueryParams(argObj) {
-      console.log(argObj, this.selectedOptionsObject);
       if (Object.keys(argObj).length > 0) {
         this.$router
           .push({ name: "searchQueryRoute", query: argObj })

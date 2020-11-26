@@ -80,6 +80,8 @@ const actions = {
   },
 
   queryParamsStringAction({ dispatch, commit }, queryParamsObject) {
+    // fn arg is queryParamsObject OR to.query from router
+    // Are they refereing to the same object or is one a copy?
     dispatch("queryParamsKebabAction", queryParamsObject);
 
     let queryParamsString = "";
@@ -89,7 +91,6 @@ const actions = {
         queryParamsString += `${key}=${val}&`;
       });
     }
-
     return commit("queryParamsStringMutation", queryParamsString.slice(0, -1));
   },
 
