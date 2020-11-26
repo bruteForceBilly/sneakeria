@@ -8,7 +8,11 @@
         :selected-options-object="selectedOptionsObject"
       >
         <template v-slot:menu-items>
-          <MenuOption v-for="option in item.options" :key="option.id">
+          <MenuOption
+            :item="item"
+            v-for="option in item.options"
+            :key="option.id"
+          >
             <template v-slot:option-input>
               <component
                 :is="currentComponent(item.inputType)"
@@ -23,7 +27,7 @@
                 </template>
               </component>
             </template>
-            <template v-if="item.inputType !== 'color'" v-slot:option-label>
+            <template v-slot:option-label>
               {{ option.label }}
             </template>
           </MenuOption>

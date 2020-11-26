@@ -15,7 +15,7 @@
       class="position-after-height inline-block z-20 absolute w-64 border-black outline-none border px-3 py-1 bg-white rounded-none"
       :class="hover ? 'inline-block' : 'hidden'"
     >
-      <ul class="px-1 pb-1">
+      <ul class="px-1 pb-1 flex flex-row flex-wrap">
         <slot name="options"> ... waiting for content</slot>
       </ul>
     </div>

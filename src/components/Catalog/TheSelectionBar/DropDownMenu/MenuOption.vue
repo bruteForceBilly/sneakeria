@@ -5,7 +5,10 @@
         <div>
           <slot name="option-input"></slot>
         </div>
-        <span class="font-semibold select-none">
+        <span
+          v-if="item.inputType !== 'color'"
+          class="font-semibold select-none"
+        >
           <slot name="option-label"></slot>
         </span>
       </label>
@@ -16,5 +19,10 @@
 <script>
 export default {
   name: "MenuOption",
+  props: {
+    item: {
+      type: Object,
+    },
+  },
 };
 </script>
