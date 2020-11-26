@@ -11,11 +11,10 @@
         <template v-slot:menu-items>
           <MenuOption v-for="option in item.options" :key="option.id">
             <template v-slot:option-input>
-              <!-- We could loop out an dynamic component instead that renders
-               different depening on option.type 
-               Like MenuOptionInput type="checkbox" or something.
-               -->
-              <MenuOptionCheckbox :checked="option.checked">
+              <component
+                :is="currentComponent(item.inputType)"
+                v-bind="{ option }"
+              >
                 <template v-slot:input>
                   <input
                     type="checkbox"
@@ -23,7 +22,7 @@
                     v-model="option.checked"
                   />
                 </template>
-              </MenuOptionCheckbox>
+              </component>
             </template>
             <template v-slot:option-label>
               {{ option.label }}
@@ -38,12 +37,24 @@
 import Menu from "../DropDownMenu/Menu.vue";
 import MenuOption from "../DropDownMenu/MenuOption.vue";
 import MenuOptionCheckbox from "../DropDownMenu/MenuOptionCheckbox.vue";
+import MenuOptionColor from "../DropDownMenu/MenuOptionColor.vue";
 
 export default {
   components: {
     Menu,
     MenuOption,
     MenuOptionCheckbox,
+    MenuOptionColor,
+  },
+  methods: {
+    currentComponent(inputType) {
+      const optionInputComponents = {
+        checkbox: "MenuOptionCheckbox",
+        color: "MenuOptionColor",
+      };
+
+      return optionInputComponents[inputType];
+    },
   },
   props: {
     selects: {
