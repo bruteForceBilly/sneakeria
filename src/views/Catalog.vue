@@ -32,7 +32,7 @@ import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "Catalog",
-  props: ["q"],
+  props: ["q"], // what is this doing here? remove it?
   components: {
     BreadCrumbsBar,
     SelectionBar,

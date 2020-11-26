@@ -181,21 +181,16 @@ const styleType = [
 ];
 
 const colors = [
-  "white",
   "black",
-  "grey",
   "blue",
-  "green",
-  "brown",
-  "red",
-  "beige",
-  "yellow",
-  "burgundy",
-  "orange",
-  "pink",
   "gold",
+  "green",
+  "grey",
+  "orange",
+  "red",
   "silver",
-  "purple",
+  "white",
+  "yellow",
 ];
 
 const catalog = [
