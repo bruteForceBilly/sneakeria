@@ -371,7 +371,7 @@ const getters = {
         previous[element.name] = [previous[element.name]];
         previous[element.name].push(element.value);
       } else {
-        previous[element.name] = element.value;
+        previous[element.name] = [element.value];
       }
       return previous;
     },
@@ -418,6 +418,7 @@ const mutations = {
     return (state.clickedOption = object);
   },
   toggleElement(state, el) {
+    // You have to recur to find since options can be nested now inside attr
     let foundElement = state.selects
       .find((select) => select.name === el.name)
       .options.find((option) => option.value === el.value);

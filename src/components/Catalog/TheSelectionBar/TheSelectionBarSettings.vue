@@ -64,6 +64,7 @@ export default {
       return !el.checked ? (el.checked = true) : (el.checked = false);
     },
     updateRouteQueryParams(argObj) {
+      console.log(argObj, this.selectedOptionsObject);
       if (Object.keys(argObj).length > 0) {
         this.$router
           .push({ name: "searchQueryRoute", query: argObj })
@@ -113,7 +114,6 @@ export default {
     if (this.$store.state.route.name === "searchResultRoute") {
       this.selectOptionsCheckToggle(this.searchQueryParamsObject);
     } else {
-      console.log("created ELSE");
       this.selectOptionsCheckToggle({});
     }
     return this.$store.commit("setByRoute", false);
