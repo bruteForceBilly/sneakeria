@@ -8,7 +8,7 @@
       <template v-slot:menu-label> {{ item.label }} </template>
     </MenuButton>
 
-    <MenuContainer :hover="hover">
+    <MenuContainer :hover="hover" :item="item">
       <template v-slot:options>
         <slot name="menu-items"> ... menu-items waiting for content</slot>
       </template>

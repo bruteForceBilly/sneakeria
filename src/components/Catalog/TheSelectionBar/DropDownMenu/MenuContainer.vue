@@ -14,7 +14,14 @@
 <script>
 export default {
   name: "CatalogFilterBarDropDownMenuContainer",
-  props: ["hover"],
+  props: {
+    item: {
+      type: Object,
+    },
+    hover: {
+      type: Boolean,
+    },
+  },
 };
 </script>
 
