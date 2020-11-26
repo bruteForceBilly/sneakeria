@@ -6,6 +6,7 @@ const state = () => ({
       label: "Section",
       value: null,
       multiple: false,
+      inputType: "checkbox",
       options: [
         {
           id: 1,
@@ -31,6 +32,7 @@ const state = () => ({
       label: "Category",
       value: null,
       multiple: false,
+      inputType: "checkbox",
       options: [
         {
           id: 1,
@@ -47,6 +49,7 @@ const state = () => ({
               label: "Product Types",
               value: null,
               multiple: false,
+              inputType: "checkbox",
               options: [
                 {
                   id: 1,
@@ -94,6 +97,7 @@ const state = () => ({
               label: "Product Types",
               value: null,
               multiple: false,
+              inputType: "checkbox",
               options: [
                 {
                   id: 1,
@@ -131,6 +135,7 @@ const state = () => ({
               label: "Style",
               value: null,
               multiple: true,
+              inputType: "checkbox",
               options: [
                 {
                   id: 1,
@@ -234,6 +239,7 @@ const state = () => ({
       label: "Campaigns",
       value: null,
       multiple: true,
+      inputType: "checkbox",
       options: [
         {
           id: 1,
@@ -267,6 +273,7 @@ const state = () => ({
       label: "Look",
       value: null,
       multiple: false,
+      inputType: "checkbox",
       options: [
         {
           id: 1,
@@ -299,6 +306,7 @@ const state = () => ({
       name: "brand",
       label: "Brand",
       multiple: false,
+      inputType: "checkbox",
       options: [
         {
           id: 1,
@@ -339,6 +347,7 @@ const state = () => ({
       name: "color",
       label: "Color",
       multiple: false,
+      inputType: "color",
       options: [
         {
           id: 1,

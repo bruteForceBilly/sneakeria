@@ -11,6 +11,10 @@
         <template v-slot:menu-items>
           <MenuOption v-for="option in item.options" :key="option.id">
             <template v-slot:option-input>
+              <!-- We could loop out an dynamic component instead that renders
+               different depening on option.type 
+               Like MenuOptionInput type="checkbox" or something.
+               -->
               <MenuOptionCheckbox :checked="option.checked">
                 <template v-slot:input>
                   <input
@@ -36,6 +40,11 @@ import MenuOption from "../DropDownMenu/MenuOption.vue";
 import MenuOptionCheckbox from "../DropDownMenu/MenuOptionCheckbox.vue";
 
 export default {
+  components: {
+    Menu,
+    MenuOption,
+    MenuOptionCheckbox,
+  },
   props: {
     selects: {
       type: Array,
@@ -46,11 +55,6 @@ export default {
         return {};
       },
     },
-  },
-  components: {
-    Menu,
-    MenuOption,
-    MenuOptionCheckbox,
   },
 };
 </script>
