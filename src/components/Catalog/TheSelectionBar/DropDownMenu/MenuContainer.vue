@@ -1,7 +1,18 @@
 <template>
   <div>
     <div
+      v-if="item.inputType === 'checkbox'"
       class="position-after-height inline-block z-20 absolute w-40 border-black outline-none border px-3 py-1 bg-white rounded-none"
+      :class="hover ? 'inline-block' : 'hidden'"
+    >
+      <ul class="px-1 pb-1">
+        <slot name="options"> ... waiting for content</slot>
+      </ul>
+    </div>
+
+    <div
+      v-if="item.inputType === 'color'"
+      class="position-after-height inline-block z-20 absolute w-64 border-black outline-none border px-3 py-1 bg-white rounded-none"
       :class="hover ? 'inline-block' : 'hidden'"
     >
       <ul class="px-1 pb-1">
