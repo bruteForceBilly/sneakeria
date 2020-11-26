@@ -1,7 +1,7 @@
 <template>
   <div
     class="bg-transparent border-solid border-black w-6 h-6 p-1 flex justify-center items-center mr-3"
-    :class="option.checked ? 'bg-black' : 'bg-white'"
+    :class="option.checked ? `bg-${color}` : `bg-${color}`"
     style="border-width: 1px"
   >
     <slot name="input"> ... input goes here </slot>
@@ -36,6 +36,23 @@ export default {
   name: "MenuOptionColor",
   props: {
     option: Object,
+  },
+  computed: {
+    color() {
+      const color = {
+        black: "black",
+        blue: "blue-500",
+        gold: "yellow-600",
+        green: "green-500",
+        grey: "gray-600",
+        orange: "orange-500",
+        red: "red-500",
+        silver: "gray-400",
+        white: "white",
+        yellow: "yellow-500",
+      };
+      return color[this.option.value];
+    },
   },
 };
 </script>
