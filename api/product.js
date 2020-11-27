@@ -1,3 +1,5 @@
+const data = require("./data.js");
+
 const {
   groupOptions,
   optionProductTypes,
@@ -36,6 +38,10 @@ const productFactory = function ({
   category = category.name;
   styleType = styleType(productType);
 
+  let ver = newVersions(id);
+
+  data.versions.push(ver);
+
   return {
     id,
     section,
@@ -45,7 +51,6 @@ const productFactory = function ({
     styleType,
     look,
     brand,
-    versions,
   };
 };
 
@@ -57,7 +62,6 @@ const newProduct = (n) =>
     category: randomElement(groupOptions("category")),
     look: randomElement(groupOptions("look")).name,
     brand: randomElement(groupOptions("brand")).name,
-    versions: newVersions(n),
   });
 
 const newProducts = function (n) {

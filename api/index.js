@@ -1,11 +1,11 @@
 const fs = require("fs");
-
 const { newProducts } = require("./product.js");
-const { catalog } = require("./data.js");
+const { catalog, versions } = require("./data.js");
 
 let output = {
   catalog: catalog,
   products: newProducts(399),
+  versions: versions.flat(),
 };
 
 let outputJson = JSON.stringify(output);

@@ -530,6 +530,8 @@ const catalog = [
   },
 ];
 
+let versions = [];
+
 module.exports = {
   catalog: catalog,
   group: group,
@@ -537,4 +539,5 @@ module.exports = {
   productType: productType,
   styleType: styleType,
   colors: colors,
+  versions: versions,
 };
