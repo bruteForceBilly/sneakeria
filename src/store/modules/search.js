@@ -59,7 +59,7 @@ const actions = {
       });
       return acc;
     }, []);
-
+    // in else push cv to array
     let queryParamsObject = queryParamsObjectArray.reduce(function (
       prev,
       next
