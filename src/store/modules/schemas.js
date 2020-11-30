@@ -1,31 +1,57 @@
 const state = () => ({
   product: {
-    id: Number,
-    section: String,
-    campaigns: Array,
-    category: String,
-    productType: String,
-    styleType: String,
-    look: String,
-    brand: String,
+    section: ["men", "women"],
+    category: ["shoes", "clothing"],
+    campaigns: ["sale", "essentials", "new"],
+    productType: [
+      "boots",
+      "sandals",
+      "sneakers",
+      "hoodies",
+      "t-shirts",
+      "trousers",
+    ],
+    styleType: [
+      "pullover",
+      "zip-up",
+      "fleece",
+      "longsleeve",
+      "sleeveless",
+      "graphic tees",
+      "chinos",
+      "jeans",
+      "sweat pants",
+    ],
+    look: ["tennis", "basketball", "fotball"],
+    brand: ["nike", "adidas", "rebook", "puma"],
   },
   productVersion: {
-    id: Number,
-    productId: Number,
-    dateRelease: Number,
-    color: String,
-    price: Object,
-    sizes: Array,
-    imageUrl: Object,
+    color: [
+      "black",
+      "blue",
+      "gold",
+      "green",
+      "grey",
+      "orange",
+      "red",
+      "silver",
+      "white",
+      "yellow",
+    ],
   },
 });
 
 const getters = {
-  productEntries: (state) => {
-    return Object.entries(state.product);
-  },
-  productVersionEntries: (state) => {
-    return Object.entries(state.productVersion);
+  findByPropKey: (state) => (arr, table) => {
+    console.log("schemas");
+    return arr.reduce(function (acc, cv) {
+      for (const key of Object.keys(state.productSchema)) {
+        if (state.productSchema[key].includes(cv)) {
+          acc.push({ [key]: cv });
+        }
+      }
+      return acc;
+    }, []);
   },
 };
 

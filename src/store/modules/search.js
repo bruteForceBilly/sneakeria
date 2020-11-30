@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import getCatalog from "@/services/catalog.js";
 import Vue from "vue";
 
@@ -34,6 +35,9 @@ const actions = {
   serviceRequestAction({ dispatch, state }, pathArrayOfStrings) {
     // import schema here to to find
 
+    // move find by prop key to queryParamsObjectAction
+    // depricate array data
+
     return new Promise((resolve) => {
       getCatalog((data) => {
         //console.log("STORE serviceRequestAction getCatalog", data, payload);
@@ -49,35 +53,48 @@ const actions = {
       });
     });
   },
-  queryParamsObjectAction({ commit }, queryAction) {
+  queryParamsObjectAction({ commit, rootState }, queryAction) {
+    // If no product key find then do version getter
+    const queryParamsObjectArray = [];
     const { path, array } = queryAction.data;
 
-    let queryParamsObjectArray = array.reduce(function (acc, cv) {
-      path.forEach((val) => {
-        if (cv.options.map((option) => option.value).includes(val)) {
-          const { name } = cv;
-          acc.push({ [name]: [val] });
+    const findByPropKey = function (arr, table) {
+      return arr.reduce(function (acc, cv) {
+        for (const key of Object.keys(table)) {
+          if (table[key].includes(cv)) {
+            acc.push({ [key]: cv });
+          }
         }
-      });
-      return acc;
-    }, []);
-    // in else push cv to array
-    let queryParamsObject = queryParamsObjectArray.reduce(function (
-      prev,
-      next
-    ) {
-      let prevKeys = Object.keys(prev);
-      let nextKey = Object.keys(next).pop();
+        return acc;
+      }, []);
+    };
 
-      if (prevKeys.includes(nextKey)) {
-        prev[nextKey].push(next[nextKey].pop());
-      } else {
-        prev = { ...prev, ...next };
-      }
+    queryParamsObjectArray.push(findByPropKey(path, rootState.schemas.product));
 
-      return prev;
-    },
-    {});
+    if (findByPropKey(path, rootState.schemas.productVersion).length > 0) {
+      queryParamsObjectArray.push(
+        findByPropKey(path, rootState.schemas.productVersion)
+      );
+    }
+
+    // check why does the object become
+    let queryParamsObject = queryParamsObjectArray
+      .flat()
+      .reduce(function (prev, next) {
+        let prevKeys = Object.keys(prev);
+        let nextKey = Object.keys(next).pop();
+
+        if (prevKeys.includes(nextKey)) {
+          prev[nextKey].push(next[nextKey].pop());
+        } else {
+          prev = { ...prev, ...next };
+        }
+
+        return prev;
+      }, {});
+
+    console.log("queryParamsObject", queryParamsObject);
+
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
 
