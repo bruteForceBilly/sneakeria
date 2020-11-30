@@ -32,6 +32,8 @@ const getters = {
 const actions = {
   // searchRequestAction
   serviceRequestAction({ dispatch, state }, pathArrayOfStrings) {
+    // import schema here to to find
+
     return new Promise((resolve) => {
       getCatalog((data) => {
         //console.log("STORE serviceRequestAction getCatalog", data, payload);
