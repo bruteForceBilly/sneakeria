@@ -54,9 +54,10 @@ const actions = {
     });
   },
   queryParamsObjectAction({ commit, rootState }, queryAction) {
-    // If no product key find then do version getter
     const queryParamsObjectArray = [];
-    const { path, array } = queryAction.data;
+    const { path } = queryAction.data;
+
+    // NOT DONE! object should look like { product: [{section: men}], version: [{color: red}]}
 
     const findByPropKey = function (arr, table) {
       return arr.reduce(function (acc, cv) {
@@ -69,14 +70,17 @@ const actions = {
       }, []);
     };
 
-    queryParamsObjectArray.push(findByPropKey(path, rootState.schemas.product));
+    queryParamsObjectArray.push({
+      product: findByPropKey(path, rootState.schemas.product),
+    });
 
     if (findByPropKey(path, rootState.schemas.productVersion).length > 0) {
-      queryParamsObjectArray.push(
-        findByPropKey(path, rootState.schemas.productVersion)
-      );
+      queryParamsObjectArray.push({
+        version: findByPropKey(path, rootState.schemas.productVersion),
+      });
     }
 
+    console.log("queryParamsObjectArray", queryParamsObjectArray);
     // check why does the object become
     let queryParamsObject = queryParamsObjectArray
       .flat()
@@ -92,8 +96,6 @@ const actions = {
 
         return prev;
       }, {});
-
-    console.log("queryParamsObject", queryParamsObject);
 
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
