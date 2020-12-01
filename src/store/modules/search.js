@@ -102,7 +102,7 @@ const actions = {
 
     // queryParamsString :{ products: products?section=men&category=shoes, versions: versions?color=red}
 
-    //dispatch("queryParamsKebabAction", queryParamsObject);
+    dispatch("queryParamsKebabAction", queryParamsObject);
 
     const makeString = function (arg) {
       let res = arg.reduce(function (acc, cv) {
@@ -124,25 +124,21 @@ const actions = {
     },
     {});
 
-    console.log("queryParamsString", queryParamsString);
-
     return commit("queryParamsStringMutation", queryParamsString);
   },
 
   queryParamsKebabAction({ commit }, queryParamsObject) {
-    let queryParamsKebab = Object.keys(queryParamsObject).reduce(function (
-      acc,
-      cv
-    ) {
-      acc[cv] = Object.values(cv).toString().replace(/[,]/g, "-");
-      return acc;
-    },
-    {});
-    /*
-    let queryParamsKebab = Object.values(queryParamsObject)
-      .toString()
-      .replace(/[,]/g, "-");
-    */
+    let queryParamsKebab;
+    let res = [];
+    Object.keys(queryParamsObject).forEach((key) => {
+      res.push(
+        queryParamsObject[key].reduce(function (acc, cv) {
+          return acc.concat(Object.values(cv));
+        }, [])
+      );
+    });
+
+    queryParamsKebab = res.flat().toString().replace(/[,]/g, "-");
 
     return commit("queryParamsKebabMutation", queryParamsKebab);
   },
