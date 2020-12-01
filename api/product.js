@@ -40,10 +40,13 @@ const productFactory = function ({
 
   let ver = newVersions(id);
 
+  let versionIds = ver.map((cv) => cv.id);
+
   data.versions.push(ver);
 
   return {
     id,
+    versionIds,
     section,
     campaigns,
     category,

@@ -69,6 +69,14 @@ const routes = [
           throw new Error("Something failed", err); // I have no idea why this throws an error when hitting about directly
         })
         .then((searchQueryParamsString) => {
+          /// THIS IS WHERE WE NEED TO FIGURE OUT
+          // HOW TO SPLIT THE API REQUEST PER OBJECT KEY IN QUERY PARAMS OBJECT
+          // IN FOUND PROUDCTS YOU NEED TO FILTER OUT DUPLICATE PRODUCTS BY ID'S
+
+          // IF PROD KEY, THEN FETCH PROD AND FILTER FOUND PROD AFTER COLOR
+
+          // IF NO PROD KEY THEN FETCH VERSION
+
           // console.log(
           //   "ROUTER searchQueryParamsString",
           //   searchQueryParamsString
@@ -113,7 +121,7 @@ const routes = [
     name: "searchResultRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      console.log("LOOOK searchResultRoute", "to >>>", to, "from >>>>", from);
+      //console.log("LOOOK searchResultRoute", "to >>>", to, "from >>>>", from);
       store.commit("search/routeLastBeforeEnterMutation", to.name);
       next();
     },

@@ -6,6 +6,8 @@ const { newDate } = require("./date.js");
 const { newPrice } = require("./price.js");
 const { newSizes } = require("./size.js");
 
+let count = 0;
+
 const versionFactory = function ({
   id = null,
   productId = null,
@@ -15,6 +17,9 @@ const versionFactory = function ({
   sizes = null,
   imageUrl = null,
 }) {
+  count++;
+  count + id;
+  id = count;
   return {
     id,
     productId,

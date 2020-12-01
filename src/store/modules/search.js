@@ -33,11 +33,7 @@ const getters = {
 const actions = {
   // searchRequestAction
   serviceRequestAction({ dispatch, state }, pathArrayOfStrings) {
-    // import schema here to to find
-
-    // move find by prop key to queryParamsObjectAction
-    // depricate array data
-
+    // Keep this action cause you might gonna move the schemas to back end
     return new Promise((resolve) => {
       getCatalog((data) => {
         //console.log("STORE serviceRequestAction getCatalog", data, payload);
@@ -80,7 +76,6 @@ const actions = {
       });
     }
 
-    console.log("queryParamsObjectArray", queryParamsObjectArray);
     // check why does the object become
     let queryParamsObject = queryParamsObjectArray
       .flat()
