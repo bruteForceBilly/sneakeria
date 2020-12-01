@@ -41,60 +41,69 @@ const routes = [
       // "from >>>",
       // from
       //);
-      return new Promise((resolve, reject) => {
-        if (
-          store.state.search.searchRouteLastBeforeEnter === "searchRequestRoute"
-        ) {
-          //console.log("ROUTER IF searchRequestRoute", to, from),
-          store.dispatch(
-            "search/queryParamsStringAction",
-            store.state.search.queryParamsObject
-          );
-        } else if (to.name === "searchQueryRoute") {
-          //console.log("ROUTER ELSE IF searchQueryRoute", to, from); // try searchQueryParamsObjectMutation
-          store.dispatch("search/queryParamsStringAction", to.query);
-          store.commit("search/queryParamsObjectMutation", to.query);
-        }
 
-        store.state.search.queryParamsString === ""
-          ? reject()
-          : resolve(store.state.search.queryParamsString);
+      store.dispatch(
+        "search/queryParamsStringAction",
+        store.state.search.queryParamsObject // check if this object exist?
+      );
 
-        store.dispatch(
-          "search/queryParamsStringAction",
-          store.state.search.queryParamsObject // check if this object exist?
-        );
-      })
-        .catch((err) => {
-          throw new Error("Something failed", err); // I have no idea why this throws an error when hitting about directly
-        })
-        .then((searchQueryParamsString) => {
-          /// THIS IS WHERE WE NEED TO FIGURE OUT
-          // HOW TO SPLIT THE API REQUEST PER OBJECT KEY IN QUERY PARAMS OBJECT
-          // IN FOUND PROUDCTS YOU NEED TO FILTER OUT DUPLICATE PRODUCTS BY ID'S
+      return;
+      // new Promise((resolve, reject) => {
+      //   if (
+      //     store.state.search.searchRouteLastBeforeEnter === "searchRequestRoute"
+      //   ) {
+      //     //console.log("ROUTER IF searchRequestRoute", to, from),
+      //     store.dispatch(
+      //       "search/queryParamsStringAction",
+      //       store.state.search.queryParamsObject
+      //     );
+      //   } else if (to.name === "searchQueryRoute") {
+      //     //console.log("ROUTER ELSE IF searchQueryRoute", to, from); // try searchQueryParamsObjectMutation
+      //     store.dispatch("search/queryParamsStringAction", to.query);
+      //     store.commit("search/queryParamsObjectMutation", to.query);
+      //   }
 
-          // IF PROD KEY, THEN FETCH PROD AND FILTER FOUND PROD AFTER COLOR
+      //   store.state.search.queryParamsString === ""
+      //     ? reject()
+      //     : resolve(store.state.search.queryParamsString);
 
-          // IF NO PROD KEY THEN FETCH VERSION
+      //   store.dispatch(
+      //     "search/queryParamsStringAction",
+      //     store.state.search.queryParamsObject // check if this object exist?
+      //   );
+      // })
+      //   .catch((err) => {
+      //     throw new Error("Something failed", err); // I have no idea why this throws an error when hitting about directly
+      //   })
+      //   .then((searchQueryParamsString) => {
+      //     /// THIS IS WHERE WE NEED TO FIGURE OUT
+      //     // HOW TO SPLIT THE API REQUEST PER OBJECT KEY IN QUERY PARAMS OBJECT
+      //     // IN FOUND PROUDCTS YOU NEED TO FILTER OUT DUPLICATE PRODUCTS BY ID'S
 
-          // console.log(
-          //   "ROUTER searchQueryParamsString",
-          //   searchQueryParamsString
-          // );
-          products("filter", searchQueryParamsString, (data) => {
-            //console.log("ROUTER products", data);
-            store.commit("search/foundProductsMutation", data);
-          }).then(() => {
-            return next({
-              name: "searchResultRoute",
-              params: { slug: store.state.search.queryParamsKebab },
-            });
-          });
-        })
-        .then(
-          store.commit("search/routeLastBeforeEnterMutation", to.name)
-          //console.log("ROUTER searchRouteLastBeforeEnterMutation", to.name)
-        );
+      //     // IF PROD KEY, THEN FETCH PROD AND FILTER FOUND PROD AFTER COLOR
+
+      //     // IF NO PROD KEY THEN FETCH VERSION
+
+      //     // filter and get sets of product id spans to use for versions? or do in router maybe?
+
+      //     // console.log(
+      //     //   "ROUTER searchQueryParamsString",
+      //     //   searchQueryParamsString
+      //     // );
+      //     products("filter", searchQueryParamsString, (data) => {
+      //       //console.log("ROUTER products", data);
+      //       store.commit("search/foundProductsMutation", data);
+      //     }).then(() => {
+      //       return next({
+      //         name: "searchResultRoute",
+      //         params: { slug: store.state.search.queryParamsKebab },
+      //       });
+      //     });
+      //   })
+      //   .then(
+      //     store.commit("search/routeLastBeforeEnterMutation", to.name)
+      //     //console.log("ROUTER searchRouteLastBeforeEnterMutation", to.name)
+      //   );
     },
   },
   {

@@ -53,8 +53,6 @@ const actions = {
     const queryParamsObjectArray = [];
     const { path } = queryAction.data;
 
-    // NOT DONE! object should look like { product: [{section: men}], version: [{color: red}]}
-
     const findByPropKey = function (arr, table) {
       return arr.reduce(function (acc, cv) {
         for (const key of Object.keys(table)) {
@@ -98,22 +96,54 @@ const actions = {
   queryParamsStringAction({ dispatch, commit }, queryParamsObject) {
     // fn arg is queryParamsObject OR to.query from router
     // Are they refereing to the same object or is one a copy?
-    dispatch("queryParamsKebabAction", queryParamsObject);
 
-    let queryParamsString = "";
+    // products?section=men&category=shoes
+    // versions?color=red
 
-    for (const [key, value] of Object.entries(queryParamsObject)) {
-      value.forEach((val) => {
-        queryParamsString += `${key}=${val}&`;
-      });
-    }
-    return commit("queryParamsStringMutation", queryParamsString.slice(0, -1));
+    // queryParamsString :{ products: products?section=men&category=shoes, versions: versions?color=red}
+
+    //dispatch("queryParamsKebabAction", queryParamsObject);
+
+    const makeString = function (arg) {
+      let res = arg.reduce(function (acc, cv) {
+        for (const [key, value] of Object.entries(cv)) {
+          acc += `${key}=${value}&`;
+        }
+        return acc;
+      }, "");
+
+      return res.slice(0, -1);
+    };
+
+    const queryParamsString = Object.keys(queryParamsObject).reduce(function (
+      acc,
+      cv
+    ) {
+      acc[cv] = makeString(queryParamsObject[cv]);
+      return acc;
+    },
+    {});
+
+    console.log("queryParamsString", queryParamsString);
+
+    return commit("queryParamsStringMutation", queryParamsString);
   },
 
   queryParamsKebabAction({ commit }, queryParamsObject) {
+    let queryParamsKebab = Object.keys(queryParamsObject).reduce(function (
+      acc,
+      cv
+    ) {
+      acc[cv] = Object.values(cv).toString().replace(/[,]/g, "-");
+      return acc;
+    },
+    {});
+    /*
     let queryParamsKebab = Object.values(queryParamsObject)
       .toString()
       .replace(/[,]/g, "-");
+    */
+
     return commit("queryParamsKebabMutation", queryParamsKebab);
   },
 };
