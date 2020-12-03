@@ -67,7 +67,7 @@ export default {
       console.log("updateRouteQueryParams", argObj);
       if (Object.keys(argObj).length > 0) {
         this.$router
-          .push({ name: "searchQueryRoute", query: argObj })
+          .push({ name: "searchRequestRoute", query: argObj })
           .catch((failure) => {});
       } else {
         this.$router.push({ name: "all" }).catch((err) => {});

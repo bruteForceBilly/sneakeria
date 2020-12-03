@@ -500,12 +500,16 @@ const actions = {
   selectOptionsCheckToggle({ commit, state, getters }, clickedOptionObject) {
     let res = {};
 
-    for (const valArr of Object.values(clickedOptionObject)) {
-      valArr.forEach((val) => {
-        for (const [key, value] of Object.entries(val)) {
-          res[key] = value;
-        }
-      });
+    if (Object.keys(clickedOptionObject).includes("product" || "version")) {
+      for (const valArr of Object.values(clickedOptionObject)) {
+        valArr.forEach((val) => {
+          for (const [key, value] of Object.entries(val)) {
+            res[key] = value;
+          }
+        });
+      }
+    } else {
+      res = clickedOptionObject;
     }
 
     let mappedOptions = getters.allOptions.reduce(function (acc, cv) {
