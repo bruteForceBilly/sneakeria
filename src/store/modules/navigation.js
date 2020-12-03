@@ -498,14 +498,25 @@ const actions = {
     );
   },
   selectOptionsCheckToggle({ commit, state, getters }, clickedOptionObject) {
+    let res = {};
+
+    for (const valArr of Object.values(clickedOptionObject)) {
+      valArr.forEach((val) => {
+        for (const [key, value] of Object.entries(val)) {
+          res[key] = value;
+        }
+      });
+    }
+
     let mappedOptions = getters.allOptions.reduce(function (acc, cv) {
-      for (const [key, value] of Object.entries(clickedOptionObject)) {
+      for (const [key, value] of Object.entries(res)) {
         if (cv.name === key && value.includes(cv.value)) {
           acc.push(cv);
         }
       }
       return acc;
     }, []);
+
     return mappedOptions.forEach((el) => commit("toggleElement", el));
   },
 };

@@ -52,7 +52,7 @@ const routes = [
             store.state.search.queryParamsObject
           );
         } else if (to.name === "searchQueryRoute") {
-          //console.log("ROUTER ELSE IF searchQueryRoute", to, from); // try searchQueryParamsObjectMutation
+          console.log("ROUTER ELSE IF searchQueryRoute", to, from); // try searchQueryParamsObjectMutation
           store.dispatch("search/queryParamsStringAction", to.query);
           store.commit("search/queryParamsObjectMutation", to.query);
         }
@@ -86,7 +86,7 @@ const routes = [
           //     // );
 
           products("filter", searchQueryParamsString, (data) => {
-            console.log("ROUTER products", data);
+            //console.log("ROUTER products", data);
             store.commit("search/foundProductsMutation", data);
           }).then(() => {
             return next({
@@ -102,14 +102,26 @@ const routes = [
     },
   },
   {
-    path: "/:id",
+    path: "/:id?",
     name: "searchRequestRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      let pathArrayOfStrings = to.path.substr(1).split("-");
       store.commit("load/countReset");
+      let queryRequest;
+
+      if (
+        Object.keys(to.query).length === 0 &&
+        to.query.constructor === Object
+      ) {
+        queryRequest = to.path.substr(1).split("-");
+        console.log("searchRequestRoute IF queryRequest", queryRequest);
+      } else {
+        queryRequest = to.query;
+        console.log("searchRequestRoute ELSE queryRequest", queryRequest);
+      }
+
       store
-        .dispatch("search/serviceRequestAction", pathArrayOfStrings)
+        .dispatch("search/serviceRequestAction", queryRequest)
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
         .then((q) => {
           //console.log("searchRequestRoute then q", q);

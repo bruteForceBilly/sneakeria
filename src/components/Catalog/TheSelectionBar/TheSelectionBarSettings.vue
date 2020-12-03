@@ -64,6 +64,7 @@ export default {
       return !el.checked ? (el.checked = true) : (el.checked = false);
     },
     updateRouteQueryParams(argObj) {
+      console.log("updateRouteQueryParams", argObj);
       if (Object.keys(argObj).length > 0) {
         this.$router
           .push({ name: "searchQueryRoute", query: argObj })
@@ -97,7 +98,10 @@ export default {
       handler: function (newValue, oldValue) {
         //console.log("watch newvalue", newValue);
         if (this.getSetByRoute === false) {
-          //console.log("watch selects - selectedOptionsObject", this.selectedOptionsObject);
+          console.log(
+            "watch selects - selectedOptionsObject",
+            this.selectedOptionsObject
+          );
           return this.updateRouteQueryParams(this.selectedOptionsObject);
         }
       },
@@ -111,8 +115,10 @@ export default {
   },
   created() {
     if (this.$store.state.route.name === "searchResultRoute") {
+      console.log("created IF", this.searchQueryParamsObject);
       this.selectOptionsCheckToggle(this.searchQueryParamsObject);
     } else {
+      console.log("created ELSE");
       this.selectOptionsCheckToggle({});
     }
     return this.$store.commit("setByRoute", false);
