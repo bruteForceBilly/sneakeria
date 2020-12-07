@@ -465,10 +465,11 @@ const getters = {
       element
     ) {
       if (element.name in previous) {
-        previous[element.name] = [previous[element.name]];
+        //previous[element.name] = [previous[element.name]];
         previous[element.name].push(element.value);
       } else {
-        previous[element.name] = [element.value];
+        previous[element.name] = [];
+        previous[element.name].push(element.value);
       }
       return previous;
     },
