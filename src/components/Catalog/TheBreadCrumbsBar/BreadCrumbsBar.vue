@@ -5,7 +5,7 @@
   >
     <span class="font-black mr-2">←</span>
     <span
-      @click="$router.go(-1)"
+      @click="onBack()"
       class="underline cursor-pointer uppercase font-black"
       >Back</span
     >
@@ -32,6 +32,15 @@ export default {
   props: {
     selects: {
       type: Array,
+    },
+  },
+  methods: {
+    setByRoute(arg) {
+      return this.$store.commit("setByRoute", arg);
+    },
+    onBack() {
+      this.$store.commit("setByRoute", true);
+      return this.$router.go(-1);
     },
   },
 };
