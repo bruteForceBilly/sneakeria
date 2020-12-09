@@ -3,7 +3,7 @@
     <TheHeader> </TheHeader>
     <div>
       <transition name="fade" mode="out-in">
-        <router-view> </router-view>
+        <router-view @scroll.native="handleScroll()"> </router-view>
       </transition>
     </div>
   </div>
@@ -11,11 +11,27 @@
 
 <script>
 import TheHeader from "@/components/App/TheHeader/TheHeader";
+import debounce from "lodash/debounce";
 
 export default {
   name: "App",
   components: {
     TheHeader,
+  },
+  methods: {
+    handleScroll(event) {
+      debounce(function (e) {
+        console.log("calling handleScroll");
+      }, 500);
+    },
+  },
+  created() {
+    this.handleDebouncedScroll = debounce(this.handleScroll, 100);
+    window.addEventListener("scroll", this.handleDebouncedScroll);
+  },
+
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.handleDebouncedScroll);
   },
 };
 </script>
