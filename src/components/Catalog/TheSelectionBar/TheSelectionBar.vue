@@ -6,10 +6,14 @@
         settings,
       }"
     >
-      <div v-hang="'hang-active'" class="static">
+      <div
+        v-hang="'hang'"
+        :class="hang ? 'hang-enter fixed top-0 left-0 z-50 w-full' : 'static'"
+      >
         <div class="relative">
           <div
-            class="border-t bg-white border-b py-1 w-full flex justify-start"
+            class="py-1 bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
+            :class="hang ? 'border border-gray-900' : 'border-t border-b'"
           >
             <FilterSelects
               :selected-options-object="settings.selectedOptionsObject"
@@ -52,6 +56,11 @@ export default {
       type: Array,
     },
   },
+  data() {
+    return {
+      hang: false,
+    };
+  },
   directives: {
     hang: hang,
   },
@@ -59,7 +68,25 @@ export default {
 </script>
 
 <style lang="postcss">
-.hang-active {
-  @apply fixed top-0 z-50 !important;
+.hang-enter {
+  animation-name: hang;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes hang {
+  0% {
+    padding: 2rem 2rem;
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  50% {
+    padding: 2rem 2rem;
+    transform: translateY(0);
+  }
+  100% {
+    padding: 2rem 1rem;
+    opacity: 1;
+  }
 }
 </style>

@@ -6,33 +6,43 @@ const offset = function (el) {
   return rect.top + scrollTop;
 };
 
-const scrollHandler = function (el, binding) {
+const scrollHandler = function (el, binding, vnode) {
   let yPostionEl = offset(el);
 
   let yPostionScroll = window.scrollY;
 
-  if (yPostionScroll > yPostionEl) {
-    el.classList.add(binding.value);
+  if (yPostionScroll > yPostionEl && !vnode.context._data[binding.value]) {
+    vnode.context._data[binding.value] = true;
+    console.log(
+      "vnode",
+      vnode.context._data,
+      vnode.context._data[binding.value]
+    );
   }
 
   if (yPostionScroll === 0) {
-    el.classList.remove(binding.value);
+    vnode.context._data[binding.value] = false;
+    console.log(
+      "vnode",
+      vnode.context._data,
+      vnode.context._data[binding.value]
+    );
   }
 };
 
 export default {
-  bind(el, binding) {
+  bind(el, binding, vnode) {
     window.addEventListener(
       "scroll",
-      debounce(() => scrollHandler(el, binding), 200, {
+      debounce(() => scrollHandler(el, binding, vnode), 200, {
         leading: true,
       })
     );
   },
-  unbind(el, binding) {
+  unbind(el, binding, vnode) {
     window.removeEventListener(
       "scroll",
-      debounce(() => scrollHandler(el, binding), 200, {
+      debounce(() => scrollHandler(el, binding, vnode), 200, {
         leading: true,
       })
     );

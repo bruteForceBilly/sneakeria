@@ -27,6 +27,9 @@ module.exports = {
         "vw-6xl": "calc(1vw + 4rem)",
         "vw-7xl": "calc(1vw + 5rem)",
       },
+      transitionDuration: {
+        2000: "2000ms",
+      },
     },
   },
   variants: {
