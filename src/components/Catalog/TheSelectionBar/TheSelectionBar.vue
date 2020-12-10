@@ -6,7 +6,7 @@
         settings,
       }"
     >
-      <div class="static hello">
+      <div v-hang="'hang-active'" class="static">
         <div class="relative">
           <div
             class="border-t bg-white border-b py-1 w-full flex justify-start"
@@ -37,6 +37,7 @@ import FilterSelects from "./FilterSelects/FilterSelects.vue";
 import SortSelects from "./SortSelects/SortSelects.vue";
 import TheSelectedOptions from "./TheSelectedOptions/TheSelectedOptions.vue";
 import Settings from "./TheSelectionBarSettings.vue";
+import hang from "@/directives/hang.js";
 
 export default {
   name: "TheCatalogSelectionBar",
@@ -51,11 +52,14 @@ export default {
       type: Array,
     },
   },
+  directives: {
+    hang: hang,
+  },
 };
 </script>
 
-<style>
-.hello {
-  @apply fixed;
+<style lang="postcss">
+.hang-active {
+  @apply fixed top-0 z-50 !important;
 }
 </style>

@@ -3,6 +3,7 @@ module.exports = {
     host: "localhost",
     public: "http://localhost:8080",
   },
+
   pages: {
     index: {
       // entry for the page
@@ -19,4 +20,9 @@ module.exports = {
       chunks: ["chunk-vendors", "chunk-common", "index"],
     },
   },
+
+  pluginOptions: {
+    lintStyleOnBuild: false,
+    stylelint: {}
+  }
 };

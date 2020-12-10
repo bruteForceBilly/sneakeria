@@ -45,13 +45,10 @@ export default {
   transition: opacity 1s ease, transform 1s ease;
 }
 
-.fade-leave {
-}
-
 .fade-leave-active {
+  opacity: 0;
   transition: opacity 1s ease, transform 1s ease;
   transform: translateX(-30%);
-  opacity: 0;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -65,10 +62,10 @@ export default {
 
 #nav a {
   font-weight: bold;
-  color: SlateBlue;
+  color: slateblue;
 }
 
 #nav a.router-link-exact-active {
-  color: SlateBlue;
+  color: slateblue;
 }
 </style>

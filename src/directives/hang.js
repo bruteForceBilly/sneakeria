@@ -10,14 +10,12 @@ const scrollHandler = function (el, binding) {
   let yPostionEl = offset(el);
 
   let yPostionScroll = window.scrollY;
-  console.log("yPostionScroll", yPostionScroll);
 
   if (yPostionScroll > yPostionEl) {
     el.classList.add(binding.value);
   }
 
   if (yPostionScroll === 0) {
-    console.log("yPostionScroll is zero", yPostionScroll);
     el.classList.remove(binding.value);
   }
 };
