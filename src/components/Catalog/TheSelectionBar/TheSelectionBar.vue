@@ -6,7 +6,7 @@
         settings,
       }"
     >
-      <div class="static">
+      <div class="static hello">
         <div class="relative">
           <div
             class="border-t bg-white border-b py-1 w-full flex justify-start"
@@ -53,3 +53,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.hello {
+  @apply fixed;
+}
+</style>
