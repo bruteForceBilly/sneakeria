@@ -13,20 +13,10 @@ const scrollHandler = function (el, binding, vnode) {
 
   if (yPostionScroll > yPostionEl && !vnode.context._data[binding.value]) {
     vnode.context._data[binding.value] = true;
-    console.log(
-      "vnode",
-      vnode.context._data,
-      vnode.context._data[binding.value]
-    );
   }
 
   if (yPostionScroll === 0) {
     vnode.context._data[binding.value] = false;
-    console.log(
-      "vnode",
-      vnode.context._data,
-      vnode.context._data[binding.value]
-    );
   }
 };
 

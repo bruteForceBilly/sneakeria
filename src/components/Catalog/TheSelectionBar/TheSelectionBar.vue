@@ -23,7 +23,7 @@
             <SortSelects class="ml-auto" :sorts="settings.sorts"></SortSelects>
           </div>
         </div>
-        <div class="mt-4 flex justify-start">
+        <div v-if="!hang" class="mt-4 flex justify-start">
           <TheSelectedOptions
             :toggler="settings.selectOptionsCheckToggle"
             :clicked="settings.clickedOptionObject"
