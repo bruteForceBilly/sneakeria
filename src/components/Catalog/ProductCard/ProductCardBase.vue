@@ -33,7 +33,13 @@
         </template> -->
 
         <template v-slot:flair>
-          {{ productData.campaigns }}
+          <span
+            class="py-1"
+            v-for="(campaign, i) in productData.campaigns"
+            :key="campaign + i"
+          >
+            {{ campaign }}
+          </span>
         </template>
 
         <!--<template v-slot:image>

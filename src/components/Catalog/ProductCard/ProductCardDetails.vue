@@ -8,7 +8,7 @@
         settings.settings.layout === 'card' ? 'text-vw-base' : 'text-vw-4xl',
       ]"
     >
-      {{ settings.settings.product.name }}
+      {{ productTitle }}
     </h3>
     <div class="h-16 flex flex-wrap justify-start items-center">
       <div
@@ -63,6 +63,12 @@ export default {
     price() {
       return this.productVersions[this.sku].price;
     },
+    product() {
+      return this.settings.settings.product;
+    },
+    productTitle() {
+      return `${this.product.brand} ${this.product.productType}`;
+    },
     discount() {
       let percent =
         100 -
@@ -80,6 +86,9 @@ export default {
         return "$" + amount; // + parseFloat(price_amount).toFixed(2)
       }
     },
+  },
+  created() {
+    console.log("product", this.settings.settings.product);
   },
 };
 </script>
