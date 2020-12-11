@@ -49,12 +49,10 @@
         </div>
       </section>
     </div>
-    <div class="flex-grow max-w-half">
-      <section class="mx-4 px-2 h-full flex items-center">
+    <div class="flex-grow w-full h-32">
+      <section class="px-2 h-full">
         <slot name="details">
-          <section class="mx-4 px-2">
-            Product Details Component Goes here
-          </section>
+          <section class="px-2">Product Details Component Goes here</section>
         </slot>
       </section>
     </div>

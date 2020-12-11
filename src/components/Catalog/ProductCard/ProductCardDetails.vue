@@ -1,36 +1,61 @@
 <template>
-  <div class="w-full">
-    <h6 class="text-gray-600 text-vw-xs mt-4 capitalize whitespace-no-wrap">
-      {{ settings.settings.product.productTitle }}
-    </h6>
-    <h3
-      :class="[
-        settings.settings.layout === 'card' ? 'text-vw-base' : 'text-vw-4xl',
-      ]"
-    >
-      {{ productTitle }}
-    </h3>
-    <div class="h-16 flex flex-wrap justify-start items-center">
-      <div
-        :class="[price.discount ? 'text-red-600' : 'text-black']"
-        class="mr-2 text-vw-base"
+  <div class="h-full">
+    <div class="w-full h-full flex flex-row flex-wrap items-start">
+      <!-- TITLE -->
+
+      <!-- <h6 class="text-gray-600 mt-4 text-vw-xss capitalize whitespace-no-wrap">
+        {{ settings.settings.product.productTitle }}
+      </h6> -->
+
+      <h3
+        class="mt-4 w-full capitalize"
+        :class="[
+          settings.settings.layout === 'card'
+            ? 'text-vw-xs whitespace-no-wrap'
+            : 'text-vw-xl',
+        ]"
       >
-        <h5>{{ price.offeredAmount | formatCurrency(this.price.currency) }}</h5>
+        {{ productTitle }}
+      </h3>
+
+      <!-- PRICE -->
+      <div
+        :class="[
+          selectedVersionPrice.discount
+            ? 'text-red-600 font-bold'
+            : 'text-gray-800',
+        ]"
+        class="mr-2 flex text-vh-xs"
+      >
+        <span>
+          {{ selectedVersionPrice.amountOffered | formatCurrency("eur") }}
+        </span>
+
+        <span
+          v-if="selectedVersionPrice.discount"
+          class="text-gray-500 font-normal line-through mx-3"
+        >
+          {{ selectedVersionPrice.amountOriginal | formatCurrency("eur") }}
+        </span>
       </div>
-      <div v-if="price.discount" class="text-gray-600">
-        <div class="line-through mx-3 text-lg">
-          <h5>
-            {{ price.originalAmount | formatCurrency(this.price.currency) }}
-          </h5>
-        </div>
+      <!-- DISCOUNT -->
+      <div v-if="discount">
+        <h6
+          class="inline rounded-full py-1 px-3 bg-gray-100 text-gray-500 font-medium text-vh-xxs whitespace-no-wrap"
+        >
+          SAVE {{ discount }}
+        </h6>
       </div>
 
-      <div
-        class="rounded-full text-xs py-2 px-3 bg-gray-100 text-gray-500 font-black whitespace-no-wrap"
-      >
-        <h6 class="">SAVE {{ discount }}</h6>
-      </div>
-
+      <!-- COLORS -->
+      <h6 class="text-gray-600 self-end text-vw-xxs w-full">
+        {{
+          productVersionsColors.length > 1
+            ? productVersionsColors.length + " Colors"
+            : productVersionsColors.length + " Color"
+        }}
+      </h6>
+      <!--
       <h6 class="text-gray-600 mt-1 text-vw-xxs w-full">
         Serial: {{ settings.settings.selectedVersion.id }} |
         {{ settings.settings.product.versions.length }} Colors
@@ -38,6 +63,7 @@
       <div class="mt-6 w-full">
         <slot name="buy">... buy button</slot>
       </div>
+      -->
     </div>
 
     <!--<p class="text-gray-500">
@@ -57,14 +83,20 @@ export default {
     sku() {
       return this.settings.settings.selectedVersion.id;
     },
-    productVersions() {
-      return this.settings.settings.product.versions;
-    },
-    price() {
-      return this.productVersions[this.sku].price;
-    },
     product() {
       return this.settings.settings.product;
+    },
+    productVersions() {
+      return this.product.versions;
+    },
+    productVersionsColors() {
+      return this.productVersions.map((version) => version.color);
+    },
+    selectedVersion() {
+      return this.productVersions[this.sku];
+    },
+    selectedVersionPrice() {
+      return this.selectedVersion.price;
     },
     productTitle() {
       return `${this.product.brand} ${this.product.productType}`;
@@ -73,9 +105,11 @@ export default {
       let percent =
         100 -
         Math.floor(
-          (this.price.offeredAmount / this.price.originalAmount) * 100
+          (this.selectedVersionPrice.amountOffered /
+            this.selectedVersionPrice.amountOriginal) *
+            100
         );
-      return percent < 100 ? `${percent}%` : false;
+      return percent > 0 ? `${percent}%` : false;
     },
   },
   filters: {
@@ -86,9 +120,6 @@ export default {
         return "$" + amount; // + parseFloat(price_amount).toFixed(2)
       }
     },
-  },
-  created() {
-    console.log("product", this.settings.settings.product);
   },
 };
 </script>
