@@ -61,6 +61,17 @@ const mutations = {
 };
 
 const getters = {
+  dateMax: (state, getters, rootState, rootGetter) => {
+    let copyProducts = [...rootGetters["load/products"]];
+    copyProducts.forEach((product) => {
+      let maxDateObj = product.versions.reduce(
+        (max, version) => (max > version.dateRelease ? max : version),
+        null
+      );
+      product.maxDate = maxDateObj;
+      return;
+    });
+  },
   priceMax: (state, getters, rootSate, rootGetters) => {
     let copyProducts = [...rootGetters["load/products"]];
     copyProducts.forEach((product) => {
