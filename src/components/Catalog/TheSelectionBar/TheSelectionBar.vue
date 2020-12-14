@@ -20,7 +20,7 @@
               :selects="settings.selects"
             ></FilterSelects>
 
-            <SortSelects class="ml-auto" :sorts="settings.sorts"></SortSelects>
+            <SortSelects class="ml-auto" :sorts="settings.sorts"> </SortSelects>
           </div>
         </div>
         <div v-if="!hang" class="mt-4 flex justify-start">

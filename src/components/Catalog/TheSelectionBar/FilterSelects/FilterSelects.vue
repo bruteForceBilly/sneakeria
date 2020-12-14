@@ -41,6 +41,7 @@ import Menu from "../DropDownMenu/Menu.vue";
 import MenuOption from "../DropDownMenu/MenuOption.vue";
 import MenuOptionCheckbox from "../DropDownMenu/MenuOptionCheckbox.vue";
 import MenuOptionColor from "../DropDownMenu/MenuOptionColor.vue";
+import MenuOptionHidden from "../DropDownMenu/MenuOptionHidden.vue";
 
 export default {
   components: {
@@ -48,12 +49,14 @@ export default {
     MenuOption,
     MenuOptionCheckbox,
     MenuOptionColor,
+    MenuOptionHidden,
   },
   methods: {
     currentComponent(inputType) {
       const optionInputComponents = {
         checkbox: "MenuOptionCheckbox",
         color: "MenuOptionColor",
+        hidden: "MenuOptionHidden",
       };
 
       return optionInputComponents[inputType];

@@ -22,7 +22,7 @@ module.exports = {
       },
     ],
     "block-no-empty": null,
-    "unit-whitelist": ["em", "rem", "s", "%", "deg"],
+    "unit-whitelist": ["em", "rem", "s", "%", "deg", "px"],
     "declaration-block-trailing-semicolon": null,
     "no-descending-specificity": null,
     "no-empty-source": null,

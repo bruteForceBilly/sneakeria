@@ -1,5 +1,9 @@
 <template>
   <div>
+    <!-- Menu Button to trigger opening of Menu Container 
+    Menu label slot is set by Menu
+    -->
+
     <button
       class="outline-none uppercase relative z-10 border bg-white border-transparent px-3 py-1 rounded-none flex items-center min-w-32"
       :class="hover ? 'border-hover z-30' : ''"
@@ -36,7 +40,7 @@ export default {
 <style scoped>
 .border-hover {
   border: 1px solid black;
-  border-bottom: 0px solid transparent;
+  border-bottom: 0 solid transparent;
   box-shadow: 0 1px 0 0 transparent;
 }
 </style>

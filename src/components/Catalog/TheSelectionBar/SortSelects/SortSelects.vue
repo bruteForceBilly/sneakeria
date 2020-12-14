@@ -3,7 +3,18 @@
     <div>
       <Menu v-for="item in sorts" :key="item.name" :item="item">
         <template v-slot:menu-items>
-          <MenuOption v-for="option in item.options" :key="option.id">
+          <MenuOption
+            :item="item"
+            v-for="option in item.options"
+            :key="option.id"
+          >
+            <!-- 
+            option-input
+              input
+            option-label
+          -->
+            <template v-slot:option-input> </template>
+
             <template v-slot:option-label>
               <div @click="sortSettingsHandler(option.value)">
                 {{ option.label }}
@@ -15,6 +26,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Menu from "../DropDownMenu/Menu.vue";
 import MenuOption from "../DropDownMenu/MenuOption.vue";
