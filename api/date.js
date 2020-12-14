@@ -3,7 +3,8 @@ const { randomNumberBetween } = require("./helpers.js");
 const generateRandomParameters = function () {
   let dd = randomNumberBetween(1, 31);
   let mm = randomNumberBetween(0, 12);
-  let yyyy = randomNumberBetween(2021, 2019);
+  let yyyy = "2021";
+
   return {
     dd: dd,
     mm: mm,
