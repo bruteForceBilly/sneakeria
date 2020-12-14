@@ -41,8 +41,8 @@ const actions = {
 };
 
 const mutations = {
-  settingMutation(state, arg) {
-    state.setting = arg;
+  settingMutation(state, formattedSettingParameters) {
+    state.setting = formattedSettingParameters;
   },
 };
 
@@ -51,19 +51,19 @@ const getters = {
     let copyProducts = [...rootGetters["load/products"]];
     copyProducts.forEach((product) => {
       let maxPriceObj = product.versions.reduce(
-        (max, version) => (max > version.price.offeredAmount ? max : version),
+        (max, version) => (max > version.price.amountOffered ? max : version),
         null
       );
-      product.maxPrice = maxPriceObj.price.offeredAmount;
+      product.maxPrice = maxPriceObj.price.amountOffered;
       return;
     });
     return copyProducts;
   },
   priceMaxAscending: (state, getters) => {
-    return [...getters.priceMax].sort((a, b) => a.maxPrice - b.maxPrice);
+    return [...getters.priceMax].sort((b, a) => a.maxPrice - b.maxPrice);
   },
   priceMaxDescending: (state, getters) => {
-    return [...getters.priceMax].sort((b, a) => a.maxPrice - b.maxPrice);
+    return [...getters.priceMax].sort((a, b) => a.maxPrice - b.maxPrice);
   },
 };
 
