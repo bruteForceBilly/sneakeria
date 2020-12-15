@@ -49,11 +49,13 @@
 
       <!-- COLORS -->
       <h6 class="text-gray-600 self-end text-vw-xxs w-full">
-        {{
+        <!-- {{
           productVersionsColors.length > 1
             ? productVersionsColors.length + " Colors"
             : productVersionsColors.length + " Color"
-        }}
+        }} -->
+        dateRelease:
+        {{ selectedVersion.dateRelease }}
       </h6>
       <!--
       <h6 class="text-gray-600 mt-1 text-vw-xxs w-full">

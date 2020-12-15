@@ -63,14 +63,26 @@ const getters = {
         )
       );
       const d = new Date(maxDateObj);
-      const yy = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
-      const mm = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
-      const dd = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
+      // const yy = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
+      // const mm = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
+      // const dd = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
 
-      product.maxDate = `${yy}-${mm}-${dd}`;
-      return;
+      //product.maxDate = `${yy}-${mm}-${dd}`;
+      product.maxDate = d;
     });
+
+    return copyProducts;
   },
+  dateMaxAscending: (state, getters) => {
+    let sorted = [...getters.dateMax].sort((a, b) => a.maxDate - b.maxDate);
+    return sorted;
+  },
+
+  dateMaxDescending: (state, getters) => {
+    let sorted = [...getters.dateMax].sort((b, a) => a.maxDate - b.maxDate);
+    return sorted;
+  },
+
   priceMax: (state, getters, rootSate, rootGetters) => {
     let copyProducts = [...rootGetters["load/products"]];
     copyProducts.forEach((product) => {

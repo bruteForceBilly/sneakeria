@@ -49,7 +49,12 @@ export default {
     ...mapState("sort", {
       sortSetting: (state) => state.setting,
     }),
-    ...mapGetters("sort", ["priceMaxAscending", "priceMaxDescending"]),
+    ...mapGetters("sort", [
+      "priceMaxAscending",
+      "priceMaxDescending",
+      "dateMaxAscending",
+      "dateMaxDescending",
+    ]),
     ...mapActions("sort", {
       settingAction: (state) =>
         state.dispatch("settingAction", { sort: "default", order: "default" }),
@@ -60,6 +65,8 @@ export default {
   },
   methods: {
     sortSelect({ sort, order } = { sort: "default", order: "default" }) {
+      //let test = this[sort + (order[0].toUpperCase() + order.slice(1))];
+      console.log("sortSelect", sort + order[0].toUpperCase() + order.slice(1));
       return sort == "default"
         ? this.loadedProducts
         : this[sort + (order[0].toUpperCase() + order.slice(1))]; // Handle camelCase in getter
