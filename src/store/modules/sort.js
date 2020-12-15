@@ -26,14 +26,7 @@ const state = () => ({
         {
           id: 3,
           name: "sortBy",
-          label: "Date (low - high)",
-          value: { sort: "DateMax", order: "Ascending" },
-          checked: false,
-        },
-        {
-          id: 4,
-          name: "sortBy",
-          label: "Date (high - low)",
+          label: "Newest",
           value: { sort: "DateMax", order: "Descending" },
           checked: false,
         },
@@ -61,14 +54,20 @@ const mutations = {
 };
 
 const getters = {
-  dateMax: (state, getters, rootState, rootGetter) => {
+  dateMax: (state, getters, rootState, rootGetters) => {
     let copyProducts = [...rootGetters["load/products"]];
     copyProducts.forEach((product) => {
-      let maxDateObj = product.versions.reduce(
-        (max, version) => (max > version.dateRelease ? max : version),
-        null
+      const maxDateObj = new Date(
+        Math.max(
+          ...product.versions.map((version) => new Date(version.dateRelease))
+        )
       );
-      product.maxDate = maxDateObj;
+      const d = new Date(maxDateObj);
+      const yy = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
+      const mm = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
+      const dd = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
+
+      product.maxDate = `${yy}-${mm}-${dd}`;
       return;
     });
   },
@@ -85,10 +84,10 @@ const getters = {
     return copyProducts;
   },
   priceMaxAscending: (state, getters) => {
-    return [...getters.priceMax].sort((b, a) => a.maxPrice - b.maxPrice);
+    return [...getters.priceMax].sort((a, b) => a.maxPrice - b.maxPrice);
   },
   priceMaxDescending: (state, getters) => {
-    return [...getters.priceMax].sort((a, b) => a.maxPrice - b.maxPrice);
+    return [...getters.priceMax].sort((b, a) => a.maxPrice - b.maxPrice);
   },
 };
 
