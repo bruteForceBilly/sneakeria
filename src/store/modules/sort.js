@@ -26,6 +26,13 @@ const state = () => ({
         {
           id: 3,
           name: "sortBy",
+          label: "Oldest",
+          value: { sort: "DateMax", order: "Ascending" },
+          checked: false,
+        },
+        {
+          id: 4,
+          name: "sortBy",
           label: "Newest",
           value: { sort: "DateMax", order: "Descending" },
           checked: false,
@@ -63,23 +70,26 @@ const getters = {
         )
       );
       const d = new Date(maxDateObj);
-      // const yy = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
-      // const mm = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
-      // const dd = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
+      const yy = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
+      const mm = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
+      const dd = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
 
-      //product.maxDate = `${yy}-${mm}-${dd}`;
-      product.maxDate = d;
+      product.maxDate = `${yy}-${mm}-${dd}`;
     });
 
     return copyProducts;
   },
   dateMaxAscending: (state, getters) => {
-    let sorted = [...getters.dateMax].sort((a, b) => a.maxDate - b.maxDate);
+    let sorted = [...getters.dateMax].sort(function (a, b) {
+      let dateA = new Date(a.maxDate);
+      let dateB = new Date(b.maxDate);
+      return dateA - dateB;
+    });
     return sorted;
   },
 
   dateMaxDescending: (state, getters) => {
-    let sorted = [...getters.dateMax].sort((b, a) => a.maxDate - b.maxDate);
+    let sorted = [...getters.dateMaxAscending].reverse();
     return sorted;
   },
 
