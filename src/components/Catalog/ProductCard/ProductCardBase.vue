@@ -2,6 +2,7 @@
   <div v-if="productData">
     <ProductCardSettings
       :product-data="productData"
+      :sort-setting="sortSetting"
       :view-context="viewContext"
       v-slot:default="{
         settings,
@@ -84,7 +85,7 @@ import ProductCardButton from "./ProductCardButton";
 
 export default {
   name: "ProductBase",
-  props: ["productData", "viewContext"],
+  props: ["productData", "viewContext", "sortSetting"],
   components: {
     ProductCardSettings,
     ProductCardLayout,

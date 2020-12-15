@@ -20,6 +20,7 @@ export default {
   //     view: this.$mq === "sm" || this.$mq === "md" ? "card" : "jumbo",
   props: {
     productData: Object,
+    sortSetting: Object,
     viewContext: String,
   },
   data() {
@@ -43,6 +44,9 @@ export default {
     },
     product() {
       return this.productData;
+    },
+    versions() {
+      return this.product.versions;
     },
     selectedVersionId() {
       return this.selectedVersion.id;
@@ -69,6 +73,29 @@ export default {
       return this.isSelectedVersionLiked
         ? (this.likedVersions[this.selectedVersion.id] = false)
         : (this.likedVersions[this.selectedVersion.id] = true);
+    },
+  },
+  watch: {
+    sortSetting: function (newVal, oldVal) {
+      //let { sort } = newVal;
+      //let prices = this.versions.map((version) => version.price.amountOffered);
+      //let priceMaxAmountOffered = Math.max.apply(prices, prices);
+      let versionWithMaxPriceIndex = this.versions.reduce(function (
+        acc,
+        cv,
+        i
+      ) {
+        if (
+          !acc?.price?.amountOffered ||
+          acc?.price?.amountOffered < cv.price.amountOffered
+        ) {
+          acc = i;
+        }
+        return acc;
+      },
+      []);
+
+      return this.selectHandler(versionWithMaxPriceIndex);
     },
   },
   created() {

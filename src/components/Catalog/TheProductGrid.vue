@@ -17,7 +17,11 @@
       >
         <div>
           {{ product.sortRank }}
-          <ProductCard :product-data="product" view-context="catalog">
+          <ProductCard
+            :sort-setting="sortSetting"
+            :product-data="product"
+            view-context="catalog"
+          >
           </ProductCard>
         </div>
       </div>

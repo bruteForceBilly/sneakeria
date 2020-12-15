@@ -4,6 +4,7 @@ node_modules
 /constants
 /api/*.json
 notes.txt
+quokka
 
 # local env files
 .env.local
