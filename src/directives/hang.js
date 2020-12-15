@@ -29,6 +29,10 @@ export default {
       })
     );
   },
+  inserted(el, binding, vnode) {
+    vnode.context._data.hangHeight = el.parentNode.clientHeight;
+    console.log(vnode.context._data.hangHeight);
+  },
   unbind(el, binding, vnode) {
     window.removeEventListener(
       "scroll",

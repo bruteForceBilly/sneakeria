@@ -6,30 +6,34 @@
         settings,
       }"
     >
-      <div
-        v-hang="'hang'"
-        :class="hang ? 'hang-enter fixed top-0 left-0 z-50 w-full' : 'static'"
-      >
-        <div class="relative">
-          <div
-            class="py-1 bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
-            :class="hang ? 'border border-gray-900' : 'border-t border-b'"
-          >
-            <FilterSelects
-              :selected-options-object="settings.selectedOptionsObject"
-              :selects="settings.selects"
-            ></FilterSelects>
+      <!-- We need to get the calc height from hang element -->
+      <div :style="{ height: `${hangHeight}px` }" class="mb-3">
+        <div
+          v-hang="'hang'"
+          :class="hang ? 'hang-enter fixed top-0 left-0 z-50 w-full' : 'static'"
+        >
+          <div class="relative">
+            <div
+              class="py-1 bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
+              :class="hang ? 'border border-gray-900' : 'border-t border-b'"
+            >
+              <FilterSelects
+                :selected-options-object="settings.selectedOptionsObject"
+                :selects="settings.selects"
+              ></FilterSelects>
 
-            <SortSelects class="ml-auto" :sorts="settings.sorts"> </SortSelects>
+              <SortSelects class="ml-auto" :sorts="settings.sorts">
+              </SortSelects>
+            </div>
           </div>
-        </div>
-        <div v-if="!hang" class="mt-4 flex justify-start">
-          <TheSelectedOptions
-            :toggler="settings.selectOptionsCheckToggle"
-            :clicked="settings.clickedOptionObject"
-            :selected="settings.selectedOptionsElements"
-            :resetter="settings.clearAll"
-          ></TheSelectedOptions>
+          <div v-if="!hang" class="mt-4 flex justify-start">
+            <TheSelectedOptions
+              :toggler="settings.selectOptionsCheckToggle"
+              :clicked="settings.clickedOptionObject"
+              :selected="settings.selectedOptionsElements"
+              :resetter="settings.clearAll"
+            ></TheSelectedOptions>
+          </div>
         </div>
       </div>
     </Settings>
@@ -59,6 +63,7 @@ export default {
   data() {
     return {
       hang: false,
+      hangHeight: null,
     };
   },
   directives: {

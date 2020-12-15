@@ -65,15 +65,9 @@ export default {
   },
   methods: {
     sortSelect({ sort, order } = { sort: "default", order: "default" }) {
-      //let test = this[sort + (order[0].toUpperCase() + order.slice(1))];
-      console.log("sortSelect", sort + order[0].toUpperCase() + order.slice(1));
-      console.log("sortSelect", this.dateMaxDescending);
-
       if (sort == "default") {
-        console.log("sort is default");
         return this.loadedProducts;
       } else {
-        console.log("sort is...", sort, order);
         return this[sort + (order[0].toUpperCase() + order.slice(1))];
       }
     },
