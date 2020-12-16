@@ -4,7 +4,7 @@
     :class="option.checked ? 'bg-black' : 'bg-white'"
     style="border-width: 1px"
   >
-    <slot name="input"> ... input goes here </slot>
+    <input type="checkbox" class="hidden" v-model="option.checked" />
   </div>
 </template>
 
@@ -13,6 +13,7 @@ export default {
   name: "MenuOptionHidden",
   props: {
     option: Object,
+    item: Object,
   },
 };
 </script>

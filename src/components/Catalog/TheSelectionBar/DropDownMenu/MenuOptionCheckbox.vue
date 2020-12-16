@@ -4,7 +4,7 @@
     :class="option.checked ? 'bg-black' : 'bg-white'"
     style="border-width: 1px"
   >
-    <slot name="input"> ... input goes here </slot>
+    <input type="checkbox" class="hidden" v-model="option.checked" />
     <svg
       class="w-4 h-4 text-black pointer-events-none"
       :class="option.checked ? 'block text-white' : 'hidden'"
@@ -36,6 +36,7 @@ export default {
   name: "MenuOptionCheckbox",
   props: {
     option: Object,
+    item: Object,
   },
 };
 </script>

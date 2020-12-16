@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <slot name="input"> ... input goes here </slot>
-  </div>
+  <div><input type="range" v-model="option.value" /> {{ option.value }}</div>
 </template>
 
 <script>
@@ -17,6 +15,7 @@ export default {
   name: "MenuOptionPriceSlider",
   props: {
     option: Object,
+    item: Object,
   },
 };
 </script>

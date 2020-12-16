@@ -16,22 +16,10 @@
             <template v-slot:option-input>
               <component
                 :is="currentComponent(item.inputType)"
+                :item="item"
+                :option="option"
                 v-bind="{ option }"
               >
-                <template
-                  v-if="hasOptionBindChecked(item.inputType)"
-                  v-slot:input
-                >
-                  <input
-                    v-if="hasOptionBindChecked(item.inputType)"
-                    type="checkbox"
-                    class="hidden"
-                    v-model="option.checked"
-                  />
-                </template>
-                <template v-else v-slot:input>
-                  <input type="range" v-model="option.value" />
-                </template>
               </component>
             </template>
 
