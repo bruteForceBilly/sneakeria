@@ -15,12 +15,7 @@ Menu option layouts Option Label and MenuInputXXXX
     <li class="my-4">
       <label class="custom-label flex">
         <slot name="option-input"></slot>
-        <div
-          v-if="item.inputType !== 'color'"
-          class="font-semibold select-none"
-        >
-          <slot name="option-label"></slot>
-        </div>
+        <slot name="option-label"></slot>
       </label>
     </li>
   </div>

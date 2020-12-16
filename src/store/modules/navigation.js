@@ -347,7 +347,7 @@ const state = () => ({
       name: "color",
       label: "Color",
       multiple: false,
-      inputType: "color",
+      inputType: "checkboxColor",
       options: [
         {
           id: 1,
@@ -428,6 +428,31 @@ const state = () => ({
           name: "color",
           label: "Yellow",
           value: "yellow",
+        },
+      ],
+    },
+    {
+      id: 7,
+      name: "price",
+      label: "Price",
+      multiple: false,
+      inputType: "range",
+      options: [
+        {
+          id: 1,
+          groupId: 7,
+          checked: false,
+          name: "min",
+          label: "Minimum",
+          value: "0",
+        },
+        {
+          id: 2,
+          groupId: 7,
+          checked: false,
+          name: "max",
+          label: "Maximum",
+          value: "100",
         },
       ],
     },

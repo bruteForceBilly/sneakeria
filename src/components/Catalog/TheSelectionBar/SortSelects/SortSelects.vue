@@ -8,11 +8,6 @@
             v-for="option in item.options"
             :key="option.id"
           >
-            <!-- 
-            option-input
-              input
-            option-label
-          -->
             <template v-slot:option-input> </template>
 
             <template v-slot:option-label>
