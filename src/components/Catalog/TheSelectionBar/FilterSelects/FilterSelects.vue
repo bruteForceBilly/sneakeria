@@ -45,8 +45,6 @@ import MenuInputRange from "../DropDownMenu/MenuInputRange.vue";
 
 // customise how v-model so works so its bound to input instead of change? Or use change and trigger change on mouse leave?
 
-// checkbox, checkboxColor, checkboxHidden, range
-
 export default {
   components: {
     Menu,

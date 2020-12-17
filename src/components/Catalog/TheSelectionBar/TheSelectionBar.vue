@@ -22,7 +22,7 @@
                 :selects="settings.selects"
               ></FilterSelects>
 
-              <!-- Multi Range Sliders -->
+              <RangeSelects :selects="settings.rangeSliders"></RangeSelects>
 
               <SortSelects class="ml-auto" :sorts="settings.sorts">
               </SortSelects>
@@ -44,6 +44,7 @@
 
 <script>
 import FilterSelects from "./FilterSelects/FilterSelects.vue";
+import RangeSelects from "./RangeSelects/RangeSelects.vue";
 import SortSelects from "./SortSelects/SortSelects.vue";
 import TheSelectedOptions from "./TheSelectedOptions/TheSelectedOptions.vue";
 import Settings from "./TheSelectionBarSettings.vue";
@@ -53,6 +54,7 @@ export default {
   name: "TheCatalogSelectionBar",
   components: {
     FilterSelects,
+    RangeSelects,
     SortSelects,
     TheSelectedOptions,
     Settings,

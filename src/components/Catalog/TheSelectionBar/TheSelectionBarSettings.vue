@@ -4,6 +4,7 @@
       :settings="{
         sorts,
         selects,
+        rangeSliders,
         selectedOptionsElements,
         selectedOptionsObject,
         searchQueryParamsObject,
@@ -37,6 +38,9 @@ export default {
     ]),
     sorts() {
       return this.$store.state.sort.sorts;
+    },
+    rangeSliders() {
+      return this.$store.state.range.ranges;
     },
     searchQueryParamsObject() {
       return this.$store.state.search.queryParamsObject;

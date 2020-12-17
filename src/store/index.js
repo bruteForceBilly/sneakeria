@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import search from "./modules/search.js";
+import range from "./modules/range.js";
 import load from "./modules/load.js";
 import sort from "./modules/sort.js";
 import navigation from "./modules/navigation.js";
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     search,
     load,
     sort,
+    range,
     navigation,
     schemas,
   },

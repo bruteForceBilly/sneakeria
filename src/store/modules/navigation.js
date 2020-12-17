@@ -437,36 +437,6 @@ const state = () => ({
         },
       ],
     },
-    {
-      id: 7,
-      name: "price",
-      label: "Price",
-      multiple: false,
-      inputType: "range",
-      containerSize: "wide",
-      options: [
-        {
-          id: 1,
-          groupId: 7,
-          checked: false,
-          name: "price",
-          label: "Price Min",
-          min: 0,
-          max: 100,
-          value: "0",
-        },
-        {
-          id: 2,
-          groupId: 7,
-          checked: false,
-          name: "price",
-          label: "Price Max",
-          min: 0,
-          max: 100,
-          value: "100",
-        },
-      ],
-    },
   ],
 });
 
