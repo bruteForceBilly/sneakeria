@@ -7,6 +7,7 @@ const state = () => ({
       label: "Sort By",
       value: null,
       inputType: "hidden",
+      containerSize: "base",
       multiple: false,
       options: [
         {

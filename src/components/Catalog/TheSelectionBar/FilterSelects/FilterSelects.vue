@@ -24,9 +24,7 @@
             </template>
 
             <template v-slot:option-label>
-              <span v-if="hasDisplayedLabel(item.inputType)">{{
-                option.label
-              }}</span>
+              <span v-if="hasDisplayedLabel(item)">{{ option.label }}</span>
             </template>
           </MenuOption>
         </template>
@@ -59,11 +57,9 @@ export default {
   },
   data() {
     return {
-      displayLabel: ["checkbox", "hidden"],
       optionBindChecked: ["checkbox", "checkboxHidden"],
     };
   },
-
   methods: {
     currentComponent(inputType) {
       const optionInputComponents = {
@@ -81,11 +77,8 @@ export default {
       };
       return optionInputComponents[inputType];
     },
-    hasDisplayedLabel(inputType) {
-      return this.displayLabel.includes(inputType) ? true : false;
-    },
-    hasOptionBindChecked(inputType) {
-      return this.optionBindChecked.includes(inputType) ? true : false;
+    hasDisplayedLabel(item) {
+      return item.name === "color" ? false : true;
     },
   },
   props: {

@@ -1,5 +1,5 @@
 <template>
-  <!-- Menu Base to be imported in other components -->
+  <!-- Menu Base to be imported in -->
   <div
     class="relative inline-block mx-2"
     @mouseover="hover = true"

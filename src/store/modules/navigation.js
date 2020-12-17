@@ -7,6 +7,7 @@ const state = () => ({
       value: null,
       multiple: false,
       inputType: "checkbox",
+      containerSize: "base",
       options: [
         {
           id: 1,
@@ -33,6 +34,7 @@ const state = () => ({
       value: null,
       multiple: false,
       inputType: "checkbox",
+      containerSize: "base",
       options: [
         {
           id: 1,
@@ -240,6 +242,7 @@ const state = () => ({
       value: null,
       multiple: true,
       inputType: "checkbox",
+      containerSize: "base",
       options: [
         {
           id: 1,
@@ -274,6 +277,7 @@ const state = () => ({
       value: null,
       multiple: false,
       inputType: "checkbox",
+      containerSize: "base",
       options: [
         {
           id: 1,
@@ -307,6 +311,7 @@ const state = () => ({
       label: "Brand",
       multiple: false,
       inputType: "checkbox",
+      containerSize: "base",
       options: [
         {
           id: 1,
@@ -347,6 +352,7 @@ const state = () => ({
       name: "color",
       label: "Color",
       multiple: false,
+      containerSize: "wide",
       inputType: "checkbox",
       options: [
         {
@@ -437,6 +443,7 @@ const state = () => ({
       label: "Price",
       multiple: false,
       inputType: "range",
+      containerSize: "wide",
       options: [
         {
           id: 1,
