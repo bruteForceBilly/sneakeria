@@ -37,9 +37,10 @@
 <script>
 import Menu from "../DropDownMenu/Menu.vue";
 import MenuOption from "../DropDownMenu/MenuOption.vue";
-import MenuInputCheckbox from "../DropDownMenu/MenuInputCheckbox.vue";
-import MenuInputHidden from "../DropDownMenu/MenuInputHidden.vue";
-import MenuInputRange from "../DropDownMenu/MenuInputRange.vue";
+import MenuOptionCheckbox from "../DropDownMenu/MenuOptionCheckbox.vue";
+import MenuOptionColor from "../DropDownMenu/MenuOptionColor.vue";
+import MenuOptionHidden from "../DropDownMenu/MenuOptionHidden.vue";
+import MenuOptionPriceSlider from "../DropDownMenu/MenuOptionPriceSlider.vue";
 
 // make computed prop that takes inputType and maps it to input type attr
 
@@ -53,29 +54,32 @@ export default {
   components: {
     Menu,
     MenuOption,
-    MenuInputCheckbox,
-    MenuInputHidden,
-    MenuInputRange,
+    MenuOptionCheckbox,
+    MenuOptionColor,
+    MenuOptionHidden,
+    MenuOptionPriceSlider,
   },
   data() {
     return {
       displayLabel: ["checkbox", "hidden"],
-      optionBindChecked: ["checkbox", "checkboxHidden"],
+      optionBindChecked: ["checkbox", "checkboxColor", "checkboxHidden"],
     };
   },
 
   methods: {
     currentComponent(inputType) {
       const optionInputComponents = {
-        checkbox: "MenuInputCheckbox",
-        checkboxHidden: "MenuInputHidden",
-        range: "MenuInputRange",
+        checkbox: "MenuOptionCheckbox",
+        checkboxColor: "MenuOptionColor",
+        checkboxHidden: "MenuOptionHidden",
+        range: "MenuOptionPriceSlider",
       };
       return optionInputComponents[inputType];
     },
     currentComponentInputType(inputType) {
       const optionInputComponents = {
         checkbox: "checkbox",
+        checkboxColor: "checkbox",
         checkboxHidden: "hidden",
         range: "range",
       };

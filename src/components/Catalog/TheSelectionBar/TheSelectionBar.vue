@@ -22,6 +22,8 @@
                 :selects="settings.selects"
               ></FilterSelects>
 
+              <!-- Multi Range Sliders -->
+
               <SortSelects class="ml-auto" :sorts="settings.sorts">
               </SortSelects>
             </div>

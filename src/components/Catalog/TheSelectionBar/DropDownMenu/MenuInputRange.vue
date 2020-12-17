@@ -12,7 +12,7 @@
 */
 
 export default {
-  name: "MenuOptionPriceSlider",
+  name: "MenuInputRange",
   props: {
     option: Object,
     item: Object,

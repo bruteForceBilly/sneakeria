@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "MenuOptionHidden",
+  name: "MenuInputHidden.vue",
   props: {
     option: Object,
     item: Object,

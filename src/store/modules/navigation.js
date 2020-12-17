@@ -347,7 +347,7 @@ const state = () => ({
       name: "color",
       label: "Color",
       multiple: false,
-      inputType: "checkboxColor",
+      inputType: "checkbox",
       options: [
         {
           id: 1,
