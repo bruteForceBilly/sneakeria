@@ -101,6 +101,7 @@ export default {
       deep: true,
       handler: function (newValue, oldValue) {
         //console.log("watch newvalue", newValue);
+
         if (this.getSetByRoute === false) {
           // console.log(
           //   "watch selects - selectedOptionsObject",
@@ -118,6 +119,7 @@ export default {
     },
   },
   created() {
+    console.log(this.rangeSliders);
     if (this.$store.state.route.name === "searchResultRoute") {
       //console.log("created IF", this.searchQueryParamsObject);
       this.selectOptionsCheckToggle(this.searchQueryParamsObject);

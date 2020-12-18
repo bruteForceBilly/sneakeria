@@ -44,8 +44,8 @@
 
 <script>
 import FilterSelects from "./FilterSelects/FilterSelects.vue";
-import RangeSelects from "./RangeSelects/RangeSelects.vue";
 import SortSelects from "./SortSelects/SortSelects.vue";
+import RangeSelects from "./RangeSelects/RangeSelects.vue";
 import TheSelectedOptions from "./TheSelectedOptions/TheSelectedOptions.vue";
 import Settings from "./TheSelectionBarSettings.vue";
 import hang from "@/directives/hang.js";
@@ -54,8 +54,8 @@ export default {
   name: "TheCatalogSelectionBar",
   components: {
     FilterSelects,
-    RangeSelects,
     SortSelects,
+    RangeSelects,
     TheSelectedOptions,
     Settings,
   },

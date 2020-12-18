@@ -9,8 +9,7 @@
             :key="option.id"
           >
             <template v-slot:option-input>
-              <MenuInputRange :item="item" :option="option" v-bind="{ option }">
-              </MenuInputRange>
+              <MenuInputRange :item="item" :option="option"> </MenuInputRange>
             </template>
           </MenuOption>
         </template>

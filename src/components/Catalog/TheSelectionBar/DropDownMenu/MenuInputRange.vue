@@ -1,15 +1,75 @@
 <template>
-  <div><input type="range" v-model="option.value" /> {{ option.value }}</div>
+  <div class="flex flex-col items-center w-full">
+    <span class="mb-1 font-normal"> {{ displayValueHeading }} </span>
+    <vue-slider
+      class="ml-2 mt-2"
+      width="208px"
+      height="2px"
+      :min="priceLowest"
+      :max="priceHighest"
+      dot-size="20"
+      v-model="value"
+      tooltip="none"
+      ref="slider"
+      :lazy="true"
+      :enable-cross="true"
+      @dragging="setValue()"
+    >
+    </vue-slider>
+  </div>
 </template>
 
 <script>
-/*
+import VueSlider from "vue-slider-component";
+import "@/assets/css/vue-slider/index.css";
 
-   class="bg-transparent border-solid border-black w-6 h-6 p-1 flex justify-center items-center mr-3"
-    :class="option.checked ? 'bg-black' : 'bg-white'"
-    style="border-width: 1px"
+export default {
+  components: {
+    VueSlider,
+  },
+  props: {
+    option: Object,
+    item: Object,
+  },
+  data() {
+    return {
+      value: [34, 80],
+      displayValue: [34, 80],
+      priceLowest: 34,
+      priceHighest: 80,
+    };
+  },
+  methods: {
+    setValue() {
+      return (this.displayValue = this.$refs.slider.getValue());
+    },
+  },
+  computed: {
+    displayValueHeading() {
+      return `€ ${this.displayValue[0]} - € ${
+        this.displayValue[this.displayValue.length - 1]
+      }`;
+    },
+  },
+  created() {
+    console.log("option", this.option);
+  },
+  mounted() {
+    return (this.displayValue = this.$refs.slider.getValue());
+  },
+};
+</script>
 
-*/
+<style scoped></style>
+
+<!-- <template>
+  <div>
+    <input type="range" min="33" max="80" v-model="option.value" />
+    {{ option.value }}
+  </div>
+</template> 
+
+<script>
 
 export default {
   name: "MenuInputRange",
@@ -19,96 +79,4 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-input[type="range"] {
-  width: 100%;
-  margin: 9px 0;
-  background-color: transparent;
-  -webkit-appearance: none;
-}
-input[type="range"]:focus {
-  outline: none;
-}
-input[type="range"]::-webkit-slider-runnable-track {
-  background: rgba(48, 113, 169, 0);
-  border: 0.5px solid #010101;
-  border-radius: 1.3px;
-  width: 100%;
-  height: 8px;
-  cursor: pointer;
-}
-input[type="range"]::-webkit-slider-thumb {
-  margin-top: -9.5px;
-  width: 26px;
-  height: 26px;
-  background: #ffffff;
-  border: 1.8px solid #000000;
-  border-radius: 39px;
-  cursor: pointer;
-  -webkit-appearance: none;
-}
-input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: #bed7ec;
-}
-input[type="range"]::-moz-range-track {
-  background: rgba(48, 113, 169, 0);
-  border: 0.5px solid #010101;
-  border-radius: 1.3px;
-  width: 100%;
-  height: 8px;
-  cursor: pointer;
-}
-input[type="range"]::-moz-range-thumb {
-  width: 26px;
-  height: 26px;
-  background: #ffffff;
-  border: 1.8px solid #000000;
-  border-radius: 39px;
-  cursor: pointer;
-}
-input[type="range"]::-ms-track {
-  background: transparent;
-  border-color: transparent;
-  border-width: 9px 0;
-  color: transparent;
-  width: 100%;
-  height: 8px;
-  cursor: pointer;
-}
-input[type="range"]::-ms-fill-lower {
-  background: #020406;
-  border: 0.5px solid #010101;
-  border-radius: 2.6px;
-}
-input[type="range"]::-ms-fill-upper {
-  background: rgba(48, 113, 169, 0);
-  border: 0.5px solid #010101;
-  border-radius: 2.6px;
-}
-input[type="range"]::-ms-thumb {
-  width: 26px;
-  height: 26px;
-  background: #ffffff;
-  border: 1.8px solid #000000;
-  border-radius: 39px;
-  cursor: pointer;
-  margin-top: 0px;
-  /*Needed to keep the Edge thumb centred*/
-}
-input[type="range"]:focus::-ms-fill-lower {
-  background: rgba(48, 113, 169, 0);
-}
-input[type="range"]:focus::-ms-fill-upper {
-  background: #bed7ec;
-}
-/*TODO: Use one of the selectors from https://stackoverflow.com/a/20541859/7077589 and figure out
-how to remove the virtical space around the range input in IE*/
-@supports (-ms-ime-align: auto) {
-  /* Pre-Chromium Edge only styles, selector taken from hhttps://stackoverflow.com/a/32202953/7077589 */
-  input[type="range"] {
-    margin: 0;
-    /*Edge starts the margin from the thumb, not the track as other browsers do*/
-  }
-}
-</style>
+-->
