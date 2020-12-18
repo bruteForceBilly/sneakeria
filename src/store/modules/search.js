@@ -28,6 +28,12 @@ const getters = {
       return state.foundProducts.length;
     }
   },
+  foundProductsPricesOffered: (state, getters) => {
+    return getters.foundProducts
+      .map((product) => product.versions)
+      .flat()
+      .map((version) => version.price.amountOffered);
+  },
 };
 
 const actions = {

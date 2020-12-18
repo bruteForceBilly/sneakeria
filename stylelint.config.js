@@ -28,6 +28,6 @@ module.exports = {
     "no-empty-source": null,
     "no-extra-semicolons": null,
   },
-  ignoreFiles: ["**/*.js"],
+  ignoreFiles: ["**/*.js", "*.js"],
   root: true,
 };

@@ -5,15 +5,15 @@
       class="ml-2 mt-2"
       width="208px"
       height="2px"
-      :min="priceLowest"
-      :max="priceHighest"
+      :min="priceMinInit"
+      :max="priceMaxInit"
       dot-size="20"
-      v-model="value"
+      :value="value"
       tooltip="none"
       ref="slider"
       :lazy="true"
       :enable-cross="true"
-      @dragging="setValue()"
+      @dragging="updateValue()"
     >
     </vue-slider>
   </div>
@@ -22,6 +22,7 @@
 <script>
 import VueSlider from "vue-slider-component";
 import "@/assets/css/vue-slider/index.css";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -33,29 +34,47 @@ export default {
   },
   data() {
     return {
-      value: [34, 80],
-      displayValue: [34, 80],
-      priceLowest: 34,
-      priceHighest: 80,
+      value: [0, 100],
+      displayValue: [0, 100],
     };
   },
   methods: {
-    setValue() {
+    updateValue() {
       return (this.displayValue = this.$refs.slider.getValue());
     },
   },
   computed: {
+    ...mapGetters("search", ["foundProductsPricesOffered"]),
+
+    priceMaxInit() {
+      return Math.max(...this.foundProductsPricesOffered);
+    },
+    priceMinInit() {
+      return Math.min(...this.foundProductsPricesOffered);
+    },
+    priceMinMax() {
+      let res = [];
+      res.push(this.priceMinInit, this.priceMaxInit);
+      return res;
+    },
     displayValueHeading() {
       return `€ ${this.displayValue[0]} - € ${
         this.displayValue[this.displayValue.length - 1]
       }`;
     },
   },
+  watch: {
+    priceMinMax(newVal, oldVal) {
+      console.log("priceMinMax", newVal);
+    },
+  },
   created() {
-    console.log("option", this.option);
+    this.value = [...this.priceMinMax];
+    this.displayValue = [...this.value];
   },
   mounted() {
-    return (this.displayValue = this.$refs.slider.getValue());
+    this.$refs.slider.setValue(this.value);
+    return this.updateValue();
   },
 };
 </script>
