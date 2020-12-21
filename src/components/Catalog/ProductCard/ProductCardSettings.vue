@@ -51,8 +51,36 @@ export default {
     selectedVersionId() {
       return this.selectedVersion.id;
     },
+
+    versionPriceMap() {
+      let map = [];
+      let obj = {};
+
+      this.versions.forEach((ver, i) =>
+        map.push((obj[i] = ver.price.amountOffered))
+      );
+
+      return map;
+    },
+
+    versionWithMaxPriceIndex() {
+      return this.getKeyByValue(
+        this.versionPriceMap,
+        Math.max(...Object.values(this.versionPriceMap))
+      );
+    },
+    versionWithMinPriceIndex() {
+      return this.getKeyByValue(
+        this.versionPriceMap,
+        Math.min(...Object.values(this.versionPriceMap))
+      );
+    },
   },
   methods: {
+    getKeyByValue(object, value) {
+      return Object.keys(object).find((key) => object[key] === value);
+    },
+
     selectHandler(version) {
       return (this.selectedVersion.id = version);
     },
@@ -77,29 +105,14 @@ export default {
   },
   watch: {
     sortSetting: function (newVal, oldVal) {
-      //let { sort } = newVal;
-      //let prices = this.versions.map((version) => version.price.amountOffered);
-      //let priceMaxAmountOffered = Math.max.apply(prices, prices);
+      let { sort } = newVal;
 
-      // Rename funciton to Select and Show version after sort_setting
-      // this funciton selects the highest or lowest priced version to be shown in the product card
+      const getVersionIndex = {
+        priceMin: this.versionWithMinPriceIndex,
+        priceMax: this.versionWithMaxPriceIndex,
+      };
 
-      let versionWithMaxPriceIndex = this.versions.reduce(function (
-        acc,
-        cv,
-        i
-      ) {
-        if (
-          !acc?.price?.amountOffered ||
-          acc?.price?.amountOffered < cv.price.amountOffered
-        ) {
-          acc = i;
-        }
-        return acc;
-      },
-      []);
-
-      return this.selectHandler(versionWithMaxPriceIndex);
+      return this.selectHandler(getVersionIndex[sort]);
     },
   },
   created() {
