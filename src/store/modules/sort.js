@@ -13,14 +13,14 @@ const state = () => ({
         {
           id: 1,
           name: "sortBy",
-          label: "Price (low - high)",
-          value: { sort: "PriceMax", order: "Ascending" },
+          label: "Price Min Asc (Low - High)",
+          value: { sort: "PriceMin", order: "Ascending" },
           checked: false,
         },
         {
           id: 2,
           name: "sortBy",
-          label: "Price (high - low)",
+          label: "Price Max Des (High - Low)",
           value: { sort: "PriceMax", order: "Descending" },
           checked: false,
         },
@@ -93,24 +93,43 @@ const getters = {
     let sorted = [...getters.dateMaxAscending].reverse();
     return sorted;
   },
+  priceMin: (state, getters, rootSate, rootGetters) => {
+    let copyProducts = [...rootGetters["load/products"]];
+
+    copyProducts.forEach((product) => {
+      let prices = [];
+      product.versions.forEach((ver) => prices.push(ver.price.amountOffered));
+      let minPrice = Math.min(...prices);
+      product.minPrice = minPrice;
+    });
+
+    return copyProducts;
+  },
+  priceMinAscending: (state, getters) => {
+    return [...getters.priceMin].sort((a, b) => a.minPrice - b.minPrice);
+  },
+
+  priceMinDescending: (state, getters) => {
+    return [...getters.priceMinAscending].reverse();
+  },
 
   priceMax: (state, getters, rootSate, rootGetters) => {
     let copyProducts = [...rootGetters["load/products"]];
+
     copyProducts.forEach((product) => {
-      let maxPriceObj = product.versions.reduce(
-        (max, version) => (max > version.price.amountOffered ? max : version),
-        null
-      );
-      product.maxPrice = maxPriceObj.price.amountOffered;
-      return;
+      let prices = [];
+      product.versions.forEach((ver) => prices.push(ver.price.amountOffered));
+      let maxPrice = Math.max(...prices);
+      product.maxPrice = maxPrice;
     });
+
     return copyProducts;
   },
   priceMaxAscending: (state, getters) => {
     return [...getters.priceMax].sort((a, b) => a.maxPrice - b.maxPrice);
   },
   priceMaxDescending: (state, getters) => {
-    return [...getters.priceMax].sort((b, a) => a.maxPrice - b.maxPrice);
+    return [...getters.priceMaxAscending].reverse();
   },
 };
 

@@ -80,6 +80,10 @@ export default {
       //let { sort } = newVal;
       //let prices = this.versions.map((version) => version.price.amountOffered);
       //let priceMaxAmountOffered = Math.max.apply(prices, prices);
+
+      // Rename funciton to Select and Show version after sort_setting
+      // this funciton selects the highest or lowest priced version to be shown in the product card
+
       let versionWithMaxPriceIndex = this.versions.reduce(function (
         acc,
         cv,

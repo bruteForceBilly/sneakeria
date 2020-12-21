@@ -63,11 +63,17 @@ export default {
       }`;
     },
   },
-  watch: {
-    priceMinMax(newVal, oldVal) {
-      console.log("priceMinMax", newVal);
-    },
-  },
+  // watch: {
+  //   priceMinMax(newVal, oldVal) {
+  //     console.log("priceMinMax", newVal);
+  //   },
+  // },
+  // beforeUpdate() {
+  //   console.log("foundProductsPricesOffered", this.foundProductsPricesOffered);
+  //   console.log("priceMin", this.priceMinInit);
+  //   console.log("priceMax", this.priceMaxInit);
+  //   console.log("priceMinMax", this.priceMinMax);
+  // },
   created() {
     this.value = [...this.priceMinMax];
     this.displayValue = [...this.value];

@@ -54,8 +54,8 @@
             ? productVersionsColors.length + " Colors"
             : productVersionsColors.length + " Color"
         }} -->
-
-        max price : {{ product.maxPrice }}
+        versions: {{ productVersions.length }} | min price :
+        {{ product.minPrice }} | max price : {{ product.maxPrice }}
       </h6>
       <!--
       <h6 class="text-gray-600 mt-1 text-vw-xxs w-full">

@@ -54,6 +54,8 @@ export default {
       sortSetting: (state) => state.setting,
     }),
     ...mapGetters("sort", [
+      "priceMinAscending",
+      "priceMinDescending",
       "priceMaxAscending",
       "priceMaxDescending",
       "dateMaxAscending",
