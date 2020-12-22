@@ -1,4 +1,3 @@
-import Vue from "vue";
 import getSelects from "@/services/selects.js";
 
 const state = () => ({
@@ -136,10 +135,9 @@ const mutations = {
       : (foundElement.checked = false);
   },
   selectsSetMutation(state, selects) {
-    return Vue.set(state, "selects", selects);
+    return (state.selects = selects);
   },
   selectsLoadingMutation(state, selectsIsLoading) {
-    console.log("selectsLoadingMutation", selectsIsLoading);
     return (state.selectsIsLoading = selectsIsLoading);
   },
 };

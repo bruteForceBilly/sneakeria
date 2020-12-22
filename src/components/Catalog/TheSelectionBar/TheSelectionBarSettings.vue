@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {
   name: "TheCatalogSelectionBarSettings",
@@ -32,6 +32,7 @@ export default {
     },
   },
   computed: {
+    ...mapState("navigation", ["selectsIsLoading"]),
     ...mapGetters("navigation", [
       "selectedOptionsElements",
       "selectedOptionsObject",
@@ -97,21 +98,6 @@ export default {
     },
   },
   watch: {
-    selects: {
-      deep: true,
-      handler: function (newValue, oldValue) {
-        //console.log("watch newvalue", newValue);
-
-        if (this.getSetByRoute === false) {
-          // and init is over
-          // console.log(
-          //   "watch selects - selectedOptionsObject",
-          //   this.selectedOptionsObject
-          // );
-          return this.updateRouteQueryParams(this.selectedOptionsObject);
-        }
-      },
-    },
     route: {
       deep: true,
       handler: function (newValue, oldValue) {
@@ -128,8 +114,20 @@ export default {
       //console.log("created ELSE");
       this.selectOptionsCheckToggle({});
     }
-
     return this.$store.commit("setByRoute", false);
+  },
+  mounted() {
+    this.$watch(
+      "selects",
+      () => {
+        if (!this.getSetByRoute) {
+          this.updateRouteQueryParams(this.selectedOptionsObject);
+        }
+      },
+      {
+        deep: true,
+      }
+    );
   },
 };
 </script>

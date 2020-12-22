@@ -131,7 +131,6 @@ const routes = [
       // BY FINDING KEYS IN LOOCK UP IN STORE
 
       queryRequest = to.path.substr(1).split("-");
-      //debugger;
 
       store
         .dispatch("search/serviceRequestAction", queryRequest)
@@ -139,7 +138,6 @@ const routes = [
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
         .then((q) => {
           console.log("searchRequestRoute then q", q);
-          //debugger;
           next({
             name: "searchQueryRoute",
             query: q,
