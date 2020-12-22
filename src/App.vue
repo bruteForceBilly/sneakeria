@@ -11,18 +11,11 @@
 
 <script>
 import TheHeader from "@/components/App/TheHeader/TheHeader";
-import { mapActions } from "vuex";
 
 export default {
   name: "App",
   components: {
     TheHeader,
-  },
-  methods: {
-    ...mapActions(["navigation/selectsInit"]),
-  },
-  created() {
-    return this.selectsInit;
   },
 };
 </script>

@@ -91,7 +91,7 @@ export default {
         } else {
           this.selectOptionsCheckToggle(this.searchQueryParamsObject);
         }
-        // reset set by route
+        // reset setByRoute
         this.$store.commit("setByRoute", false);
       }
     },
@@ -99,8 +99,6 @@ export default {
   watch: {
     selects: {
       deep: true,
-      immediate: false,
-
       handler: function (newValue, oldValue) {
         //console.log("watch newvalue", newValue);
 
@@ -116,7 +114,6 @@ export default {
     },
     route: {
       deep: true,
-      immediate: false,
       handler: function (newValue, oldValue) {
         return this.updateElements();
       },
@@ -126,10 +123,10 @@ export default {
     //console.log(this.rangeSliders);
     if (this.$store.state.route.name === "searchResultRoute") {
       //console.log("created IF", this.searchQueryParamsObject);
-      //this.selectOptionsCheckToggle(this.searchQueryParamsObject);
+      this.selectOptionsCheckToggle(this.searchQueryParamsObject);
     } else {
       //console.log("created ELSE");
-      //this.selectOptionsCheckToggle({});
+      this.selectOptionsCheckToggle({});
     }
 
     return this.$store.commit("setByRoute", false);

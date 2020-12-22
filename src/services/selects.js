@@ -442,7 +442,7 @@ function timeout(ms) {
 }
 
 async function getSelects(args) {
-  await timeout(500);
+  await timeout(1000);
   return args;
 }
 

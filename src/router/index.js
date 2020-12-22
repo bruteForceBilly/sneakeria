@@ -110,7 +110,6 @@ const routes = [
     beforeEnter: (to, from, next) => {
       store.commit("load/countReset");
       let queryRequest;
-      store.commit("navigation/selectsLoadingMutation", true);
       /*
       
       if (

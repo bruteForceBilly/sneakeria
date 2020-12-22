@@ -1,30 +1,39 @@
+import Vue from "vue";
 import getSelects from "@/services/selects.js";
 
 const state = () => ({
-  selectsIsLoading: true,
+  selectsIsLoading: null,
   selects: null,
 });
 
 const getters = {
+  selectsGetter: (state) => {
+    return state.selects;
+  },
   allOptions: (state) => {
     let res;
-    res = state.selects.reduce(function (acc, cv) {
-      const recur = (n, q) => {
-        if (Object.keys(n).includes(q)) {
-          acc.push(n);
-        }
+    // if selects are not there return empty array
+    if (state.selectsIsLoading || !state.selects) {
+      res = [];
+    } else {
+      res = state.selects.reduce(function (acc, cv) {
+        const recur = (n, q) => {
+          if (Object.keys(n).includes(q)) {
+            acc.push(n);
+          }
 
-        if (Object.values(n).some((val) => Array.isArray(val))) {
-          Object.values(n)
-            .filter((val) => Array.isArray(val))
-            .flat()
-            .forEach((el) => recur(el, q));
-        }
-      };
+          if (Object.values(n).some((val) => Array.isArray(val))) {
+            Object.values(n)
+              .filter((val) => Array.isArray(val))
+              .flat()
+              .forEach((el) => recur(el, q));
+          }
+        };
 
-      recur(cv, "checked");
-      return acc;
-    }, []);
+        recur(cv, "checked");
+        return acc;
+      }, []);
+    }
 
     return res;
   },
@@ -52,22 +61,20 @@ const getters = {
 };
 
 const actions = {
-  selectsInit({ commit, dispatch }) {
-    console.log("selectsInit Action");
+  async selectsGetAction({ commit, state }) {
     commit("selectsLoadingMutation", true);
-    return new Promise((resolve) => {
-      getSelects((data) => {
-        commit("selectsInitMutation", data);
-      })
-        .then((data) => {
-          commit("selectsLoadingMutation", false);
-          resolve(data);
-        })
-        .catch((err) => {
-          console.log("selects init error");
-        });
+    return await getSelects();
+  },
+  async selectsSetAction({ commit, state }, selects) {
+    commit("selectsSetMutation", selects);
+  },
+  async selectsInitAction({ dispatch, commit, state }) {
+    await dispatch("selectsGetAction").then(async function (selects) {
+      await dispatch("selectsSetAction", selects);
+      commit("selectsLoadingMutation", false);
     });
   },
+
   toggleIndex({ dispatch }, { name, value }) {
     let options = {};
     options[name] = value;
@@ -128,10 +135,11 @@ const mutations = {
       ? (foundElement.checked = true)
       : (foundElement.checked = false);
   },
-  selectsInitMutation(state, selects) {
-    return (state.select = selects);
+  selectsSetMutation(state, selects) {
+    return Vue.set(state, "selects", selects);
   },
   selectsLoadingMutation(state, selectsIsLoading) {
+    console.log("selectsLoadingMutation", selectsIsLoading);
     return (state.selectsIsLoading = selectsIsLoading);
   },
 };
