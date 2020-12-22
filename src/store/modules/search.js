@@ -8,6 +8,7 @@ const state = () => ({
   queryParamsKebab: null,
   foundProducts: null,
   routeLastBeforeEnter: null,
+  init: null,
 });
 
 const getters = {
@@ -107,7 +108,7 @@ const actions = {
     // versions?color=red
 
     // queryParamsString :{ products: products?section=men&category=shoes, versions: versions?color=red}
-
+    // console.log("queryParamsStringAction", queryParamsObject);
     dispatch("queryParamsKebabAction", queryParamsObject);
 
     const makeString = function (arg) {

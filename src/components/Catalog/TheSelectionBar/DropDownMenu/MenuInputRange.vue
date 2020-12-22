@@ -8,12 +8,13 @@
       :min="priceMinInit"
       :max="priceMaxInit"
       dot-size="20"
-      :value="value"
+      v-model.lazy="value"
       tooltip="none"
       ref="slider"
       :lazy="true"
       :enable-cross="true"
-      @dragging="updateValue()"
+      @dragging="updateDisplayValue()"
+      @drag-end="updateRouter()"
     >
     </vue-slider>
   </div>
@@ -21,8 +22,9 @@
 
 <script>
 import VueSlider from "vue-slider-component";
+
 import "@/assets/css/vue-slider/index.css";
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   components: {
@@ -39,13 +41,29 @@ export default {
     };
   },
   methods: {
-    updateValue() {
+    updateDisplayValue() {
       return (this.displayValue = this.$refs.slider.getValue());
+    },
+    updateRouter() {
+      console.log("updateRouter");
+      this.$router.push({
+        name: "searchRequestRoute",
+        params: this.params,
+        query: { price_max: this.priceMax, price_min: this.priceMin },
+      });
     },
   },
   computed: {
+    ...mapState("search", ["queryParamsString"]),
     ...mapGetters("search", ["foundProductsPricesOffered"]),
+    ...mapState("route", ["path", "params", "query"]),
 
+    priceMin() {
+      return [...this.value].shift();
+    },
+    priceMax() {
+      return [...this.value].pop();
+    },
     priceMaxInit() {
       return Math.max(...this.foundProductsPricesOffered);
     },
@@ -63,24 +81,13 @@ export default {
       }`;
     },
   },
-  // watch: {
-  //   priceMinMax(newVal, oldVal) {
-  //     console.log("priceMinMax", newVal);
-  //   },
-  // },
-  // beforeUpdate() {
-  //   console.log("foundProductsPricesOffered", this.foundProductsPricesOffered);
-  //   console.log("priceMin", this.priceMinInit);
-  //   console.log("priceMax", this.priceMaxInit);
-  //   console.log("priceMinMax", this.priceMinMax);
-  // },
   created() {
     this.value = [...this.priceMinMax];
     this.displayValue = [...this.value];
   },
   mounted() {
     this.$refs.slider.setValue(this.value);
-    return this.updateValue();
+    return this.updateDisplayValue();
   },
 };
 </script>

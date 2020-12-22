@@ -35,12 +35,12 @@ const routes = [
     component: Catalog,
     beforeEnter: (to, from, next) => {
       // console.log(
-      // "ROUTER >>>> searchQueryRoute beforeEnter",
-      // "to query >>",
-      // to.query
-      // "from >>>",
-      // from
-      //);
+      //   "ROUTER >>>> searchQueryRoute beforeEnter",
+      //   "to query >>",
+      //   to.query,
+      //   "from >>>",
+      //   from
+      // );
 
       return new Promise((resolve, reject) => {
         if (
@@ -52,7 +52,7 @@ const routes = [
             store.state.search.queryParamsObject
           );
         } else if (to.name === "searchQueryRoute") {
-          //console.log("ROUTER ELSE IF searchQueryRoute", to, from); // try searchQueryParamsObjectMutation
+          //console.log("ROUTER ELSE IF searchQueryRoute", to.query); // try searchQueryParamsObjectMutation
           //store.dispatch("search/queryParamsStringAction", to.query);
           //store.commit("search/queryParamsObjectMutation", to.query);
           store.dispatch("search/queryParamsStringAction", to.query);
@@ -82,10 +82,10 @@ const routes = [
 
           //     // filter and get sets of product id spans to use for versions? or do in router maybe?
 
-          //     // console.log(
-          //     //   "ROUTER searchQueryParamsString",
-          //     //   searchQueryParamsString
-          //     // );
+          // console.log(
+          //   "ROUTER searchQueryParamsString",
+          //   searchQueryParamsString
+          // );
 
           products("filter", searchQueryParamsString, (data) => {
             //console.log("ROUTER products", data);
@@ -110,23 +110,37 @@ const routes = [
     beforeEnter: (to, from, next) => {
       store.commit("load/countReset");
       let queryRequest;
-
+      store.commit("navigation/selectsLoadingMutation", true);
+      /*
+      
       if (
         Object.keys(to.query).length === 0 &&
-        to.query.constructor === Object
+        to.query.constructor === Object // check if query is empty
       ) {
         queryRequest = to.path.substr(1).split("-");
-        //console.log("searchRequestRoute IF queryRequest", queryRequest);
-      } else {
+        console.log("searchRequestRoute IF queryRequest", queryRequest);
+      } 
+      
+      else {
         queryRequest = Object.values(to.query).flat();
-        //console.log("searchRequestRoute ELSE queryRequest", queryRequest);
-      }
+        //console.log("else", to.query, queryRequest);
+        //queryRequest = to.query;
+        console.log("searchRequestRoute ELSE queryRequest", queryRequest);
+      } */
+
+      // TO PARSE KEBAB PATH STRING INTO SEARCH QUERY OBJECT
+      // BY FINDING KEYS IN LOOCK UP IN STORE
+
+      queryRequest = to.path.substr(1).split("-");
+      //debugger;
 
       store
         .dispatch("search/serviceRequestAction", queryRequest)
+
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
         .then((q) => {
-          //console.log("searchRequestRoute then q", q);
+          console.log("searchRequestRoute then q", q);
+          //debugger;
           next({
             name: "searchQueryRoute",
             query: q,
@@ -135,11 +149,17 @@ const routes = [
     },
   },
   {
-    path: "/:slug",
+    path: "/:slug?",
     name: "searchResultRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      //console.log("LOOOK searchResultRoute", "to >>>", to, "from >>>>", from);
+      // console.log(
+      //   "LOOOK searchResultRoute",
+      //   "to >>>",
+      //   to,
+      //   "from >>>>",
+      //   from.query
+      // );
       store.commit("search/routeLastBeforeEnterMutation", to.name);
       next();
     },

@@ -99,10 +99,13 @@ export default {
   watch: {
     selects: {
       deep: true,
+      immediate: false,
+
       handler: function (newValue, oldValue) {
         //console.log("watch newvalue", newValue);
 
         if (this.getSetByRoute === false) {
+          // and init is over
           // console.log(
           //   "watch selects - selectedOptionsObject",
           //   this.selectedOptionsObject
@@ -113,20 +116,22 @@ export default {
     },
     route: {
       deep: true,
+      immediate: false,
       handler: function (newValue, oldValue) {
         return this.updateElements();
       },
     },
   },
   created() {
-    console.log(this.rangeSliders);
+    //console.log(this.rangeSliders);
     if (this.$store.state.route.name === "searchResultRoute") {
       //console.log("created IF", this.searchQueryParamsObject);
-      this.selectOptionsCheckToggle(this.searchQueryParamsObject);
+      //this.selectOptionsCheckToggle(this.searchQueryParamsObject);
     } else {
       //console.log("created ELSE");
-      this.selectOptionsCheckToggle({});
+      //this.selectOptionsCheckToggle({});
     }
+
     return this.$store.commit("setByRoute", false);
   },
 };

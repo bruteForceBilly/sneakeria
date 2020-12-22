@@ -3,7 +3,7 @@
     <TheHeader> </TheHeader>
     <div>
       <transition name="fade" mode="out-in">
-        <router-view @scroll.native="handleScroll()"> </router-view>
+        <router-view> </router-view>
       </transition>
     </div>
   </div>
@@ -11,7 +11,7 @@
 
 <script>
 import TheHeader from "@/components/App/TheHeader/TheHeader";
-import debounce from "lodash/debounce";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -19,19 +19,10 @@ export default {
     TheHeader,
   },
   methods: {
-    handleScroll(event) {
-      debounce(function (e) {
-        console.log("calling handleScroll");
-      }, 500);
-    },
+    ...mapActions(["navigation/selectsInit"]),
   },
   created() {
-    this.handleDebouncedScroll = debounce(this.handleScroll, 100);
-    window.addEventListener("scroll", this.handleDebouncedScroll);
-  },
-
-  beforeDestroy() {
-    window.removeEventListener("scroll", this.handleDebouncedScroll);
+    return this.selectsInit;
   },
 };
 </script>

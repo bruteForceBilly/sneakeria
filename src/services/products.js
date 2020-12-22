@@ -23,9 +23,10 @@ export default function (o, q, cb) {
       .catch((err) => err.toString());
   } else if (o === "filter") {
     //console.log("product service Q PRODUCTS", q);
+    let { product, version } = q;
     let prodResp;
     return axios
-      .get(API_PRODUCTS + "?" + q["product"])
+      .get(API_PRODUCTS + "?" + product)
       .then((response) => {
         prodResp = response.data;
         //console.log("prodResp", prodResp);
@@ -37,7 +38,8 @@ export default function (o, q, cb) {
           }, "");
       })
       .then((response) => {
-        let ver = q["version"] != undefined ? q["version"] : "";
+        let ver = version != undefined ? version : "";
+        //console.log("services", ver, q);
         return axios
           .get(API_VERSIONS + "?" + response + ver)
           .then((response) => {
