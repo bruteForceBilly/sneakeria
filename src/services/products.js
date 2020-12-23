@@ -41,7 +41,7 @@ export default function (o, q, cb) {
       acc[arr[0]] = arr[1];
       return acc;
     }, {});
-    console.log("product service Q PRODUCTS", qObjectified);
+    //console.log("product service Q PRODUCTS", qObjectified);
     //let { product, version, operator } = q;
 
     let qStrings = Object.entries(qObjectified).reduce(

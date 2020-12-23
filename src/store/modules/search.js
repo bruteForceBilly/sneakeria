@@ -39,6 +39,7 @@ const getters = {
     return queryParamsObjectFlat;
   },
   queryParamsStringKebab: (state, getters) => {
+    // CHECK IF THIS WORKS FOR VERSION AND OPERATORS
     let copy = { ...getters.queryParamsObjectFlat };
     let res = "";
     Object.values(copy).forEach((word) => (res += `${word}-`));
@@ -68,7 +69,7 @@ const actions = {
     return new Promise((resolve) => {
       getCatalog((resBody) => {
         let { id } = to.params;
-        console.log("to & id", to, id);
+        //console.log("to & id", to, id);
         //debugger;
         dispatch({
           type: "queryParamsObjectAction",
@@ -138,8 +139,8 @@ const actions = {
         return prev;
       }, {});
 
-    console.log("queryParamsObject queryAction", queryAction);
-    console.log("queryParamsObject return", queryParamsObject);
+    // console.log("queryParamsObject queryAction", queryAction);
+    // console.log("queryParamsObject return", queryParamsObject);
 
     return commit("queryParamsObjectMutation", queryParamsObject);
   },

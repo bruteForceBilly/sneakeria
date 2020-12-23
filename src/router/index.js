@@ -47,19 +47,31 @@ const routes = [
 
       let searchQueryParamsString = to.fullPath.split("?").pop();
 
-      console.log("searchQueryParamsString", searchQueryParamsString);
+      //console.log("searchQueryParamsString", searchQueryParamsString);
 
       return new Promise((resolve, reject) => {
         products("filter", searchQueryParamsString, (data) => {
           //console.log("ROUTER products", data);
+          // navigation action selectOptionsCheckToggle
+          // search getter searchQueryParamsObject
           store.commit("search/foundProductsMutation", data);
+
+          store.dispatch(
+            "navigation/selectOptionsCheckToggle",
+            store.getters["search/queryParamsObject"]
+          );
+
+          // store.commit("setByRoute", false),
+          //   store.commit("search/routeLastBeforeEnterMutation", to.name);
         }).then(() => {
           return next({
             name: "searchResultRoute",
-            params: { slug: store.state.search.queryParamsKebab },
+            params: { slug: store.getters["search/queryParamsStringKebab"] },
           });
         });
       }).then(
+        // update selects in store so that the componenet dosent have to
+        //store.commit("setByRoute", false),
         store.commit("search/routeLastBeforeEnterMutation", to.name)
         //console.log("ROUTER searchRouteLastBeforeEnterMutation", to.name)
       );
@@ -72,8 +84,10 @@ const routes = [
     beforeEnter: (to, from, next) => {
       store.commit("load/countReset");
       let queryRequest;
+      //console.log(to.params);
+
       /*
-      
+
       if (
         Object.keys(to.query).length === 0 &&
         to.query.constructor === Object // check if query is empty
@@ -116,6 +130,11 @@ const routes = [
       //   "from >>>>",
       //   from.query
       // );
+
+      store.commit("setByRoute", true);
+
+      console.log(store.state.setByRoute);
+
       store.commit("search/routeLastBeforeEnterMutation", to.name);
       next();
     },

@@ -69,31 +69,39 @@ export default {
       return !el.checked ? (el.checked = true) : (el.checked = false);
     },
     updateRouteQueryParams(argObj) {
-      //console.log("updateRouteQueryParams", argObj);
+      console.log("updateRouteQueryParams", argObj);
+
+      //debugger;
+
       if (Object.keys(argObj).length > 0) {
         // this.$router
         //   .push({ name: "searchRequestRoute", query: argObj })
         //   .catch((failure) => {});
-        console.log("argObj", argObj);
-
+        // eslint-disable-next-line no-unused-vars
+        // let res = "";
+        // for (const [key, values] of Object.entries(argObj)) {
+        //   console.log(`${key}: ${values}`);
+        //   values.forEach((value) => {
+        //     res += `${key}=${value}&`;
+        //   });
+        // }
         // build Param String from argObj
 
-        this.$router
-          .push({
-            name: "searchRequestRoute",
-            params: { id: argObj },
-          })
-          .catch((failure) => {});
+        // set get by route to true
+        this.$router.push({
+          name: "searchQueryRoute",
+          query: argObj,
+        });
       } else {
         this.$router.push({ name: "all" }).catch((err) => {});
       }
     },
-    selectsWatchHandler() {
-      console.log("selectsWatchHandler");
-      if (!this.getSetByRoute) {
-        this.updateRouteQueryParams(this.selectedOptionsObject);
-      }
-    },
+    // selectsWatchHandler() {
+    //   console.log("selectsWatchHandler");
+    //   if (!this.getSetByRoute) {
+    //     this.updateRouteQueryParams(this.selectedOptionsObject);
+    //   }
+    // },
     updateElements() {
       //console.log("update elements", this.selectedOptionsElements)
       // check if data are set by route
@@ -114,28 +122,47 @@ export default {
     },
   },
   watch: {
+    selects: {
+      deep: true,
+      immediate: false,
+      handler: function (newValue, oldValue) {
+        // if (this.getSetByRoute === false) {
+        //   this.updateRouteQueryParams(this.selectedOptionsObject);
+        // }
+        this.updateRouteQueryParams(this.selectedOptionsObject);
+      },
+    },
     route: {
       deep: true,
       handler: function (newValue, oldValue) {
-        return this.updateElements();
+        return; //this.updateElements();
       },
     },
   },
+  beforeCreate() {
+    //console.log("beforeCreate", this.getSetByRoute);
+    //console.log("router", this.store.state.route);
+    // console.log("beforeCreate options", this.$options);
+    // console.log("beforeCreate selects", this.$options.propsData.selects);
+  },
   created() {
-    //console.log(this.rangeSliders);
-    if (this.$store.state.route.name === "searchResultRoute") {
-      //console.log("created IF", this.searchQueryParamsObject);
-      this.selectOptionsCheckToggle(this.searchQueryParamsObject);
-    } else {
-      //console.log("created ELSE");
-      this.selectOptionsCheckToggle({});
-    }
-    return this.$store.commit("setByRoute", false);
+    // if (this.$store.state.route.name === "searchResultRoute") {
+    //   console.log("created IF", this.searchQueryParamsObject);
+    //   //this.selectOptionsCheckToggle(this.searchQueryParamsObject);
+    //   this.selectOptionsCheckToggle({});
+    // } else {
+    //   console.log("created ELSE");
+    //   this.selectOptionsCheckToggle({});
+    // }
+    // this.$store.commit("setByRoute", false);
+    // console.log("created", this.getSetByRoute);
+    return;
   },
-  mounted() {
-    this.$watch("selects", this.selectsWatchHandler(), {
-      deep: true,
-    });
-  },
+
+  // mounted() {
+  //   this.$watch("selects", this.selectsWatchHandler(), {
+  //     deep: true,
+  //   });
+  // },
 };
 </script>

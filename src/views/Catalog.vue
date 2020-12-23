@@ -11,10 +11,11 @@
       :search-found-products-length="foundProductsLength"
     ></DisplayTitle>
 
-    <div v-if="selectsIsLoading">...selection bar loading</div>
+    <!-- <div v-if="selectsIsLoading">...selection bar loading</div>
     <div v-else>
-      <SelectionBar :selects="selectsGetter"></SelectionBar>
-    </div>
+    </div> -->
+
+    <SelectionBar :selects="selects"></SelectionBar>
 
     <ProductGrid
       :loaded-products="products"
@@ -51,14 +52,14 @@ export default {
     ...mapGetters("search", ["foundProductsLength"]),
     ...mapGetters("navigation", ["selectsGetter"]),
     ...mapState(["route"]),
-    ...mapState("navigation", ["selectsIsLoading"]),
+    ...mapState("navigation", ["selects"]),
   },
   methods: {
     ...mapActions("navigation", ["selectsInit"]),
   },
 
   beforeCreate() {
-    this.$store.dispatch("navigation/selectsInitAction");
+    //this.$store.dispatch("navigation/selectsInitAction");
   },
 };
 </script>
