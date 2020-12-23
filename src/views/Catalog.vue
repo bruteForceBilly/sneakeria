@@ -13,7 +13,6 @@
 
     <div v-if="selectsIsLoading">...selection bar loading</div>
     <div v-else>
-      .. not loading!
       <SelectionBar :selects="selectsGetter"></SelectionBar>
     </div>
 

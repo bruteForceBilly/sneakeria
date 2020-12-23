@@ -71,11 +71,27 @@ export default {
     updateRouteQueryParams(argObj) {
       //console.log("updateRouteQueryParams", argObj);
       if (Object.keys(argObj).length > 0) {
+        // this.$router
+        //   .push({ name: "searchRequestRoute", query: argObj })
+        //   .catch((failure) => {});
+        console.log("argObj", argObj);
+
+        // build Param String from argObj
+
         this.$router
-          .push({ name: "searchRequestRoute", query: argObj })
+          .push({
+            name: "searchRequestRoute",
+            params: { id: argObj },
+          })
           .catch((failure) => {});
       } else {
         this.$router.push({ name: "all" }).catch((err) => {});
+      }
+    },
+    selectsWatchHandler() {
+      console.log("selectsWatchHandler");
+      if (!this.getSetByRoute) {
+        this.updateRouteQueryParams(this.selectedOptionsObject);
       }
     },
     updateElements() {
@@ -117,17 +133,9 @@ export default {
     return this.$store.commit("setByRoute", false);
   },
   mounted() {
-    this.$watch(
-      "selects",
-      () => {
-        if (!this.getSetByRoute) {
-          this.updateRouteQueryParams(this.selectedOptionsObject);
-        }
-      },
-      {
-        deep: true,
-      }
-    );
+    this.$watch("selects", this.selectsWatchHandler(), {
+      deep: true,
+    });
   },
 };
 </script>

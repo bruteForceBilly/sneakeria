@@ -45,10 +45,10 @@ export default {
       return (this.displayValue = this.$refs.slider.getValue());
     },
     updateRouter() {
-      console.log("updateRouter");
+      let { slug } = this.params;
       this.$router.push({
         name: "searchRequestRoute",
-        params: this.params,
+        params: { id: slug },
         query: { price_max: this.priceMax, price_min: this.priceMin },
       });
     },

@@ -15,9 +15,34 @@ const getters = {
   queryParamsObject: (state) => {
     return state.queryParamsObject;
   },
-  queryParamsStringKebab: (state) => {
-    // BUG leaves a , anyway sometimes!
-    return Object.values(state.queryParamsObject).toString().replace(",", "-");
+  queryParamsObjectFlat: (state, getters) => {
+    let copyQueryParamsObject = { ...getters.queryParamsObject };
+    const recur = function (n) {
+      let acc = {};
+      const run = function (n) {
+        if (Array.isArray(n)) {
+          n.forEach((cv) => {
+            for (const [key, value] of Object.entries(cv)) {
+              acc[key] = value;
+            }
+          });
+        } else {
+          Object.keys(n).forEach((key) => run(n[key]));
+        }
+      };
+      run(n);
+      return acc;
+    };
+
+    let queryParamsObjectFlat = recur(copyQueryParamsObject);
+
+    return queryParamsObjectFlat;
+  },
+  queryParamsStringKebab: (state, getters) => {
+    let copy = { ...getters.queryParamsObjectFlat };
+    let res = "";
+    Object.values(copy).forEach((word) => (res += `${word}-`));
+    return res.slice(0, -1);
   },
   foundProducts: (state) => {
     return state.foundProducts;
@@ -39,26 +64,29 @@ const getters = {
 
 const actions = {
   // searchRequestAction
-  serviceRequestAction({ dispatch, state }, pathArrayOfStrings) {
-    // Keep this action cause you might gonna move the schemas to back end
+  serviceRequestAction({ dispatch, state, getters }, to) {
     return new Promise((resolve) => {
-      getCatalog((data) => {
-        //console.log("STORE serviceRequestAction getCatalog", data, payload);
+      getCatalog((resBody) => {
+        let { id } = to.params;
+        console.log("to & id", to, id);
+        //debugger;
         dispatch({
           type: "queryParamsObjectAction",
           data: {
-            path: pathArrayOfStrings,
-            array: data, // chnage to prop in state that instead should be fetch once on app load
+            params: id.split("-"),
+            query: to.query,
+            body: resBody, // We are using Schemas Instead of this? response?
           },
         });
       }).then(() => {
-        resolve(state.queryParamsObject);
+        resolve(getters.queryParamsObjectFlat);
       });
     });
   },
   queryParamsObjectAction({ commit, rootState }, queryAction) {
+    //console.log("queryAction !!!!", queryAction);
     const queryParamsObjectArray = [];
-    const { path } = queryAction.data;
+    const { params, query, body } = queryAction.data;
 
     const findByPropKey = function (arr, table) {
       return arr.reduce(function (acc, cv) {
@@ -72,12 +100,25 @@ const actions = {
     };
 
     queryParamsObjectArray.push({
-      product: findByPropKey(path, rootState.schemas.product),
+      product: findByPropKey(params, rootState.schemas.product),
+      //product: findByPropKey(params, response),
     });
 
-    if (findByPropKey(path, rootState.schemas.productVersion).length > 0) {
+    if (findByPropKey(params, rootState.schemas.productVersion).length > 0) {
       queryParamsObjectArray.push({
-        version: findByPropKey(path, rootState.schemas.productVersion),
+        version: findByPropKey(params, rootState.schemas.productVersion),
+      });
+    }
+
+    if (Object.keys(query).length > 0) {
+      let res = [];
+      for (const [key, value] of Object.entries(query)) {
+        let lit = {};
+        lit[key] = value;
+        res.push(lit);
+      }
+      queryParamsObjectArray.push({
+        operator: res,
       });
     }
 
@@ -97,6 +138,9 @@ const actions = {
         return prev;
       }, {});
 
+    console.log("queryParamsObject queryAction", queryAction);
+    console.log("queryParamsObject return", queryParamsObject);
+
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
 
@@ -108,7 +152,6 @@ const actions = {
     // versions?color=red
 
     // queryParamsString :{ products: products?section=men&category=shoes, versions: versions?color=red}
-    // console.log("queryParamsStringAction", queryParamsObject);
     dispatch("queryParamsKebabAction", queryParamsObject);
 
     const makeString = function (arg) {
@@ -131,8 +174,8 @@ const actions = {
     },
     {});
 
-    // console.log("queryParamsStringAction queryParamsObject", queryParamsObject);
-    // console.log("queryParamsStringAction queryParamsString", queryParamsString);
+    console.log("queryParamsStringAction queryParamsObject", queryParamsObject);
+    console.log("queryParamsStringAction queryParamsString", queryParamsString);
 
     return commit("queryParamsStringMutation", queryParamsString);
   },
