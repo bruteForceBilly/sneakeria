@@ -88,20 +88,17 @@ export default {
         // build Param String from argObj
 
         // set get by route to true
-        this.$router.push({
-          name: "searchQueryRoute",
-          query: argObj,
-        });
+        this.$router
+          .push({
+            name: "searchQueryRoute",
+            query: argObj,
+          })
+          .catch((err) => {});
       } else {
         this.$router.push({ name: "all" }).catch((err) => {});
       }
     },
-    // selectsWatchHandler() {
-    //   console.log("selectsWatchHandler");
-    //   if (!this.getSetByRoute) {
-    //     this.updateRouteQueryParams(this.selectedOptionsObject);
-    //   }
-    // },
+
     updateElements() {
       //console.log("update elements", this.selectedOptionsElements)
       // check if data are set by route
@@ -126,10 +123,10 @@ export default {
       deep: true,
       immediate: false,
       handler: function (newValue, oldValue) {
-        // if (this.getSetByRoute === false) {
-        //   this.updateRouteQueryParams(this.selectedOptionsObject);
-        // }
-        this.updateRouteQueryParams(this.selectedOptionsObject);
+        console.log("watcher", this.getSetByRoute, newValue, oldValue);
+        if (this.getSetByRoute === false) {
+          this.updateRouteQueryParams(this.selectedOptionsObject);
+        }
       },
     },
     route: {
@@ -139,30 +136,5 @@ export default {
       },
     },
   },
-  beforeCreate() {
-    //console.log("beforeCreate", this.getSetByRoute);
-    //console.log("router", this.store.state.route);
-    // console.log("beforeCreate options", this.$options);
-    // console.log("beforeCreate selects", this.$options.propsData.selects);
-  },
-  created() {
-    // if (this.$store.state.route.name === "searchResultRoute") {
-    //   console.log("created IF", this.searchQueryParamsObject);
-    //   //this.selectOptionsCheckToggle(this.searchQueryParamsObject);
-    //   this.selectOptionsCheckToggle({});
-    // } else {
-    //   console.log("created ELSE");
-    //   this.selectOptionsCheckToggle({});
-    // }
-    // this.$store.commit("setByRoute", false);
-    // console.log("created", this.getSetByRoute);
-    return;
-  },
-
-  // mounted() {
-  //   this.$watch("selects", this.selectsWatchHandler(), {
-  //     deep: true,
-  //   });
-  // },
 };
 </script>

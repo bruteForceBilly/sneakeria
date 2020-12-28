@@ -43,38 +43,54 @@ const routes = [
         from
       );
 
+      store.commit("setByRoute", true);
+
       // SEARCH QUERY ROUTE DEMANDS QUERY PARAMS OBJECT
 
       let searchQueryParamsString = to.fullPath.split("?").pop();
 
-      //console.log("searchQueryParamsString", searchQueryParamsString);
-
-      return new Promise((resolve, reject) => {
-        products("filter", searchQueryParamsString, (data) => {
-          //console.log("ROUTER products", data);
-          // navigation action selectOptionsCheckToggle
-          // search getter searchQueryParamsObject
-          store.commit("search/foundProductsMutation", data);
-
-          store.dispatch(
-            "navigation/selectOptionsCheckToggle",
-            store.getters["search/queryParamsObject"]
+      products("filter", searchQueryParamsString, (data) => {
+        store.commit("search/foundProductsMutation", data);
+        store.dispatch(
+          "navigation/selectOptionsCheckToggle",
+          store.getters["search/queryParamsObject"]
+        );
+      })
+        .then(() => {
+          store.commit("search/routeLastBeforeEnterMutation", to.name);
+          console.log(
+            "ROUTER THEN queryParamsStringKebab",
+            store.getters["search/queryParamsObject"],
+            store.getters["search/queryParamsStringKebab"]
           );
-
-          // store.commit("setByRoute", false),
-          //   store.commit("search/routeLastBeforeEnterMutation", to.name);
-        }).then(() => {
-          return next({
+          next({
             name: "searchResultRoute",
             params: { slug: store.getters["search/queryParamsStringKebab"] },
           });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      }).then(
-        // update selects in store so that the componenet dosent have to
-        //store.commit("setByRoute", false),
-        store.commit("search/routeLastBeforeEnterMutation", to.name)
-        //console.log("ROUTER searchRouteLastBeforeEnterMutation", to.name)
-      );
+
+      // return new Promise((resolve, reject) => {
+      //   products("filter", searchQueryParamsString, (data) => {
+      //     store.commit("search/foundProductsMutation", data);
+      //     store.dispatch(
+      //       "navigation/selectOptionsCheckToggle",
+      //       store.getters["search/queryParamsObject"]
+      //     );
+      //   }).then((test) => {
+      //     next({
+      //       name: "searchResultRoute",
+      //       params: { slug: store.getters["search/queryParamsStringKebab"] },
+      //     })
+      //   });
+      // }).then(
+      //   // update selects in store so that the componenet dosent have to
+      //   //store.commit("setByRoute", false),
+      //   store.commit("search/routeLastBeforeEnterMutation", to.name)
+      //   //console.log("ROUTER searchRouteLastBeforeEnterMutation", to.name)
+      // );
     },
   },
   {
@@ -83,6 +99,7 @@ const routes = [
     component: Catalog,
     beforeEnter: (to, from, next) => {
       store.commit("load/countReset");
+
       let queryRequest;
       //console.log(to.params);
 
@@ -119,7 +136,7 @@ const routes = [
     },
   },
   {
-    path: "/:slug?",
+    path: "/:slug",
     name: "searchResultRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
@@ -131,11 +148,10 @@ const routes = [
       //   from.query
       // );
 
-      store.commit("setByRoute", true);
-
-      console.log(store.state.setByRoute);
+      store.commit("setByRoute", false);
 
       store.commit("search/routeLastBeforeEnterMutation", to.name);
+
       next();
     },
   },

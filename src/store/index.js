@@ -20,7 +20,7 @@ export default new Vuex.Store({
   },
   state: {
     rootData: null,
-    setByRoute: true,
+    setByRoute: null,
     selectedVersion: null,
   },
   mutations: {

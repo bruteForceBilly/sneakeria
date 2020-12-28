@@ -89,6 +89,13 @@ const actions = {
     const queryParamsObjectArray = [];
     const { params, query, body } = queryAction.data;
 
+    // Look up is handled in product service right now!
+    // We are getting { product: [{},{}]}
+    // BUT!! THIS IS FINE: { section: ["men"], category: ["shoes"]}
+
+    // WE NEED TO UNIFY HOW WE PASS INPUT TO THIS FUNCTION SO THAT
+    // WE CAN PASS ARG OBJ FROM SELECTINO BAR SETTINGS TO HERE
+
     const findByPropKey = function (arr, table) {
       return arr.reduce(function (acc, cv) {
         for (const key of Object.keys(table)) {
@@ -139,8 +146,8 @@ const actions = {
         return prev;
       }, {});
 
-    // console.log("queryParamsObject queryAction", queryAction);
-    // console.log("queryParamsObject return", queryParamsObject);
+    console.log("queryParamsObject queryAction INPUT", queryAction);
+    console.log("queryParamsObject OUTPUT", queryParamsObject);
 
     return commit("queryParamsObjectMutation", queryParamsObject);
   },

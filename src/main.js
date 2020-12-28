@@ -10,7 +10,7 @@ Vue.config.productionTip = false;
 
 sync(store, router);
 
-new Vue({
+window.App = new Vue({
   router,
   store,
   media,

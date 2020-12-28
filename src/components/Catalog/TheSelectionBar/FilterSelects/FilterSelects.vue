@@ -19,12 +19,17 @@
                 :item="item"
                 :option="option"
                 v-bind="{ option }"
+                @click.native.self="setByRouteHandler()"
               >
               </component>
             </template>
 
             <template v-slot:option-label>
-              <span v-if="hasDisplayedLabel(item)">{{ option.label }}</span>
+              <span
+                v-if="hasDisplayedLabel(item)"
+                @click.self="setByRouteHandler()"
+                >{{ option.label }}</span
+              >
             </template>
           </MenuOption>
         </template>
@@ -77,6 +82,10 @@ export default {
     },
     hasDisplayedLabel(item) {
       return item.name === "color" ? false : true;
+    },
+    setByRouteHandler() {
+      this.$store.commit("setByRoute", false);
+      console.log("set by route", this.$store.state.setByRoute);
     },
   },
   props: {
