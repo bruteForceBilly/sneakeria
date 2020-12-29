@@ -45,6 +45,20 @@ const routes = [
 
       store.commit("setByRoute", true);
 
+      // console.log(
+      //   "hello routeLastBeforeEnter",
+      //   store.state.search.routeLastBeforeEnter
+      // );
+
+      store.dispatch("search/queryParamsObjectAction", to);
+
+      if (store.state.search.routeLastBeforeEnter !== "searchRequestRoute") {
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!  not searchRequestRoute");
+        store.dispatch("search/queryParamsObjectAction", to);
+      }
+
+      //debugger;
+
       // SEARCH QUERY ROUTE DEMANDS QUERY PARAMS OBJECT
 
       let searchQueryParamsString = to.fullPath.split("?").pop();
@@ -65,6 +79,7 @@ const routes = [
           //   store.getters["search/queryParamsObject"],
           //   store.getters["search/queryParamsStringKebab"]
           // );
+          debugger;
           next({
             name: "searchResultRoute",
             params: { slug: store.getters["search/queryParamsStringKebab"] },
@@ -126,16 +141,15 @@ const routes = [
       // BY FINDING KEYS IN LOOCK UP IN STORE
       // THEN PARSING THIS OBJECT INTO FLATTEN QUERY PARAM STRING
 
+      //      .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
+
       store
         //.dispatch("search/serviceRequestAction", to)
         .dispatch("search/queryParamsObjectAction", to)
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
-        .then((q) => {
-          console.log("getter", store.getters["search/searchQueryStringKebab"]);
-          debugger;
+        .then(() => {
           next({
-            name: "searchQueryRoute",
-            query: q,
+            path: `/search?${store.getters["search/searchQueryString"]}`,
           });
         });
     },

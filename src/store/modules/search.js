@@ -120,7 +120,15 @@ const actions = {
 
     //const params = Object.values(to.params); // ["men", "nike"]
 
-    const params = to.params.id.split("-");
+    let params = [];
+
+    if (to.name === "searchQueryRoute") {
+      params = Object.values(to.query);
+    } else if (to.name === "searchRequestRoute") {
+      params = to.params.id.split("-");
+    }
+
+    //const params = to.params.id.split("-");
 
     const findByPropKey = function (arr, table) {
       let res = arr.reduce(function (acc, cv) {
@@ -150,8 +158,6 @@ const actions = {
         }, "")
         .slice(0, -1);
     };
-
-    //console.log(to, params, queryString(params, rootState.schemas.product));
 
     queryParamsObjectArray.push({
       product: queryString(params, rootState.schemas.product),
@@ -189,8 +195,19 @@ const actions = {
         return prev;
       }, {});
 
-    // console.log("queryParamsObject queryAction INPUT", queryAction);
-    //console.log("queryParamsObject OUTPUT", queryParamsObject);
+    // Operator behave differently when searchQueryRoute
+
+    if (to.name === "searchQueryRoute") {
+      const { product, version, operator } = queryParamsObject;
+
+      let res = operator.replace(product + "&", "").replace(version + "&", "");
+
+      queryParamsObject.operator = res;
+    }
+
+    // console.log("queryParamsObject INPUT", to);
+    // console.log("queryParamsObject OUTPUT", queryParamsObject);
+
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
 
