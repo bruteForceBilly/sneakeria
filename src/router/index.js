@@ -35,19 +35,21 @@ const routes = [
     name: "searchQueryRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      console.log(
-        "ROUTER >>>> searchQueryRoute beforeEnter",
-        "to >>",
-        to,
-        "from >>>",
-        from
-      );
+      // console.log(
+      //   "ROUTER >>>> searchQueryRoute beforeEnter",
+      //   "to >>",
+      //   to,
+      //   "from >>>",
+      //   from
+      // );
 
       store.commit("setByRoute", true);
 
       // SEARCH QUERY ROUTE DEMANDS QUERY PARAMS OBJECT
 
       let searchQueryParamsString = to.fullPath.split("?").pop();
+
+      console.log("searchQueryParamsString", searchQueryParamsString);
 
       products("filter", searchQueryParamsString, (data) => {
         store.commit("search/foundProductsMutation", data);
@@ -58,11 +60,11 @@ const routes = [
       })
         .then(() => {
           store.commit("search/routeLastBeforeEnterMutation", to.name);
-          console.log(
-            "ROUTER THEN queryParamsStringKebab",
-            store.getters["search/queryParamsObject"],
-            store.getters["search/queryParamsStringKebab"]
-          );
+          // console.log(
+          //   "ROUTER THEN queryParamsStringKebab",
+          //   store.getters["search/queryParamsObject"],
+          //   store.getters["search/queryParamsStringKebab"]
+          // );
           next({
             name: "searchResultRoute",
             params: { slug: store.getters["search/queryParamsStringKebab"] },
@@ -125,7 +127,8 @@ const routes = [
       // THEN PARSING THIS OBJECT INTO FLATTEN QUERY PARAM STRING
 
       store
-        .dispatch("search/serviceRequestAction", to)
+        //.dispatch("search/serviceRequestAction", to)
+        .dispatch("search/queryParamsObjectAction", to)
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
         .then((q) => {
           next({

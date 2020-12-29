@@ -67,16 +67,16 @@ const actions = {
   // searchRequestAction
   serviceRequestAction({ dispatch, state, getters }, to) {
     return new Promise((resolve) => {
-      getCatalog((resBody) => {
+      getCatalog((catalog) => {
         let { id } = to.params;
         //console.log("to & id", to, id);
-        //debugger;
+
         dispatch({
           type: "queryParamsObjectAction",
           data: {
             params: id.split("-"),
             query: to.query,
-            body: resBody, // We are using Schemas Instead of this? response?
+            catalog: catalog, // We are using Schemas Instead of this? response?
           },
         });
       }).then(() => {
@@ -84,20 +84,15 @@ const actions = {
       });
     });
   },
-  queryParamsObjectAction({ commit, rootState }, queryAction) {
-    //console.log("queryAction !!!!", queryAction);
+  queryParamsObjectAction({ commit, rootState }, to) {
     const queryParamsObjectArray = [];
-    const { params, query, body } = queryAction.data;
 
-    // Look up is handled in product service right now!
-    // We are getting { product: [{},{}]}
-    // BUT!! THIS IS FINE: { section: ["men"], category: ["shoes"]}
+    //const params = Object.values(to.params); // ["men", "nike"]
 
-    // WE NEED TO UNIFY HOW WE PASS INPUT TO THIS FUNCTION SO THAT
-    // WE CAN PASS ARG OBJ FROM SELECTINO BAR SETTINGS TO HERE
+    const params = to.params.id.split("-");
 
     const findByPropKey = function (arr, table) {
-      return arr.reduce(function (acc, cv) {
+      let res = arr.reduce(function (acc, cv) {
         for (const key of Object.keys(table)) {
           if (table[key].includes(cv)) {
             acc.push({ [key]: cv });
@@ -105,28 +100,43 @@ const actions = {
         }
         return acc;
       }, []);
+      return res;
     };
 
+    const objectToString = function (object) {
+      let res = "";
+      for (const [key, value] of Object.entries(object)) {
+        res += `${key}=${value}&`;
+      }
+      return res.slice(0, -1);
+    };
+
+    const queryString = function (params, table) {
+      return findByPropKey(params, table).reduce((acc, cv) => {
+        acc += objectToString(cv);
+        return acc;
+      }, "");
+    };
+
+    //console.log(to, params, queryString(params, rootState.schemas.product));
+
     queryParamsObjectArray.push({
-      product: findByPropKey(params, rootState.schemas.product),
-      //product: findByPropKey(params, response),
+      product: queryString(params, rootState.schemas.product),
     });
 
     if (findByPropKey(params, rootState.schemas.productVersion).length > 0) {
       queryParamsObjectArray.push({
-        version: findByPropKey(params, rootState.schemas.productVersion),
+        version: queryString(params, rootState.schemas.productVersion),
       });
     }
 
-    if (Object.keys(query).length > 0) {
-      let res = [];
-      for (const [key, value] of Object.entries(query)) {
-        let lit = {};
-        lit[key] = value;
-        res.push(lit);
+    if (Object.keys(to.query).length > 0) {
+      let res = "";
+      for (const [key, value] of Object.entries(to.query)) {
+        res += `${key}=${value}&`;
       }
       queryParamsObjectArray.push({
-        operator: res,
+        operator: res.slice(0, -1),
       });
     }
 
@@ -146,15 +156,17 @@ const actions = {
         return prev;
       }, {});
 
-    console.log("queryParamsObject queryAction INPUT", queryAction);
-    console.log("queryParamsObject OUTPUT", queryParamsObject);
-
+    // console.log("queryParamsObject queryAction INPUT", queryAction);
+    //console.log("queryParamsObject OUTPUT", queryParamsObject);
+    debugger;
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
 
   queryParamsStringAction({ dispatch, commit }, queryParamsObject) {
     // fn arg is queryParamsObject OR to.query from router
     // Are they refereing to the same object or is one a copy?
+
+    console.log("queryParamsStringAction");
 
     // products?section=men&category=shoes
     // versions?color=red
@@ -182,8 +194,8 @@ const actions = {
     },
     {});
 
-    console.log("queryParamsStringAction queryParamsObject", queryParamsObject);
-    console.log("queryParamsStringAction queryParamsString", queryParamsString);
+    // console.log("queryParamsStringAction queryParamsObject", queryParamsObject);
+    // console.log("queryParamsStringAction queryParamsString", queryParamsString);
 
     return commit("queryParamsStringMutation", queryParamsString);
   },
@@ -200,6 +212,9 @@ const actions = {
     });
 
     queryParamsKebab = res.flat().toString().replace(/[,]/g, "-");
+
+    console.log("queryParamsKebabAction queryParamsObject", queryParamsObject);
+    console.log("queryParamsKebabAction queryParamsKebab", queryParamsKebab);
 
     return commit("queryParamsKebabMutation", queryParamsKebab);
   },
