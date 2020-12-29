@@ -18,10 +18,21 @@ const getters = {
   searchQueryString: (state) => {
     const copyQueryParamsObject = { ...state.queryParamsObject };
     const { product, version, operator } = copyQueryParamsObject;
-    return `${product}&${version}&${operator}&`;
+    let res = [product, version, operator]
+      .reduce((acc, cv) => {
+        if (cv === undefined) {
+          acc += "";
+        } else {
+          acc += cv + "&";
+        }
+        return acc;
+      }, "")
+      .slice(0, -1);
+    return res;
   },
   searchQueryStringKebab: (state) => {
     const copyQueryParamsObject = { ...state.queryParamsObject };
+
     const { product, version, operator } = copyQueryParamsObject;
 
     const kebabify = function (input) {
@@ -34,25 +45,17 @@ const getters = {
         .slice(0, -1);
     };
 
-    const productVersion = [product, version]
+    let res = [product, version, operator]
+      .filter((prop) => prop !== undefined)
       .reduce((acc, cv) => {
-        if (cv != typeof undefined || cv === "") {
-          acc += kebabify(cv) + "-";
-        }
-
+        acc += kebabify(cv) + "-";
         return acc;
       }, "")
       .slice(0, -1);
 
-    return productVersion + "?" + operator;
+    return res;
   },
-  queryParamsStringKebab: (state, getters) => {
-    // CHECK IF THIS WORKS FOR VERSION AND OPERATORS
-    let copy = { ...getters.queryParamsObjectFlat };
-    let res = "";
-    Object.values(copy).forEach((word) => (res += `${word}-`));
-    return res.slice(0, -1);
-  },
+
   foundProducts: (state) => {
     return state.foundProducts;
   },

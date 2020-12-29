@@ -45,7 +45,9 @@ const routes = [
 
       store.commit("setByRoute", true);
 
-      store.dispatch("search/queryParamsObjectAction", to);
+      console.log("searchQueryRoute !!!!!!!!!!!!", to);
+
+      //store.dispatch("search/queryParamsObjectAction", to);
 
       // if (store.state.search.routeLastBeforeEnter !== "searchRequestRoute") {
       //   console.log("!!!!!!!!!!!!!!!!!!!!!!!  not searchRequestRoute");
@@ -54,6 +56,7 @@ const routes = [
 
       products("search", store.state.search.queryParamsObject, (data) => {
         store.commit("search/foundProductsMutation", data);
+        // Check toggle not working properly!!
         // store.dispatch(
         //   "navigation/selectOptionsCheckToggle",
         //   store.getters["search/queryParamsObject"]
@@ -61,9 +64,11 @@ const routes = [
       })
         .then(() => {
           store.commit("search/routeLastBeforeEnterMutation", to.name);
+          let slug = store.getters["search/searchQueryStringKebab"];
+          console.log("slug", slug);
           next({
             name: "searchResultRoute",
-            params: { slug: store.getters["search/queryParamsStringKebab"] },
+            params: { slug: slug },
           });
         })
         .catch((err) => {
@@ -78,20 +83,20 @@ const routes = [
     beforeEnter: (to, from, next) => {
       store.commit("load/countReset");
 
-      let queryRequest;
-
       store
         .dispatch("search/queryParamsObjectAction", to)
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
         .then(() => {
+          let searchQueryString =
+            "/search?" + store.getters["search/searchQueryString"];
           next({
-            path: `/search?${store.getters["search/searchQueryString"]}`,
+            path: searchQueryString,
           });
         });
     },
   },
   {
-    path: "/:slug",
+    path: "/:slug?",
     name: "searchResultRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
@@ -106,7 +111,6 @@ const routes = [
       store.commit("setByRoute", false);
 
       store.commit("search/routeLastBeforeEnterMutation", to.name);
-
       next();
     },
   },
