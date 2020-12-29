@@ -131,6 +131,7 @@ const routes = [
         .dispatch("search/queryParamsObjectAction", to)
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
         .then((q) => {
+          debugger;
           next({
             name: "searchQueryRoute",
             query: q,

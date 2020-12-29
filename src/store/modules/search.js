@@ -15,6 +15,11 @@ const getters = {
   queryParamsObject: (state) => {
     return state.queryParamsObject;
   },
+  searchQueryString: (state) => {
+    const copyQueryParamsObject = { ...state.queryParamsObject };
+    const { product, version, operator } = copyQueryParamsObject;
+    return `${product}&${version}&${operator}&`;
+  },
   queryParamsObjectFlat: (state, getters) => {
     let copyQueryParamsObject = { ...getters.queryParamsObject };
     const recur = function (n) {
@@ -158,7 +163,6 @@ const actions = {
 
     // console.log("queryParamsObject queryAction INPUT", queryAction);
     //console.log("queryParamsObject OUTPUT", queryParamsObject);
-    debugger;
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
 
