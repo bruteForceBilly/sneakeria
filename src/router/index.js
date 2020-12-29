@@ -57,15 +57,12 @@ const routes = [
         store.dispatch("search/queryParamsObjectAction", to);
       }
 
-      //debugger;
+      console.log(
+        "store.state.search.queryParamsObject",
+        store.state.search.queryParamsObject
+      );
 
-      // SEARCH QUERY ROUTE DEMANDS QUERY PARAMS OBJECT
-
-      let searchQueryParamsString = to.fullPath.split("?").pop();
-
-      console.log("searchQueryParamsString", searchQueryParamsString);
-
-      products("filter", searchQueryParamsString, (data) => {
+      products("search", store.state.search.queryParamsObject, (data) => {
         store.commit("search/foundProductsMutation", data);
         store.dispatch(
           "navigation/selectOptionsCheckToggle",
@@ -74,12 +71,6 @@ const routes = [
       })
         .then(() => {
           store.commit("search/routeLastBeforeEnterMutation", to.name);
-          // console.log(
-          //   "ROUTER THEN queryParamsStringKebab",
-          //   store.getters["search/queryParamsObject"],
-          //   store.getters["search/queryParamsStringKebab"]
-          // );
-          debugger;
           next({
             name: "searchResultRoute",
             params: { slug: store.getters["search/queryParamsStringKebab"] },
@@ -88,26 +79,6 @@ const routes = [
         .catch((err) => {
           console.log(err);
         });
-
-      // return new Promise((resolve, reject) => {
-      //   products("filter", searchQueryParamsString, (data) => {
-      //     store.commit("search/foundProductsMutation", data);
-      //     store.dispatch(
-      //       "navigation/selectOptionsCheckToggle",
-      //       store.getters["search/queryParamsObject"]
-      //     );
-      //   }).then((test) => {
-      //     next({
-      //       name: "searchResultRoute",
-      //       params: { slug: store.getters["search/queryParamsStringKebab"] },
-      //     })
-      //   });
-      // }).then(
-      //   // update selects in store so that the componenet dosent have to
-      //   //store.commit("setByRoute", false),
-      //   store.commit("search/routeLastBeforeEnterMutation", to.name)
-      //   //console.log("ROUTER searchRouteLastBeforeEnterMutation", to.name)
-      // );
     },
   },
   {

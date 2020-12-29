@@ -5,19 +5,6 @@ import { API_VERSIONS } from "@/constants";
 // Refactor so it also takes an option var called o to link it to the right if
 // Route, Filter, Slice, Sort, Full-text search
 
-const API_LEGEND = {
-  section: "product",
-  category: "product",
-  campaigns: "product",
-  productType: "product",
-  styleType: "product",
-  look: "product",
-  brand: "product",
-  color: "version",
-  price_min: "operator",
-  price_max: "operator",
-};
-
 export default function (o, q, cb) {
   if (o === "route" && q === "all") {
     //console.log("ALL PRODUCTS", q);
@@ -35,64 +22,36 @@ export default function (o, q, cb) {
         cb(response.data);
       })
       .catch((err) => err.toString());
-  } else if (o === "filter") {
-    let qObjectified = q.split("&").reduce(function (acc, cv) {
-      let arr = cv.split("=");
-      acc[arr[0]] = arr[1];
-      return acc;
-    }, {});
-    //console.log("product service Q PRODUCTS", qObjectified);
-    //let { product, version, operator } = q;
-
-    let qStrings = Object.entries(qObjectified).reduce(
-      function (acc, cv, i, arr) {
-        let [key, value] = cv;
-
-        if (API_LEGEND[key] === "product") {
-          acc.product += `${key}=${value}&`;
-        }
-
-        if (API_LEGEND[key] === "version") {
-          acc.version += `${key}=${value}&`;
-        }
-
-        if (API_LEGEND[key] === "operator") {
-          acc.operator += `${key}=${value}&`;
-        }
-
-        return acc;
-      },
-      { product: "", version: "", operator: "" }
-    );
-
-    let { product, version, operator } = qStrings;
-
-    let prodResp;
+  } else if (o === "search") {
+    const { product, version, operator } = q;
+    let apiProductResponse = [];
+    let apiVersionResponse = [];
 
     return axios
       .get(API_PRODUCTS + "?" + product)
       .then((response) => {
-        prodResp = response.data;
-        //console.log("prodResp", prodResp);
-        return response.data
+        apiProductResponse = response.data;
+
+        let apiVersionProductIdsParam = response.data
           .map((cv) => cv.id)
           .reduce(function (acc, cv) {
             acc += `productId=${cv}&`;
             return acc;
           }, "");
+
+        return apiVersionProductIdsParam;
       })
       .then((response) => {
-        let ver = version != undefined ? version : "";
-        let op = operator != undefined ? operator : "";
         return axios
-          .get(API_VERSIONS + "?" + response + ver + op)
+          .get(API_VERSIONS + "?" + response + version + "&" + operator)
           .then((response) => {
-            let verResp = response.data;
-            prodResp.forEach((cv) => (cv["versions"] = []));
+            apiVersionResponse = response.data;
 
-            prodResp.forEach((product) => {
+            apiProductResponse.forEach((cv) => (cv["versions"] = []));
+
+            apiProductResponse.forEach((product) => {
               product.versionIds.forEach((versionId) => {
-                verResp.forEach((version) => {
+                apiVersionResponse.forEach((version) => {
                   if (version.id === versionId) {
                     product.versions.push(version);
                   }
@@ -100,12 +59,15 @@ export default function (o, q, cb) {
               });
             });
 
-            let res = prodResp.filter((prod) => prod.versions.length > 0);
+            let res = apiProductResponse.filter(
+              (prod) => prod.versions.length > 0
+            );
 
             console.log("SING HALLELUJAH", res);
+            debugger;
+
             return cb(res);
           });
-      })
-      .catch((err) => err.toString());
+      });
   }
 }

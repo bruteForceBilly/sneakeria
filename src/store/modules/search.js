@@ -3,7 +3,7 @@ import getCatalog from "@/services/catalog.js";
 import Vue from "vue";
 
 const state = () => ({
-  queryParamsObject: null,
+  products: null,
   queryParamsString: null,
   queryParamsKebab: null,
   foundProducts: null,
