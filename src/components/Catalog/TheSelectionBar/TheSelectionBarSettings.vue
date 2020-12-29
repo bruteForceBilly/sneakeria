@@ -125,7 +125,7 @@ export default {
       handler: function (newValue, oldValue) {
         console.log("watcher", this.getSetByRoute, newValue, oldValue);
         if (this.getSetByRoute === false) {
-          this.updateRouteQueryParams(this.selectedOptionsObject);
+          //this.updateRouteQueryParams(this.selectedOptionsObject);
         }
       },
     },

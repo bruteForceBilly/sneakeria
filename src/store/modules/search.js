@@ -46,29 +46,6 @@ const getters = {
 
     return productVersion + "?" + operator;
   },
-  queryParamsObjectFlat: (state, getters) => {
-    let copyQueryParamsObject = { ...getters.queryParamsObject };
-    const recur = function (n) {
-      let acc = {};
-      const run = function (n) {
-        if (Array.isArray(n)) {
-          n.forEach((cv) => {
-            for (const [key, value] of Object.entries(cv)) {
-              acc[key] = value;
-            }
-          });
-        } else {
-          Object.keys(n).forEach((key) => run(n[key]));
-        }
-      };
-      run(n);
-      return acc;
-    };
-
-    let queryParamsObjectFlat = recur(copyQueryParamsObject);
-
-    return queryParamsObjectFlat;
-  },
   queryParamsStringKebab: (state, getters) => {
     // CHECK IF THIS WORKS FOR VERSION AND OPERATORS
     let copy = { ...getters.queryParamsObjectFlat };

@@ -64,7 +64,6 @@ export default function (o, q, cb) {
             );
 
             console.log("SING HALLELUJAH", res);
-            debugger;
 
             return cb(res);
           });

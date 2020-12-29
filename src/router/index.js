@@ -45,29 +45,19 @@ const routes = [
 
       store.commit("setByRoute", true);
 
-      // console.log(
-      //   "hello routeLastBeforeEnter",
-      //   store.state.search.routeLastBeforeEnter
-      // );
-
       store.dispatch("search/queryParamsObjectAction", to);
 
-      if (store.state.search.routeLastBeforeEnter !== "searchRequestRoute") {
-        console.log("!!!!!!!!!!!!!!!!!!!!!!!  not searchRequestRoute");
-        store.dispatch("search/queryParamsObjectAction", to);
-      }
-
-      console.log(
-        "store.state.search.queryParamsObject",
-        store.state.search.queryParamsObject
-      );
+      // if (store.state.search.routeLastBeforeEnter !== "searchRequestRoute") {
+      //   console.log("!!!!!!!!!!!!!!!!!!!!!!!  not searchRequestRoute");
+      //   store.dispatch("search/queryParamsObjectAction", to);
+      // }
 
       products("search", store.state.search.queryParamsObject, (data) => {
         store.commit("search/foundProductsMutation", data);
-        store.dispatch(
-          "navigation/selectOptionsCheckToggle",
-          store.getters["search/queryParamsObject"]
-        );
+        // store.dispatch(
+        //   "navigation/selectOptionsCheckToggle",
+        //   store.getters["search/queryParamsObject"]
+        // );
       })
         .then(() => {
           store.commit("search/routeLastBeforeEnterMutation", to.name);
@@ -89,33 +79,8 @@ const routes = [
       store.commit("load/countReset");
 
       let queryRequest;
-      //console.log(to.params);
-
-      /*
-
-      if (
-        Object.keys(to.query).length === 0 &&
-        to.query.constructor === Object // check if query is empty
-      ) {
-        queryRequest = to.path.substr(1).split("-");
-        console.log("searchRequestRoute IF queryRequest", queryRequest);
-      } 
-      
-      else {
-        queryRequest = Object.values(to.query).flat();
-        //console.log("else", to.query, queryRequest);
-        //queryRequest = to.query;
-        console.log("searchRequestRoute ELSE queryRequest", queryRequest);
-      } */
-
-      // TO PARSE KEBAB PATH STRING INTO SEARCH QUERY OBJECT
-      // BY FINDING KEYS IN LOOCK UP IN STORE
-      // THEN PARSING THIS OBJECT INTO FLATTEN QUERY PARAM STRING
-
-      //      .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
 
       store
-        //.dispatch("search/serviceRequestAction", to)
         .dispatch("search/queryParamsObjectAction", to)
         .then(store.commit("search/routeLastBeforeEnterMutation", to.name))
         .then(() => {

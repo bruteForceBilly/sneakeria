@@ -555,6 +555,8 @@ const actions = {
       return acc;
     }, []);
 
+    console.log("selectOptionsCheckToggle", res, mappedOptions);
+    debugger;
     return mappedOptions.forEach((el) => commit("toggleElement", el));
   },
 };
