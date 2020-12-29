@@ -20,6 +20,32 @@ const getters = {
     const { product, version, operator } = copyQueryParamsObject;
     return `${product}&${version}&${operator}&`;
   },
+  searchQueryStringKebab: (state) => {
+    const copyQueryParamsObject = { ...state.queryParamsObject };
+    const { product, version, operator } = copyQueryParamsObject;
+
+    const kebabify = function (input) {
+      return input
+        .split("&")
+        .reduce((acc, cv) => {
+          acc += cv.split("=").pop() + "-";
+          return acc;
+        }, "")
+        .slice(0, -1);
+    };
+
+    const productVersion = [product, version]
+      .reduce((acc, cv) => {
+        if (cv != typeof undefined || cv === "") {
+          acc += kebabify(cv) + "-";
+        }
+
+        return acc;
+      }, "")
+      .slice(0, -1);
+
+    return productVersion + "?" + operator;
+  },
   queryParamsObjectFlat: (state, getters) => {
     let copyQueryParamsObject = { ...getters.queryParamsObject };
     const recur = function (n) {
@@ -117,10 +143,12 @@ const actions = {
     };
 
     const queryString = function (params, table) {
-      return findByPropKey(params, table).reduce((acc, cv) => {
-        acc += objectToString(cv);
-        return acc;
-      }, "");
+      return findByPropKey(params, table)
+        .reduce((acc, cv) => {
+          acc += objectToString(cv) + "&";
+          return acc;
+        }, "")
+        .slice(0, -1);
     };
 
     //console.log(to, params, queryString(params, rootState.schemas.product));
