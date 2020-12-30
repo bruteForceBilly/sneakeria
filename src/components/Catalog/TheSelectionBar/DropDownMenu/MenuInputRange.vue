@@ -45,18 +45,21 @@ export default {
       return (this.displayValue = this.$refs.slider.getValue());
     },
     updateRouter() {
-      let { slug } = this.params;
-      this.$router.push({
-        name: "searchRequestRoute",
-        params: { id: slug },
-        query: { price_max: this.priceMax, price_min: this.priceMin },
-      });
+      let searchQuery =
+        this.searchQueryString +
+        `&price_max=${this.priceMax}&price_min=${this.priceMin}`;
+
+      this.$router.push("search?" + searchQuery);
     },
   },
   computed: {
-    ...mapState("search", ["queryParamsString"]),
-    ...mapGetters("search", ["foundProductsPricesOffered"]),
     ...mapState("route", ["path", "params", "query"]),
+    ...mapState("search", ["queryParamsString"]),
+    ...mapGetters("search", [
+      "foundProductsPricesOffered",
+      "searchQueryString",
+    ]),
+    ...mapGetters("navigation", ["selectedOptionsObject"]),
 
     priceMin() {
       return [...this.value].shift();

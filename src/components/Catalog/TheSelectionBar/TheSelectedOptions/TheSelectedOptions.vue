@@ -41,11 +41,5 @@ export default {
   components: {
     SelectedOption,
   },
-  mounted() {
-    console.log("selected mounted >>>", this.selected);
-  },
-  beforeUpdate() {
-    console.log("selected update >>>", this.selected);
-  },
 };
 </script>

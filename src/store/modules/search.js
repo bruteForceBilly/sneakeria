@@ -35,6 +35,19 @@ const getters = {
 
     const { product, version, operator } = copyQueryParamsObject;
 
+    let operatorStringToObject = null;
+
+    if (operator !== undefined) {
+      operatorStringToObject = operator.split("&").reduce((acc, cv) => {
+        let arr = cv.split("=");
+        let res = {};
+        res[arr[0]] = arr[arr.length - 1];
+        return { ...acc, ...res };
+      }, {});
+    }
+
+    console.log("operatorStringToObject", operatorStringToObject);
+
     const kebabify = function (input) {
       return input
         .split("&")
@@ -45,7 +58,7 @@ const getters = {
         .slice(0, -1);
     };
 
-    let res = [product, version, operator]
+    let productVersion = [product, version]
       .filter((prop) => prop !== undefined)
       .reduce((acc, cv) => {
         acc += kebabify(cv) + "-";
@@ -53,7 +66,21 @@ const getters = {
       }, "")
       .slice(0, -1);
 
-    return res;
+    const makeString = function () {
+      if (operator === undefined) {
+        return {
+          params: productVersion,
+          query: null,
+        };
+      } else {
+        return {
+          params: productVersion,
+          query: operatorStringToObject,
+        };
+      }
+    };
+
+    return makeString();
   },
 
   foundProducts: (state) => {
@@ -83,7 +110,7 @@ const actions = {
 
     if (to.name === "searchQueryRoute") {
       params = Object.values(to.query);
-      query = null;
+      query = Object.keys(to.query);
     } else if (to.name === "searchRequestRoute") {
       query = to.query;
       params = to.params.id.split("-");
@@ -140,13 +167,36 @@ const actions = {
       });
     }
 
-    if (
-      to.name === "searchQueryRoute" &&
-      Array.from(queryString(params, rootState.schemas.operator)).length > 0
-    ) {
+    if (to.name === "searchQueryRoute") {
+      //Array.from(queryString(params, rootState.schemas.operator)).length > 0
+
+      let foundOperatorProps = findByPropKey(
+        query,
+        rootState.schemas.operator
+      ).reduce((acc, cv) => {
+        acc.push(Object.values(cv));
+        return acc.flat();
+      }, []);
+
+      let operatorProp = foundOperatorProps.reduce((acc, cv) => {
+        let res = {};
+        res[cv] = to.query[cv];
+        acc.push(res);
+        return acc;
+      }, []);
+
+      let operatorPropString = operatorProp
+        .reduce((acc, cv) => {
+          for (const [key, value] of Object.entries(cv)) {
+            acc += `${key}=${value}&`;
+          }
+          return acc;
+        }, "")
+        .slice(0, -1);
+
       queryParamsObjectArray.push({
-        operator: queryString(params, rootState.schemas.operator),
-        operatorProp: findByPropKey(params, rootState.schemas.operator),
+        operator: operatorPropString,
+        operatorProp: operatorProp,
       });
     }
 

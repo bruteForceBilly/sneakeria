@@ -9,7 +9,7 @@
             :key="option.id"
           >
             <template v-slot:option-input>
-              <!-- <MenuInputRange :item="item" :option="option"> </MenuInputRange> -->
+              <MenuInputRange :item="item" :option="option"> </MenuInputRange>
             </template>
           </MenuOption>
         </template>
@@ -20,13 +20,13 @@
 <script>
 import Menu from "../DropDownMenu/Menu.vue";
 import MenuOption from "../DropDownMenu/MenuOption.vue";
-//import MenuInputRange from "../DropDownMenu/MenuInputRange.vue";
+import MenuInputRange from "../DropDownMenu/MenuInputRange.vue";
 
 export default {
   components: {
     Menu,
     MenuOption,
-    //MenuInputRange,
+    MenuInputRange,
   },
   props: {
     selects: {

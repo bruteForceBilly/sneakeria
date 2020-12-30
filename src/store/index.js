@@ -25,7 +25,6 @@ export default new Vuex.Store({
   },
   mutations: {
     setByRoute(state, setByRoute) {
-      console.log("setByRoute STORE", setByRoute);
       Vue.set(state, "setByRoute", setByRoute);
     },
     selectedVersionMutation(state, selectedVersion) {

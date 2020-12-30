@@ -64,10 +64,21 @@ const routes = [
         .then(() => {
           store.commit("search/routeLastBeforeEnterMutation", to.name);
           let slug = store.getters["search/searchQueryStringKebab"];
-          next({
+
+          const { params, query } = slug;
+
+          let nextConfig = {
             name: "searchResultRoute",
-            params: { slug: slug },
-          });
+            params: { slug: params },
+          };
+
+          if (query !== null) {
+            nextConfig.query = query;
+          }
+
+          console.log("nextConfig", nextConfig);
+
+          next(nextConfig);
         })
         .catch((err) => {
           console.log(err);
