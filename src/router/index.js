@@ -52,21 +52,18 @@ const routes = [
         searchQuery = store.state.search.queryParamsObject; //to.fullPath.split("?").pop();
       } else {
         searchQuery = store.state.search.queryParamsObject;
-      }
-
-      console.log(to, "searchQuery", searchQuery);
-
-      products("search", searchQuery, (data) => {
-        store.commit("search/foundProductsMutation", data);
         store.dispatch(
           "navigation/selectOptionsCheckToggle",
           store.state.search.queryParamsObject
         );
+      }
+
+      products("search", searchQuery, (data) => {
+        store.commit("search/foundProductsMutation", data);
       })
         .then(() => {
           store.commit("search/routeLastBeforeEnterMutation", to.name);
           let slug = store.getters["search/searchQueryStringKebab"];
-          console.log("slug", slug);
           next({
             name: "searchResultRoute",
             params: { slug: slug },

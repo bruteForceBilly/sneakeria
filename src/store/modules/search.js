@@ -180,8 +180,8 @@ const actions = {
       }
     }
 
-    console.log("queryParamsObject INPUT", to);
-    console.log("queryParamsObject OUTPUT", queryParamsObject);
+    // console.log("queryParamsObject INPUT", to);
+    // console.log("queryParamsObject OUTPUT", queryParamsObject);
 
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
@@ -190,7 +190,7 @@ const actions = {
     // fn arg is queryParamsObject OR to.query from router
     // Are they refereing to the same object or is one a copy?
 
-    console.log("queryParamsStringAction");
+    //console.log("queryParamsStringAction");
 
     // products?section=men&category=shoes
     // versions?color=red
@@ -237,8 +237,8 @@ const actions = {
 
     queryParamsKebab = res.flat().toString().replace(/[,]/g, "-");
 
-    console.log("queryParamsKebabAction queryParamsObject", queryParamsObject);
-    console.log("queryParamsKebabAction queryParamsKebab", queryParamsKebab);
+    // console.log("queryParamsKebabAction queryParamsObject", queryParamsObject);
+    // console.log("queryParamsKebabAction queryParamsKebab", queryParamsKebab);
 
     return commit("queryParamsKebabMutation", queryParamsKebab);
   },

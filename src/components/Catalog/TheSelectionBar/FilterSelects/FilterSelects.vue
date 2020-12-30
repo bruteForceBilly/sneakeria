@@ -85,7 +85,7 @@ export default {
     },
     setByRouteHandler() {
       this.$store.commit("setByRoute", false);
-      console.log("set by route", this.$store.state.setByRoute);
+      //console.log("set by route", this.$store.state.setByRoute);
     },
   },
   props: {
