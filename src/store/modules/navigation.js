@@ -531,32 +531,37 @@ const actions = {
       commit("toggleElementMutation", el)
     );
   },
-  selectOptionsCheckToggle({ commit, state, getters }, clickedOptionObject) {
-    let res = {};
+  selectOptionsCheckToggle({ commit, state, getters }, queryParamsObject) {
+    const { productProp = null, versionProp = null } = queryParamsObject;
 
-    if (Object.keys(clickedOptionObject).includes("product" || "version")) {
-      for (const valArr of Object.values(clickedOptionObject)) {
-        valArr.forEach((val) => {
-          for (const [key, value] of Object.entries(val)) {
-            res[key] = value;
+    let elements = [];
+
+    [productProp, versionProp].forEach((prop) =>
+      prop !== null ? elements.push(prop) : ""
+    );
+
+    const mappedElements = function (options, elements) {
+      let mapped = [];
+      elements.flat().forEach((el) => {
+        let foundOptions = options.reduce((acc, cv) => {
+          if (
+            Object.keys(el).includes(cv.name) &&
+            Object.values(el).includes(cv.value)
+          ) {
+            acc.push(cv);
           }
-        });
-      }
-    } else {
-      res = clickedOptionObject;
-    }
+          return acc;
+        }, []);
 
-    let mappedOptions = getters.allOptions.reduce(function (acc, cv) {
-      for (const [key, value] of Object.entries(res)) {
-        if (cv.name === key && value.includes(cv.value)) {
-          acc.push(cv);
-        }
-      }
-      return acc;
-    }, []);
+        return mapped.push(foundOptions);
+      });
 
-    console.log("selectOptionsCheckToggle", res, mappedOptions);
-    return mappedOptions.forEach((el) => commit("toggleElement", el));
+      return mapped.flat();
+    };
+
+    return mappedElements(getters.allOptions, elements).forEach((el) =>
+      commit("toggleElement", el)
+    );
   },
 };
 
@@ -564,6 +569,7 @@ const mutations = {
   clickedOptionObjectMutation(state, object) {
     return (state.clickedOption = object);
   },
+
   toggleElement(state, el) {
     // You have to recur to find since options can be nested now inside attr
 
@@ -577,6 +583,7 @@ const mutations = {
       ? (foundElement.checked = true)
       : (foundElement.checked = false);
   },
+
   selectsSetMutation(state, selects) {
     return (state.selects = selects);
   },

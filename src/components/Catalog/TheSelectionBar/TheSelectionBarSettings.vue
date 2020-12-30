@@ -71,8 +71,6 @@ export default {
     updateRouteQueryParams(argObj) {
       console.log("updateRouteQueryParams", argObj);
 
-      //debugger;
-
       if (Object.keys(argObj).length > 0) {
         // this.$router
         //   .push({ name: "searchRequestRoute", query: argObj })

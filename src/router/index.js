@@ -45,10 +45,6 @@ const routes = [
 
       store.commit("setByRoute", true);
 
-      console.log("searchQueryRoute !!!!!!!!!!!!", to);
-
-      //store.dispatch("search/queryParamsObjectAction", to);
-
       // if (store.state.search.routeLastBeforeEnter !== "searchRequestRoute") {
       //   console.log("!!!!!!!!!!!!!!!!!!!!!!!  not searchRequestRoute");
       //   store.dispatch("search/queryParamsObjectAction", to);
@@ -56,16 +52,14 @@ const routes = [
 
       products("search", store.state.search.queryParamsObject, (data) => {
         store.commit("search/foundProductsMutation", data);
-        // Check toggle not working properly!!
-        // store.dispatch(
-        //   "navigation/selectOptionsCheckToggle",
-        //   store.getters["search/queryParamsObject"]
-        // );
+        store.dispatch(
+          "navigation/selectOptionsCheckToggle",
+          store.state.search.queryParamsObject
+        );
       })
         .then(() => {
           store.commit("search/routeLastBeforeEnterMutation", to.name);
           let slug = store.getters["search/searchQueryStringKebab"];
-          console.log("slug", slug);
           next({
             name: "searchResultRoute",
             params: { slug: slug },

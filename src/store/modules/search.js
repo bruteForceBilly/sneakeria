@@ -75,26 +75,6 @@ const getters = {
 };
 
 const actions = {
-  // searchRequestAction
-  serviceRequestAction({ dispatch, state, getters }, to) {
-    return new Promise((resolve) => {
-      getCatalog((catalog) => {
-        let { id } = to.params;
-        //console.log("to & id", to, id);
-
-        dispatch({
-          type: "queryParamsObjectAction",
-          data: {
-            params: id.split("-"),
-            query: to.query,
-            catalog: catalog, // We are using Schemas Instead of this? response?
-          },
-        });
-      }).then(() => {
-        resolve(getters.queryParamsObjectFlat);
-      });
-    });
-  },
   queryParamsObjectAction({ commit, rootState }, to) {
     const queryParamsObjectArray = [];
 
@@ -141,11 +121,13 @@ const actions = {
 
     queryParamsObjectArray.push({
       product: queryString(params, rootState.schemas.product),
+      productProp: findByPropKey(params, rootState.schemas.product),
     });
 
     if (findByPropKey(params, rootState.schemas.productVersion).length > 0) {
       queryParamsObjectArray.push({
         version: queryString(params, rootState.schemas.productVersion),
+        versionProp: findByPropKey(params, rootState.schemas.productVersion),
       });
     }
 
