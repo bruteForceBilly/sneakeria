@@ -78,17 +78,16 @@ const actions = {
   queryParamsObjectAction({ commit, rootState }, to) {
     const queryParamsObjectArray = [];
 
-    //const params = Object.values(to.params); // ["men", "nike"]
-
     let params = [];
+    let query = {};
 
     if (to.name === "searchQueryRoute") {
       params = Object.values(to.query);
+      query = null;
     } else if (to.name === "searchRequestRoute") {
+      query = to.query;
       params = to.params.id.split("-");
     }
-
-    //const params = to.params.id.split("-");
 
     const findByPropKey = function (arr, table) {
       let res = arr.reduce(function (acc, cv) {
@@ -131,13 +130,23 @@ const actions = {
       });
     }
 
-    if (Object.keys(to.query).length > 0) {
+    if (to.name === "searchRequestRoute" && Object.keys(query).length > 0) {
       let res = "";
       for (const [key, value] of Object.entries(to.query)) {
         res += `${key}=${value}&`;
       }
       queryParamsObjectArray.push({
         operator: res.slice(0, -1),
+      });
+    }
+
+    if (
+      to.name === "searchQueryRoute" &&
+      Array.from(queryString(params, rootState.schemas.operator)).length > 0
+    ) {
+      queryParamsObjectArray.push({
+        operator: queryString(params, rootState.schemas.operator),
+        operatorProp: findByPropKey(params, rootState.schemas.operator),
       });
     }
 
@@ -160,15 +169,19 @@ const actions = {
     // Operator behave differently when searchQueryRoute
 
     if (to.name === "searchQueryRoute") {
-      const { product, version, operator } = queryParamsObject;
+      const { product, version, operator = null } = queryParamsObject;
 
-      let res = operator.replace(product + "&", "").replace(version + "&", "");
+      if (operator !== null) {
+        let res = operator
+          .replace(product + "&", "")
+          .replace(version + "&", "");
 
-      queryParamsObject.operator = res;
+        queryParamsObject.operator = res;
+      }
     }
 
-    // console.log("queryParamsObject INPUT", to);
-    // console.log("queryParamsObject OUTPUT", queryParamsObject);
+    console.log("queryParamsObject INPUT", to);
+    console.log("queryParamsObject OUTPUT", queryParamsObject);
 
     return commit("queryParamsObjectMutation", queryParamsObject);
   },

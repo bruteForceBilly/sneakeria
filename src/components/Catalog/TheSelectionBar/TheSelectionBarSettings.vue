@@ -69,29 +69,18 @@ export default {
       return !el.checked ? (el.checked = true) : (el.checked = false);
     },
     updateRouteQueryParams(argObj) {
-      console.log("updateRouteQueryParams", argObj);
+      //console.log("updateRouteQueryParams", argObj);
 
       if (Object.keys(argObj).length > 0) {
-        // this.$router
-        //   .push({ name: "searchRequestRoute", query: argObj })
-        //   .catch((failure) => {});
-        // eslint-disable-next-line no-unused-vars
-        // let res = "";
-        // for (const [key, values] of Object.entries(argObj)) {
-        //   console.log(`${key}: ${values}`);
-        //   values.forEach((value) => {
-        //     res += `${key}=${value}&`;
-        //   });
-        // }
-        // build Param String from argObj
+        let queryParamsString = Object.keys(argObj)
+          .reduce((acc, cv) => {
+            return (acc += `${cv}=${argObj[cv]}&`);
+          }, "")
+          .slice(0, -1);
 
-        // set get by route to true
-        this.$router
-          .push({
-            name: "searchQueryRoute",
-            query: argObj,
-          })
-          .catch((err) => {});
+        //console.log("queryParamsString", queryParamsString);
+
+        this.$router.push("search?" + queryParamsString).catch((err) => {});
       } else {
         this.$router.push({ name: "all" }).catch((err) => {});
       }
@@ -121,9 +110,9 @@ export default {
       deep: true,
       immediate: false,
       handler: function (newValue, oldValue) {
-        console.log("watcher", this.getSetByRoute, newValue, oldValue);
+        //console.log("watcher", this.getSetByRoute, newValue, oldValue);
         if (this.getSetByRoute === false) {
-          //this.updateRouteQueryParams(this.selectedOptionsObject);
+          this.updateRouteQueryParams(this.selectedOptionsObject);
         }
       },
     },

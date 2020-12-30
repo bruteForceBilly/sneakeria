@@ -39,6 +39,9 @@ const state = () => ({
       "yellow",
     ],
   },
+  operator: {
+    price: ["price_min", "price_max"],
+  },
 });
 
 const getters = {
