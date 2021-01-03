@@ -35,9 +35,13 @@ const getters = {
 
     const { product, version, operator } = copyQueryParamsObject;
 
+    // empty string is not a good init value
+
     let operatorStringToObject = null;
 
-    if (operator !== undefined) {
+    if (operator === "" || operator === undefined) {
+      operatorStringToObject = null;
+    } else {
       operatorStringToObject = operator.split("&").reduce((acc, cv) => {
         let arr = cv.split("=");
         let res = {};
@@ -45,8 +49,6 @@ const getters = {
         return { ...acc, ...res };
       }, {});
     }
-
-    console.log("operatorStringToObject", operatorStringToObject);
 
     const kebabify = function (input) {
       return input
