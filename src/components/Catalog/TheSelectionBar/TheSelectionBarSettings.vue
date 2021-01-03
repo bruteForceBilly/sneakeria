@@ -10,12 +10,8 @@
         searchQueryParamsObject,
         getSetByRoute,
         route,
-        clearAll,
-        clickedOptionObject,
         selectOptionsCheckToggle,
-        toggleElement,
         updateRouteQueryParams,
-        updateElements,
       }"
     ></slot>
   </div>
@@ -54,20 +50,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("navigation", [
-      "clearAll",
-      "selectOptionsCheckToggle",
-      "toggleElement",
-    ]),
-    clickedOptionObject(name, value) {
-      let o = {};
-      o[name] = value;
-      //console.log("clickedOptionObject", o);
-      return o;
-    },
-    toggleElement(el) {
-      return !el.checked ? (el.checked = true) : (el.checked = false);
-    },
+    ...mapActions("navigation", ["selectOptionsCheckToggle"]),
     updateRouteQueryParams(argObj) {
       //console.log("updateRouteQueryParams", argObj);
 
@@ -85,41 +68,15 @@ export default {
         this.$router.push({ name: "all" }).catch((err) => {});
       }
     },
-
-    updateElements() {
-      //console.log("update elements", this.selectedOptionsElements)
-      // check if data are set by route
-      if (this.getSetByRoute === true) {
-        // reset option el with false
-        this.selectedOptionsElements.forEach(
-          (el) => this.toggleElement(el) //!el.checked ? null : (el.checked = false)
-        );
-        // set data after prop
-        if (this.searchQueryParamsObject === null) {
-          this.selectOptionsCheckToggle({});
-        } else {
-          this.selectOptionsCheckToggle(this.searchQueryParamsObject);
-        }
-        // reset setByRoute
-        this.$store.commit("setByRoute", false);
-      }
-    },
   },
   watch: {
     selects: {
       deep: true,
       immediate: false,
       handler: function (newValue, oldValue) {
-        //console.log("watcher", this.getSetByRoute, newValue, oldValue);
         if (this.getSetByRoute === false) {
           this.updateRouteQueryParams(this.selectedOptionsObject);
         }
-      },
-    },
-    route: {
-      deep: true,
-      handler: function (newValue, oldValue) {
-        return; //this.updateElements();
       },
     },
   },

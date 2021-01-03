@@ -30,10 +30,8 @@
           </div>
           <div v-if="!hang" class="mt-4 flex justify-start">
             <TheSelectedOptions
-              :toggler="settings.selectOptionsCheckToggle"
-              :clicked="settings.clickedOptionObject"
-              :selected="settings.selectedOptionsElements"
-              :resetter="settings.clearAll"
+              :selected-options-object="settings.selectedOptionsObject"
+              :selects="settings.selects"
             ></TheSelectedOptions>
           </div>
         </div>

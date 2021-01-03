@@ -531,8 +531,20 @@ const actions = {
       commit("toggleElementMutation", el)
     );
   },
-  selectOptionsCheckToggle({ commit, state, getters }, queryParamsObject) {
+  selectOptionsCheckToggle(
+    { commit, state, getters, rootState },
+    queryParamsObject
+  ) {
+    // rename to selectOptionsCheckToggleByRouter
+
     const { productProp = null, versionProp = null } = queryParamsObject;
+
+    console.log(
+      "selectOptionsCheckToggle queryParamsObject",
+      queryParamsObject,
+      "rootState setByRoute",
+      rootState.setByRoute
+    );
 
     let elements = [];
 
@@ -573,11 +585,14 @@ const mutations = {
   toggleElement(state, el) {
     // You have to recur to find since options can be nested now inside attr
 
+    // the secong arg must be of type element
+    // { el.name: el.value }
+
     let foundElement = state.selects
       .find((select) => select.name === el.name)
       .options.find((option) => option.value === el.value);
 
-    //console.log("toggleElement", el);
+    console.log("toggleElement", el);
 
     return !foundElement.checked
       ? (foundElement.checked = true)
