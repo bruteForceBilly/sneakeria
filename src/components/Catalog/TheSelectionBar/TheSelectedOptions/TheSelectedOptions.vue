@@ -9,51 +9,29 @@
             class="tag focus:outline-none"
           >
             {{ option.label }}
+            <span class="font-hairline text-gray-600 ml-1 inline">x</span>
           </button>
         </div>
       </div>
     </div>
 
-    <SelectedOption
+    <div
       v-show="Object.keys(selectedOptionsObject).length > 0"
-      link="true"
-      @click.native="resetter()"
-      >Clear All</SelectedOption
+      @click="clearAllTags()"
     >
+      <span
+        class="px-0 mx-2 underline bg-transparent py-1 text-gray-800 font-sans font-normal text-sm lowercase"
+      >
+        Clear all
+      </span>
+      <span class="font-hairline text-gray-600 ml-1 inline">x</span>
+    </div>
   </div>
 </template>
 
 <script>
-import SelectedOption from "./SelectedOption.vue";
-import { mapActions } from "vuex";
-
+import { mapGetters } from "vuex";
 // RENAME COMPONENT TO TAGSBAR AND DECOUPLE IT FROM SELECTION BAR
-
-// toggler clicked( take an correct config object)
-// we rewrote the selectionOptionCheckToggle to accept
-// a query paramss object form the router.
-// but here we are simpky passing an object literal from the the option and that dosent work!
-
-// we can remove the clicked props
-
-/*
-
-   clickedOptionObject(name, value) {
-      let o = {};
-      o.name = name;
-      o.value = value;
-      console.log("clickedOptionObject", o);
-      debugger;
-      return o;
-    },
-
-
-
-navigation action clearAll
-
-
-
-*/
 
 export default {
   props: {
@@ -68,34 +46,26 @@ export default {
       },
     },
   },
-  components: {
-    SelectedOption,
+  computed: {
+    ...mapGetters("navigation", ["selectedOptionsElements"]),
   },
   methods: {
-    ...mapActions("navigation", ["clearAll"]),
-
     toggle(option) {
       this.$store.commit("setByRoute", false);
-      console.log(
-        "toggle option",
-        option,
-        "setByRoute",
-        this.$store.state.setByRoute
-      );
-
       return option.checked === false
         ? (option.checked = true)
         : (option.checked = false);
     },
-
-    el(name, value) {
-      let o = {};
-      o.name = name;
-      o.value = value;
-      console.log("clickedOption", o);
-      debugger;
-      return o;
+    clearAllTags() {
+      console.log("reset was hit");
+      let copySelectedOptionsElements = [...this.selectedOptionsElements];
+      return copySelectedOptionsElements.forEach((option) =>
+        this.toggle(option)
+      );
     },
+  },
+  beforeUpdate() {
+    console.log("selectedOptionsElements", this.selectedOptionsElements);
   },
 };
 </script>
@@ -103,5 +73,9 @@ export default {
 <style lang="postcss" scoped>
 .tag {
   @apply py-1 text-gray-800 font-sans font-normal text-sm lowercase px-4 no-underline bg-gray-300 rounded-full mr-2;
+}
+
+.clear-all {
+  @apply px-0 mx-2 underline bg-transparent py-1 text-gray-800 font-sans font-normal text-sm lowercase;
 }
 </style>

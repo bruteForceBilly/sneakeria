@@ -11,6 +11,7 @@
       v-model.lazy="value"
       tooltip="none"
       ref="slider"
+      :silent="true"
       :lazy="true"
       :enable-cross="true"
       @dragging="updateDisplayValue()"
@@ -22,7 +23,6 @@
 
 <script>
 import VueSlider from "vue-slider-component";
-
 import "@/assets/css/vue-slider/index.css";
 import { mapState, mapGetters } from "vuex";
 
@@ -58,6 +58,7 @@ export default {
     ...mapGetters("search", [
       "foundProductsPricesOffered",
       "searchQueryString",
+      "foundProducts",
     ]),
     ...mapGetters("navigation", ["selectedOptionsObject"]),
 
@@ -82,6 +83,14 @@ export default {
       return `€ ${this.displayValue[0]} - € ${
         this.displayValue[this.displayValue.length - 1]
       }`;
+    },
+  },
+  watch: {
+    foundProductsPricesOffered: {
+      handler: function (newVal) {
+        this.value = [...this.priceMinMax];
+        this.$refs.slider.setValue(this.value);
+      },
     },
   },
   created() {

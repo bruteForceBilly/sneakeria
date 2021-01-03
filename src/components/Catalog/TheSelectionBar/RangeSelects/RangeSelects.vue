@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div v-if="thereIsFoundProducts">
       <Menu v-for="item in selects" :key="item.name" :item="item">
         <template v-slot:menu-items>
           <MenuOption
@@ -21,6 +21,7 @@
 import Menu from "../DropDownMenu/Menu.vue";
 import MenuOption from "../DropDownMenu/MenuOption.vue";
 import MenuInputRange from "../DropDownMenu/MenuInputRange.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -31,6 +32,14 @@ export default {
   props: {
     selects: {
       type: Array,
+    },
+  },
+  computed: {
+    ...mapGetters("search", ["foundProducts"]),
+    thereIsFoundProducts() {
+      return this.foundProducts === null || this.foundProducts.length === 0
+        ? false
+        : true;
     },
   },
 };
