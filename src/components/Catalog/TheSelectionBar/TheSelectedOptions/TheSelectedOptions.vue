@@ -64,9 +64,6 @@ export default {
       );
     },
   },
-  beforeUpdate() {
-    console.log("selectedOptionsElements", this.selectedOptionsElements);
-  },
 };
 </script>
 

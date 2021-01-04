@@ -76,7 +76,7 @@ const routes = [
             nextConfig.query = query;
           }
 
-          console.log("nextConfig", nextConfig);
+          //console.log("nextConfig", nextConfig);
 
           next(nextConfig);
         })

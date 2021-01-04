@@ -5,8 +5,8 @@
       class="ml-2 mt-2"
       width="208px"
       height="2px"
-      :min="priceMinInit"
-      :max="priceMaxInit"
+      :min="rangeMin"
+      :max="rangeMax"
       dot-size="20"
       v-model.lazy="value"
       tooltip="none"
@@ -36,10 +36,10 @@ export default {
   },
   data() {
     return {
-      value: [0, 100],
-      priceMinInit: 0,
-      priceMaxInit: 100,
-      displayValue: [0, 100],
+      value: null,
+      rangeMin: null,
+      rangeMax: null,
+      displayValue: null,
     };
   },
   methods: {
@@ -49,8 +49,16 @@ export default {
     updateRouter() {
       let searchQuery =
         this.searchQueryString +
-        `price_min=${this.priceMin}&&price_max=${this.priceMax}`;
+        `price_min=${this.tupleMin(this.value)}&price_max=${this.tupleMax(
+          this.value
+        )}`;
       this.$router.push("search?" + searchQuery);
+    },
+    tupleMin(tuple) {
+      return tuple[0];
+    },
+    tupleMax(tuple) {
+      return tuple[tuple.length - 1];
     },
   },
   computed: {
@@ -62,17 +70,11 @@ export default {
       "foundProducts",
     ]),
     ...mapGetters("navigation", ["selectedOptionsObject"]),
-
-    priceMin() {
-      return [...this.value].shift();
-    },
-    priceMax() {
-      return [...this.value].pop();
-    },
-    priceMinMax() {
-      let res = [];
-      res.push(this.priceMinInit, this.priceMaxInit);
-      return res;
+    productPriceRange() {
+      let min, max;
+      min = Math.min(...this.foundProductsPricesOffered);
+      max = Math.max(...this.foundProductsPricesOffered);
+      return [min, max];
     },
     displayValueHeading() {
       return `€ ${this.displayValue[0]} - € ${
@@ -84,26 +86,24 @@ export default {
     selectedOptionsObject: {
       deep: true,
       handler: function (newVal) {
-        console.log("watcher");
         if (this.foundProductsPricesOffered.length > 0) {
-          this.priceMaxInit = Math.max(...this.foundProductsPricesOffered);
-          this.priceMinInit = Math.min(...this.foundProductsPricesOffered);
-
-          if (this.priceMinInit > this.priceMin) {
-            let copyValue = [...this.value];
-            let res = [];
-            res.push(this.priceMinInit, copyValue[copyValue.length - 1]);
-            console.log("priceMinInit more than price min", this.value, res);
-            this.$refs.slider.setValue(res);
+          if (
+            this.tupleMin(this.productPriceRange) > this.tupleMin(this.value)
+          ) {
+            this.$refs.slider.setValue(
+              this.tupleMin(this.productPriceRange),
+              this.tupleMax(this.value)
+            );
             this.updateDisplayValue();
           }
 
-          if (this.priceMaxInit < this.priceMax) {
-            let copyValue = [...this.value];
-            let res = [];
-            res.push(copyValue[0], this.priceMaxInit);
-            console.log("priceMaxInit less than price max", this.value, res);
-            this.$refs.slider.setValue(res);
+          if (
+            this.tupleMax(this.productPriceRange) > this.tupleMax(this.value)
+          ) {
+            this.$refs.slider.setValue(
+              this.tupleMin(this.value),
+              this.tupleMax(this.productPriceRange)
+            );
             this.updateDisplayValue();
           }
         }
@@ -111,35 +111,14 @@ export default {
     },
   },
   created() {
-    this.priceMaxInit = Math.max(...this.foundProductsPricesOffered);
-    this.priceMinInit = Math.min(...this.foundProductsPricesOffered);
-    this.value = [...this.priceMinMax];
+    this.rangeMin = this.tupleMin(this.productPriceRange);
+    this.rangeMax = this.tupleMax(this.productPriceRange);
+    this.value = [...this.productPriceRange];
     this.displayValue = [...this.value];
   },
   mounted() {
     this.$refs.slider.setValue(this.value);
-    return this.updateDisplayValue();
+    this.updateDisplayValue();
   },
 };
 </script>
-
-<style scoped></style>
-
-<!-- <template>
-  <div>
-    <input type="range" min="33" max="80" v-model="option.value" />
-    {{ option.value }}
-  </div>
-</template> 
-
-<script>
-
-export default {
-  name: "MenuInputRange",
-  props: {
-    option: Object,
-    item: Object,
-  },
-};
-</script>
--->
