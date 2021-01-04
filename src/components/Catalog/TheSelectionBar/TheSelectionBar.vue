@@ -32,6 +32,7 @@
           </div>
           <div v-if="!hang" class="mt-4 flex justify-start">
             <TheSelectedOptions
+              :update-route-query-params="settings.updateRouteQueryParams"
               :selected-options-object="settings.selectedOptionsObject"
               :selects="settings.selects"
             ></TheSelectedOptions>

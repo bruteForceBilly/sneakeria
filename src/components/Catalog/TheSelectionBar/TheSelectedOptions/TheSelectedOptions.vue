@@ -15,7 +15,11 @@
       </div>
     </div>
 
-    <div v-if="priceOperators !== false" class="tag focus:outline-none">
+    <div
+      v-if="priceOperators !== false"
+      @click="togglePriceOperator()"
+      class="tag focus:outline-none"
+    >
       {{ priceOperators }}
       <span class="font-hairline text-gray-800 ml-1 inline">x</span>
     </div>
@@ -23,6 +27,7 @@
     <div
       v-show="Object.keys(selectedOptionsObject).length > 0"
       @click="clearAllTags()"
+      class="cursor-pointer"
     >
       <span
         class="px-0 mx-2 underline bg-transparent py-1 text-gray-800 font-sans font-normal text-sm lowercase"
@@ -35,7 +40,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 // RENAME COMPONENT TO TAGSBAR AND DECOUPLE IT FROM SELECTION BAR
 
 export default {
@@ -50,16 +55,16 @@ export default {
         return {};
       },
     },
+    updateRouteQueryParams: Function,
   },
   computed: {
     ...mapGetters("navigation", ["selectedOptionsElements"]),
+    ...mapState("route", ["path", "params", "query"]),
     priceOperators() {
       let priceMin =
         this.$store.state.route.query["price.amountOffered_gte"] ?? false;
       let priceMax =
         this.$store.state.route.query["price.amountOffered_lte"] ?? false;
-
-      console.log("priceOperators prop", priceMin, priceMax);
 
       return priceMin && priceMax ? `€ ${priceMin} - € ${priceMax}` : false;
     },
@@ -71,9 +76,10 @@ export default {
         ? (option.checked = true)
         : (option.checked = false);
     },
+    togglePriceOperator() {
+      this.updateRouteQueryParams(this.selectedOptionsObject);
+    },
     clearAllTags() {
-      console.log("reset was hit");
-      // replace router query to empty
       let copySelectedOptionsElements = [...this.selectedOptionsElements];
       return copySelectedOptionsElements.forEach((option) =>
         this.toggleOption(option)
@@ -85,10 +91,10 @@ export default {
 
 <style lang="postcss" scoped>
 .tag {
-  @apply py-1 text-gray-800 font-sans font-normal text-sm lowercase px-4 no-underline bg-gray-300 rounded-full mr-2;
+  @apply py-1 cursor-pointer text-gray-800 font-sans font-normal text-sm lowercase px-4 no-underline bg-gray-300 rounded-full mr-2;
 }
 
 .clear-all {
-  @apply px-0 mx-2 underline bg-transparent py-1 text-gray-800 font-sans font-normal text-sm lowercase;
+  @apply px-0 mx-2 cursor-pointer underline bg-transparent py-1 text-gray-800 font-sans font-normal text-sm lowercase;
 }
 </style>
