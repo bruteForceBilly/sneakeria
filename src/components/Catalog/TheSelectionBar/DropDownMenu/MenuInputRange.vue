@@ -47,12 +47,25 @@ export default {
       return (this.displayValue = this.$refs.slider.getValue());
     },
     updateRouter() {
-      let searchQuery =
-        this.searchQueryString +
-        `price_min=${this.tupleMin(this.value)}&price_max=${this.tupleMax(
-          this.value
-        )}`;
-      this.$router.push("search?" + searchQuery);
+      let queryConfig = this.queryParamsObject?.productProp.reduce(
+        (acc, cv) => {
+          for (const [key, value] of Object.entries(cv)) {
+            acc[key] = value;
+          }
+          return acc;
+        },
+        {
+          price_gte: this.tupleMin(this.value),
+          price_lte: this.tupleMax(this.value),
+        }
+      );
+
+      this.$router
+        .push({
+          name: "searchQueryRoute",
+          query: queryConfig,
+        })
+        .catch((error) => console.log("error", error));
     },
     tupleMin(tuple) {
       return tuple[0];
@@ -63,7 +76,7 @@ export default {
   },
   computed: {
     ...mapState("route", ["path", "params", "query"]),
-    ...mapState("search", ["queryParamsString"]),
+    ...mapState("search", ["queryParamsString", "queryParamsObject"]),
     ...mapGetters("search", [
       "foundProductsPricesOffered",
       "searchQueryString",

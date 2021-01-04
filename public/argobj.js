@@ -8,8 +8,8 @@ const API_LEGEND = {
   look: "product",
   brand: "product",
   color: "version",
-  price_min: "operator",
-  price_max: "operator",
+  price_gte: "operator",
+  price_lte: "operator",
 };
 
 const qObjectified = {
@@ -17,8 +17,8 @@ const qObjectified = {
   brand: "nike",
   campaigns: "sale",
   color: "red",
-  price_min: 29,
-  price_max: 359,
+  price_gte: 29,
+  price_lte: 359,
 };
 
 let test = Object.entries(qObjectified).reduce(

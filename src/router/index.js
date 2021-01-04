@@ -57,12 +57,17 @@ const routes = [
           store.state.search.queryParamsObject
         );
       }
-
-      products("search", searchQuery, (data) => {
-        store.commit("search/foundProductsMutation", data);
+      return new Promise(function (resolve, reject) {
+        products("search", searchQuery, (data) => {
+          if (data !== undefined) {
+            store.commit("search/foundProductsMutation", data);
+            return resolve(data);
+          } else {
+            return reject(new Error("Poducts call failed in searchQuery"));
+          }
+        });
       })
-        .then(() => {
-          store.commit("search/routeLastBeforeEnterMutation", to.name);
+        .then((response) => {
           let slug = store.getters["search/searchQueryStringKebab"];
 
           const { params, query } = slug;
@@ -76,7 +81,7 @@ const routes = [
             nextConfig.query = query;
           }
 
-          //console.log("nextConfig", nextConfig);
+          store.commit("search/routeLastBeforeEnterMutation", to.name);
 
           next(nextConfig);
         })

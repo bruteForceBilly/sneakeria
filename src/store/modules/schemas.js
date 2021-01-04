@@ -40,7 +40,7 @@ const state = () => ({
     ],
   },
   operator: {
-    price: ["price_min", "price_max"],
+    price: ["price_gte", "price_lte"],
   },
 });
 

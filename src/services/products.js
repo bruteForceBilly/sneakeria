@@ -29,6 +29,9 @@ export default function (o, q, cb) {
 
     return axios
       .get(API_PRODUCTS + "?" + product)
+      .catch(function (error) {
+        console.log("API_PRODUCTS error:", error);
+      })
       .then((response) => {
         apiProductResponse = response.data;
 
@@ -42,8 +45,12 @@ export default function (o, q, cb) {
         return apiVersionProductIdsParam;
       })
       .then((response) => {
+        console.log("QUERY STRING", version, operator);
         return axios
           .get(API_VERSIONS + "?" + response + version + "&" + operator)
+          .catch(function (error) {
+            console.log("API_VERSIONS error:", error);
+          })
           .then((response) => {
             apiVersionResponse = response.data;
 
