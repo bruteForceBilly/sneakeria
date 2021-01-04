@@ -5,14 +5,19 @@
         <div v-if="option.checked">
           <button
             v-bind:checked="option.checked"
-            @click="toggle(option)"
+            @click="toggleOption(option)"
             class="tag focus:outline-none"
           >
             {{ option.label }}
-            <span class="font-hairline text-gray-600 ml-1 inline">x</span>
+            <span class="font-hairline text-gray-800 ml-1 inline">x</span>
           </button>
         </div>
       </div>
+    </div>
+
+    <div v-if="priceOperators !== false" class="tag focus:outline-none">
+      {{ priceOperators }}
+      <span class="font-hairline text-gray-800 ml-1 inline">x</span>
     </div>
 
     <div
@@ -48,9 +53,19 @@ export default {
   },
   computed: {
     ...mapGetters("navigation", ["selectedOptionsElements"]),
+    priceOperators() {
+      let priceMin =
+        this.$store.state.route.query["price.amountOffered_gte"] ?? false;
+      let priceMax =
+        this.$store.state.route.query["price.amountOffered_lte"] ?? false;
+
+      console.log("priceOperators prop", priceMin, priceMax);
+
+      return priceMin && priceMax ? `€ ${priceMin} - € ${priceMax}` : false;
+    },
   },
   methods: {
-    toggle(option) {
+    toggleOption(option) {
       this.$store.commit("setByRoute", false);
       return option.checked === false
         ? (option.checked = true)
@@ -58,9 +73,10 @@ export default {
     },
     clearAllTags() {
       console.log("reset was hit");
+      // replace router query to empty
       let copySelectedOptionsElements = [...this.selectedOptionsElements];
       return copySelectedOptionsElements.forEach((option) =>
-        this.toggle(option)
+        this.toggleOption(option)
       );
     },
   },
