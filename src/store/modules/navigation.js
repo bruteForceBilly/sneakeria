@@ -539,13 +539,6 @@ const actions = {
 
     const { productProp = null, versionProp = null } = queryParamsObject;
 
-    console.log(
-      "selectOptionsCheckToggle queryParamsObject",
-      queryParamsObject,
-      "rootState setByRoute",
-      rootState.setByRoute
-    );
-
     let elements = [];
 
     [productProp, versionProp].forEach((prop) =>
@@ -591,8 +584,6 @@ const mutations = {
     let foundElement = state.selects
       .find((select) => select.name === el.name)
       .options.find((option) => option.value === el.value);
-
-    console.log("toggleElement", el);
 
     return !foundElement.checked
       ? (foundElement.checked = true)

@@ -22,7 +22,9 @@
                 :selects="settings.selects"
               ></FilterSelects>
 
-              <RangeSelects :selects="settings.rangeSliders"></RangeSelects>
+              <RangeSelects
+                :range-sliders="settings.rangeSliders"
+              ></RangeSelects>
 
               <SortSelects class="ml-auto" :sorts="settings.sorts">
               </SortSelects>

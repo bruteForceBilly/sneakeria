@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="thereIsFoundProducts">
-      <Menu v-for="item in selects" :key="item.name" :item="item">
+      <Menu v-for="item in rangeSliders" :key="item.name" :item="item">
         <template v-slot:menu-items>
           <MenuOption
             :item="item"
@@ -30,8 +30,14 @@ export default {
     MenuInputRange,
   },
   props: {
-    selects: {
+    rangeSliders: {
       type: Array,
+    },
+    selectedOptionsObject: {
+      type: Object,
+      default: function () {
+        return {};
+      },
     },
   },
   computed: {

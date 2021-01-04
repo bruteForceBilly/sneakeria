@@ -11,7 +11,7 @@
       v-model.lazy="value"
       tooltip="none"
       ref="slider"
-      :silent="true"
+      :silent="false"
       :lazy="true"
       :enable-cross="true"
       @dragging="updateDisplayValue()"
@@ -37,6 +37,8 @@ export default {
   data() {
     return {
       value: [0, 100],
+      priceMinInit: 0,
+      priceMaxInit: 100,
       displayValue: [0, 100],
     };
   },
@@ -47,8 +49,7 @@ export default {
     updateRouter() {
       let searchQuery =
         this.searchQueryString +
-        `&price_max=${this.priceMax}&price_min=${this.priceMin}`;
-
+        `price_min=${this.priceMin}&&price_max=${this.priceMax}`;
       this.$router.push("search?" + searchQuery);
     },
   },
@@ -68,12 +69,6 @@ export default {
     priceMax() {
       return [...this.value].pop();
     },
-    priceMaxInit() {
-      return Math.max(...this.foundProductsPricesOffered);
-    },
-    priceMinInit() {
-      return Math.min(...this.foundProductsPricesOffered);
-    },
     priceMinMax() {
       let res = [];
       res.push(this.priceMinInit, this.priceMaxInit);
@@ -86,14 +81,38 @@ export default {
     },
   },
   watch: {
-    foundProductsPricesOffered: {
+    selectedOptionsObject: {
+      deep: true,
       handler: function (newVal) {
-        this.value = [...this.priceMinMax];
-        this.$refs.slider.setValue(this.value);
+        console.log("watcher");
+        if (this.foundProductsPricesOffered.length > 0) {
+          this.priceMaxInit = Math.max(...this.foundProductsPricesOffered);
+          this.priceMinInit = Math.min(...this.foundProductsPricesOffered);
+
+          if (this.priceMinInit > this.priceMin) {
+            let copyValue = [...this.value];
+            let res = [];
+            res.push(this.priceMinInit, copyValue[copyValue.length - 1]);
+            console.log("priceMinInit more than price min", this.value, res);
+            this.$refs.slider.setValue(res);
+            this.updateDisplayValue();
+          }
+
+          if (this.priceMaxInit < this.priceMax) {
+            let copyValue = [...this.value];
+            let res = [];
+            res.push(copyValue[0], this.priceMaxInit);
+            console.log("priceMaxInit less than price max", this.value, res);
+            this.$refs.slider.setValue(res);
+            this.updateDisplayValue();
+          }
+        }
       },
     },
   },
   created() {
+    this.priceMaxInit = Math.max(...this.foundProductsPricesOffered);
+    this.priceMinInit = Math.min(...this.foundProductsPricesOffered);
     this.value = [...this.priceMinMax];
     this.displayValue = [...this.value];
   },
