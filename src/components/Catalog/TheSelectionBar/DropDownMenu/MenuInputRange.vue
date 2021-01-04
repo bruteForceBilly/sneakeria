@@ -11,7 +11,7 @@
       v-model.lazy="value"
       tooltip="none"
       ref="slider"
-      :silent="false"
+      :silent="true"
       :lazy="true"
       :enable-cross="true"
       @dragging="updateDisplayValue()"
@@ -55,8 +55,8 @@ export default {
           return acc;
         },
         {
-          price_gte: this.tupleMin(this.value),
-          price_lte: this.tupleMax(this.value),
+          "price.amountOffered_gte": this.tupleMin(this.value),
+          "price.amountOffered_lte": this.tupleMax(this.value),
         }
       );
 
@@ -65,13 +65,19 @@ export default {
           name: "searchQueryRoute",
           query: queryConfig,
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => {});
     },
     tupleMin(tuple) {
       return tuple[0];
     },
     tupleMax(tuple) {
       return tuple[tuple.length - 1];
+    },
+    initialize() {
+      this.rangeMin = this.tupleMin(this.productPriceRange);
+      this.rangeMax = this.tupleMax(this.productPriceRange);
+      this.value = [...this.productPriceRange];
+      this.displayValue = [...this.value];
     },
   },
   computed: {
@@ -96,40 +102,48 @@ export default {
     },
   },
   watch: {
-    selectedOptionsObject: {
+    foundProducts: {
       deep: true,
-      handler: function (newVal) {
-        if (this.foundProductsPricesOffered.length > 0) {
-          if (
-            this.tupleMin(this.productPriceRange) > this.tupleMin(this.value)
-          ) {
-            this.$refs.slider.setValue(
-              this.tupleMin(this.productPriceRange),
-              this.tupleMax(this.value)
-            );
-            this.updateDisplayValue();
-          }
+      immediate: false,
+      handler: function (newVal, oldVal) {
+        // IN THEORY WE SHOULD HAVE TO DO THIS
+        // BECAUSE DESELECTING A TAG LEADS TO ROUTE UPDATE
 
-          if (
-            this.tupleMax(this.productPriceRange) > this.tupleMax(this.value)
-          ) {
-            this.$refs.slider.setValue(
-              this.tupleMin(this.value),
-              this.tupleMax(this.productPriceRange)
-            );
+        if (this.tupleMin(this.productPriceRange) > this.tupleMin(this.value)) {
+          this.rangeMin = this.tupleMin(this.productPriceRange);
+          this.rangeMax = this.tupleMax(this.value);
+          this.value = [this.rangeMin, this.rangeMax];
+          this.displayValue = [...this.value];
+
+          //console.log("If 1", this.value, this.rangeMin, this.rangeMax);
+
+          return this.$nextTick(() => {
+            this.$refs.slider.setValue(this.value);
             this.updateDisplayValue();
-          }
+          });
+        }
+        if (this.tupleMax(this.productPriceRange) > this.tupleMax(this.value)) {
+          this.rangeMin = this.tupleMin(this.value);
+          this.rangeMax = this.tupleMax(this.productPriceRange);
+          this.value = [this.rangeMin, this.rangeMax];
+          this.displayValue = [...this.value];
+
+          //console.log("If 2", this.value, this.rangeMin, this.rangeMax);
+
+          return this.$nextTick(() => {
+            this.$refs.slider.setValue(this.value);
+            this.updateDisplayValue();
+          });
         }
       },
     },
   },
   created() {
-    this.rangeMin = this.tupleMin(this.productPriceRange);
-    this.rangeMax = this.tupleMax(this.productPriceRange);
-    this.value = [...this.productPriceRange];
-    this.displayValue = [...this.value];
+    //console.log("created");
+    this.initialize();
   },
   mounted() {
+    //console.log("mounted");
     this.$refs.slider.setValue(this.value);
     this.updateDisplayValue();
   },

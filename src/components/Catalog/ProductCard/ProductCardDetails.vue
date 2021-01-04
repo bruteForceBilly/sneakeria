@@ -49,13 +49,15 @@
 
       <!-- COLORS -->
       <h6 class="text-gray-600 self-end text-vw-xxs w-full">
-        <!-- {{
+        {{
           productVersionsColors.length > 1
             ? productVersionsColors.length + " Colors"
             : productVersionsColors.length + " Color"
-        }} -->
-        versions: {{ productVersions.length }} | min price :
-        {{ product.minPrice }} | max price : {{ product.maxPrice }}
+        }}
+        <!-- versions: {{ productVersions.length }} -->
+
+        <!-- | min price :
+        {{ product.minPrice }} | max price : {{ product.maxPrice }} -->
       </h6>
       <!--
       <h6 class="text-gray-600 mt-1 text-vw-xxs w-full">

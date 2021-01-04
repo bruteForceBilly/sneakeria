@@ -23,7 +23,7 @@ export default function (o, q, cb) {
       })
       .catch((err) => err.toString());
   } else if (o === "search") {
-    const { product, version, operator } = q;
+    const { product, version = null, operator = null } = q;
     let apiProductResponse = [];
     let apiVersionResponse = [];
 
@@ -40,14 +40,28 @@ export default function (o, q, cb) {
           .reduce(function (acc, cv) {
             acc += `productId=${cv}&`;
             return acc;
-          }, "");
+          }, "")
+          .slice(0, -1);
 
         return apiVersionProductIdsParam;
       })
       .then((response) => {
-        console.log("QUERY STRING", version, operator);
+        let apiVersionsQuery = "?";
+
+        apiVersionsQuery += response;
+
+        if (version !== null) {
+          apiVersionsQuery += "&" + version;
+        }
+
+        if (operator !== null) {
+          apiVersionsQuery += "&" + operator;
+        }
+
+        //console.log(apiVersionsQuery);
+
         return axios
-          .get(API_VERSIONS + "?" + response + version + "&" + operator)
+          .get(API_VERSIONS + apiVersionsQuery)
           .catch(function (error) {
             console.log("API_VERSIONS error:", error);
           })
