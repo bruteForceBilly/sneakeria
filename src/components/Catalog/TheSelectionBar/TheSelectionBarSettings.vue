@@ -29,6 +29,8 @@ export default {
   },
   computed: {
     ...mapState("navigation", ["selectsIsLoading"]),
+    ...mapState("route", ["query"]),
+
     ...mapGetters("navigation", [
       "selectedOptionsElements",
       "selectedOptionsObject",
@@ -51,18 +53,19 @@ export default {
   },
   methods: {
     ...mapActions("navigation", ["selectOptionsCheckToggle"]),
-    updateRouteQueryParams(argObj) {
-      //console.log("updateRouteQueryParams", argObj);
+    updateRouteQueryParams(argObj, operator = null) {
+      //console.log("updateRouteQueryParams", argObj, "operator", operator);
 
-      if (Object.keys(argObj).length > 0) {
-        let queryParamsString = Object.keys(argObj)
+      let params = { ...argObj, ...operator };
+
+      let queryParamsString;
+
+      if (Object.keys(params).length > 0) {
+        queryParamsString += Object.keys(params)
           .reduce((acc, cv) => {
-            return (acc += `${cv}=${argObj[cv]}&`);
+            return (acc += `${cv}=${params[cv]}&`);
           }, "")
           .slice(0, -1);
-
-        //console.log("queryParamsString", queryParamsString);
-
         this.$router.push("search?" + queryParamsString).catch((err) => {});
       } else {
         this.$router.push({ name: "all" }).catch((err) => {});
@@ -75,7 +78,7 @@ export default {
       immediate: false,
       handler: function (newValue, oldValue) {
         if (this.getSetByRoute === false) {
-          this.updateRouteQueryParams(this.selectedOptionsObject);
+          this.updateRouteQueryParams(this.selectedOptionsObject, this.query);
         }
       },
     },

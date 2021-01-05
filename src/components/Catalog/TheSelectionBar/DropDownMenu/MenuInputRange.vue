@@ -60,6 +60,8 @@ export default {
         }
       );
 
+      console.log("queryConfig", queryConfig, "router path", this.path);
+
       this.$router
         .push({
           name: "searchQueryRoute",
