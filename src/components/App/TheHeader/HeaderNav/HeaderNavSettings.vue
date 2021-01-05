@@ -11,22 +11,22 @@ export default {
       items: {
         links: [
           {
-            name: "Men",
+            name: "section",
             label: "Men",
             value: "men",
           },
           {
-            name: "Women",
+            name: "section",
             label: "Women",
             value: "women",
           },
           {
-            name: "New",
+            name: "campaigns",
             label: "New",
             value: "new",
           },
           {
-            name: "Essentials",
+            name: "campaigns",
             label: "Essentials",
             value: "essentials",
           },

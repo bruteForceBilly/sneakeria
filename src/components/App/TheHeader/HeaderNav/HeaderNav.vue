@@ -8,9 +8,7 @@
             class="no-underline uppercase tracking-widest text-black text-sm py-3 mr-8 border-transparent border-b-2 hover:border-black"
             :class="[index > 1 ? 'font-normal' : 'font-bold']"
           >
-            <router-link
-              :to="{ name: 'searchRequestRoute', params: { id: link.value } }"
-            >
+            <router-link :to="link.value">
               {{ link.label }}
             </router-link>
           </span>

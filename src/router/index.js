@@ -47,16 +47,20 @@ const routes = [
 
       let searchQuery;
 
-      if (store.state.search.routeLastBeforeEnter !== "searchRequestRoute") {
+      if (store.state.search.routeLastBeforeEnter === "searchRequestRoute") {
+        searchQuery = store.state.search.queryParamsObject;
+        // Reset all checked options to false then toggle with query params
+        store.dispatch("navigation/selectOptionsCheckReset").then(() => {
+          store.dispatch(
+            "navigation/selectOptionsCheckToggle",
+            store.state.search.queryParamsObject
+          );
+        });
+      } else {
         store.dispatch("search/queryParamsObjectAction", to);
         searchQuery = store.state.search.queryParamsObject; //to.fullPath.split("?").pop();
-      } else {
-        searchQuery = store.state.search.queryParamsObject;
-        store.dispatch(
-          "navigation/selectOptionsCheckToggle",
-          store.state.search.queryParamsObject
-        );
       }
+
       return new Promise(function (resolve, reject) {
         products("search", searchQuery, (data) => {
           if (data !== undefined) {

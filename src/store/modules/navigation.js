@@ -537,6 +537,11 @@ const actions = {
   ) {
     // rename to selectOptionsCheckToggleByRouter
 
+    // console.log(
+    //   "selectOptionsCheckToggle queryParamsObject",
+    //   queryParamsObject
+    // );
+
     const { productProp = null, versionProp = null } = queryParamsObject;
 
     let elements = [];
@@ -568,6 +573,9 @@ const actions = {
       commit("toggleElement", el)
     );
   },
+  selectOptionsCheckReset({ commit, getters }) {
+    return getters.allOptions.forEach((el) => commit("resetElement", el));
+  },
 };
 
 const mutations = {
@@ -588,6 +596,10 @@ const mutations = {
     return !foundElement.checked
       ? (foundElement.checked = true)
       : (foundElement.checked = false);
+  },
+
+  resetElement(state, el) {
+    return (el.checked = false);
   },
 
   selectsSetMutation(state, selects) {
