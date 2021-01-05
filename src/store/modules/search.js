@@ -33,7 +33,7 @@ const getters = {
   searchQueryStringKebab: (state) => {
     const copyQueryParamsObject = { ...state.queryParamsObject };
 
-    const { product, version, operator } = copyQueryParamsObject;
+    const { product = null, version = null, operator } = copyQueryParamsObject;
 
     // empty string is not a good init value
 
@@ -51,32 +51,44 @@ const getters = {
     }
 
     const kebabify = function (input) {
-      return input
-        .split("&")
-        .reduce((acc, cv) => {
-          acc += cv.split("=").pop() + "-";
-          return acc;
-        }, "")
-        .slice(0, -1);
+      if (input === null) {
+        return null;
+      } else {
+        return input
+          .split("&")
+          .reduce((acc, cv) => {
+            acc += cv.split("=").pop() + "-";
+            return acc;
+          }, "")
+          .slice(0, -1);
+      }
     };
 
-    let productVersion = [product, version]
-      .filter((prop) => prop !== undefined)
-      .reduce((acc, cv) => {
-        acc += kebabify(cv) + "-";
-        return acc;
-      }, "")
-      .slice(0, -1);
+    let productString = kebabify(product);
+
+    let versionString = kebabify(version);
+
+    let productVersionString = () => {
+      if (!productString && !versionString) {
+        return "";
+      } else if (productString && !versionString) {
+        return productString;
+      } else if (!productString && versionString) {
+        return versionString;
+      } else if (productString && versionString) {
+        return productString + "-" + versionString;
+      }
+    };
 
     const makeString = function () {
       if (operator === undefined) {
         return {
-          params: productVersion,
+          params: productVersionString(),
           query: null,
         };
       } else {
         return {
-          params: productVersion,
+          params: productVersionString(),
           query: operatorStringToObject,
         };
       }
