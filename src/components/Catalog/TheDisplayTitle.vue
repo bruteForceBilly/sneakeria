@@ -17,7 +17,7 @@
         >
         <span v-else>
           <span v-if="searchFoundProductsLength > 0">
-            {{ currentRoute.path | displayPath }}
+            {{ displayTitel }}
             <span class="font-light tracking-wider text-gray-600 text-xl">
               ( {{ searchFoundProductsLength }} Products )
             </span>
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex";
+
 export default {
   props: {
     searchFoundProductsLength: {
@@ -39,11 +41,16 @@ export default {
       type: Object,
     },
   },
-  filters: {
-    displayPath: function (value) {
-      if (!value) return "";
-      value = value.toString();
-      return value.replace(/[-]/g, " ∙ ").substr(1);
+  computed: {
+    ...mapGetters("search", ["queryParamsObject", "selectedDisplayTitle"]),
+    ...mapState(["route"]),
+    displayTitel() {
+      return [
+        this.selectedDisplayTitle(this.queryParamsObject.productProp),
+        this.selectedDisplayTitle(this.queryParamsObject.versionProp),
+      ]
+        .toString()
+        .replace(",", " ∙ ");
     },
   },
 };

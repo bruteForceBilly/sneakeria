@@ -13,6 +13,42 @@ const state = () => ({
 });
 
 const getters = {
+  selectedDisplayTitle: (state) => (arr) => {
+    const sortValues = function (arr) {
+      return arr.reduce((acc, cv) => {
+        if (acc.length) {
+          for (const [key1, value1] of Object.entries(cv)) {
+            for (const [key2, value2] of Object.entries(acc[acc.length - 1])) {
+              if (key1 === key2) {
+                let temp = {};
+                console.log("jello", key1, key2);
+                temp[key2] = [value2, value1];
+                acc[acc.length - 1] = temp;
+              } else {
+                acc.push(cv);
+              }
+            }
+          }
+        } else {
+          acc.push(cv);
+        }
+
+        return acc;
+      }, []);
+    };
+
+    const makeString = function (arr) {
+      return arr.reduce((acc, cv) => {
+        Object.values(cv).forEach((value) => {
+          acc.push(value.toString().replace(",", "+"));
+        });
+        return acc;
+      }, []);
+    };
+
+    return makeString(sortValues(arr));
+  },
+
   queryParamsObject: (state) => {
     return state.queryParamsObject;
   },
