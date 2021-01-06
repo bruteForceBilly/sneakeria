@@ -4,6 +4,7 @@ import Vue from "vue";
 
 const state = () => ({
   products: null,
+  queryParamsObject: null,
   queryParamsString: null,
   queryParamsKebab: null,
   foundProducts: null,
@@ -35,10 +36,10 @@ const getters = {
 
     const { product = null, version = null, operator } = copyQueryParamsObject;
 
-    console.log(
-      "searchQueryStringKebab copyQueryParamsObject \n",
-      copyQueryParamsObject
-    );
+    // console.log(
+    //   "searchQueryStringKebab copyQueryParamsObject \n",
+    //   copyQueryParamsObject
+    // );
     // console.log(
     //   "product",
     //   product,
@@ -139,7 +140,7 @@ const actions = {
     let query = to.query;
 
     if (to.name === "searchQueryRoute") {
-      params = Object.values(to.query);
+      params = Object.values(to.query).flat();
     } else if (to.name === "searchRequestRoute") {
       params = to.params.id.split("-");
     }
@@ -244,8 +245,8 @@ const actions = {
       }
     }
 
-    // console.log("queryParamsObject INPUT", to);
-    // console.log("queryParamsObject OUTPUT", queryParamsObject);
+    console.log("queryParamsObject INPUT", to);
+    console.log("queryParamsObject OUTPUT", queryParamsObject);
 
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
@@ -301,8 +302,8 @@ const actions = {
 
     queryParamsKebab = res.flat().toString().replace(/[,]/g, "-");
 
-    // console.log("queryParamsKebabAction queryParamsObject", queryParamsObject);
-    // console.log("queryParamsKebabAction queryParamsKebab", queryParamsKebab);
+    console.log("queryParamsKebabAction queryParamsObject", queryParamsObject);
+    console.log("queryParamsKebabAction queryParamsKebab", queryParamsKebab);
 
     return commit("queryParamsKebabMutation", queryParamsKebab);
   },
