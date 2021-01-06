@@ -35,6 +35,22 @@ const getters = {
 
     const { product = null, version = null, operator } = copyQueryParamsObject;
 
+    console.log(
+      "searchQueryStringKebab copyQueryParamsObject \n",
+      copyQueryParamsObject
+    );
+    // console.log(
+    //   "product",
+    //   product,
+    //   "\n",
+    //   "version",
+    //   version,
+    //   "\n",
+    //   "operator",
+    //   operator,
+    //   "\n"
+    // );
+
     // empty string is not a good init value
 
     let operatorStringToObject = null;
@@ -120,25 +136,35 @@ const actions = {
     const queryParamsObjectArray = [];
 
     let params = [];
-    let query = {};
+    let query = to.query;
 
     if (to.name === "searchQueryRoute") {
       params = Object.values(to.query);
-      query = Object.keys(to.query);
     } else if (to.name === "searchRequestRoute") {
-      query = to.query;
       params = to.params.id.split("-");
     }
 
-    const findByPropKey = function (arr, table) {
-      let res = arr.reduce(function (acc, cv) {
-        for (const key of Object.keys(table)) {
-          if (table[key].includes(cv)) {
-            acc.push({ [key]: cv });
+    const findByPropKey = function (arg, table) {
+      let res = [];
+
+      if (Array.isArray(arg)) {
+        res = arg.reduce(function (acc, cv) {
+          for (const key of Object.keys(table)) {
+            if (table[key].includes(cv)) {
+              acc.push({ [key]: cv });
+            }
           }
-        }
-        return acc;
-      }, []);
+          return acc;
+        }, []);
+      } else {
+        Object.keys(query).forEach((key) => {
+          if (Object.values(table).flat().includes(key)) {
+            let temp = {};
+            temp[key] = query[key];
+            res.push(temp);
+          }
+        });
+      }
       return res;
     };
 
@@ -171,35 +197,9 @@ const actions = {
       });
     }
 
-    if (to.name === "searchRequestRoute" && Object.keys(query).length > 0) {
-      let res = "";
-      for (const [key, value] of Object.entries(to.query)) {
-        res += `${key}=${value}&`;
-      }
-      queryParamsObjectArray.push({
-        operator: res.slice(0, -1),
-      });
-    }
-
-    if (to.name === "searchQueryRoute") {
-      //Array.from(queryString(params, rootState.schemas.operator)).length > 0
-
-      let foundOperatorProps = findByPropKey(
-        query,
-        rootState.schemas.operator
-      ).reduce((acc, cv) => {
-        acc.push(Object.values(cv));
-        return acc.flat();
-      }, []);
-
-      let operatorProp = foundOperatorProps.reduce((acc, cv) => {
-        let res = {};
-        res[cv] = to.query[cv];
-        acc.push(res);
-        return acc;
-      }, []);
-
-      let operatorPropString = operatorProp
+    if (Object.keys(query).length > 0) {
+      let foundOperatorProps = findByPropKey(query, rootState.schemas.operator);
+      let operatorPropString = foundOperatorProps
         .reduce((acc, cv) => {
           for (const [key, value] of Object.entries(cv)) {
             acc += `${key}=${value}&`;
@@ -210,7 +210,7 @@ const actions = {
 
       queryParamsObjectArray.push({
         operator: operatorPropString,
-        operatorProp: operatorProp,
+        operatorProp: foundOperatorProps,
       });
     }
 

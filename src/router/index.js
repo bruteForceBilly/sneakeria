@@ -35,13 +35,13 @@ const routes = [
     name: "searchQueryRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      // console.log(
-      //   "ROUTER >>>> searchQueryRoute beforeEnter",
-      //   "to >>",
-      //   to,
-      //   "from >>>",
-      //   from
-      // );
+      console.log(
+        "ROUTER >>>> searchQueryRoute beforeEnter",
+        "to >>",
+        to,
+        "from >>>",
+        from
+      );
 
       store.commit("setByRoute", true);
 
@@ -86,6 +86,8 @@ const routes = [
           }
 
           store.commit("search/routeLastBeforeEnterMutation", to.name);
+
+          console.log("nextConfig slug", slug);
 
           next(nextConfig);
         })
