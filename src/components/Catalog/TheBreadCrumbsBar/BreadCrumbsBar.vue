@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="selects"
     class="flex flex-row items-center py-1 text-gray-800 font-sans font-normal text-sm capitalize tracking-widest"
   >
     <span class="font-black mr-2">←</span>
@@ -17,11 +16,12 @@
 
     <span class="mx-2">/</span>
 
-    <Crumbs :selects="selects" />
+    <Crumbs></Crumbs>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Crumbs from "./Crumbs.vue";
 
 export default {
@@ -32,6 +32,16 @@ export default {
   props: {
     selects: {
       type: Array,
+    },
+  },
+  computed: {
+    ...mapGetters("search", ["queryParamsObject", "selectedDisplayTitle"]),
+
+    displayTitel() {
+      return [
+        this.selectedDisplayTitle(this.queryParamsObject.productProp),
+        this.selectedDisplayTitle(this.queryParamsObject.versionProp),
+      ].flat();
     },
   },
   methods: {

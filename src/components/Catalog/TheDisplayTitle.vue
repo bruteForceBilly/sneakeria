@@ -45,13 +45,20 @@ export default {
     ...mapGetters("search", ["queryParamsObject", "selectedDisplayTitle"]),
     ...mapState(["route"]),
     displayTitel() {
-      return [
+      let res = [
         this.selectedDisplayTitle(this.queryParamsObject.productProp),
         this.selectedDisplayTitle(this.queryParamsObject.versionProp),
-      ]
-        .toString()
-        .replace(",", " ∙ ");
+      ];
+
+      if (res.length === 2 && res[res.length - 1] === null) {
+        return res.flat().toString().replace(/,/g, " ∙ ").slice(0, -3);
+      } else {
+        return res.flat().toString().replace(/,/g, " ∙ ");
+      }
     },
+  },
+  created() {
+    console.log("hello", this.displayTitel);
   },
 };
 </script>

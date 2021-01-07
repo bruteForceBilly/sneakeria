@@ -1,10 +1,6 @@
 <template>
   <div class="h-screen px-4 sm:px-6 md:px-12 xl:px-16">
-    <!-- <BreadCrumbsBar
-      class="pt-8"
-      v-if="!selectsIsLoadingData"
-      :selects="selectsData"
-    ></BreadCrumbsBar> -->
+    <BreadCrumbsBar class="pt-8"></BreadCrumbsBar>
 
     <DisplayTitle
       :current-route="route"
@@ -31,7 +27,7 @@
 </template>
 
 <script>
-//import BreadCrumbsBar from "@/components/Catalog/TheBreadCrumbsBar/BreadCrumbsBar.vue";
+import BreadCrumbsBar from "@/components/Catalog/TheBreadCrumbsBar/BreadCrumbsBar.vue";
 import SelectionBar from "@/components/Catalog/TheSelectionBar/TheSelectionBar.vue";
 import DisplayTitle from "@/components/Catalog/TheDisplayTitle.vue";
 import ProductGrid from "@/components/Catalog/TheProductGrid.vue";
@@ -41,7 +37,7 @@ import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   name: "Catalog",
   components: {
-    //BreadCrumbsBar,
+    BreadCrumbsBar,
     SelectionBar,
     DisplayTitle,
     ProductGrid,
@@ -49,7 +45,11 @@ export default {
   },
   computed: {
     ...mapGetters("load", ["products"]),
-    ...mapGetters("search", ["foundProductsLength"]),
+    ...mapGetters("search", [
+      "foundProductsLength",
+      "queryParamsObject",
+      "selectedDisplayTitle",
+    ]),
     ...mapGetters("navigation", ["selectsGetter"]),
     ...mapState(["route"]),
     ...mapState("navigation", ["selects"]),

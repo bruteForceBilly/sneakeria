@@ -84,7 +84,7 @@ export default function (o, q, cb) {
               (prod) => prod.versions.length > 0
             );
 
-            console.log("SING HALLELUJAH", res);
+            //console.log("SING HALLELUJAH", res);
 
             return cb(res);
           });

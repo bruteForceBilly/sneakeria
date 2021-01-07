@@ -21,7 +21,7 @@ const getters = {
             for (const [key2, value2] of Object.entries(acc[acc.length - 1])) {
               if (key1 === key2) {
                 let temp = {};
-                console.log("jello", key1, key2);
+                //console.log("jello", key1, key2);
                 temp[key2] = [value2, value1];
                 acc[acc.length - 1] = temp;
               } else {
@@ -46,7 +46,11 @@ const getters = {
       }, []);
     };
 
-    return makeString(sortValues(arr));
+    if (arr === undefined) {
+      return null;
+    } else {
+      return makeString(sortValues(arr));
+    }
   },
 
   queryParamsObject: (state) => {
@@ -71,22 +75,6 @@ const getters = {
     const copyQueryParamsObject = { ...state.queryParamsObject };
 
     const { product = null, version = null, operator } = copyQueryParamsObject;
-
-    // console.log(
-    //   "searchQueryStringKebab copyQueryParamsObject \n",
-    //   copyQueryParamsObject
-    // );
-    // console.log(
-    //   "product",
-    //   product,
-    //   "\n",
-    //   "version",
-    //   version,
-    //   "\n",
-    //   "operator",
-    //   operator,
-    //   "\n"
-    // );
 
     // empty string is not a good init value
 
@@ -281,8 +269,8 @@ const actions = {
       }
     }
 
-    console.log("queryParamsObject INPUT", to);
-    console.log("queryParamsObject OUTPUT", queryParamsObject);
+    // console.log("queryParamsObject INPUT", to);
+    // console.log("queryParamsObject OUTPUT", queryParamsObject);
 
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
@@ -338,8 +326,8 @@ const actions = {
 
     queryParamsKebab = res.flat().toString().replace(/[,]/g, "-");
 
-    console.log("queryParamsKebabAction queryParamsObject", queryParamsObject);
-    console.log("queryParamsKebabAction queryParamsKebab", queryParamsKebab);
+    // console.log("queryParamsKebabAction queryParamsObject", queryParamsObject);
+    // console.log("queryParamsKebabAction queryParamsKebab", queryParamsKebab);
 
     return commit("queryParamsKebabMutation", queryParamsKebab);
   },
