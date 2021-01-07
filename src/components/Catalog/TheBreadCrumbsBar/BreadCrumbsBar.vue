@@ -16,7 +16,7 @@
 
     <span class="mx-2">/</span>
 
-    <Crumbs></Crumbs>
+    <Crumbs :selects="displayTitel"></Crumbs>
   </div>
 </template>
 

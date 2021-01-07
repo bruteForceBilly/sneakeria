@@ -64,7 +64,15 @@ export default {
               });
             } else {
               for (const [key, value] of Object.entries(cv)) {
-                acc += `${key}=${value}&`;
+                console.log("else", key, value.length);
+
+                if (value.length > 1) {
+                  value.forEach((val) => {
+                    acc += `${key}=${val}&`;
+                  });
+                } else {
+                  acc += `${key}=${value}&`;
+                }
               }
             }
             return acc;
