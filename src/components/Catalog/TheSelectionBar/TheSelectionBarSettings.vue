@@ -64,8 +64,6 @@ export default {
               });
             } else {
               for (const [key, value] of Object.entries(cv)) {
-                console.log("else", key, value.length);
-
                 if (value.length > 1) {
                   value.forEach((val) => {
                     acc += `${key}=${val}&`;
@@ -79,8 +77,6 @@ export default {
           }
         }, "")
         .slice(0, -1);
-
-      console.log("args", args, "queryParamsString", queryParamsString);
 
       if (!queryParamsString) {
         this.$router.push({ name: "all" }).catch((err) => {});

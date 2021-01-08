@@ -1,25 +1,29 @@
 <template>
   <div
-    v-if="selects"
+    v-if="selectedOptionsElements"
     class="flex flex-row items-center py-1 text-gray-800 font-sans font-normal text-sm capitalize tracking-widest"
   >
-    <div v-for="(item, index) in selects" :key="item + index">
+    <div v-for="(option, index) in selectedOptionsElements" :key="option.value">
       <template v-if="index === 0">
         <a
           @click="toggleIndexAndSuccseedors(index)"
           class="cursor-pointer"
-          :class="[selects.length === 1 ? 'no-underline' : 'underline']"
+          :class="[
+            selectedOptionsElements.length === 1 ? 'no-underline' : 'underline',
+          ]"
         >
-          {{ item }}</a
+          {{ option.label }}</a
         >
         <span
           class="mx-2"
-          :class="[selects.length === 1 ? 'invisible' : 'visible']"
+          :class="[
+            selectedOptionsElements.length === 1 ? 'invisible' : 'visible',
+          ]"
           >/</span
         >
       </template>
-      <template v-else-if="index === selects.length - 1">
-        <a class="no-underline cursor-auto">{{ item }}</a>
+      <template v-else-if="index === selectedOptionsElements.length - 1">
+        <a class="no-underline cursor-auto">{{ option.label }}</a>
         <span class="mx-2"></span>
       </template>
       <template v-else-if="index > 0 && index % 2">
@@ -27,7 +31,7 @@
           @click="toggleIndexAndSuccseedors(index)"
           class="cursor-pointer underline"
         >
-          {{ item }}</a
+          {{ option.label }}</a
         >
         <span class="mx-2">/</span>
       </template>
@@ -41,7 +45,7 @@
           "
           class="underline cursor-pointer"
         >
-          {{ item }}</a
+          {{ option.label }}</a
         >
         <span class="mx-2">/</span>
       </template>
@@ -53,13 +57,16 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "TheBreadCrumbBar",
-  props: {
-    selects: {
-      type: Array,
-    },
-  },
   computed: {
     ...mapGetters("navigation", ["selectedOptionsElements"]),
+    ...mapGetters("search", ["queryParamsObject", "selectedDisplayTitle"]),
+
+    displayTitel() {
+      return [
+        this.selectedDisplayTitle(this.queryParamsObject.productProp),
+        this.selectedDisplayTitle(this.queryParamsObject.versionProp),
+      ].flat();
+    },
   },
   methods: {
     ...mapActions("navigation", [

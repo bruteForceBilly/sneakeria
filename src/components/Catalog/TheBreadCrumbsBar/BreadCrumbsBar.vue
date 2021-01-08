@@ -16,33 +16,17 @@
 
     <span class="mx-2">/</span>
 
-    <Crumbs :selects="displayTitel"></Crumbs>
+    <Crumbs></Crumbs>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import Crumbs from "./Crumbs.vue";
 
 export default {
   name: "TheBreadCrumbBar",
   components: {
     Crumbs,
-  },
-  props: {
-    selects: {
-      type: Array,
-    },
-  },
-  computed: {
-    ...mapGetters("search", ["queryParamsObject", "selectedDisplayTitle"]),
-
-    displayTitel() {
-      return [
-        this.selectedDisplayTitle(this.queryParamsObject.productProp),
-        this.selectedDisplayTitle(this.queryParamsObject.versionProp),
-      ].flat();
-    },
   },
   methods: {
     setByRoute(arg) {
