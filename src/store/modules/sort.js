@@ -51,7 +51,7 @@ const actions = {
         v[0].toLowerCase() + v.slice(1),
       ])
     );
-    console.log("formattedSettingParameters", formattedSettingParameters);
+    //console.log("formattedSettingParameters", formattedSettingParameters);
 
     return commit("settingMutation", formattedSettingParameters);
   },
