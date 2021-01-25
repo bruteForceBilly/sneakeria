@@ -595,7 +595,7 @@ const mutations = {
       .find((select) => select.name === el.name)
       .options.find((option) => option.value === el.value);
 
-    console.log("el", el, "foundElement", foundElement);
+    // console.log("el", el, "foundElement", foundElement);
 
     return !foundElement.checked
       ? (foundElement.checked = true)

@@ -58,6 +58,8 @@ export default {
       "priceMinDescending",
       "priceMaxAscending",
       "priceMaxDescending",
+      "dateMinAscending",
+      "dateMinDescending",
       "dateMaxAscending",
       "dateMaxDescending",
     ]),

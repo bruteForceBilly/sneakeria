@@ -38,6 +38,8 @@ export default {
   },
   methods: {
     sortSettingsHandler(optionValue) {
+      console.log("sortSettingsHandler optionValue", optionValue);
+      //debugger;
       return this.$store.dispatch("sort/settingAction", optionValue);
     },
   },

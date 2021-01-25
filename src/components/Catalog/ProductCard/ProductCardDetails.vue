@@ -125,5 +125,8 @@ export default {
       }
     },
   },
+  beforeUpdate() {
+    //console.log("selectedVersion", this.settings.settings.selectedVersion);
+  },
 };
 </script>

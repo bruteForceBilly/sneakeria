@@ -17,6 +17,8 @@
 </template>
 <script>
 export default {
+  /* eslint-disable no-unused-vars */
+
   //     view: this.$mq === "sm" || this.$mq === "md" ? "card" : "jumbo",
   props: {
     productData: Object,
@@ -51,36 +53,41 @@ export default {
     selectedVersionId() {
       return this.selectedVersion.id;
     },
-
-    versionPriceMap() {
-      let map = [];
-      let obj = {};
-
-      this.versions.forEach((ver, i) =>
-        map.push((obj[i] = ver.price.amountOffered))
-      );
-
-      return map;
+    versionPrices() {
+      return [...this.versions].map((version) => version.price.amountOffered);
+    },
+    versionPricesMax() {
+      return [...this.versionPrices].reduce((acc, cv, i) => {
+        if (cv === Math.max(...this.versionPrices)) {
+          acc = i;
+        }
+        return acc;
+      }, null);
+    },
+    versionPricesMin() {
+      return [...this.versionPrices].reduce((acc, cv, i) => {
+        if (cv === Math.min(...this.versionPrices)) {
+          acc = i;
+        }
+        return acc;
+      }, null);
     },
 
-    versionWithMaxPriceIndex() {
-      return this.getKeyByValue(
-        this.versionPriceMap,
-        Math.max(...Object.values(this.versionPriceMap))
-      );
+    versionDates() {
+      return [...this.versions].map((version) => new Date(version.dateRelease));
     },
-    versionWithMinPriceIndex() {
-      return this.getKeyByValue(
-        this.versionPriceMap,
-        Math.min(...Object.values(this.versionPriceMap))
-      );
+    versionDatesMin() {
+      let min = new Date(Math.min(...this.versionDates)).toString();
+      let arr = [...this.versionDates].map((date) => date.toString());
+      return arr.findIndex((el) => el == min);
+    },
+    versionDatesMax() {
+      let max = new Date(Math.max(...this.versionDates)).toString();
+      let arr = [...this.versionDates].map((date) => date.toString());
+      return arr.findIndex((el) => el == max);
     },
   },
   methods: {
-    getKeyByValue(object, value) {
-      return Object.keys(object).find((key) => object[key] === value);
-    },
-
     selectHandler(version) {
       return (this.selectedVersion.id = version);
     },
@@ -104,15 +111,20 @@ export default {
     },
   },
   watch: {
-    sortSetting: function (newVal, oldVal) {
-      let { sort } = newVal;
+    sortSetting: {
+      deep: true,
+      handler: function (newVal, oldVal) {
+        let { sort } = newVal;
 
-      const getVersionIndex = {
-        priceMin: this.versionWithMinPriceIndex,
-        priceMax: this.versionWithMaxPriceIndex,
-      };
+        const getVersionIndex = {
+          priceMin: this.versionPricesMin,
+          priceMax: this.versionPricesMax,
+          dateMin: this.versionDatesMin,
+          dateMax: this.versionDatesMax,
+        };
 
-      return this.selectHandler(getVersionIndex[sort]);
+        return this.selectHandler(getVersionIndex[sort]);
+      },
     },
   },
   created() {
@@ -129,6 +141,10 @@ export default {
     this.product.versions.forEach((version) => {
       this.$set(this.likedVersions, version.id, false);
     });
+  },
+  beforeUpdate() {
+    //console.log(this.versionDatesMin);
+    //let prices = this.versions.map((version) => version.price.amountOffered);
   },
 };
 </script>

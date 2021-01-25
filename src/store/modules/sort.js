@@ -28,7 +28,7 @@ const state = () => ({
           id: 3,
           name: "sortBy",
           label: "Oldest",
-          value: { sort: "DateMax", order: "Ascending" },
+          value: { sort: "DateMin", order: "Ascending" },
           checked: false,
         },
         {
@@ -51,6 +51,8 @@ const actions = {
         v[0].toLowerCase() + v.slice(1),
       ])
     );
+    console.log("formattedSettingParameters", formattedSettingParameters);
+
     return commit("settingMutation", formattedSettingParameters);
   },
 };
@@ -62,6 +64,36 @@ const mutations = {
 };
 
 const getters = {
+  dateMin: (state, getters, rootState, rootGetters) => {
+    let copyProducts = [...rootGetters["load/products"]];
+    copyProducts.forEach((product) => {
+      const minDateObj = new Date(
+        Math.min(
+          ...product.versions.map((version) => new Date(version.dateRelease))
+        )
+      );
+      const d = new Date(minDateObj);
+      const yy = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
+      const mm = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
+      const dd = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
+
+      product.maxDate = `${yy}-${mm}-${dd}`;
+    });
+
+    return copyProducts;
+  },
+  dateMinAscending: (state, getters) => {
+    let sorted = [...getters.dateMin].sort(function (a, b) {
+      let dateA = new Date(a.minDate);
+      let dateB = new Date(b.minDate);
+      return dateA - dateB;
+    });
+    return sorted;
+  },
+  dateMinDescending: (state, getters) => {
+    let sorted = [...getters.dateMinAscending].reverse();
+    return sorted;
+  },
   dateMax: (state, getters, rootState, rootGetters) => {
     let copyProducts = [...rootGetters["load/products"]];
     copyProducts.forEach((product) => {

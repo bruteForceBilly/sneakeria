@@ -57,9 +57,9 @@ export default {
       }
     },
   },
-  created() {
-    console.log("hello", this.displayTitel);
-  },
+  // created() {
+  //   console.log("hello", this.displayTitel);
+  // },
 };
 </script>
 
