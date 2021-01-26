@@ -151,12 +151,12 @@ const router = new VueRouter({
   routes,
 });
 
-router.afterEach((to, from) => {
-  // if (process.env.NODE_ENV === "development") {
-  //   console.log("ROUTER TO:\n", to);
-  //   console.log("FROM:\n", from);
-  // }
-  console.log(store.state.cache.stack);
-});
+// router.afterEach((to, from) => {
+//   // if (process.env.NODE_ENV === "development") {
+//   //   console.log("ROUTER TO:\n", to);
+//   //   console.log("FROM:\n", from);
+//   // }
+//   //console.log(store.state.cache.stack);
+// });
 
 export default router;
