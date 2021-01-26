@@ -105,6 +105,7 @@ const routes = [
     component: Catalog,
     beforeEnter: (to, from, next) => {
       store.commit("load/countReset");
+      store.commit("cache/resetStack");
 
       store
         .dispatch("search/queryParamsObjectAction", to)

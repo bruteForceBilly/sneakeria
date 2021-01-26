@@ -26,6 +26,10 @@ const actions = {
 };
 
 const mutations = {
+  resetStack(state) {
+    state.stack = [];
+  },
+
   popStack(state) {
     state.stack.pop();
   },
