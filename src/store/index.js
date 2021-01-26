@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import search from "./modules/search.js";
 import range from "./modules/range.js";
 import load from "./modules/load.js";
+import cache from "./modules/cache.js";
 import sort from "./modules/sort.js";
 import navigation from "./modules/navigation.js";
 import schemas from "./modules/schemas.js";
@@ -13,6 +14,7 @@ export default new Vuex.Store({
   modules: {
     search,
     load,
+    cache,
     sort,
     range,
     navigation,

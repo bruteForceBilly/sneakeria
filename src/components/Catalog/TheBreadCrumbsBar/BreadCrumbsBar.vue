@@ -3,11 +3,13 @@
     class="flex flex-row items-center py-1 text-gray-800 font-sans font-normal text-sm capitalize tracking-widest"
   >
     <span class="font-black mr-2">←</span>
+
     <span
-      @click="onBack()"
+      @click="goBack()"
       class="underline cursor-pointer uppercase font-black"
       >Back</span
     >
+
     <span class="mx-2">/</span>
 
     <router-link to="all">
@@ -28,13 +30,36 @@ export default {
   components: {
     Crumbs,
   },
+  computed: {
+    history() {
+      return this.$routerHistory;
+    },
+  },
   methods: {
     setByRoute(arg) {
       return this.$store.commit("setByRoute", arg);
     },
-    onBack() {
+    goBack() {
+      this.$store.commit("cache/popStack");
       this.$store.commit("setByRoute", true);
-      return this.$router.go(-1);
+
+      if (this.$store.state.cache.stack.length >= 1) {
+        this.$router
+          .push(this.$store.getters["cache/currentRoute"].fullPath)
+          .catch((err) => err)
+          .finally(() => {
+            this.$store
+              .dispatch("navigation/selectOptionsCheckReset")
+              .then(() => {
+                this.$store.dispatch(
+                  "navigation/selectOptionsCheckToggle",
+                  this.$store.state.search.queryParamsObject
+                );
+              });
+          });
+      } else {
+        this.$router.push({ name: "home" }).catch((err) => err);
+      }
     },
   },
 };

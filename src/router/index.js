@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import Vue from "vue";
 import VueRouter from "vue-router";
+
 import store from "@/store/index.js";
 import products from "@/services/products.js";
 import Home from "../views/Home.vue";
@@ -44,6 +45,8 @@ const routes = [
       // );
 
       store.commit("setByRoute", true);
+
+      store.dispatch("cache/writeHistory", to);
 
       let searchQuery;
 
@@ -147,11 +150,12 @@ const router = new VueRouter({
   routes,
 });
 
-// router.afterEach((to, from) => {
-//   if (process.env.NODE_ENV === "development") {
-//     console.log("ROUTER TO:\n", to);
-//     console.log("FROM:\n", from);
-//   }
-// });
+router.afterEach((to, from) => {
+  // if (process.env.NODE_ENV === "development") {
+  //   console.log("ROUTER TO:\n", to);
+  //   console.log("FROM:\n", from);
+  // }
+  console.log(store.state.cache.stack);
+});
 
 export default router;
