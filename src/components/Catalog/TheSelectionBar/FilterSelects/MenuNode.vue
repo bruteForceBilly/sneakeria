@@ -1,8 +1,14 @@
 <template>
   <div>
-    <Menu :item="select"> </Menu>
+    <Menu v-if="select.value === null" :item="select"> </Menu>
 
-    <MenuNode v-for="select in selects" :key="select.name" :select="select">
+    <MenuNode
+      class="inline"
+      v-for="select in node"
+      :key="select.id + select.name"
+      :select="select"
+      :node="next(select)"
+    >
     </MenuNode>
   </div>
 </template>
@@ -16,10 +22,18 @@ export default {
     Menu,
   },
   props: {
-    selects: Array,
-    select: Object,
-    options: Array,
-    attributes: Array,
+    node: {
+      type: Array,
+      default: function () {
+        return [];
+      },
+    },
+    select: {
+      type: Object,
+      default: function () {
+        return {};
+      },
+    },
     selectedOptionsObject: {
       type: Object,
       default: function () {
@@ -27,13 +41,20 @@ export default {
       },
     },
   },
-  computed: {
-    hasAttributes() {
-      return Array.isArray(this.options.attributes) &&
-        this.options.attributes.length < 0
-        ? true
-        : false;
+  methods: {
+    next(select) {
+      let next = null;
+      if (select?.attributes) {
+        next = select.attributes;
+      }
+      if (select?.options) {
+        next = select.options;
+      }
+      return next;
     },
+  },
+  beforeUpdate() {
+    console.log("selec props", this.select);
   },
 };
 </script>

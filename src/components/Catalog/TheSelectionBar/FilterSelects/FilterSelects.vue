@@ -1,5 +1,5 @@
 <template>
-  <MenuNode :selects="selects"></MenuNode>
+  <MenuNode class="inline" :node="selects"></MenuNode>
 </template>
 
 <script>
@@ -19,9 +19,6 @@ export default {
         return {};
       },
     },
-  },
-  created() {
-    console.log("selects", this.selects);
   },
 };
 </script>
