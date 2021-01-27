@@ -1,25 +1,43 @@
 <template>
   <div>
-    <Menu
-      v-if="select.level === 'attribute'"
-      :key="select.id"
-      :item="select"
-      :selected-options-object="selectedOptionsObject"
-    >
-      <template v-slot:menu-items>
-        <MenuOption
-          :item="select"
-          v-for="option in select.options"
-          :key="option.id"
-        >
-          <template v-slot:option-label>
-            <span @click.self="setByRouteHandler()">{{ option.label }} </span>
-          </template>
-          <!-- Menu Attributes -->
-        </MenuOption>
-      </template>
-    </Menu>
+    <div class="inline">
+      <Menu
+        v-if="
+          select.level === 'group' ||
+          (select.level === 'attribute' && groupHasCheckedOption)
+        "
+        :key="select.id"
+        :item="select"
+        :selected-options-object="selectedOptionsObject"
+      >
+        <template v-slot:menu-items>
+          <MenuOption
+            :item="select"
+            v-for="option in select.options"
+            :key="option.id"
+          >
+            <template v-slot:option-input>
+              <component
+                :is="currentComponent(select.inputType)"
+                :item="select"
+                :option="option"
+                v-bind="{ option }"
+                @click.native.self="setByRouteHandler()"
+              >
+              </component>
+            </template>
 
+            <template v-slot:option-label>
+              <span
+                v-if="hasDisplayedLabel(option)"
+                @click.self="setByRouteHandler()"
+                >{{ option.label }}
+              </span>
+            </template>
+          </MenuOption>
+        </template>
+      </Menu>
+    </div>
     <MenuNode
       class="inline"
       v-for="select in node"
@@ -34,16 +52,16 @@
 <script>
 import Menu from "../DropDownMenu/Menu.vue";
 import MenuOption from "../DropDownMenu/MenuOption.vue";
-//import MenuInputCheckbox from "../DropDownMenu/MenuInputCheckbox.vue";
-//import MenuInputHidden from "../DropDownMenu/MenuInputHidden.vue";
+import MenuInputCheckbox from "../DropDownMenu/MenuInputCheckbox.vue";
+import MenuInputHidden from "../DropDownMenu/MenuInputHidden.vue";
 
 export default {
   name: "MenuNode",
   components: {
     Menu,
     MenuOption,
-    //MenuInputCheckbox,
-    //MenuInputHidden,
+    MenuInputCheckbox,
+    MenuInputHidden,
   },
   props: {
     node: {
@@ -70,6 +88,26 @@ export default {
       optionBindChecked: ["checkbox", "checkboxHidden"],
     };
   },
+  computed: {
+    groupHasCheckedOption() {
+      let selectedElHas = (elementKey, selectValue) => {
+        // Look if all el key of type X has Y
+        return [...this.$store.getters["navigation/selectedOptionsElements"]]
+          .map((el) => el[elementKey])
+          .includes(selectValue);
+      };
+
+      // Attribute Belongs to Checked Option
+      let hasOptionId = selectedElHas("id", this.select.optionId);
+
+      // Select belongs to Group
+      let hasGroupId = selectedElHas("groupId", this.select.groupId);
+
+      let hasName = selectedElHas("value", this.select.name);
+
+      return hasOptionId && hasGroupId && hasName ? true : false;
+    },
+  },
   methods: {
     next(select) {
       let next = null;
@@ -83,29 +121,32 @@ export default {
       }
       return next;
     },
+    currentComponent(inputType) {
+      const optionInputComponents = {
+        checkbox: "MenuInputCheckbox",
+        checkboxHidden: "MenuInputHidden",
+        range: "MenuInputRange",
+      };
+      return optionInputComponents[inputType];
+    },
+    currentComponentInputType(inputType) {
+      const optionInputComponents = {
+        checkbox: "checkbox",
+        checkboxHidden: "hidden",
+        range: "range",
+      };
+      return optionInputComponents[inputType];
+    },
+    hasDisplayedLabel(item) {
+      return item.name === "color" ? false : true;
+    },
+    setByRouteHandler() {
+      this.$store.commit("setByRoute", false);
+      //console.log("set by route", this.$store.state.setByRoute);
+    },
   },
-  currentComponent(inputType) {
-    const optionInputComponents = {
-      checkbox: "MenuInputCheckbox",
-      checkboxHidden: "MenuInputHidden",
-      range: "MenuInputRange",
-    };
-    return optionInputComponents[inputType];
-  },
-  currentComponentInputType(inputType) {
-    const optionInputComponents = {
-      checkbox: "checkbox",
-      checkboxHidden: "hidden",
-      range: "range",
-    };
-    return optionInputComponents[inputType];
-  },
-  hasDisplayedLabel(item) {
-    return item.name === "color" ? false : true;
-  },
-  setByRouteHandler() {
-    this.$store.commit("setByRoute", false);
-    //console.log("set by route", this.$store.state.setByRoute);
+  created() {
+    //console.log("select", this.select, "node", this.node);
   },
 };
 </script>

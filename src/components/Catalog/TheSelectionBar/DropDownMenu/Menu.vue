@@ -54,7 +54,7 @@ export default {
     },
   },
   created() {
-    console.log("item", this.item);
+    //console.log("item", this.item);
   },
 };
 </script>
