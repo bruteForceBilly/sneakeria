@@ -5,6 +5,7 @@ const state = () => ({
   selects: [
     {
       id: 1,
+      level: "group",
       name: "section",
       label: "Section",
       value: null,
@@ -14,6 +15,7 @@ const state = () => ({
       options: [
         {
           id: 1,
+          level: "option",
           groupId: 1,
           checked: false,
           name: "section",
@@ -22,6 +24,7 @@ const state = () => ({
         },
         {
           id: 2,
+          level: "option",
           groupId: 1,
           checked: false,
           name: "section",
@@ -32,6 +35,7 @@ const state = () => ({
     },
     {
       id: 2,
+      level: "group",
       name: "category",
       label: "Category",
       value: null,
@@ -41,6 +45,7 @@ const state = () => ({
       options: [
         {
           id: 1,
+          level: "option",
           groupId: 2,
           checked: false,
           name: "category",
@@ -49,15 +54,17 @@ const state = () => ({
           attributes: [
             {
               id: 1,
+              level: "attribute",
               optionId: 1,
-              name: "shoes",
-              label: "Product Types",
+              name: "productType",
+              label: "Type",
               value: null,
               multiple: false,
               inputType: "checkbox",
               options: [
                 {
                   id: 1,
+                  level: "option",
                   attributeId: 1,
                   optionId: 1,
                   checked: false,
@@ -67,6 +74,7 @@ const state = () => ({
                 },
                 {
                   id: 2,
+                  level: "option",
                   attributeId: 1,
                   optionId: 1,
                   checked: false,
@@ -76,6 +84,7 @@ const state = () => ({
                 },
                 {
                   id: 3,
+                  level: "option",
                   attributeId: 1,
                   optionId: 1,
                   checked: false,
@@ -89,6 +98,7 @@ const state = () => ({
         },
         {
           id: 2,
+          level: "option",
           groupId: 2,
           checked: false,
           name: "category",
@@ -97,15 +107,17 @@ const state = () => ({
           attributes: [
             {
               id: 1,
+              level: "attribute",
               optionId: 2,
-              name: "category",
-              label: "Product Types",
+              name: "productType",
+              label: "Type",
               value: null,
               multiple: false,
               inputType: "checkbox",
               options: [
                 {
                   id: 1,
+                  level: "option",
                   attributeId: 1,
                   optionId: 2,
                   checked: false,
@@ -115,6 +127,7 @@ const state = () => ({
                 },
                 {
                   id: 2,
+                  level: "option",
                   attributeId: 1,
                   optionId: 2,
                   checked: false,
@@ -124,6 +137,7 @@ const state = () => ({
                 },
                 {
                   id: 3,
+                  level: "option",
                   attributeId: 1,
                   optionId: 2,
                   checked: false,
@@ -135,6 +149,7 @@ const state = () => ({
             },
             {
               id: 2,
+              level: "attribute",
               optionId: 2,
               name: "category",
               label: "Style",
@@ -144,6 +159,7 @@ const state = () => ({
               options: [
                 {
                   id: 1,
+                  level: "option",
                   attributeId: 2,
                   optionId: 2,
                   productTypeId: 1,
@@ -154,6 +170,7 @@ const state = () => ({
                 },
                 {
                   id: 2,
+                  level: "option",
                   attributeId: 2,
                   optionId: 2,
                   productTypeId: 1,
@@ -164,6 +181,7 @@ const state = () => ({
                 },
                 {
                   id: 3,
+                  level: "option",
                   attributeId: 2,
                   optionId: 2,
                   productTypeId: 1,
@@ -174,6 +192,7 @@ const state = () => ({
                 },
                 {
                   id: 4,
+                  level: "option",
                   attributeId: 2,
                   optionId: 2,
                   productTypeId: 2,
@@ -184,6 +203,7 @@ const state = () => ({
                 },
                 {
                   id: 5,
+                  level: "option",
                   attributeId: 2,
                   optionId: 2,
                   productTypeId: 2,
@@ -194,6 +214,7 @@ const state = () => ({
                 },
                 {
                   id: 6,
+                  level: "option",
                   attributeId: 2,
                   optionId: 2,
                   productTypeId: 2,
@@ -204,6 +225,7 @@ const state = () => ({
                 },
                 {
                   id: 7,
+                  level: "option",
                   attributeId: 2,
                   optionId: 2,
                   productTypeId: 3,
@@ -214,6 +236,7 @@ const state = () => ({
                 },
                 {
                   id: 8,
+                  level: "option",
                   attributeId: 2,
                   optionId: 2,
                   productTypeId: 3,
@@ -224,6 +247,7 @@ const state = () => ({
                 },
                 {
                   id: 9,
+                  level: "option",
                   attributeId: 2,
                   optionId: 2,
                   productTypeId: 3,
@@ -240,6 +264,7 @@ const state = () => ({
     },
     {
       id: 3,
+      level: "group",
       name: "campaigns",
       label: "Campaigns",
       value: null,
@@ -249,6 +274,7 @@ const state = () => ({
       options: [
         {
           id: 1,
+          level: "option",
           groupId: 3,
           checked: false,
           name: "campaigns",
@@ -257,6 +283,7 @@ const state = () => ({
         },
         {
           id: 2,
+          level: "option",
           groupId: 3,
           checked: false,
           name: "campaigns",
@@ -265,6 +292,7 @@ const state = () => ({
         },
         {
           id: 3,
+          level: "option",
           groupId: 3,
           checked: false,
           name: "campaigns",
@@ -275,6 +303,7 @@ const state = () => ({
     },
     {
       id: 4,
+      level: "group",
       name: "look",
       label: "Look",
       value: null,
@@ -284,6 +313,7 @@ const state = () => ({
       options: [
         {
           id: 1,
+          level: "option",
           groupId: 4,
           checked: false,
           name: "look",
@@ -292,6 +322,7 @@ const state = () => ({
         },
         {
           id: 2,
+          level: "option",
           groupId: 4,
           checked: false,
           name: "look",
@@ -300,6 +331,7 @@ const state = () => ({
         },
         {
           id: 3,
+          level: "option",
           groupId: 4,
           checked: false,
           name: "look",
@@ -310,6 +342,7 @@ const state = () => ({
     },
     {
       id: 5,
+      level: "group",
       name: "brand",
       label: "Brand",
       value: null,
@@ -319,6 +352,7 @@ const state = () => ({
       options: [
         {
           id: 1,
+          level: "option",
           groupId: 5,
           checked: false,
           name: "brand",
@@ -327,6 +361,7 @@ const state = () => ({
         },
         {
           id: 2,
+          level: "option",
           groupId: 5,
           checked: false,
           name: "brand",
@@ -335,6 +370,7 @@ const state = () => ({
         },
         {
           id: 3,
+          level: "option",
           groupId: 5,
           checked: false,
           name: "brand",
@@ -343,6 +379,7 @@ const state = () => ({
         },
         {
           id: 4,
+          level: "option",
           groupId: 5,
           checked: false,
           name: "brand",
@@ -353,6 +390,7 @@ const state = () => ({
     },
     {
       id: 6,
+      level: "group",
       name: "color",
       label: "Color",
       value: null,
@@ -362,6 +400,7 @@ const state = () => ({
       options: [
         {
           id: 1,
+          level: "option",
           groupId: 6,
           checked: false,
           name: "color",
@@ -370,6 +409,7 @@ const state = () => ({
         },
         {
           id: 2,
+          level: "option",
           groupId: 6,
           checked: false,
           name: "color",
@@ -378,6 +418,7 @@ const state = () => ({
         },
         {
           id: 3,
+          level: "option",
           groupId: 6,
           checked: false,
           name: "color",
@@ -386,6 +427,7 @@ const state = () => ({
         },
         {
           id: 4,
+          level: "option",
           groupId: 6,
           checked: false,
           name: "color",
@@ -394,6 +436,7 @@ const state = () => ({
         },
         {
           id: 5,
+          level: "option",
           groupId: 6,
           checked: false,
           name: "color",
@@ -402,6 +445,7 @@ const state = () => ({
         },
         {
           id: 6,
+          level: "option",
           groupId: 6,
           checked: false,
           name: "color",
@@ -410,6 +454,7 @@ const state = () => ({
         },
         {
           id: 7,
+          level: "option",
           groupId: 6,
           checked: false,
           name: "color",
@@ -418,6 +463,7 @@ const state = () => ({
         },
         {
           id: 8,
+          level: "option",
           groupId: 6,
           checked: false,
           name: "color",
@@ -426,6 +472,7 @@ const state = () => ({
         },
         {
           id: 9,
+          level: "option",
           groupId: 6,
           checked: false,
           name: "color",
@@ -434,6 +481,7 @@ const state = () => ({
         },
         {
           id: 10,
+          level: "option",
           groupId: 6,
           checked: false,
           name: "color",

@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-8">
+  <div class="mt-8 hidden">
     <div v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1">
       <h1 class="text-2xl text-gray-800">
         ...No filter is selected.

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-if="item.containerSize === 'base'"
+      v-if="itemCcontainerSize === 'base'"
       class="position-after-height inline-block z-20 absolute w-40 border-black outline-none border px-3 py-1 bg-white rounded-none"
       :class="hover ? 'inline-block' : 'hidden'"
     >
@@ -11,7 +11,7 @@
     </div>
 
     <div
-      v-if="item.containerSize === 'wide'"
+      v-if="itemCcontainerSize === 'wide'"
       class="position-after-height inline-block z-20 absolute w-64 border-black outline-none border px-3 py-1 bg-white rounded-none"
       :class="hover ? 'inline-block' : 'hidden'"
     >
@@ -28,6 +28,12 @@ export default {
   props: {
     item: {
       type: Object,
+    },
+    itemCcontainerSize: {
+      type: String,
+      default: function () {
+        return this.item?.containerSize ? this.item.containerSize : "base";
+      },
     },
     hover: {
       type: Boolean,

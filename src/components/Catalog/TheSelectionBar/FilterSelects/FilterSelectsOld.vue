@@ -43,7 +43,6 @@ import Menu from "../DropDownMenu/Menu.vue";
 import MenuOption from "../DropDownMenu/MenuOption.vue";
 import MenuInputCheckbox from "../DropDownMenu/MenuInputCheckbox.vue";
 import MenuInputHidden from "../DropDownMenu/MenuInputHidden.vue";
-import MenuAttributes from "../DropDownMenu/MenuAttributes.vue";
 
 // make computed prop that takes inputType and maps it to input type attr
 
@@ -57,20 +56,13 @@ export default {
     MenuOption,
     MenuInputCheckbox,
     MenuInputHidden,
-    MenuAttributes,
   },
   data() {
     return {
       optionBindChecked: ["checkbox", "checkboxHidden"],
     };
   },
-  computed: {
-    menuAttributes() {
-      return [...this.selects]
-        .map((select) => select.options)
-        .map((option) => option.attributes);
-    },
-  },
+
   methods: {
     currentComponent(inputType) {
       const optionInputComponents = {

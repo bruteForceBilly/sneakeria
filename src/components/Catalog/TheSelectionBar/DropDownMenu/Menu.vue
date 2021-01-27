@@ -27,7 +27,9 @@ export default {
   props: {
     item: {
       type: Object,
-      default: null,
+      default: function () {
+        return {};
+      },
     },
     selectedOptionsObject: {
       type: Object,
