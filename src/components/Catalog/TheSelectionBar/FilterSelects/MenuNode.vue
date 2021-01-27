@@ -4,7 +4,10 @@
       <Menu
         v-if="
           select.level === 'group' ||
-          (select.level === 'attribute' && groupHasCheckedOption)
+          (select.level === 'attribute' &&
+            select.label !== 'Style' &&
+            selectHas) ||
+          (select.label === 'Style' && hasCheckedSiblings)
         "
         :key="select.id"
         :item="select"
@@ -89,7 +92,38 @@ export default {
     };
   },
   computed: {
-    groupHasCheckedOption() {
+    hasCheckedSiblings: () => {
+      const flatMap = (n) => {
+        let result = [];
+        const recur = (n) => {
+          if (Array.isArray(n)) {
+            n.forEach((o) => recur(o));
+          } else if ("attributes" in n) {
+            if (n.checked) {
+              result.push(n);
+            }
+            recur(n.attributes);
+          } else if ("options" in n) {
+            recur(n.options);
+          } else {
+            if (n.checked) {
+              result.push(n);
+            }
+          }
+        };
+        recur(n);
+        return result;
+      };
+
+      return flatMap([
+        ...this.$store.getters["navigation/selectedOptionsElements"],
+      ])
+        .map((el) => el.attributeId)
+        .filter((attrId) => attrId != this.select.id).length > 0
+        ? true
+        : false;
+    },
+    selectHas() {
       let selectedElHas = (elementKey, selectValue) => {
         // Look if all el key of type X has Y
         return [...this.$store.getters["navigation/selectedOptionsElements"]]
