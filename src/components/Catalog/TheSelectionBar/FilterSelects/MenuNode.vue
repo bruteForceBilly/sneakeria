@@ -2,13 +2,7 @@
   <div>
     <div class="inline">
       <Menu
-        v-if="
-          select.level === 'group' ||
-          (select.level === 'attribute' &&
-            select.label !== 'Style' &&
-            selectHas) ||
-          (select.label === 'Style' && hasCheckedSiblings)
-        "
+        v-if="visibilityHandler"
         :key="select.id"
         :item="select"
         :selected-options-object="selectedOptionsObject"
@@ -57,6 +51,7 @@ import Menu from "../DropDownMenu/Menu.vue";
 import MenuOption from "../DropDownMenu/MenuOption.vue";
 import MenuInputCheckbox from "../DropDownMenu/MenuInputCheckbox.vue";
 import MenuInputHidden from "../DropDownMenu/MenuInputHidden.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "MenuNode",
@@ -92,41 +87,35 @@ export default {
     };
   },
   computed: {
-    hasCheckedSiblings: () => {
-      const flatMap = (n) => {
-        let result = [];
-        const recur = (n) => {
-          if (Array.isArray(n)) {
-            n.forEach((o) => recur(o));
-          } else if ("attributes" in n) {
-            if (n.checked) {
-              result.push(n);
-            }
-            recur(n.attributes);
-          } else if ("options" in n) {
-            recur(n.options);
-          } else {
-            if (n.checked) {
-              result.push(n);
-            }
-          }
-        };
-        recur(n);
-        return result;
-      };
-
-      return flatMap([
-        ...this.$store.getters["navigation/selectedOptionsElements"],
-      ])
-        .map((el) => el.attributeId)
-        .filter((attrId) => attrId != this.select.id).length > 0
-        ? true
-        : false;
+    ...mapGetters("navigation", ["selectedOptionsElements"]),
+    visibilityHandler() {
+      let res;
+      if (
+        this.select.level === "group" ||
+        (this.select.level === "attribute" &&
+          this.select.label !== "Style" &&
+          this.isSelected)
+      ) {
+        res = true;
+      } else if (this.select.label === "Style" && this.hasCheckedSiblings) {
+        res = true;
+      } else {
+        res = false;
+      }
+      return res;
     },
-    selectHas() {
+    hasCheckedSiblings() {
+      return this.$store.state.navigation.selects
+        .find((group) => group.id === this.select.groupId)
+        .options.find((option) => option.id === this.select.optionId)
+        .attributes.filter((attribute) => attribute.id !== this.select.id)
+        .flatMap((sibling) => sibling.options)
+        .some((siblingOption) => siblingOption.checked);
+    },
+    isSelected() {
       let selectedElHas = (elementKey, selectValue) => {
         // Look if all el key of type X has Y
-        return [...this.$store.getters["navigation/selectedOptionsElements"]]
+        return [...this.selectedOptionsElements]
           .map((el) => el[elementKey])
           .includes(selectValue);
       };
@@ -181,6 +170,7 @@ export default {
   },
   created() {
     //console.log("select", this.select, "node", this.node);
+    //console.log("selected", this.selectedOptionsElements);
   },
 };
 </script>
