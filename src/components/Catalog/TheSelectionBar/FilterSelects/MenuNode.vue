@@ -10,7 +10,7 @@
         <template v-slot:menu-items>
           <MenuOption
             :item="select"
-            v-for="option in select.options"
+            v-for="option in selectOptions"
             :key="option.id"
           >
             <template v-slot:option-input>
@@ -88,6 +88,7 @@ export default {
   },
   computed: {
     ...mapGetters("navigation", ["selectedOptionsElements"]),
+
     visibilityHandler() {
       let res;
       if (
@@ -104,13 +105,35 @@ export default {
       }
       return res;
     },
-    hasCheckedSiblings() {
-      return this.$store.state.navigation.selects
+
+    selectOptions() {
+      if (this.select.label === "Style") {
+        let test = this.select.options.filter((option) =>
+          this.checkedSiblings
+            .map((sib) => sib.id)
+            .includes(option.productTypeId)
+        );
+
+        return test;
+      } else {
+        return this.select.options;
+      }
+    },
+
+    siblings() {
+      // selectsGetter
+      // this.$store.getters["search/searchQueryStringKebab"]
+      return this.$store.getters["navigation/selectsGetter"]
         .find((group) => group.id === this.select.groupId)
         .options.find((option) => option.id === this.select.optionId)
         .attributes.filter((attribute) => attribute.id !== this.select.id)
-        .flatMap((sibling) => sibling.options)
-        .some((siblingOption) => siblingOption.checked);
+        .flatMap((sibling) => sibling.options);
+    },
+    checkedSiblings() {
+      return this.siblings.filter((sibling) => sibling.checked);
+    },
+    hasCheckedSiblings() {
+      return this.siblings.some((siblingOption) => siblingOption.checked);
     },
     isSelected() {
       let selectedElHas = (elementKey, selectValue) => {
@@ -167,10 +190,6 @@ export default {
       this.$store.commit("setByRoute", false);
       //console.log("set by route", this.$store.state.setByRoute);
     },
-  },
-  created() {
-    //console.log("select", this.select, "node", this.node);
-    //console.log("selected", this.selectedOptionsElements);
   },
 };
 </script>
