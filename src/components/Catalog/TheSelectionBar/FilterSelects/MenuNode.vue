@@ -2,10 +2,10 @@
   <div>
     <div class="inline">
       <Menu
+        :hasSelected="hasCheckedOption"
         v-if="visibilityHandler"
         :key="select.id"
         :item="select"
-        :selected-options-object="selectedOptionsObject"
       >
         <template v-slot:menu-items>
           <MenuOption
@@ -74,12 +74,6 @@ export default {
         return {};
       },
     },
-    selectedOptionsObject: {
-      type: Object,
-      default: function () {
-        return {};
-      },
-    },
   },
   data() {
     return {
@@ -90,7 +84,7 @@ export default {
     ...mapGetters("navigation", ["selectedOptionsElements"]),
 
     visibilityHandler() {
-      let res;
+      let res = null;
       if (
         this.select.level === "group" ||
         (this.select.level === "attribute" &&
@@ -103,7 +97,12 @@ export default {
       } else {
         res = false;
       }
+
       return res;
+    },
+
+    hasCheckedOption() {
+      return this.select.options.map((option) => option.checked).includes(true);
     },
 
     selectOptions() {
@@ -122,7 +121,6 @@ export default {
 
     siblings() {
       // selectsGetter
-      // this.$store.getters["search/searchQueryStringKebab"]
       return this.$store.getters["navigation/selectsGetter"]
         .find((group) => group.id === this.select.groupId)
         .options.find((option) => option.id === this.select.optionId)
@@ -151,7 +149,9 @@ export default {
 
       let hasName = selectedElHas("value", this.select.name);
 
-      return hasOptionId && hasGroupId && hasName ? true : false;
+      return (hasOptionId && hasGroupId && hasName) || this.hasCheckedOption
+        ? true
+        : false;
     },
   },
   methods: {
@@ -189,6 +189,9 @@ export default {
     setByRouteHandler() {
       this.$store.commit("setByRoute", false);
       //console.log("set by route", this.$store.state.setByRoute);
+    },
+    beforeCreate() {
+      console.log(this.selectedOptionsObject);
     },
   },
 };

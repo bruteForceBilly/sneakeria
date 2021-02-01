@@ -655,16 +655,31 @@ const mutations = {
   },
 
   toggleElement(state, el) {
-    // You have to recur to find since options can be nested now inside attr
+    // I was too tired to do recursion, please forgive me
 
-    // the secong arg must be of type element
-    // { el.name: el.value }
+    let foundElement;
 
-    let foundElement = state.selects
-      .find((select) => select.name === el.name)
-      .options.find((option) => option.value === el.value);
+    if (el.groupId) {
+      foundElement = state.selects
+        .find((select) => select.id === el.groupId)
+        .options.find((option) => option.id === el.id);
+    }
 
-    // console.log("el", el, "foundElement", foundElement);
+    if (el.groupId && el.optionId && el.attributeId) {
+      foundElement = state.selects
+        .find((select) => select.id === el.groupId)
+        .options.find((option) => option.id === el.optionId)
+        .attributes.find((attribute) => attribute.id === el.attributeId)
+        .options.find((attributeOption) => attributeOption.id === el.id);
+    }
+
+    if (el.groupId && el.optionId && el.attributeId && el.productTypeId) {
+      foundElement = state.selects
+        .find((select) => select.id === el.groupId)
+        .options.find((option) => option.id === el.optionId)
+        .attributes.find((attribute) => attribute.id === el.attributeId)
+        .options.filter((option) => option.id === el.id);
+    }
 
     return !foundElement.checked
       ? (foundElement.checked = true)

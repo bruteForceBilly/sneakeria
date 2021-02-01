@@ -25,15 +25,9 @@ import MenuContainer from "./MenuContainer.vue";
 export default {
   name: "CatalogSelectionBarDropDownMenu",
   props: {
+    hasSelected: Boolean,
     item: {
       type: Object,
-      default: function () {
-        return {};
-      },
-    },
-    selectedOptionsObject: {
-      type: Object,
-      required: false,
       default: function () {
         return {};
       },
@@ -47,14 +41,6 @@ export default {
     return {
       hover: false,
     };
-  },
-  computed: {
-    hasSelected() {
-      return Object.keys(this.selectedOptionsObject).includes(this.item.name);
-    },
-  },
-  created() {
-    //console.log("item", this.item);
   },
 };
 </script>
