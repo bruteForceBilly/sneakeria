@@ -82,17 +82,24 @@ export default {
   },
   computed: {
     ...mapGetters("navigation", ["selectedOptionsElements"]),
+    ...mapGetters("search", ["foundProducts"]),
 
     visibilityHandler() {
       let res = null;
       if (
-        this.select.level === "group" ||
+        (this.select.level === "group" && this.select.name != "color") ||
         (this.select.level === "attribute" &&
           this.select.label !== "Style" &&
           this.isSelected)
       ) {
         res = true;
       } else if (this.select.label === "Style" && this.hasCheckedSiblings) {
+        res = true;
+      } else if (
+        this.select.name == "color" &&
+        this.foundProducts &&
+        this.selectOptions
+      ) {
         res = true;
       } else {
         res = false;
@@ -107,13 +114,23 @@ export default {
 
     selectOptions() {
       if (this.select.label === "Style") {
-        let test = this.select.options.filter((option) =>
+        return this.select.options.filter((option) =>
           this.checkedSiblings
             .map((sib) => sib.id)
             .includes(option.productTypeId)
         );
-
-        return test;
+      } else if (this.select.label === "Color" && this.foundProducts != null) {
+        let foundProductsColors = [
+          ...new Set(
+            this.foundProducts
+              .flatMap((product) => product.versions)
+              .map((version) => version.color)
+          ),
+        ];
+        let res = this.select.options.filter((option) =>
+          foundProductsColors.includes(option.value)
+        );
+        return res.length === 0 ? false : res;
       } else {
         return this.select.options;
       }
