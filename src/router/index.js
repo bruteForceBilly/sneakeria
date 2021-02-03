@@ -70,7 +70,7 @@ const routes = [
             store.commit("search/foundProductsMutation", data);
             return resolve(data);
           } else {
-            return reject(new Error("Poducts call failed in searchQuery"));
+            return reject(new Error("Products call failed in searchQuery"));
           }
         });
       })

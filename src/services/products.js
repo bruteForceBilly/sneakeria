@@ -26,6 +26,7 @@ export default function (o, q, cb) {
     const { product, version = null, operator = null } = q;
     let apiProductResponse = [];
     let apiVersionResponse = [];
+    let apiAllVersionsResponse = [];
 
     return axios
       .get(API_PRODUCTS + "?" + product)
@@ -67,27 +68,41 @@ export default function (o, q, cb) {
           })
           .then((response) => {
             apiVersionResponse = response.data;
-
-            apiProductResponse.forEach((cv) => (cv["versions"] = []));
-
-            apiProductResponse.forEach((product) => {
-              product.versionIds.forEach((versionId) => {
-                apiVersionResponse.forEach((version) => {
-                  if (version.id === versionId) {
-                    product.versions.push(version);
-                  }
-                });
-              });
-            });
-
-            let res = apiProductResponse.filter(
-              (prod) => prod.versions.length > 0
-            );
-
-            //console.log("SING HALLELUJAH", res);
-
-            return cb(res);
           });
+      })
+      .then((response) => {
+        return axios
+          .get(API_VERSIONS)
+          .catch(function (error) {
+            console.log("API_VERSIONS ALL error:", error);
+          })
+          .then((response) => {
+            apiAllVersionsResponse = response.data;
+          });
+      })
+      .then(() => {
+        //apiProductResponse, apiVersionResponse, apiAllVersionsResponse;
+
+        let foundVersionsProductIds = [
+          ...new Set(apiVersionResponse.map((version) => version.productId)),
+        ];
+
+        let filteredProducts = [...apiProductResponse].filter((product) =>
+          foundVersionsProductIds.includes(product.id)
+        );
+
+        filteredProducts.forEach((product) => {
+          product["versions"] = [];
+          product.versionIds.forEach((versionId) => {
+            let ver;
+            ver = apiAllVersionsResponse[versionId];
+            product.versions.push(ver);
+          });
+        });
+
+        console.log(filteredProducts);
+
+        return cb(filteredProducts);
       });
   }
 }
