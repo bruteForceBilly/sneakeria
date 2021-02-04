@@ -269,8 +269,8 @@ const actions = {
       }
     }
 
-    // console.log("queryParamsObject INPUT", to);
-    // console.log("queryParamsObject OUTPUT", queryParamsObject);
+    console.log("queryParamsObject INPUT", to);
+    console.log("queryParamsObject OUTPUT", queryParamsObject);
 
     return commit("queryParamsObjectMutation", queryParamsObject);
   },

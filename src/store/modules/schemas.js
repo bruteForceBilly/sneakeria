@@ -41,6 +41,7 @@ const state = () => ({
   },
   operator: {
     price: ["price.amountOffered_gte", "price.amountOffered_lte"],
+    page: ["_page", "_limit"],
   },
 });
 

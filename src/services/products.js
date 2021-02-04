@@ -27,15 +27,13 @@ export default function (o, q, cb) {
     let apiProductResponse = [];
     let apiVersionResponse = [];
     let apiAllVersionsResponse = [];
-
     return axios
-      .get(API_PRODUCTS + "?" + product)
+      .get(API_PRODUCTS + "?" + product + "&" + operator)
       .catch(function (error) {
         console.log("API_PRODUCTS error:", error);
       })
       .then((response) => {
         apiProductResponse = response.data;
-
         let apiVersionProductIdsParam = response.data
           .map((cv) => cv.id)
           .reduce(function (acc, cv) {
@@ -56,7 +54,16 @@ export default function (o, q, cb) {
         }
 
         if (operator !== null) {
-          apiVersionsQuery += "&" + operator;
+          // Remove page and limit param because
+          // It's allready been used in product api call
+
+          const page = /_page=\d+/g;
+          const limit = /&_limit=\d+/g;
+
+          let operatorCleaned = operator.replace(page, "");
+          operatorCleaned = operatorCleaned.replace(limit, "");
+
+          apiVersionsQuery += "&" + operatorCleaned;
         }
 
         //console.log(apiVersionsQuery);
