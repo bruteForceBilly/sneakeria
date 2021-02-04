@@ -95,12 +95,13 @@ export default function (o, q, cb) {
           product["versions"] = [];
           product.versionIds.forEach((versionId) => {
             let ver;
-            ver = apiAllVersionsResponse[versionId];
+            let elementPosition = apiAllVersionsResponse.findIndex(
+              (version) => version.id === versionId
+            );
+            ver = apiAllVersionsResponse[elementPosition];
             product.versions.push(ver);
           });
         });
-
-        console.log(filteredProducts);
 
         return cb(filteredProducts);
       });
