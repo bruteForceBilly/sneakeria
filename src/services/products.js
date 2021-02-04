@@ -58,7 +58,7 @@ export default function (o, q, cb) {
           // It's allready been used in product api call
 
           const page = /_page=\d+/g;
-          const limit = /&_limit=\d+/g;
+          const limit = /_limit=\d+/g;
 
           let operatorCleaned = operator.replace(page, "");
           operatorCleaned = operatorCleaned.replace(limit, "");

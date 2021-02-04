@@ -161,7 +161,8 @@ const actions = {
     const queryParamsObjectArray = [];
 
     let params = [];
-    let query = to.query;
+    let initializePaginationInQuery = { _page: "1", _limit: "48" };
+    let query = { ...initializePaginationInQuery, ...to.query };
 
     if (to.name === "searchQueryRoute") {
       params = Object.values(to.query).flat();
