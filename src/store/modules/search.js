@@ -7,6 +7,7 @@ const state = () => ({
   queryParamsObject: null,
   queryParamsString: null,
   queryParamsKebab: null,
+  foundProductsPagination: null,
   foundProducts: null,
   routeLastBeforeEnter: null,
   init: null,
@@ -346,6 +347,9 @@ const mutations = {
   },
   foundProductsMutation(state, foundProducts) {
     Vue.set(state, "foundProducts", foundProducts);
+  },
+  foundProductsPagination(state, pagination) {
+    Vue.set(state, "foundProductsPagination", pagination);
   },
   routeLastBeforeEnterMutation(state, routeLastBeforeEnter) {
     Vue.set(state, "routeLastBeforeEnter", routeLastBeforeEnter);

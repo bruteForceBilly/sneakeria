@@ -2,6 +2,8 @@
 import axios from "axios";
 import { API_PRODUCTS } from "@/constants";
 import { API_VERSIONS } from "@/constants";
+import store from "@/store/index.js";
+
 // Refactor so it also takes an option var called o to link it to the right if
 // Route, Filter, Slice, Sort, Full-text search
 
@@ -27,13 +29,24 @@ export default function (o, q, cb) {
     let apiProductResponse = [];
     let apiVersionResponse = [];
     let apiAllVersionsResponse = [];
+
+    const page = /_page=\d+/g;
+    const limit = /_limit=\d+/g;
+
+    let operatorWithPage = operator.match(page);
+    operatorWithPage += "&" + operator.match(limit);
+
+    let operatorWithoutPage = operator.replace(page, "");
+    operatorWithoutPage = operatorWithoutPage.replace(limit, "");
+
     return axios
-      .get(API_PRODUCTS + "?" + product + "&" + operator)
+      .get(API_PRODUCTS + "?" + product + operatorWithoutPage)
       .catch(function (error) {
         console.log("API_PRODUCTS error:", error);
       })
       .then((response) => {
         apiProductResponse = response.data;
+
         let apiVersionProductIdsParam = response.data
           .map((cv) => cv.id)
           .reduce(function (acc, cv) {
@@ -54,19 +67,10 @@ export default function (o, q, cb) {
         }
 
         if (operator !== null) {
-          // Remove page and limit param because
-          // It's allready been used in product api call
-
-          const page = /_page=\d+/g;
-          const limit = /_limit=\d+/g;
-
-          let operatorCleaned = operator.replace(page, "");
-          operatorCleaned = operatorCleaned.replace(limit, "");
-
-          apiVersionsQuery += "&" + operatorCleaned;
+          apiVersionsQuery += "&" + operatorWithoutPage;
         }
 
-        //console.log(apiVersionsQuery);
+        //console.log("apiVersionsQuery", apiVersionsQuery);
 
         return axios
           .get(API_VERSIONS + apiVersionsQuery)
@@ -110,7 +114,58 @@ export default function (o, q, cb) {
           });
         });
 
-        return cb(filteredProducts);
+        const paginator = (data, operator) => {
+          let operatorParams = operator.split("&");
+
+          const pageParams = operatorParams.reduce((acc, cv) => {
+            const page = /_page=\d+/g;
+            const limit = /_limit=\d+/g;
+
+            if (page.test(cv)) {
+              acc.pageCurrent = parseInt(cv.match(/\d+/g)[0], 10);
+            } else if (limit.test(cv)) {
+              acc.contentLimit = parseInt(cv.match(/\d+/g)[0], 10);
+            }
+
+            return acc;
+          }, {});
+
+          const { pageCurrent, contentLimit } = pageParams;
+          const contentStart =
+            pageCurrent == 1 ? 0 : pageCurrent * contentLimit;
+          const contentCount = data.length;
+          const contentEnd =
+            contentStart + contentLimit > contentCount
+              ? contentCount
+              : contentStart + contentLimit;
+
+          const pageCount = Math.ceil(contentCount / contentLimit);
+          const pagePrevious = pageCurrent > 1 ? pageCurrent - 1 : 1;
+          const pageNext =
+            pageCurrent < pageCount ? pageCurrent + 1 : pageCount;
+
+          return {
+            pageCount,
+            pageCurrent,
+            pageNext,
+            pagePrevious,
+            contentLimit,
+            contentCount,
+            contentStart,
+            contentEnd,
+          };
+        };
+
+        const pagination = paginator(filteredProducts, operator);
+
+        const paginatedProducts = filteredProducts.slice(
+          pagination.contentStart,
+          pagination.contentEnd
+        );
+
+        store.commit("search/foundProductsPagination", pagination);
+
+        return cb(paginatedProducts);
       });
   }
 }
