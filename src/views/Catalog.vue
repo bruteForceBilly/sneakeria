@@ -4,7 +4,7 @@
 
     <DisplayTitle
       :current-route="route"
-      :search-found-products-length="foundProductsLength"
+      :search-found-products-length="foundProductsPagination.contentCount"
     ></DisplayTitle>
 
     <!-- <div v-if="selectsIsLoading">...selection bar loading</div>
@@ -20,7 +20,6 @@
     ></ProductGrid>
 
     <LoadMoreButton
-      v-if="false"
       :search-found-products-length="foundProductsLength"
       :loaded-products="products"
     ></LoadMoreButton>
@@ -51,14 +50,11 @@ export default {
   },
   computed: {
     ...mapGetters("load", ["products"]),
-    ...mapGetters("search", [
-      "foundProductsLength",
-      "queryParamsObject",
-      "selectedDisplayTitle",
-    ]),
+    ...mapGetters("search", ["queryParamsObject", "selectedDisplayTitle"]),
     ...mapGetters("navigation", ["selectsGetter"]),
     ...mapState(["route"]),
     ...mapState("navigation", ["selects"]),
+    ...mapState("search", ["foundProductsPagination"]),
   },
   methods: {
     ...mapActions("navigation", ["selectsInit"]),

@@ -1,5 +1,13 @@
 <template>
   <div class="mt-20 mb-64 flex flex-row">
+    <span
+      @click="setSelectedPage(pagination.pagePrevious)"
+      class="cursor-pointer mt-4 align text-sm tracking-widest text-gray-900 font-black underline"
+      :class="pagination.pageCurrent === 1 ? 'invisible' : 'visible'"
+    >
+      PREVIOUS
+    </span>
+
     <div class="ml-auto flex flex-row justify-center align-baseline">
       <span class="mt-4 mr-3 text-sm text-widest text-gray-900">Page:</span>
       <div
@@ -11,7 +19,7 @@
           class="outline-none uppercase z-30 border bg-white border-gray-300 py-3 px-6 rounded-none flex items-center w-20"
         >
           <span class="pr-1 flex-1 font-medium">
-            {{ paginationMenu.label }}
+            {{ selectedPage }}
           </span>
 
           <span>
@@ -34,14 +42,13 @@
         >
           <ul class="list-outside">
             <li
+              @click="setSelectedPage(option.id)"
               class="hover:bg-gray-200 w-full py-3"
               v-for="option in options"
               :key="option.id"
             >
               <label class="custom-label flex justify-center font-medium">
-                <span @click.self="setByRouteHandler()"
-                  >{{ option.label }}
-                </span>
+                <span>{{ option.label }} </span>
               </label>
             </li>
           </ul>
@@ -52,7 +59,13 @@
       </span>
     </div>
     <span
-      class="mt-4 align ml-auto text-sm tracking-widest text-gray-900 font-black underline"
+      @click="setSelectedPage(pagination.pageNext)"
+      class="cursor-pointer mt-4 align ml-auto text-sm tracking-widest text-gray-900 font-black underline"
+      :class="
+        pagination.pageCurrent === pagination.pageCount
+          ? 'invisible'
+          : 'visible'
+      "
     >
       NEXT
     </span>
@@ -80,7 +93,13 @@ export default {
   data() {
     return {
       hover: false,
+      selectedPage: 1,
     };
+  },
+  methods: {
+    setSelectedPage(n) {
+      return (this.selectedPage = n);
+    },
   },
   computed: {
     pagination() {
@@ -135,8 +154,18 @@ export default {
       };
     },
   },
+  watch: {
+    selectedPage: function (newVal) {
+      return this.$router
+        .push({
+          path: this.$store.state.route.path,
+          query: { _page: newVal },
+        })
+        .catch((e) => {});
+    },
+  },
   created() {
-    console.log(this.pagination.pageCount);
+    this.selectedPage = this.pagination.pageCurrent;
   },
 };
 </script>
