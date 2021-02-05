@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen px-4 sm:px-6 md:px-12 xl:px-16">
+  <div class="px-4 sm:px-6 md:px-12 xl:px-16">
     <BreadCrumbsBar class="pt-8"></BreadCrumbsBar>
 
     <DisplayTitle
@@ -20,9 +20,12 @@
     ></ProductGrid>
 
     <LoadMoreButton
+      v-if="false"
       :search-found-products-length="foundProductsLength"
       :loaded-products="products"
     ></LoadMoreButton>
+
+    <ThePaginationBar></ThePaginationBar>
   </div>
 </template>
 
@@ -31,6 +34,8 @@ import BreadCrumbsBar from "@/components/Catalog/TheBreadCrumbsBar/BreadCrumbsBa
 import SelectionBar from "@/components/Catalog/TheSelectionBar/TheSelectionBar.vue";
 import DisplayTitle from "@/components/Catalog/TheDisplayTitle.vue";
 import ProductGrid from "@/components/Catalog/TheProductGrid.vue";
+import ThePaginationBar from "@/components/Catalog/ThePaginationBar.vue";
+
 import LoadMoreButton from "@/components/Catalog/LoadMoreButton.vue";
 import { mapState, mapGetters, mapActions } from "vuex";
 
@@ -42,6 +47,7 @@ export default {
     DisplayTitle,
     ProductGrid,
     LoadMoreButton,
+    ThePaginationBar,
   },
   computed: {
     ...mapGetters("load", ["products"]),
