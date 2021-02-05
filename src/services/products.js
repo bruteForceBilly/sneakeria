@@ -131,9 +131,25 @@ export default function (o, q, cb) {
           }, {});
 
           const { pageCurrent, contentLimit } = pageParams;
-          const contentStart =
-            pageCurrent == 1 ? 0 : pageCurrent * contentLimit;
           const contentCount = data.length;
+          const getContentStart = () => {
+            if (pageCurrent == 1) {
+              return 0;
+            } else {
+              if (pageCurrent * contentLimit > contentCount) {
+                return (
+                  contentLimit -
+                  (contentLimit - contentCount) +
+                  (contentLimit - contentCount)
+                );
+              } else {
+                return pageCurrent * contentLimit;
+              }
+            }
+          };
+
+          const contentStart = getContentStart();
+
           const contentEnd =
             contentStart + contentLimit > contentCount
               ? contentCount
@@ -164,6 +180,8 @@ export default function (o, q, cb) {
         );
 
         store.commit("search/foundProductsPagination", pagination);
+
+        console.log(filteredProducts, paginatedProducts, pagination);
 
         return cb(paginatedProducts);
       });
