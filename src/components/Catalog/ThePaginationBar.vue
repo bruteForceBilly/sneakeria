@@ -74,11 +74,6 @@
 
 <script>
 /*
-
-:class="hover ? 'border-hover z-30' : ''"
-
-:class="hover ? 'inline-block' : 'hidden'"
-
 containerSize: (...)
 id: (...)
 inputType: (...)

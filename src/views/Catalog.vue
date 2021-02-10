@@ -54,7 +54,7 @@ export default {
     ...mapGetters("navigation", ["selectsGetter"]),
     ...mapState(["route"]),
     ...mapState("navigation", ["selects"]),
-    ...mapState("search", ["foundProductsPagination"]),
+    ...mapState("search", ["foundProductsPagination", "foundProductsLength"]),
   },
   methods: {
     ...mapActions("navigation", ["selectsInit"]),

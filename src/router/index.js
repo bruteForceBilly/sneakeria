@@ -90,7 +90,7 @@ const routes = [
 
           store.commit("search/routeLastBeforeEnterMutation", to.name);
 
-          //console.log("nextConfig slug", slug);
+          //console.log("nextConfig", nextConfig);
 
           next(nextConfig);
         })
@@ -124,13 +124,13 @@ const routes = [
     name: "searchResultRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      // console.log(
-      //   "LOOOK searchResultRoute",
-      //   "to >>>",
-      //   to,
-      //   "from >>>>",
-      //   from.query
-      // );
+      console.log(
+        "LOOOK searchResultRoute",
+        "to >>>",
+        to,
+        "from >>>>",
+        from.query
+      );
 
       store.commit("setByRoute", false);
 

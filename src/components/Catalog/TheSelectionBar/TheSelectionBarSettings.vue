@@ -54,6 +54,8 @@ export default {
   methods: {
     ...mapActions("navigation", ["selectOptionsCheckToggle"]),
     updateRouteQueryParams(...args) {
+      console.log("args", args);
+      //debugger;
       let queryParamsString = args
         .filter((o) => Object.keys(o).length !== 0)
         .reduce((acc, cv) => {
