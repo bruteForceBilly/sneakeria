@@ -33,14 +33,18 @@ export default function (o, q, cb) {
     const page = /_page=\d+/g;
     const limit = /_limit=\d+/g;
 
-    let operatorWithPage = operator.match(page);
-    operatorWithPage += "&" + operator.match(limit);
+    let operatorPage = operator.match(page);
+    let operatorLimit = operator.match(limit);
 
-    let operatorWithoutPage = operator.replace(page, "");
-    operatorWithoutPage = operatorWithoutPage.replace(limit, "");
+    let operatorWithoutPagination = operator
+      .replace(operatorPage, "")
+      .replace(operatorLimit, "")
+      .slice(2);
+
+    console.log("operatorWithoutPagination", operatorWithoutPagination);
 
     return axios
-      .get(API_PRODUCTS + "?" + product + operatorWithoutPage)
+      .get(API_PRODUCTS + "?" + product)
       .catch(function (error) {
         console.log("API_PRODUCTS error:", error);
       })
@@ -67,7 +71,7 @@ export default function (o, q, cb) {
         }
 
         if (operator !== null) {
-          apiVersionsQuery += "&" + operatorWithoutPage;
+          apiVersionsQuery += "&" + operatorWithoutPagination;
         }
 
         //console.log("apiVersionsQuery", apiVersionsQuery);

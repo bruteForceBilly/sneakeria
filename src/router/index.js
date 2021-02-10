@@ -85,6 +85,9 @@ const routes = [
           };
 
           if (query !== null) {
+            // to be passed in as settings on app start
+            delete query["_page"];
+            delete query["_limit"];
             nextConfig.query = query;
           }
 
@@ -124,13 +127,13 @@ const routes = [
     name: "searchResultRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      console.log(
-        "LOOOK searchResultRoute",
-        "to >>>",
-        to,
-        "from >>>>",
-        from.query
-      );
+      // console.log(
+      //   "LOOOK searchResultRoute",
+      //   "to >>>",
+      //   to,
+      //   "from >>>>",
+      //   from.query
+      // );
 
       store.commit("setByRoute", false);
 
