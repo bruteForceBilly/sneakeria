@@ -1,17 +1,23 @@
 <template>
   <div class="flex justify-start">
-    <div v-for="select in selects" :key="select.value">
-      <div v-for="option in select.options" :key="option.value">
-        <div v-if="option.checked">
-          <button
-            v-bind:checked="option.checked"
-            @click="toggleOption(option)"
-            class="tag focus:outline-none"
-          >
-            {{ option.label }}
-            <span class="font-hairline text-gray-800 ml-1 inline">x</span>
-          </button>
-        </div>
+    <!-- <div
+      class="flex"
+      v-for="select in selectedOptionsElements"
+      :key="select.value"
+    >
+      
+    </div> -->
+
+    <div v-for="option in selectedOptionsElements" :key="option.value">
+      <div v-if="option.checked">
+        <button
+          v-bind:checked="option.checked"
+          @click="toggleOption(option)"
+          class="tag focus:outline-none"
+        >
+          {{ option.label }}
+          <span class="font-hairline text-gray-800 ml-1 inline">x</span>
+        </button>
       </div>
     </div>
 
@@ -40,7 +46,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 // RENAME COMPONENT TO TAGSBAR AND DECOUPLE IT FROM SELECTION BAR
 
 export default {
@@ -70,11 +76,15 @@ export default {
     },
   },
   methods: {
+    ...mapActions("navigation", ["selectOptionsCheckToggle"]),
+
     toggleOption(option) {
       this.$store.commit("setByRoute", false);
-      return option.checked === false
+      /* return option.checked === false
         ? (option.checked = true)
-        : (option.checked = false);
+        : (option.checked = false); */
+      console.log("toggle", option);
+      return this.selectOptionsCheckToggle(option);
     },
     togglePriceOperator() {
       this.updateRouteQueryParams(this.selectedOptionsObject);
@@ -85,6 +95,9 @@ export default {
         this.toggleOption(option)
       );
     },
+  },
+  beforeUpdate() {
+    console.log("selected el: ", this.selectedOptionsElements);
   },
 };
 </script>

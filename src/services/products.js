@@ -41,8 +41,6 @@ export default function (o, q, cb) {
       .replace(operatorLimit, "")
       .slice(2);
 
-    console.log("operatorWithoutPagination", operatorWithoutPagination);
-
     return axios
       .get(API_PRODUCTS + "?" + product)
       .catch(function (error) {

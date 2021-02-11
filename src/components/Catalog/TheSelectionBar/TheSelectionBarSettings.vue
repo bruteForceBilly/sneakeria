@@ -54,9 +54,14 @@ export default {
   methods: {
     ...mapActions("navigation", ["selectOptionsCheckToggle"]),
     updateRouteQueryParams(...args) {
-      console.log("args", args);
-      //debugger;
-      let queryParamsString = args
+      let validatedArgs = args.reduce((acc, cv) => {
+        if (Object.keys(cv).length > 0 && cv.constructor === Object) {
+          acc.push(cv);
+        }
+        return acc;
+      }, []);
+
+      let queryParamsString = validatedArgs
         .filter((o) => Object.keys(o).length !== 0)
         .reduce((acc, cv) => {
           for (const [key, value] of Object.entries(cv)) {
@@ -91,7 +96,7 @@ export default {
     selects: {
       deep: true,
       immediate: false,
-      handler: function (newValue, oldValue) {
+      handler: function () {
         if (this.getSetByRoute === false) {
           this.updateRouteQueryParams(this.selectedOptionsObject, this.query);
         }
