@@ -156,16 +156,9 @@ export default {
     route: {
       deep: true,
       handler: function () {
-        console.log("router changed");
         return this.setSelectedPage(1);
       },
     },
-    // pagination: function (newVal) {
-    //   if (this.selectedPage > newVal.pageCount) {
-    //     console.log("reset selectedPage", this.selectedPage, newVal.pageCount);
-    //     return this.setSelectedPage(newVal.pageCount);
-    //   }
-    // },
     selectedPage: function (newVal) {
       return this.$router
         .push({
