@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 // RENAME COMPONENT TO TAGSBAR AND DECOUPLE IT FROM SELECTION BAR
 
 export default {
@@ -77,6 +77,7 @@ export default {
   },
   methods: {
     ...mapActions("navigation", ["selectOptionsCheckToggle"]),
+    ...mapMutations("navigation", ["toggleElement"]),
 
     toggleOption(option) {
       this.$store.commit("setByRoute", false);
@@ -84,7 +85,7 @@ export default {
         ? (option.checked = true)
         : (option.checked = false); */
       console.log("toggle", option);
-      return this.selectOptionsCheckToggle(option);
+      return this.toggleElement(option);
     },
     togglePriceOperator() {
       this.updateRouteQueryParams(this.selectedOptionsObject);
