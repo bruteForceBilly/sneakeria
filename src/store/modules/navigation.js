@@ -608,10 +608,10 @@ const actions = {
   ) {
     // rename to selectOptionsCheckToggleByRouter
 
-    console.log(
-      "selectOptionsCheckToggle queryParamsObject",
-      queryParamsObject
-    );
+    // console.log(
+    //   "selectOptionsCheckToggle queryParamsObject",
+    //   queryParamsObject
+    // );
 
     const { productProp = null, versionProp = null } = queryParamsObject;
 
