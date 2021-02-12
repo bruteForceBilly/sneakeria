@@ -1,12 +1,12 @@
 <template>
   <div
-    class="flex flex-row items-center py-1 text-gray-800 font-sans font-normal text-sm capitalize tracking-widest"
+    class="flex flex-row items-center pt-10 text-black font-sans font-normal text-sm capitalize"
   >
     <span class="font-black mr-2">←</span>
 
     <span
       @click="goBack()"
-      class="underline cursor-pointer uppercase font-black"
+      class="underline cursor-pointer uppercase font-black tracking-widest"
       >Back</span
     >
 

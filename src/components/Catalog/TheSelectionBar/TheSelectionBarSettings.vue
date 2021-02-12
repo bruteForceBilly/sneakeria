@@ -61,6 +61,8 @@ export default {
         return acc;
       }, []);
 
+      console.log(validatedArgs);
+
       let queryParamsString = validatedArgs
         .filter((o) => Object.keys(o).length !== 0)
         .reduce((acc, cv) => {

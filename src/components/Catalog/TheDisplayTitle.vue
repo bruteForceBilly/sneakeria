@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="pt-8 pb-12">
-      <h1 class="text-4xl tracking-tighter font-black uppercase">
+    <div class="pt-5 pb-1">
+      <h1 class="text-4xl tracking-tighter font-normal italic uppercase">
         <span
           v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1"
           >All Products</span
@@ -11,15 +11,19 @@
             currentRoute.name === 'all' && searchFoundProductsLength > 0
           "
           >All Products
-          <span class="font-light tracking-wider text-gray-600 text-xl">
-            ( {{ searchFoundProductsLength }} Products )
+          <span
+            class="font-extralight tracking-normal text-gray-600 not-italic text-xs"
+          >
+            [{{ searchFoundProductsLength }}]
           </span></span
         >
         <span v-else>
           <span v-if="searchFoundProductsLength > 0">
             {{ displayTitel }}
-            <span class="font-light tracking-wider text-gray-600 text-xl">
-              ( {{ searchFoundProductsLength }} Products )
+            <span
+              class="font-extralight tracking-normal text-gray-600 not-italic text-xs"
+            >
+              [{{ searchFoundProductsLength }}]
             </span>
           </span>
           <span v-else> No Products Found </span>
@@ -51,9 +55,9 @@ export default {
       ];
 
       if (res.length === 2 && res[res.length - 1] === null) {
-        return res.flat().toString().replace(/,/g, " ∙ ").slice(0, -3);
+        return res.flat().toString().replace(/,/g, "∙").slice(0, -1);
       } else {
-        return res.flat().toString().replace(/,/g, " ∙ ");
+        return res.flat().toString().replace(/,/g, "∙");
       }
     },
   },

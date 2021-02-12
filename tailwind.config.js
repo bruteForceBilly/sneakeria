@@ -1,6 +1,9 @@
 module.exports = {
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["IBM Plex Mono", "Roboto", "Helvetica", "Arial", "sans-serif"],
+      },
       fontSize: {
         "vh-xxs": "calc(.5vh + .5rem)",
         "vh-xs": "calc(1vh + .5rem)",

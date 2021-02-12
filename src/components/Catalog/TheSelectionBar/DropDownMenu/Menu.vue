@@ -2,7 +2,7 @@
   <!-- Menu Base to be imported in -->
   <div
     v-if="item != null"
-    class="relative inline-block mx-2"
+    class="relative inline-block"
     @mouseover="hover = true"
     @mouseleave="hover = false"
   >

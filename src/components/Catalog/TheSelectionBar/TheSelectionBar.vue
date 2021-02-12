@@ -14,7 +14,7 @@
         >
           <div class="relative">
             <div
-              class="py-1 bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
+              class="py-2 bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
               :class="hang ? 'border border-gray-900' : 'border-t border-b'"
             >
               <FilterSelects

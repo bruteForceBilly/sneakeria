@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="selectedOptionsElements"
-    class="flex flex-row items-center py-1 text-gray-800 font-sans font-normal text-sm capitalize tracking-widest"
+    class="flex flex-row items-center py-1 text-black font-sans font-normal text-sm capitalize"
   >
     <div v-for="(option, index) in selectedOptionsElements" :key="option.value">
       <template v-if="index === 0">

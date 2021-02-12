@@ -1,6 +1,6 @@
 <template>
-  <div class="px-4 sm:px-6 md:px-12 xl:px-16">
-    <BreadCrumbsBar class="pt-8"></BreadCrumbsBar>
+  <div class="px-2 md:px-4 xl:px-8">
+    <BreadCrumbsBar></BreadCrumbsBar>
 
     <DisplayTitle
       :current-route="route"
