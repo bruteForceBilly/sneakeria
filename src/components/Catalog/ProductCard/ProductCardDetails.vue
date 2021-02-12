@@ -8,10 +8,10 @@
       </h6> -->
 
       <h3
-        class="mt-4 w-full capitalize"
+        class="mt-4 w-full uppercase tracking-widest font-normal"
         :class="[
           settings.settings.layout === 'card'
-            ? 'text-vw-xs whitespace-no-wrap'
+            ? 'text-vw-xxs whitespace-no-wrap'
             : 'text-vw-xl',
         ]"
       >
@@ -23,32 +23,27 @@
         :class="[
           selectedVersionPrice.discount
             ? 'text-red-600 font-bold'
-            : 'text-gray-800',
+            : 'text-black',
         ]"
-        class="mr-2 flex text-vh-xs"
+        class="mr-2 flex text-vh-xxs"
       >
         <span>
           {{ selectedVersionPrice.amountOffered | formatCurrency("eur") }}
-        </span>
-
-        <span
-          v-if="selectedVersionPrice.discount"
-          class="text-gray-500 font-normal line-through mx-3"
-        >
-          {{ selectedVersionPrice.amountOriginal | formatCurrency("eur") }}
         </span>
       </div>
       <!-- DISCOUNT -->
       <div v-if="discount">
         <h6
-          class="inline rounded-full py-1 px-3 bg-gray-100 text-gray-500 font-medium text-vh-xxs whitespace-no-wrap"
+          class="rounded text-gray-600 tracking-widest font-normal text-vh-xxs whitespace-no-wrap"
         >
           SAVE {{ discount }}
         </h6>
       </div>
 
       <!-- COLORS -->
-      <h6 class="text-gray-600 self-end text-vw-xxs w-full">
+      <h6
+        class="text-black tracking-tight self-end font-light text-vh-xxs w-full"
+      >
         {{
           productVersionsColors.length > 1
             ? productVersionsColors.length + " Colors"

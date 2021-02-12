@@ -1,6 +1,6 @@
 <template>
   <article
-    class="relative w-full flex flex-no-wrap overflow-hidden bg-white"
+    class="test relative flex flex-no-wrap overflow-hidden bg-white pb-4"
     :class="[
       layout === 'card'
         ? 'flex-col flex-no-wrap'
@@ -14,11 +14,11 @@
       <section
         v-on:mouseenter="hover = true"
         v-on:mouseleave="hover = false"
-        class="relative z-10 max-h-full overflow-hidden w-full flex-shrink temp-bg"
+        class="relative z-10 max-h-full overflow-hidden flex-shrink temp-bg"
       >
         <section v-if="settings.settings.product.campaigns.length !== 0">
           <span
-            class="overflow-visible absolute z-20 top-0 m-4 inline writing-mode-rotate w-full"
+            class="overflow-visible absolute m-4 z-20 top-0 inline writing-mode-rotate"
           >
             <h4
               class="text-vh-xs inline bg-yellow-200 tracking-widest uppercase px-1 py-2"
@@ -78,6 +78,10 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.test {
+  width: 386px;
+}
+
 .max-w-half {
   max-width: 50%;
 }

@@ -9,7 +9,7 @@
       </h1>
     </div>
 
-    <div v-else :class="[this.$mq !== 'sm' ? 'grid' : 'grid-sm']" class="gap-6">
+    <div v-else :class="[this.$mq !== 'sm' ? 'grid' : 'grid-sm']">
       <div
         v-for="product in sortSelect(sortSetting)"
         :key="product.id"
@@ -91,12 +91,15 @@ export default {
 <style>
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(4, minmax(386px, 1fr));
+  gap: 4px;
 }
 
 .grid-sm {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .na-enter {
