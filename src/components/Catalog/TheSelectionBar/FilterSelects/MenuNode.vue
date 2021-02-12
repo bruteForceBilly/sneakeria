@@ -9,6 +9,7 @@
       >
         <template v-slot:menu-items>
           <MenuOption
+            class="hover:bg-gray-200"
             :item="select"
             v-for="option in selectOptions"
             :key="option.id"

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <li class="my-4">
+    <li class="py-3 pl-4">
       <label class="custom-label flex font-normal text-sm">
         <slot name="option-input"></slot>
         <slot name="option-label"></slot>

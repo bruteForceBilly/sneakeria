@@ -7,20 +7,20 @@ const state = () => ({
       label: "Sort By",
       value: null,
       inputType: "hidden",
-      containerSize: "base",
+      containerSize: "base-left",
       multiple: false,
       options: [
         {
           id: 1,
           name: "sortBy",
-          label: "Price Min Asc (Low - High)",
+          label: "Price (Low - High)",
           value: { sort: "PriceMin", order: "Ascending" },
           checked: false,
         },
         {
           id: 2,
           name: "sortBy",
-          label: "Price Max Des (High - Low)",
+          label: "Price (High - Low)",
           value: { sort: "PriceMax", order: "Descending" },
           checked: false,
         },

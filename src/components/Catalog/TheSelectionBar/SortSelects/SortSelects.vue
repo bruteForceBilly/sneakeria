@@ -4,6 +4,7 @@
       <Menu v-for="item in sorts" :key="item.name" :item="item">
         <template v-slot:menu-items>
           <MenuOption
+            class="hover:bg-gray-200"
             :item="item"
             v-for="option in item.options"
             :key="option.id"

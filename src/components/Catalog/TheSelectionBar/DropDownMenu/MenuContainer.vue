@@ -2,20 +2,30 @@
   <div>
     <div
       v-if="itemCcontainerSize === 'base'"
-      class="position-after-height inline-block z-20 absolute w-40 border-black outline-none border px-3 py-1 bg-white rounded-none"
+      class="position-after-height inline-block z-20 absolute w-40 border-black outline-none border pt-2 pb-3 bg-white rounded-none"
       :class="hover ? 'inline-block' : 'hidden'"
     >
-      <ul class="px-1 pb-1">
+      <ul>
+        <slot name="options"> ... waiting for content</slot>
+      </ul>
+    </div>
+
+    <div
+      v-if="itemCcontainerSize === 'base-left'"
+      class="position-after-height base-left inline-block z-20 absolute w-64 border-black outline-none border pt-2 pb-3 bg-white rounded-none"
+      :class="hover ? 'inline-block' : 'hidden'"
+    >
+      <ul>
         <slot name="options"> ... waiting for content</slot>
       </ul>
     </div>
 
     <div
       v-if="itemCcontainerSize === 'wide'"
-      class="position-after-height inline-block z-20 absolute w-64 border-black outline-none border px-3 py-1 bg-white rounded-none"
+      class="position-after-height inline-block z-20 absolute w-64 border-black outline-none border pt-2 pb-3 bg-white rounded-none"
       :class="hover ? 'inline-block' : 'hidden'"
     >
-      <ul class="px-1 pb-1 flex flex-row flex-wrap">
+      <ul class="flex flex-row flex-wrap">
         <slot name="options"> ... waiting for content</slot>
       </ul>
     </div>
@@ -44,6 +54,10 @@ export default {
 
 <style scoped>
 .position-after-height {
-  top: calc(100% - 2px);
+  top: calc(100% - 1px);
+}
+
+.base-left {
+  right: 0;
 }
 </style>
