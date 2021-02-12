@@ -1,38 +1,39 @@
 <template>
-  <div class="flex justify-start">
-    <div v-for="option in selectedOptionsElements" :key="option.value">
-      <div v-if="option.checked">
-        <button
-          v-bind:checked="option.checked"
-          @click="toggleOption(option)"
-          class="tag focus:outline-none"
-        >
-          {{ option.label }}
-          <span class="font-hairline text-gray-800 ml-1 inline">x</span>
-        </button>
+  <div>
+    <div class="flex justify-start content-center align-middle">
+      <div v-for="option in selectedOptionsElements" :key="option.value">
+        <div v-if="option.checked">
+          <button
+            v-bind:checked="option.checked"
+            @click="toggleOption(option)"
+            class="tag focus:outline-none"
+          >
+            {{ option.label }}
+            <span class="font-hairline text-gray-800 ml-1 inline">x</span>
+          </button>
+        </div>
       </div>
-    </div>
 
-    <div
-      v-if="priceOperators !== false"
-      @click="togglePriceOperator()"
-      class="tag focus:outline-none"
-    >
-      {{ priceOperators }}
-      <span class="font-hairline text-gray-800 ml-1 inline">x</span>
-    </div>
-
-    <div
-      v-show="Object.keys(selectedOptionsObject).length > 0"
-      @click="clearAllTags()"
-      class="cursor-pointer"
-    >
-      <span
-        class="px-0 mx-2 underline bg-transparent py-1 text-gray-800 font-sans font-normal text-sm lowercase"
+      <div
+        v-if="priceOperators !== false"
+        @click="togglePriceOperator()"
+        class="tag focus:outline-none"
       >
-        Clear all
-      </span>
-      <span class="font-hairline text-gray-600 ml-1 inline">x</span>
+        {{ priceOperators }}
+        <span class="font-hairline text-gray-800 ml-1 inline">x</span>
+      </div>
+
+      <div
+        v-show="Object.keys(selectedOptionsObject).length > 0"
+        @click="clearAllTags()"
+        class="cursor-pointer"
+      >
+        <span
+          class="px-0 mx-2 underline bg-transparent text-black font-sans font-normal text-xs lowercase"
+        >
+          Clear all
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -89,7 +90,7 @@ export default {
 
 <style lang="postcss" scoped>
 .tag {
-  @apply py-1 cursor-pointer text-gray-800 font-sans font-normal text-sm lowercase px-4 no-underline bg-gray-300 rounded-full mr-2;
+  @apply py-1 cursor-pointer text-black font-sans font-normal text-sm lowercase px-2 no-underline border border-gray-300 bg-gray-100 rounded-sm mr-2;
 }
 
 .clear-all {

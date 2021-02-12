@@ -5,7 +5,7 @@
         <div v-for="(link, index) in items.links" :key="link.value">
           <span
             @click="setByRoute(true)"
-            class="no-underline uppercase tracking-widest text-black text-sm py-3 mr-8 border-transparent border-b-2 hover:border-black"
+            class="no-underline uppercase tracking-widest text-black text-xs py-3 mr-8 border-transparent border-b-2 hover:border-black"
             :class="[index > 1 ? 'font-normal' : 'font-bold']"
           >
             <router-link :to="link.value">

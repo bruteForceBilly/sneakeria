@@ -14,7 +14,7 @@
         >
           <div class="relative">
             <div
-              class="py-2 bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
+              class="py-2 px-2 bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
               :class="hang ? 'border border-gray-900' : 'border-t border-b'"
             >
               <FilterSelects
@@ -30,7 +30,7 @@
               </SortSelects>
             </div>
           </div>
-          <div v-if="!hang" class="mt-4 flex justify-start">
+          <div v-if="!hang" class="mt-4">
             <TheSelectedOptions
               :update-route-query-params="settings.updateRouteQueryParams"
               :selected-options-object="settings.selectedOptionsObject"
