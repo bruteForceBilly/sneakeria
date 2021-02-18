@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-row items-center pt-10 text-black font-sans font-normal text-sm capitalize"
+    class="flex flex-row items-center text-black font-sans font-normal text-sm capitalize"
   >
     <span class="font-black mr-2">←</span>
 

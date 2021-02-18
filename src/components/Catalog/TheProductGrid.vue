@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-10 mb-32">
+  <div class="mt-12 sm:mb-32">
     <div v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1">
       <h1 class="text-2xl text-gray-800">
         ...No filter is selected.
@@ -122,7 +122,7 @@ lg 386
 
 .grid-lg {
   display: grid;
-  grid-template-columns: repeat(4, minmax(155px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: auto;
   gap: 2px;
 }

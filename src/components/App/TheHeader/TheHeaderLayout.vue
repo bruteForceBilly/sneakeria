@@ -3,18 +3,21 @@
     <div class="relative">
       <!-- Container start -->
       <div
-        class="border-b px-4 sm:px-0 bg-white flex justify-start items-center"
+        class="border-b px-4 lg:px-12 xl:px-4 bg-white flex justify-between items-center"
         style="height: 50px"
       >
         <!-- Sidebar Toggle Icon-->
-        <div class="pr-2 sm:pr-0 sm:p-2 sm:ml-2 sm:mr-8">
+        <div
+          v-if="this.$mq == 'sm'"
+          class="pr-2 sm:pr-0 sm:p-2 sm:ml-2 sm:mr-8"
+        >
           <slot name="sidebarToggleIcon">
             <p>... sidebarToggleIcon should go here</p>
           </slot>
         </div>
 
         <!-- Logo -->
-        <div class="flex-grow">
+        <div class="">
           <router-link :to="{ name: 'home' }">
             <slot name="logo">
               <p>... logo should go here</p>
@@ -22,7 +25,7 @@
           </router-link>
         </div>
 
-        <div v-if="this.$mq != 'sm'" class="flex-grow">
+        <div v-if="this.$mq != 'sm'" class="">
           <slot name="links"></slot>
         </div>
 

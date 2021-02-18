@@ -1,6 +1,9 @@
 <template>
-  <div class="px-1 pb-64 sm:px-8 xl:px-40" style="padding-top: 50px">
-    <BreadCrumbsBar v-if="false" />
+  <div
+    class="px-1 pb-24 sm:pb-64 sm:px-8 lg:px-24 xl:px-8"
+    style="padding-top: 50px"
+  >
+    <BreadCrumbsBar v-if="this.$mq != 'sm'" />
 
     <DisplayTitle
       :current-route="route"
@@ -11,7 +14,7 @@
     <div v-else>
     </div> -->
 
-    <SelectionBar v-if="false" :selects="selects"></SelectionBar>
+    <SelectionBar v-if="this.$mq != 'sm'" :selects="selects"></SelectionBar>
 
     <ProductGrid
       :loaded-products="products"
