@@ -1,46 +1,38 @@
 <template>
-  <article
-    class="test relative flex flex-no-wrap overflow-hidden bg-white pb-4"
-    :class="[
-      layout === 'card'
-        ? 'flex-col flex-no-wrap'
-        : 'flex-row items-stretch justify-center',
-    ]"
-  >
-    <div
-      class="overflow-hidden"
-      :class="[layout === 'card' ? 'flex flex-col' : 'flex-grow max-w-half']"
-    >
+  <article class="relative flex flex-col bg-white pb-6">
+    <div class="">
       <section
         v-on:mouseenter="hover = true"
         v-on:mouseleave="hover = false"
-        class="relative z-10 max-h-full overflow-hidden flex-shrink temp-bg"
+        class="relative z-10 h-full overflow-hidden temp-bg"
       >
-        <section v-if="settings.settings.product.campaigns.length !== 0">
+        <div v-if="settings.settings.product.campaigns.length !== 0">
           <span
             class="overflow-visible absolute m-4 z-20 top-0 inline writing-mode-rotate"
           >
             <h4
-              class="text-vh-xs inline bg-yellow-200 tracking-widest uppercase px-1 py-2"
+              class="text-vh-xxs inline bg-white tracking-widest font-normal italic uppercase px-1 py-2"
             >
               <slot name="flair"></slot>
             </h4>
           </span>
-        </section>
+        </div>
 
-        <section class="mt-2 relative w-full z-20 flex justify-end">
+        <div class="mt-2 relative w-full z-20 flex justify-end">
           <slot name="favourite">
             <h1>Favourite Button goes here</h1>
           </slot>
-        </section>
+        </div>
 
-        <section v-on:click="settings.settings.versionLinkQueryHandler(1)">
-          <div class="flex justify-center max-h-full">
-            <slot name="image">
-              <img src="@/assets/2.png" />
-            </slot>
+        <div v-on:click="settings.settings.versionLinkQueryHandler(1)">
+          <div class="flex justify-center h-full">
+            <div class="flex-grow">
+              <slot name="image">
+                <img src="@/assets/2.png" />
+              </slot>
+            </div>
           </div>
-        </section>
+        </div>
         <div
           class="z-50 overflow-hidden w-full absolute bottom-0"
           :class="[hover ? 'block' : 'hidden']"
@@ -49,7 +41,8 @@
         </div>
       </section>
     </div>
-    <div class="flex-grow w-full h-32">
+
+    <div class="w-full">
       <section class="px-2 h-full">
         <slot name="details">
           <section class="px-2">Product Details Component Goes here</section>
@@ -78,10 +71,6 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.test {
-  width: 386px;
-}
-
 .max-w-half {
   max-width: 50%;
 }

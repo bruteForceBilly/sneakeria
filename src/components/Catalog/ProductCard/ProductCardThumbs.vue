@@ -6,7 +6,7 @@
         v-if="times > 0"
         icon="chevron-left"
         button-style="secondary sm"
-        class="absolute z-20 top-1 left-0 mt-6"
+        class="absolute z-20 top-1 left-0 mt-5"
       >
       </ProductCardButton>
       <ProductCardButton
@@ -14,7 +14,7 @@
         v-if="times < maxTimes"
         icon="chevron-right"
         button-style="secondary sm"
-        class="absolute z-20 top-1 right-0 mt-6"
+        class="absolute z-20 top-1 right-0 mt-5"
       ></ProductCardButton>
     </div>
     <div class="relative">

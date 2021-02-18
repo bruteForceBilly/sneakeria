@@ -44,12 +44,6 @@ export default {
             value: "whishlist",
             src: "heart.svg",
           },
-          {
-            name: "Cart",
-            label: "Cart",
-            value: "cart",
-            src: "shopping-cart.svg",
-          },
         ],
       },
     };

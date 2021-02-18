@@ -16,7 +16,7 @@
       </div>
       <div v-else-if="mode === 'icons'" class="flex item-center">
         <div v-for="icon in items.icons" :key="icon.value">
-          <img :src="require(`@/assets/${icon.src}`)" class="px-2" />
+          <img :src="require(`@/assets/${icon.src}`)" class="px-1 sm:px-2" />
         </div>
       </div>
     </HeaderNavSettings>
@@ -42,9 +42,6 @@ export default {
     },
   },
   methods: {
-    log(arg) {
-      return console.log(arg);
-    },
     setByRoute(arg) {
       return this.$store.commit("setByRoute", arg);
     },

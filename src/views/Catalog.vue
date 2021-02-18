@@ -1,6 +1,6 @@
 <template>
-  <div class="px-2 md:px-4 xl:px-8">
-    <BreadCrumbsBar></BreadCrumbsBar>
+  <div class="px-1 pb-64 sm:px-8 xl:px-40" style="padding-top: 50px">
+    <BreadCrumbsBar v-if="false" />
 
     <DisplayTitle
       :current-route="route"
@@ -11,7 +11,7 @@
     <div v-else>
     </div> -->
 
-    <SelectionBar :selects="selects"></SelectionBar>
+    <SelectionBar v-if="false" :selects="selects"></SelectionBar>
 
     <ProductGrid
       :loaded-products="products"
@@ -24,7 +24,7 @@
       :loaded-products="products"
     ></LoadMoreButton>
 
-    <ThePaginationBar></ThePaginationBar>
+    <ThePaginationBar />
   </div>
 </template>
 

@@ -161,11 +161,11 @@ export default {
 .primary--inverted svg,
 .primary svg {
   position: relative;
-  z-index: 20;
-  left: -5px;
-  right: 5px;
   top: -4px;
-  bottom: 0px;
+  right: 5px;
+  bottom: 0;
+  left: -5px;
+  z-index: 20;
 }
 
 .primary--call-to-action > *,
@@ -173,45 +173,45 @@ export default {
   @apply text-white font-semibold tracking-widest text-base pl-1;
 }
 
-.primary:before {
+.primary::before {
+  position: absolute;
+  top: -4px;
+  right: 1px;
+  bottom: 1px;
+  left: -4px;
+  z-index: 10;
   content: "";
   background: black;
-  position: absolute;
-  left: -4px;
-  right: 1px;
-  top: -4px;
-  bottom: 1px;
-  border: 0px solid;
-  z-index: 10;
+  border: 0 solid;
 }
 
 .primary--inverted {
-  @apply border border-yellow-200 bg-black relative text-black;
+  @apply border border-white bg-black relative text-black;
 }
 
-.primary--inverted:before {
-  content: "";
-  background: #fefcbf;
+.primary--inverted::before {
   position: absolute;
-  left: -3px;
-  right: 1px;
   top: -4px;
+  right: 1px;
   bottom: 1px;
-  border: 0px solid;
+  left: -3px;
   z-index: 10;
+  content: "";
+  background: white;
+  border: 0 solid;
 }
 
 .secondary {
-  @apply border-2 border-transparent bg-yellow-200;
+  @apply border-2 border-transparent bg-white;
 }
 
 .secondary:hover {
-  color: #fefcbf;
+  color: white;
   background: black;
 }
 
 .secondary--inverted {
-  @apply border-2 border-transparent bg-black text-yellow-200;
+  @apply border-2 border-transparent bg-black text-white;
 }
 
 .link {

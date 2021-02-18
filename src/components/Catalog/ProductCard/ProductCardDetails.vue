@@ -42,7 +42,7 @@
 
       <!-- COLORS -->
       <h6
-        class="text-black tracking-tight self-end font-light text-vh-xxs w-full"
+        class="text-black tracking-tight mt-8 self-end font-light text-vw-xxs sm:text-vh-xxs w-full"
       >
         {{
           productVersionsColors.length > 1

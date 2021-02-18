@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="pt-5 pb-1">
+    <div class="pt-1 sm:pt-5 pb-1">
       <h1 class="text-4xl tracking-tighter font-normal italic uppercase">
         <span
           v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1"

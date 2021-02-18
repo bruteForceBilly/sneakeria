@@ -1,14 +1,23 @@
 <template>
-  <div class="mt-20 mb-64 flex flex-row">
+  <div class="flex flex-row justify-around content-center">
     <span
       @click="setSelectedPage(pagination.pagePrevious)"
-      class="cursor-pointer mt-4 align text-sm tracking-widest text-gray-900 font-black underline"
+      class="cursor-pointer mt-4 text-sm tracking-widest text-gray-900 font-black underline"
       :class="pagination.pageCurrent === 1 ? 'invisible' : 'visible'"
     >
       PREVIOUS
     </span>
 
-    <div class="ml-auto flex flex-row justify-center align-baseline">
+    <span
+      v-if="this.$mq === 'sm'"
+      class="mt-4 text-sm tracking-widest text-gray-900 font-base"
+      >1/1</span
+    >
+
+    <div
+      v-show="this.$mq != 'sm'"
+      class="flex-grow flex flex-row justify-center align-baseline"
+    >
       <span class="mt-4 mr-3 text-sm text-widest text-gray-900">Page:</span>
       <div
         class="flex justify-center relative"
@@ -58,9 +67,10 @@
         >of {{ pagination.pageCount }}
       </span>
     </div>
+
     <span
       @click="setSelectedPage(pagination.pageNext)"
-      class="cursor-pointer mt-4 align ml-auto text-sm tracking-widest text-gray-900 font-black underline"
+      class="cursor-pointer mt-4 sm:ml-auto text-sm tracking-widest text-gray-900 font-black underline"
       :class="
         pagination.pageCurrent === pagination.pageCount
           ? 'invisible'

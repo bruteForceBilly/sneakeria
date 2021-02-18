@@ -1,5 +1,5 @@
 <template>
-  <div class="my-10">
+  <div class="mt-10 mb-32">
     <div v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1">
       <h1 class="text-2xl text-gray-800">
         ...No filter is selected.
@@ -9,12 +9,8 @@
       </h1>
     </div>
 
-    <div v-else :class="[this.$mq !== 'sm' ? 'grid' : 'grid-sm']">
-      <div
-        v-for="product in sortSelect(sortSetting)"
-        :key="product.id"
-        class=""
-      >
+    <div v-else :class="gridSize">
+      <div v-for="product in sortSelect(sortSetting)" :key="product.id">
         <div>
           {{ product.sortRank }}
           <ProductCard
@@ -67,6 +63,17 @@ export default {
       settingAction: (state) =>
         state.dispatch("settingAction", { sort: "default", order: "default" }),
     }),
+    gridSize() {
+      if (this.$mq === "sm") {
+        return "grid-sm";
+      } else if (this.$mq === "md" || this.$mq === "lg") {
+        return "grid-md";
+      } else if (this.$mq === "xl") {
+        return "grid-lg";
+      } else {
+        return "grid";
+      }
+    },
     selectedVersion() {
       return this.$store.state.selectedVersion;
     },
@@ -89,18 +96,44 @@ export default {
 </script>
 
 <style>
+/*
+lg 386
+*/
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(386px, 1fr));
-  gap: 4px;
+  grid-template-columns: repeat(4, minmax(306px, 1fr));
+  grid-auto-rows: auto;
+  gap: 2px;
 }
 
+.grid-sm {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(155px, 1fr));
+  grid-auto-rows: auto;
+  gap: 2px;
+}
+
+.grid-md {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(155px, 1fr));
+  grid-auto-rows: auto;
+  gap: 2px;
+}
+
+.grid-lg {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(155px, 1fr));
+  grid-auto-rows: auto;
+  gap: 2px;
+}
+
+/*
 .grid-sm {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-}
+} */
 
 .na-enter {
   opacity: 0;

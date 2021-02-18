@@ -1,20 +1,20 @@
 <template>
-  <div>
+  <div class="fixed z-50 sm:z-0 sm:static w-full">
     <div class="relative">
       <!-- Container start -->
       <div
-        class="border-b flex justify-start items-center"
+        class="border-b px-4 sm:px-0 bg-white flex justify-start items-center"
         style="height: 50px"
       >
-        <!-- Sidebar Toggle Icon -->
-        <div class="p-2 ml-2 mr-8">
+        <!-- Sidebar Toggle Icon-->
+        <div class="pr-2 sm:pr-0 sm:p-2 sm:ml-2 sm:mr-8">
           <slot name="sidebarToggleIcon">
             <p>... sidebarToggleIcon should go here</p>
           </slot>
         </div>
 
         <!-- Logo -->
-        <div class="">
+        <div class="flex-grow">
           <router-link :to="{ name: 'home' }">
             <slot name="logo">
               <p>... logo should go here</p>
@@ -22,11 +22,12 @@
           </router-link>
         </div>
 
-        <div class="flex-grow">
+        <div v-if="this.$mq != 'sm'" class="flex-grow">
           <slot name="links"></slot>
         </div>
 
-        <div class="ml-16 mr-2 xl:mr-12">
+        <!-- Icons ml-16 mr-2 xl:mr-12 -->
+        <div class="sm:ml-16 sm:mr-2 xl:mr-12">
           <slot name="icons">
             <p>... icons shold go here</p>
           </slot>
