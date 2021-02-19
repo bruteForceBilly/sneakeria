@@ -2,13 +2,23 @@ import getSelects from "@/services/selects.js";
 
 const state = () => ({
   selectsIsLoading: false,
+  mobile: [
+    {
+      label: "Filters",
+      menus: ["FilterSelects", "RangeSelects"],
+    },
+    {
+      label: "Sorts",
+      menus: ["SortSelect"],
+    },
+  ],
   selects: [
     {
       id: 1,
       level: "group",
       name: "section",
       label: "Section",
-      value: null,
+      value: "filterSelects",
       multiple: false,
       inputType: "checkbox",
       containerSize: "base",

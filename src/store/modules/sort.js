@@ -5,7 +5,7 @@ const state = () => ({
       id: 1,
       name: "sortBy",
       label: "Sort By",
-      value: null,
+      value: "sortSelect",
       inputType: "hidden",
       containerSize: "base-left",
       multiple: false,

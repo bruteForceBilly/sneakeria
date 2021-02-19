@@ -6,16 +6,14 @@ const offset = function (el) {
   return rect.top + scrollTop;
 };
 
-const scrollHandler = function (el, binding, vnode) {
+const scrollHandler = function (el, binding, vnode, yPostionScroll) {
   let yPostionEl = offset(el);
-
-  let yPostionScroll = window.scrollY;
 
   if (yPostionScroll > yPostionEl && !vnode.context._data[binding.value]) {
     vnode.context._data[binding.value] = true;
   }
 
-  if (yPostionScroll === 0) {
+  if (yPostionScroll < 400) {
     vnode.context._data[binding.value] = false;
   }
 };
@@ -24,7 +22,7 @@ export default {
   bind(el, binding, vnode) {
     window.addEventListener(
       "scroll",
-      debounce(() => scrollHandler(el, binding, vnode), 200, {
+      debounce(() => scrollHandler(el, binding, vnode, window.scrollY), 100, {
         leading: true,
       })
     );
@@ -36,7 +34,7 @@ export default {
   unbind(el, binding, vnode) {
     window.removeEventListener(
       "scroll",
-      debounce(() => scrollHandler(el, binding, vnode), 200, {
+      debounce(() => scrollHandler(el, binding, vnode), 100, {
         leading: true,
       })
     );

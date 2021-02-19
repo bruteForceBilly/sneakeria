@@ -10,11 +10,27 @@
       <div :style="{ height: `${hangHeight}px` }" class="mb-3">
         <div
           v-hang="'hang'"
-          :class="hang ? 'hang-enter fixed top-0 left-0 z-50 w-full' : 'static'"
+          :style="isMobileScreen ? 'top:55px' : 'top: 1rem'"
+          :class="hang ? 'hang-enter fixed left-0 z-40 w-full' : 'static'"
         >
-          <div v-if="$mq == 'sm'" class="relative">
-            <div
-              class="bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
+          <div
+            v-if="isMobileScreen"
+            class="relative w-full mobile-menu-grid transition delay-500 duration-500 ease-in-out"
+            :class="
+              hang
+                ? 'border border-gray-900 bg-gray-900'
+                : 'bg-gray-300 border-t border-b'
+            "
+          >
+            <div v-for="menu in mobileMenus" :key="menu.name">
+              <div>
+                <MenuButton :block="true">
+                  <template v-slot:menu-label> {{ menu.label }} </template>
+                </MenuButton>
+              </div>
+            </div>
+            <!-- <div
+              class="uppercase bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
               :class="hang ? 'border border-gray-900' : 'border-t border-b'"
             >
               <div
@@ -23,8 +39,8 @@
               >
                 Filter
               </div>
-              <div class="px-2 py-1 w-1/2">Sort</div>
-            </div>
+              <div class="px-2 py-1 w-1/2">Sort after</div>
+            </div> -->
           </div>
           <div v-else class="relative">
             <div
@@ -59,6 +75,7 @@
 </template>
 
 <script>
+import MenuButton from "@/components/Catalog/TheSelectionBar/DropDownMenu/MenuButton.vue";
 import FilterSelects from "./FilterSelects/FilterSelects.vue";
 import SortSelects from "./SortSelects/SortSelects.vue";
 import RangeSelects from "./RangeSelects/RangeSelects.vue";
@@ -69,6 +86,7 @@ import hang from "@/directives/hang.js";
 export default {
   name: "TheCatalogSelectionBar",
   components: {
+    MenuButton,
     FilterSelects,
     SortSelects,
     RangeSelects,
@@ -86,6 +104,14 @@ export default {
       hangHeight: null,
     };
   },
+  computed: {
+    mobileMenus() {
+      return this.$store.state.navigation.mobile;
+    },
+    isMobileScreen() {
+      return this.$mq !== "xl" ? true : false;
+    },
+  },
   directives: {
     hang: hang,
   },
@@ -99,25 +125,24 @@ export default {
   animation-fill-mode: forwards;
 }
 
-.mobile {
+.mobile-menu-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  background: red;
+  gap: 1px;
 }
 
 @keyframes hang {
   0% {
-    padding: 2rem 2rem;
+    padding: 0 2rem;
     opacity: 0;
     transform: translateY(-100%);
   }
   50% {
-    padding: 2rem 2rem;
+    padding: 0 2rem;
     transform: translateY(0);
   }
   100% {
-    padding: 2rem 1rem;
+    padding: 0 1rem;
     opacity: 1;
   }
 }
