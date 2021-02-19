@@ -12,7 +12,21 @@
           v-hang="'hang'"
           :class="hang ? 'hang-enter fixed top-0 left-0 z-50 w-full' : 'static'"
         >
-          <div class="relative">
+          <div v-if="$mq == 'sm'" class="relative">
+            <div
+              class="bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
+              :class="hang ? 'border border-gray-900' : 'border-t border-b'"
+            >
+              <div
+                class="px-2 py-1 border-r w-1/2 transition delay-500 duration-500 ease-in-out"
+                :class="hang ? 'border-gray-900' : 'border-gray-300'"
+              >
+                Filter
+              </div>
+              <div class="px-2 py-1 w-1/2">Sort</div>
+            </div>
+          </div>
+          <div v-else class="relative">
             <div
               class="py-2 px-2 bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
               :class="hang ? 'border border-gray-900' : 'border-t border-b'"
@@ -30,6 +44,7 @@
               </SortSelects>
             </div>
           </div>
+
           <div v-if="!hang" class="mt-4">
             <TheSelectedOptions
               :update-route-query-params="settings.updateRouteQueryParams"
@@ -77,11 +92,18 @@ export default {
 };
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 .hang-enter {
   animation-name: hang;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
+}
+
+.mobile {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  background: red;
 }
 
 @keyframes hang {

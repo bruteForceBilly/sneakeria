@@ -14,7 +14,7 @@
     <div v-else>
     </div> -->
 
-    <SelectionBar v-if="this.$mq != 'sm'" :selects="selects"></SelectionBar>
+    <SelectionBar :selects="selects"></SelectionBar>
 
     <ProductGrid
       :loaded-products="products"
