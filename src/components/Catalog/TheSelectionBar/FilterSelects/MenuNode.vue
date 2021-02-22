@@ -1,7 +1,9 @@
 <template>
+  <!-- :class="isMobile ? 'block' : 'inline-block'" -->
   <div>
-    <div class="inline">
+    <div>
       <Menu
+        :isMobile="isMobile"
         :hasSelected="hasCheckedOption"
         v-if="visibilityHandler"
         :key="select.id"
@@ -37,7 +39,8 @@
       </Menu>
     </div>
     <MenuNode
-      class="inline"
+      :isMobile="isMobile"
+      :class="isMobile ? '' : 'inline'"
       v-for="select in node"
       :key="select.id + select.name"
       :select="select"
@@ -63,6 +66,7 @@ export default {
     MenuInputHidden,
   },
   props: {
+    isMobile: Boolean,
     node: {
       type: Array,
       default: function () {
@@ -207,9 +211,6 @@ export default {
     setByRouteHandler() {
       this.$store.commit("setByRoute", false);
       //console.log("set by route", this.$store.state.setByRoute);
-    },
-    beforeCreate() {
-      console.log(this.selectedOptionsObject);
     },
   },
 };

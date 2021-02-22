@@ -1,5 +1,10 @@
 <template>
-  <MenuNode class="inline" :node="selects"></MenuNode>
+  <MenuNode
+    class="mobile-menu-node-grid pb-px bg-gray-300"
+    :node="selects"
+    :isMobile="isMobile"
+  >
+  </MenuNode>
 </template>
 
 <script>
@@ -13,6 +18,9 @@ export default {
     selects: {
       type: Array,
     },
+    isMobile: {
+      type: Boolean,
+    },
     selectedOptionsObject: {
       type: Object,
       default: function () {
@@ -22,3 +30,11 @@ export default {
   },
 };
 </script>
+<style lang="postcss" scoped>
+.mobile-menu-node-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-flow: row;
+  gap: 1px;
+}
+</style>

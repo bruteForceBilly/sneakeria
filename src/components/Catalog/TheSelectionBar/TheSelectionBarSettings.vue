@@ -61,7 +61,7 @@ export default {
         return acc;
       }, []);
 
-      console.log(validatedArgs);
+      //console.log(validatedArgs);
 
       let queryParamsString = validatedArgs
         .filter((o) => Object.keys(o).length !== 0)

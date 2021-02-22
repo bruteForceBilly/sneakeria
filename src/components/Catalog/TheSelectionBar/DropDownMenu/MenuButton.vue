@@ -1,29 +1,43 @@
 <template>
-  <div :class="block ? 'block' : 'inline-block min-w-32'">
+  <div
+    class="border-l-8"
+    :class="hasSelected && !isExpanded ? 'border-black' : 'border-white'"
+  >
     <!-- Menu Button to trigger opening of Menu Container 
     Menu label slot is set by Menu
-    -->
-
-    <button
-      class="outline-none uppercase relative z-10 w-full border bg-white border-transparent px-3 py-2 rounded-none"
+    w-full
       :class="hover ? 'border-hover z-30' : ''"
+block ? 'flex justify-between items-center' : 'flex items-center'
+    -->
+    <button
+      class="outline-none uppercase bg-white px-3 rounded-none"
+      :class="[
+        selectedOptionsLabels ? 'pt-2 pb-6' : 'py-3 sm:py-2',
+        !isMobile && isExpanded ? 'border-hover z-30' : '',
+        isMobile ? buttonMobile : 'relative z-10 border border-transparent',
+      ]"
     >
       <div
-        :class="
-          block ? 'flex justify-between items-center' : 'flex items-center'
-        "
+        class="flex pl-2 pr-3 tracking-widest"
+        :class="isMobile ? 'justify-between items-center' : 'items-center'"
       >
-        <span
-          class="pr-1 tracking-widest text-sm"
-          :class="[hasSelected ? 'font-black' : 'font-normal']"
-        >
-          <slot name="menu-label">Menu</slot>
-        </span>
+        <ul :class="[isMobile ? 'text-base' : 'text-sm']">
+          <li :class="[hasSelected ? 'font-black' : 'font-normal']">
+            <slot name="menu-label">Menu</slot>
+          </li>
 
-        <span>
+          <li class="text-xs absolute capitalize truncate">
+            {{ selectedOptionsLabels }}
+          </li>
+        </ul>
+
+        <span class="">
           <svg
-            class="fill-current h-4 w-4"
-            :class="hover ? 'transform -rotate-180' : ''"
+            class="fill-current"
+            :class="[
+              isExpanded ? 'transform -rotate-180' : '',
+              isMobile ? 'h-6 w-6' : 'h-4 w-4',
+            ]"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
@@ -40,10 +54,45 @@
 <script>
 export default {
   name: "CatalogFilterBarDropDownMenuButton",
-  props: ["hover", "hasSelected", "block"],
+  props: {
+    isExpanded: Boolean,
+    isMobile: Boolean,
+    hover: Boolean,
+    hasSelected: Boolean,
+    isBlock: Boolean,
+    item: {
+      type: Object,
+      default: function () {
+        return null;
+      },
+    },
+  },
+  computed: {
+    selectedOptionsLabels() {
+      return this.item !== null
+        ? this.item.options
+            .filter((option) => option.checked)
+            .map((option) => option.label)
+            .join(", ")
+        : "";
+    },
+  },
+  data() {
+    return {
+      buttonMobile: {
+        "w-full py-4 ": this.isMobile,
+      },
+    };
+  },
 };
 </script>
 <style scoped>
+button:focus {
+  outline-width: 0;
+  outline-style: auto;
+  outline-color: transparent;
+}
+
 .border-hover {
   border: 1px solid black;
   border-bottom: 0 solid transparent;

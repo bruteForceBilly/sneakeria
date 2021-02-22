@@ -5,10 +5,12 @@ const state = () => ({
   mobile: [
     {
       label: "Filters",
+      value: "FilterSelects",
       menus: ["FilterSelects", "RangeSelects"],
     },
     {
       label: "Sorts",
+      value: "SortSelects",
       menus: ["SortSelect"],
     },
   ],

@@ -6,9 +6,9 @@
           <button
             v-bind:checked="option.checked"
             @click="toggleOption(option)"
-            class="tag focus:outline-none"
+            class="tag focus:outline-none flex flex-no-wrap"
           >
-            {{ option.label }}
+            <span>{{ option.label }}</span>
             <span class="font-hairline text-gray-800 ml-1 inline">x</span>
           </button>
         </div>

@@ -7,6 +7,17 @@ module.exports = {
         lg: "1024px",
         xl: "1280px",
       },
+      zIndex: {
+        auto: "auto",
+        0: "0",
+        10: "10",
+        20: "20",
+        30: "30",
+        40: "40",
+        50: "50",
+        60: "60",
+        70: "70",
+      },
       fontFamily: {
         sans: ["IBM Plex Mono", "Roboto", "Helvetica", "Arial", "sans-serif"],
       },
@@ -43,6 +54,9 @@ module.exports = {
   },
   variants: {
     margin: ["even", "odd"],
+    variants: {
+      borderWidth: ["responsive", "last", "hover", "focus"],
+    },
   },
   plugins: [],
 };

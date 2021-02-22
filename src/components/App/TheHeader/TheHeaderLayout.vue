@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed z-50 sm:z-0 sm:static w-full">
+  <div class="fixed z-40 sm:z-0 sm:static w-full">
     <div class="relative">
       <!-- Container start -->
       <div
