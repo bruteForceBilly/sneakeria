@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border-l-8"
+    class="border-l-8 bg-gradient-to-r from-red-500"
     :class="hasSelected && !isExpanded ? 'border-black' : 'border-white'"
   >
     <!-- Menu Button to trigger opening of Menu Container 
@@ -18,7 +18,7 @@ block ? 'flex justify-between items-center' : 'flex items-center'
       ]"
     >
       <div
-        class="flex pl-2 pr-3 tracking-widest"
+        class="flex pl-2 pr-3 tracking-widest text-left"
         :class="isMobile ? 'justify-between items-center' : 'items-center'"
       >
         <ul :class="[isMobile ? 'text-base' : 'text-sm']">
@@ -26,8 +26,8 @@ block ? 'flex justify-between items-center' : 'flex items-center'
             <slot name="menu-label">Menu</slot>
           </li>
 
-          <li class="text-xs absolute capitalize truncate">
-            {{ selectedOptionsLabels }}
+          <li class="w-full text-xs tracking-tight absolute capitalize">
+            <span> {{ selectedOptionsLabels }}</span>
           </li>
         </ul>
 
@@ -80,7 +80,7 @@ export default {
   data() {
     return {
       buttonMobile: {
-        "w-full py-4 ": this.isMobile,
+        "w-full py-4": this.isMobile,
       },
     };
   },

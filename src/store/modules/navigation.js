@@ -4,12 +4,12 @@ const state = () => ({
   selectsIsLoading: false,
   mobile: [
     {
-      label: "Filters",
+      label: "Filter By",
       value: "FilterSelects",
       menus: ["FilterSelects", "RangeSelects"],
     },
     {
-      label: "Sorts",
+      label: "Sort By",
       value: "SortSelects",
       menus: ["SortSelect"],
     },

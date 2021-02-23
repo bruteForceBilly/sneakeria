@@ -17,6 +17,7 @@
     <SelectionBar :selects="selects"></SelectionBar>
 
     <ProductGrid
+      v-if="false"
       :loaded-products="products"
       :current-route="route"
       :search-found-products-length="foundProductsLength"

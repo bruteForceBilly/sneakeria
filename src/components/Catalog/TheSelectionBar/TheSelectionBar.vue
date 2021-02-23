@@ -18,6 +18,7 @@
             '`static`': !hang,
           }"
         >
+          <!-- If mobile to render the two boxes -->
           <div
             v-if="isMobileScreen"
             :style="{
@@ -29,31 +30,18 @@
             }"
           >
             <div v-for="menu in mobileMenus" :key="menu.name">
-              <div class="h-full bg-white">
+              <div class="h-full w-full bg-white">
                 <MenuButton
                   :isBlock="true"
                   @click.native="mobileMenuSelected = menu"
                 >
-                  <template v-slot:menu-label> {{ menu.label }} </template>
+                  <template v-slot:menu-label>
+                    <span class="text-vw-xs">{{ menu.label }} </span></template
+                  >
                 </MenuButton>
               </div>
             </div>
-
-            <!-- <div
-
- grid-template-columns: 50% 50%;
-
-              class="uppercase bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
-              :class="hang ? 'border border-gray-900' : 'border-t border-b'"
-            >
-              <div
-                class="px-2 py-1 border-r w-1/2 transition delay-500 duration-500 ease-in-out"
-                :class="hang ? 'border-gray-900' : 'border-gray-300'"
-              >
-                Filter
-              </div>
-              <div class="px-2 py-1 w-1/2">Sort after</div>
-            </div> -->
+            <!-- End of If mobile -->
           </div>
           <div v-else class="relative">
             <div
@@ -76,66 +64,73 @@
           </div>
 
           <div
-            v-if="
-              mobileMenuSelected != null &&
-              mobileMenuSelected.value == 'FilterSelects'
-            "
-            class="fixed top-0 left-0 z-60 w-screen h-screen bg-white overflow-y-auto"
+            v-if="mobileMenuSelected != null"
+            class="fixed top-0 left-0 z-60 h-screen bg-white w-screen overflow-y-auto w-full"
           >
-            <div class="w-full flex justify-end items-center p-4 pb-0">
-              <span
-                class="flex-grow tracking-tighter uppercase text-lg inline"
-                >{{ mobileMenuSelected.label }}</span
-              >
+            <div v-if="mobileMenuSelected.value == 'SortSelects'">
+              <div class="flex justify-end items-center p-3">
+                <span
+                  class="flex-grow tracking-tighter uppercase text-lg inline"
+                  >{{ mobileMenuSelected.label }}</span
+                >
 
-              <span
-                v-show="selectedOptionsElements.length > 0"
-                @click="clearAllTags()"
-                class="capitalize cursor-pointer inline px-0 mx-2 underline bg-transparent text-gray-800 font-sans font-normal text-xs"
-                >Clear all</span
-              >
-              <img
-                @click="mobileMenuSelected = null"
-                src="@/assets/x.svg"
-                class="ml-4 mr-2"
-              />
+                <span
+                  v-show="selectedOptionsElements.length > 0"
+                  @click="clearAllTags()"
+                  class="capitalize cursor-pointer inline px-0 mx-2 underline bg-transparent text-gray-800 font-sans font-normal text-xs"
+                  >Clear all</span
+                >
+                <img
+                  @click="mobileMenuSelected = null"
+                  src="@/assets/x.svg"
+                  class="ml-4 mr-2"
+                />
+              </div>
+
+              <SortSelects :isMobile="true" :sorts="settings.sorts">
+              </SortSelects>
             </div>
 
-            <!-- <span
-              @click="mobileMenuSelected = null"
-              class="absolute top-0 right-0 m-4 cursor-pointer"
-              :class="mobileMenuSelected != null"
-              >X</span> -->
+            <div v-if="mobileMenuSelected.value == 'FilterSelects'">
+              <div class="flex justify-end items-center p-3">
+                <span
+                  class="flex-grow tracking-tighter uppercase text-lg inline"
+                  >{{ mobileMenuSelected.label }}</span
+                >
 
-            <FilterSelects
-              class="mt-4"
-              :isMobile="true"
-              :selected-options-object="settings.selectedOptionsObject"
-              :selects="settings.selects"
-            ></FilterSelects>
+                <span
+                  v-show="selectedOptionsElements.length > 0"
+                  @click="clearAllTags()"
+                  class="capitalize cursor-pointer inline px-0 mx-2 underline bg-transparent text-gray-800 font-sans font-normal text-xs"
+                  >Clear all</span
+                >
+                <img
+                  @click="mobileMenuSelected = null"
+                  src="@/assets/x.svg"
+                  class="ml-4 mr-2"
+                />
+              </div>
 
-            <!-- <RangeSelects :range-sliders="settings.rangeSliders"></RangeSelects> -->
+              <FilterSelects
+                class="mt-4"
+                :isMobile="true"
+                :selected-options-object="settings.selectedOptionsObject"
+                :selects="settings.selects"
+              ></FilterSelects>
 
-            <div class="w-full absolute bottom-0 pl-5 pb-6 pr-8">
-              <ProductCardButton
-                @click.native="mobileMenuSelected = null"
-                class="w-full py-3 relative"
-                icon="none"
-                button-style="primary primary--call-to-action"
-              >
-                APPLY ⟶
-              </ProductCardButton>
+              <!-- <RangeSelects :range-sliders="settings.rangeSliders"></RangeSelects> -->
+
+              <div class="w-full absolute bottom-0 pl-5 pb-6 pr-8">
+                <ProductCardButton
+                  @click.native="mobileMenuSelected = null"
+                  class="w-full py-3 relative"
+                  icon="none"
+                  button-style="primary primary--call-to-action"
+                >
+                  APPLY ⟶
+                </ProductCardButton>
+              </div>
             </div>
-          </div>
-
-          <div
-            v-if="
-              mobileMenuSelected != null &&
-              mobileMenuSelected.value == 'SortSelects'
-            "
-            class=""
-          >
-            <SortSelects class="" :sorts="settings.sorts"> </SortSelects>
           </div>
 
           <div v-if="!hang" class="mt-4">
