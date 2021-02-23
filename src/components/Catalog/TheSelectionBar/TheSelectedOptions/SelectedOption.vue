@@ -13,7 +13,7 @@
       </div>
 
       <div v-show="!link" class="inline">
-        <span class="font-hairline text-gray-600 ml-1 inline">x</span>
+        <span class="font-thin text-gray-600 ml-1 inline">x</span>
       </div>
     </button>
   </div>

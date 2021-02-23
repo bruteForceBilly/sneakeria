@@ -6,10 +6,10 @@
           <button
             v-bind:checked="option.checked"
             @click="toggleOption(option)"
-            class="tag focus:outline-none flex flex-no-wrap"
+            class="tag focus:outline-none flex flex-nowrap"
           >
             <span>{{ option.label }}</span>
-            <span class="font-hairline text-gray-800 ml-1 inline">x</span>
+            <span class="font-thin text-gray-800 ml-1 inline">x</span>
           </button>
         </div>
       </div>
@@ -20,7 +20,7 @@
         class="tag focus:outline-none"
       >
         {{ priceOperators }}
-        <span class="font-hairline text-gray-800 ml-1 inline">x</span>
+        <span class="font-thin text-gray-800 ml-1 inline">x</span>
       </div>
 
       <div

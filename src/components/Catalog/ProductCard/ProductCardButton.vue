@@ -1,11 +1,11 @@
 <template>
   <button
     :class="buttonStyle"
-    class="text-sm focus:outline-none justify-center py-2 px-3 mx-2 uppercase tracking-widest leading-tight inline-block"
+    class="text-sm focus:outline-none justify-center py-3 uppercase tracking-widest leading-tight"
   >
     <template>
       <div
-        class="flex flex-row flex-no-wrap justify-center items-center content-center"
+        class="flex flex-row flex-nowrap justify-center items-center content-center"
       >
         <div class="flex-none">
           <span><slot></slot> </span>

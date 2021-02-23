@@ -3,7 +3,7 @@
     <div class="w-full h-full flex flex-row flex-wrap items-start">
       <!-- TITLE -->
 
-      <!-- <h6 class="text-gray-600 mt-4 text-vw-xss capitalize whitespace-no-wrap">
+      <!-- <h6 class="text-gray-600 mt-4 text-vw-xss">
         {{ settings.settings.product.productTitle }}
       </h6> -->
 
@@ -11,7 +11,7 @@
         class="mt-4 w-full uppercase tracking-widest font-normal"
         :class="[
           settings.settings.layout === 'card'
-            ? 'text-vw-xxs whitespace-no-wrap'
+            ? 'text-vw-xxs whitespace-nowrap'
             : 'text-vw-xl',
         ]"
       >
@@ -34,7 +34,7 @@
       <!-- DISCOUNT -->
       <div v-if="discount">
         <h6
-          class="rounded text-gray-600 tracking-widest font-normal text-vh-xxs whitespace-no-wrap"
+          class="rounded text-gray-600 tracking-widest font-normal text-vh-xxs whitespace-nowrap"
         >
           SAVE {{ discount }}
         </h6>

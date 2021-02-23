@@ -1,5 +1,14 @@
 // @vue/cli-plugin-babel/preset
 module.exports = {
-  presets: ["@vue/cli-plugin-babel/preset"],
+  presets: [
+    ["@vue/app", { useBuiltIns: "entry" }],
+    [
+      "@babel/preset-env",
+      {
+        corejs: "core-js@3",
+      },
+    ],
+    "@vue/cli-plugin-babel/preset",
+  ],
   plugins: ["@babel/transform-runtime"],
 };

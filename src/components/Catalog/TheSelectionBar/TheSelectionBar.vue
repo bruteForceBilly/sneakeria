@@ -65,7 +65,7 @@
 
           <div
             v-if="mobileMenuSelected != null"
-            class="fixed top-0 left-0 z-60 h-screen bg-white w-screen overflow-y-auto w-full"
+            class="fixed top-0 left-0 right-0 bottom-0 z-60 h-screen w-screen flex flex-col bg-white overflow-y-auto"
           >
             <div v-if="mobileMenuSelected.value == 'SortSelects'">
               <div class="flex justify-end items-center p-3">
@@ -91,7 +91,10 @@
               </SortSelects>
             </div>
 
-            <div v-if="mobileMenuSelected.value == 'FilterSelects'">
+            <div
+              v-if="mobileMenuSelected.value == 'FilterSelects'"
+              class="absolute w-full"
+            >
               <div class="flex justify-end items-center p-3">
                 <span
                   class="flex-grow tracking-tighter uppercase text-lg inline"
@@ -119,17 +122,21 @@
               ></FilterSelects>
 
               <!-- <RangeSelects :range-sliders="settings.rangeSliders"></RangeSelects> -->
+            </div>
 
-              <div class="w-full absolute bottom-0 pl-5 pb-6 pr-8">
-                <ProductCardButton
-                  @click.native="mobileMenuSelected = null"
-                  class="w-full py-3 relative"
-                  icon="none"
-                  button-style="primary primary--call-to-action"
-                >
-                  APPLY ⟶
-                </ProductCardButton>
-              </div>
+            <div
+              class="fixed top-0 z-70 w-screen pl-7"
+              style="margin-top: calc(100vh - 4.5rem)"
+            >
+              <ProductCardButton
+                v-if="mobileMenuSelected != null"
+                class="w-11/12"
+                @click.native="mobileMenuSelected = null"
+                icon="none"
+                button-style="primary primary--call-to-action"
+              >
+                APPLY ⟶
+              </ProductCardButton>
             </div>
           </div>
 

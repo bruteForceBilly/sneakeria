@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border-l-8 bg-gradient-to-r from-red-500"
+    class="border-l-8"
     :class="hasSelected && !isExpanded ? 'border-black' : 'border-white'"
   >
     <!-- Menu Button to trigger opening of Menu Container 
@@ -26,9 +26,18 @@ block ? 'flex justify-between items-center' : 'flex items-center'
             <slot name="menu-label">Menu</slot>
           </li>
 
-          <li class="w-full text-xs tracking-tight absolute capitalize">
-            <span> {{ selectedOptionsLabels }}</span>
-          </li>
+          <div
+            class="text-xs w-4/5 truncate absolute tracking-tight capitalize"
+          >
+            <li class="absolute">
+              <span> {{ selectedOptionsLabels }}</span>
+            </li>
+            <div
+              class="relative z-10 bg-gradient-to-l via-transparent from-white"
+            >
+              <span class="invisible">{{ selectedOptionsLabels }}</span>
+            </div>
+          </div>
         </ul>
 
         <span class="">
