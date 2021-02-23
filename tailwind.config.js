@@ -183,7 +183,7 @@ module.exports = {
   variants: {
     margin: ["even", "odd"],
     variants: {
-      borderWidth: ["responsive", "last", "hover", "focus"],
+      borderWidth: ["last"],
       wordBreak: ["responsive", "group-hover"],
       textOverflow: ["responsive", "group-hover"],
     },

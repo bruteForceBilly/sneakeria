@@ -1,10 +1,18 @@
 <template>
   <div>
     <div>
-      <Menu v-for="item in sorts" :key="item.name" :item="item">
+      <Menu
+        v-for="item in sorts"
+        :key="item.name"
+        :item="item"
+        :isMobile="isMobile"
+        :showMenuButton="false"
+      >
         <template v-slot:menu-items>
           <MenuOption
-            class="hover:bg-gray-200"
+            :isMobile="isMobile"
+            :class="{ 'mobile-border': isMobile }"
+            class="hover:bg-gray-200 uppercase"
             :item="item"
             v-for="option in item.options"
             :key="option.id"
@@ -12,7 +20,19 @@
             <template v-slot:option-input> </template>
 
             <template v-slot:option-label>
-              <div @click="sortSettingsHandler(option.value)">
+              <div
+                class="border-l-8"
+                @click="
+                  [
+                    (option.checked = !option.checked),
+                    sortSettingsHandler(option.value),
+                  ]
+                "
+                :class="[
+                  { 'pl-3 py-4 tracking-widest text-base': isMobile },
+                  option.checked ? 'border-black' : 'border-white',
+                ]"
+              >
                 {{ option.label }}
               </div>
             </template>
@@ -29,20 +49,29 @@ import MenuOption from "../DropDownMenu/MenuOption.vue";
 
 export default {
   props: {
-    sorts: {
-      type: Array,
-    },
+    sorts: Array,
+    isMobile: Boolean,
   },
   components: {
     Menu,
     MenuOption,
   },
   methods: {
+    setByRouteHandler() {
+      this.$store.commit("setByRoute", false);
+    },
     sortSettingsHandler(optionValue) {
-      //console.log("sortSettingsHandler optionValue", optionValue);
-      //debugger;
       return this.$store.dispatch("sort/settingAction", optionValue);
     },
   },
 };
 </script>
+<style lang="postcss" scoped>
+.mobile-border {
+  border-top-width: 1px;
+}
+
+.mobile-border:last-child {
+  border-bottom-width: 1px;
+}
+</style>

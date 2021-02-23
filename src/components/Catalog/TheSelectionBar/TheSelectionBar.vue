@@ -36,7 +36,7 @@
                   @click.native="mobileMenuSelected = menu"
                 >
                   <template v-slot:menu-label>
-                    <span class="text-vw-xs">{{ menu.label }} </span></template
+                    <span class="text-xs">{{ menu.label }} </span></template
                   >
                 </MenuButton>
               </div>
@@ -74,12 +74,6 @@
                   >{{ mobileMenuSelected.label }}</span
                 >
 
-                <span
-                  v-show="selectedOptionsElements.length > 0"
-                  @click="clearAllTags()"
-                  class="capitalize cursor-pointer inline px-0 mx-2 underline bg-transparent text-gray-800 font-sans font-normal text-xs"
-                  >Clear all</span
-                >
                 <img
                   @click="mobileMenuSelected = null"
                   src="@/assets/x.svg"
@@ -87,8 +81,11 @@
                 />
               </div>
 
-              <SortSelects :isMobile="true" :sorts="settings.sorts">
-              </SortSelects>
+              <SortSelects
+                :isMobile="true"
+                :sorts="settings.sorts"
+                @click.native="mobileMenuSelected = null"
+              />
             </div>
 
             <div
@@ -124,20 +121,24 @@
               <!-- <RangeSelects :range-sliders="settings.rangeSliders"></RangeSelects> -->
             </div>
 
-            <div
-              class="fixed top-0 z-70 w-screen pl-7"
-              style="margin-top: calc(100vh - 4.5rem)"
-            >
-              <ProductCardButton
-                v-if="mobileMenuSelected != null"
-                class="w-11/12"
-                @click.native="mobileMenuSelected = null"
-                icon="none"
-                button-style="primary primary--call-to-action"
+            <transition name="button-slide-fade">
+              <div
+                v-if="selectedOptionsElements.length > 0"
+                class="fixed top-0 right-0 left-0 w-screen px-7 z-70"
+                style="margin-top: calc(100vh - 4.5rem)"
               >
-                APPLY ⟶
-              </ProductCardButton>
-            </div>
+                <ProductCardButton
+                  v-show="mobileMenuSelected.value == 'FilterSelects'"
+                  v-if="mobileMenuSelected != null"
+                  class="w-full"
+                  @click.native="mobileMenuSelected = null"
+                  icon="none"
+                  button-style="primary primary--call-to-action"
+                >
+                  APPLY ⟶
+                </ProductCardButton>
+              </div>
+            </transition>
           </div>
 
           <div v-if="!hang" class="mt-4">
@@ -229,6 +230,17 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.button-slide-fade-enter-active,
+.button-slide-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.button-slide-fade-enter,
+.button-slide-fade-leave-to {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
 .hang-enter {
   animation-name: hang;
   animation-duration: 0.5s;

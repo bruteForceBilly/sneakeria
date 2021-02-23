@@ -1,6 +1,6 @@
 <template>
   <div>
-    <li class="py-3 pl-4">
+    <li :class="isMobile ? '' : 'py-3 pl-4'">
       <label class="custom-label flex font-normal text-base sm:text-sm">
         <slot name="option-input"></slot>
         <slot name="option-label"></slot>
@@ -13,9 +13,8 @@
 export default {
   name: "MenuOption",
   props: {
-    item: {
-      type: Object,
-    },
+    item: Object,
+    isMobile: Boolean,
   },
 };
 </script>

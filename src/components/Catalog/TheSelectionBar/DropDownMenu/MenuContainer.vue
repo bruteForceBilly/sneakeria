@@ -41,9 +41,18 @@
     </div>
 
     <div
-      v-if="itemCcontainerSize === 'base-left'"
+      v-if="itemCcontainerSize === 'base-left' && !isMobile"
       class="position-after-height base-left inline-block z-20 absolute w-64 border-black outline-none border pt-2 pb-3 bg-white rounded-none"
-      :class="!isMobile && isExpanded ? 'inline-block' : 'hidden'"
+      :class="isExpanded ? 'inline-block' : 'hidden'"
+    >
+      <ul>
+        <slot name="options"> ... waiting for content</slot>
+      </ul>
+    </div>
+    <div
+      v-if="itemCcontainerSize === 'base-left' && isMobile"
+      class="position-after-height base-left inline-block z-20 w-full outline-none pt-2 pb-3 bg-white rounded-none"
+      :class="isExpanded ? 'inline-block' : 'hidden'"
     >
       <ul>
         <slot name="options"> ... waiting for content</slot>

@@ -5,27 +5,35 @@
 relative
 
   -->
-  <div
-    v-if="item != null"
-    :class="isMobile ? 'static' : 'relative'"
-    @mouseover="!isMobile ? (isExpanded = !isExpanded) : ''"
-    @mouseleave="!isMobile ? (isExpanded = !isExpanded) : ''"
-    @click="isExpanded = !isExpanded"
-  >
-    <MenuButton
-      :isExpanded="isExpanded"
-      :hasSelected="hasSelected"
-      :isMobile="isMobile"
-      :item="item"
+  <div :class="item != null && isMobile ? 'static' : 'relative'">
+    <div v-if="!showMenuButton">
+      <MenuContainer :isExpanded="true" :item="item" :isMobile="isMobile">
+        <template v-slot:options>
+          <slot name="menu-items"> ... menu-items waiting for content</slot>
+        </template>
+      </MenuContainer>
+    </div>
+    <div
+      v-else
+      @mouseover="!isMobile ? (isExpanded = !isExpanded) : ''"
+      @mouseleave="!isMobile ? (isExpanded = !isExpanded) : ''"
+      @click="isExpanded = !isExpanded"
     >
-      <template v-slot:menu-label> {{ item.label }}</template>
-    </MenuButton>
+      <MenuButton
+        :isExpanded="isExpanded"
+        :hasSelected="hasSelected"
+        :isMobile="isMobile"
+        :item="item"
+      >
+        <template v-slot:menu-label> {{ item.label }}</template>
+      </MenuButton>
 
-    <MenuContainer :isExpanded="isExpanded" :item="item" :isMobile="isMobile">
-      <template v-slot:options>
-        <slot name="menu-items"> ... menu-items waiting for content</slot>
-      </template>
-    </MenuContainer>
+      <MenuContainer :isExpanded="isExpanded" :item="item" :isMobile="isMobile">
+        <template v-slot:options>
+          <slot name="menu-items"> ... menu-items waiting for content</slot>
+        </template>
+      </MenuContainer>
+    </div>
   </div>
 </template>
 
@@ -36,6 +44,10 @@ import MenuContainer from "./MenuContainer.vue";
 export default {
   name: "CatalogSelectionBarDropDownMenu",
   props: {
+    showMenuButton: {
+      type: Boolean,
+      default: true,
+    },
     isMobile: Boolean,
     hasSelected: Boolean,
     item: {

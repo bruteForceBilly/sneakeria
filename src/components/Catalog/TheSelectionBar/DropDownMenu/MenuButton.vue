@@ -3,12 +3,6 @@
     class="border-l-8"
     :class="hasSelected && !isExpanded ? 'border-black' : 'border-white'"
   >
-    <!-- Menu Button to trigger opening of Menu Container 
-    Menu label slot is set by Menu
-    w-full
-      :class="hover ? 'border-hover z-30' : ''"
-block ? 'flex justify-between items-center' : 'flex items-center'
-    -->
     <button
       class="outline-none uppercase bg-white px-3 rounded-none"
       :class="[
