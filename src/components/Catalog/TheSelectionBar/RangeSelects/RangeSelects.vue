@@ -1,15 +1,30 @@
 <template>
-  <div>
+  <div
+    :class="{
+      'inline-block py-1': !isMobile,
+      'border-b border-gray-300': isMobile,
+    }"
+  >
     <div v-if="thereIsFoundProducts">
-      <Menu v-for="item in rangeSliders" :key="item.name" :item="item">
+      <Menu
+        :isMobile="isMobile"
+        v-for="item in rangeSliders"
+        :key="item.name"
+        :item="item"
+      >
         <template v-slot:menu-items>
           <MenuOption
+            :isMobile="isMobile"
             :item="item"
             v-for="option in item.options"
             :key="option.id"
           >
             <template v-slot:option-input>
-              <MenuInputRange :item="item" :option="option"> </MenuInputRange>
+              <MenuInputRange
+                :isMobile="isMobile"
+                :item="item"
+                :option="option"
+              />
             </template>
           </MenuOption>
         </template>
@@ -30,6 +45,10 @@ export default {
     MenuInputRange,
   },
   props: {
+    isMobile: {
+      type: Boolean,
+      default: false,
+    },
     rangeSliders: {
       type: Array,
     },

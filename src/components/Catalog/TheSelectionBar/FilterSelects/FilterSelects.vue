@@ -1,6 +1,10 @@
 <template>
   <MenuNode
-    class="mobile-menu-node-grid pb-px bg-gray-300"
+    :class="
+      isMobile
+        ? 'mobile-menu-node-grid pb-px bg-gray-300'
+        : 'py-1 inline-flex justify-start'
+    "
     :node="selects"
     :isMobile="isMobile"
   >

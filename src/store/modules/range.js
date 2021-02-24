@@ -6,7 +6,7 @@ const state = () => ({
       label: "Price",
       valuue: "rangeSelects",
       inputType: "range",
-      containerSize: "wide",
+      containerSize: "wide-center",
       options: [
         {
           id: 1,

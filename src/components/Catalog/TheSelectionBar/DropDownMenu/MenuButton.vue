@@ -1,19 +1,36 @@
 <template>
+  <!--
+Button
+
+hasSelected
+isExpanded
+isMobile
+selectedOptionsLabels
+
+ -->
   <div
-    class="border-l-8"
-    :class="hasSelected && !isExpanded ? 'border-black' : 'border-white'"
+    :class="{
+      'border-l-0 inline-block': !isMobile,
+      'border-l-8 border-black': isMobile && hasSelected && !isExpanded,
+    }"
   >
     <button
-      class="outline-none uppercase bg-white px-3 rounded-none"
+      class="outline-none uppercase bg-white rounded-none"
       :class="[
-        selectedOptionsLabels ? 'pt-2 pb-6' : 'py-3 sm:py-2',
-        !isMobile && isExpanded ? 'border-hover z-30' : '',
-        isMobile ? buttonMobile : 'relative z-10 border border-transparent',
+        isMobile && selectedOptionsLabels ? 'pt-2 pb-6' : 'py-3 sm:py-2',
+        { 'border-hover z-30': !isMobile && isExpanded },
+        isMobile
+          ? 'py-4 px-3 w-full'
+          : 'w-auto px-3 relative z-10 border border-white',
       ]"
     >
       <div
-        class="flex pl-2 pr-3 tracking-widest text-left"
-        :class="isMobile ? 'justify-between items-center' : 'items-center'"
+        class="flex tracking-widest text-left w-full"
+        :class="
+          isMobile
+            ? 'justify-between items-center pl-2 pr-3'
+            : 'items-center mr-1'
+        "
       >
         <ul :class="[isMobile ? 'text-base' : 'text-sm']">
           <li :class="[hasSelected ? 'font-black' : 'font-normal']">
@@ -21,6 +38,7 @@
           </li>
 
           <div
+            v-show="isMobile"
             class="text-xs w-4/5 truncate absolute tracking-tight capitalize"
           >
             <li class="absolute">
@@ -34,7 +52,10 @@
           </div>
         </ul>
 
-        <span class="">
+        <span
+          class="ml-auto"
+          :class="{ 'absolute right-6 pt-4': hasSelected && isMobile }"
+        >
           <svg
             class="fill-current"
             :class="[
@@ -93,12 +114,12 @@ export default {
 button:focus {
   outline-width: 0;
   outline-style: auto;
-  outline-color: transparent;
+  outline-color: white;
 }
 
 .border-hover {
   border: 1px solid black;
-  border-bottom: 0 solid transparent;
-  box-shadow: 0 1px 0 0 transparent;
+  border-bottom: 0 solid white;
+  box-shadow: 0 1px 0 0 white;
 }
 </style>

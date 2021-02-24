@@ -8,6 +8,9 @@
     >
       <!-- We need to get the calc height from hang element 
       :style="{ height: `${hangHeight}px` }"
+
+      WE NEED A SELECTION BAR LAYOUT COMPONENET
+
       -->
       <div :style="{ height: `${hangHeight}px` }" class="mb-3">
         <div
@@ -45,7 +48,7 @@
           </div>
           <div v-else class="relative">
             <div
-              class="py-1 px-2 bg-white w-full flex justify-start transition delay-500 duration-500 ease-in-out"
+              class="bg-white w-full flex justify-start items-center transition delay-500 duration-500 ease-in-out"
               :class="hang ? 'border border-gray-900' : 'border-t border-b'"
             >
               <FilterSelects
@@ -55,16 +58,18 @@
               ></FilterSelects>
 
               <RangeSelects
+                :isMobile="false"
                 :range-sliders="settings.rangeSliders"
               ></RangeSelects>
 
-              <SortSelects class="ml-auto" :sorts="settings.sorts">
+              <SortSelects v-if="false" class="ml-auto" :sorts="settings.sorts">
               </SortSelects>
             </div>
           </div>
 
+          <!-- Start of mobile menu modal -->
           <div
-            v-if="mobileMenuSelected != null"
+            v-if="isMobileScreen && mobileMenuSelected != null"
             class="fixed top-0 left-0 right-0 bottom-0 z-60 h-screen w-screen flex flex-col bg-white overflow-y-auto"
           >
             <div v-if="mobileMenuSelected.value == 'SortSelects'">
@@ -90,7 +95,7 @@
 
             <div
               v-if="mobileMenuSelected.value == 'FilterSelects'"
-              class="absolute w-full"
+              class="absolute w-full pb-28"
             >
               <div class="flex justify-end items-center p-3">
                 <span
@@ -118,27 +123,31 @@
                 :selects="settings.selects"
               ></FilterSelects>
 
-              <!-- <RangeSelects :range-sliders="settings.rangeSliders"></RangeSelects> -->
-            </div>
+              <RangeSelects
+                :isMobile="true"
+                :range-sliders="settings.rangeSliders"
+              ></RangeSelects>
 
-            <transition name="button-slide-fade">
-              <div
-                v-if="selectedOptionsElements.length > 0"
-                class="fixed top-0 right-0 left-0 w-screen px-7 z-70"
-                style="margin-top: calc(100vh - 4.5rem)"
-              >
-                <ProductCardButton
-                  v-show="mobileMenuSelected.value == 'FilterSelects'"
-                  v-if="mobileMenuSelected != null"
-                  class="w-full"
-                  @click.native="mobileMenuSelected = null"
-                  icon="none"
-                  button-style="primary primary--call-to-action"
+              <!-- APPLY BUTTON -->
+              <transition name="button-slide-fade">
+                <div
+                  v-if="selectedOptionsElements.length > 0"
+                  class="fixed top-0 right-0 left-0 w-screen px-7 z-70"
+                  style="margin-top: calc(100vh - 4.5rem)"
                 >
-                  APPLY ⟶
-                </ProductCardButton>
-              </div>
-            </transition>
+                  <ProductCardButton
+                    v-show="mobileMenuSelected.value == 'FilterSelects'"
+                    v-if="mobileMenuSelected != null"
+                    class="w-full"
+                    @click.native="mobileMenuSelected = null"
+                    icon="none"
+                    button-style="primary primary--call-to-action"
+                  >
+                    APPLY ⟶
+                  </ProductCardButton>
+                </div>
+              </transition>
+            </div>
           </div>
 
           <div v-if="!hang" class="mt-4">

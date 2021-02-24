@@ -1,27 +1,8 @@
 <template>
-  <!--  !isMobile && hover ? 'inline-block' : 'hidden',  border-black border 
-  
-   isMobile && isExpanded
-          ? 'inline-block w-full border-0 bg-white '
-          : 'hidden',
-
-
-                  hover && !isMobile ? 'inline-block' : 'hidden',
-
-
-   !isMobile && isExpanded
-          ? 'position-after-height absolute inline-block'
-          : 'position-after-height absolute hidden',
-
-            isExpanded
-          ? 'position-after-height absolute'
-          : 'position-after-height absolute hidden',
-
-  -->
   <div>
     <div
       v-if="itemCcontainerSize === 'base' && !isMobile"
-      class="z-20 w-40 position-after-height absolute outline-none pt-2 pb-3 rounded-none"
+      class="bg-white border-black border z-20 w-40 position-after-height absolute outline-none pt-2 pb-3 rounded-none"
       :class="[isExpanded ? 'inline-block' : ' hidden']"
     >
       <ul>
@@ -32,7 +13,7 @@
       v-else-if="itemCcontainerSize === 'base' && isMobile"
       class="inline-block z-20 w-full outline-none pt-2 pb-3 rounded-none"
       :class="[
-        isExpanded ? 'inline-block w-full border-0 bg-white ' : ' hidden',
+        isExpanded ? 'inline-block w-full border-0 bg-white' : ' hidden',
       ]"
     >
       <ul>
@@ -70,11 +51,31 @@
     </div>
 
     <div
-      v-if="itemCcontainerSize === 'wide' && isMobile"
-      class="position-after-height z-20 w-full outline-none pt-2 pb-3 bg-white rounded-none"
+      v-if="itemCcontainerSize === 'wide-center' && !isMobile"
+      class="position-after-height inline-block z-20 absolute w-64 border-black outline-none border pt-2 pb-3 bg-white rounded-none"
       :class="isExpanded ? 'inline-block' : 'hidden'"
     >
       <ul class="flex flex-row flex-wrap">
+        <slot name="options"> ... waiting for content</slot>
+      </ul>
+    </div>
+
+    <div
+      v-if="itemCcontainerSize === 'wide' && isMobile"
+      class="inline-block z-20 w-full outline-none pt-2 pb-3 rounded-none"
+      :class="isExpanded ? 'inline-block w-full border-0 bg-white' : 'hidden'"
+    >
+      <ul class="flex flex-row flex-wrap justify-start">
+        <slot name="options"> ... waiting for content</slot>
+      </ul>
+    </div>
+
+    <div
+      v-if="itemCcontainerSize === 'wide-center' && isMobile"
+      class="inline-block z-20 w-full outline-none pt-2 pb-3 rounded-none"
+      :class="isExpanded ? 'inline-block w-full border-0 bg-white' : 'hidden'"
+    >
+      <ul class="flex flex-row flex-wrap justify-center">
         <slot name="options"> ... waiting for content</slot>
       </ul>
     </div>

@@ -13,12 +13,7 @@ relative
         </template>
       </MenuContainer>
     </div>
-    <div
-      v-else
-      @mouseover="!isMobile ? (isExpanded = !isExpanded) : ''"
-      @mouseleave="!isMobile ? (isExpanded = !isExpanded) : ''"
-      @click="isExpanded = !isExpanded"
-    >
+    <div v-else @click="isExpanded = !isExpanded">
       <MenuButton
         :isExpanded="isExpanded"
         :hasSelected="hasSelected"

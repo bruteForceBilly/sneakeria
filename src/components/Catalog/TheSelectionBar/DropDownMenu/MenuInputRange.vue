@@ -1,23 +1,25 @@
 <template>
-  <div class="flex flex-col items-center w-full">
-    <span class="mb-1 font-normal"> {{ displayValueHeading }} </span>
-    <vue-slider
-      class="ml-2 mt-2"
-      width="208px"
-      height="2px"
-      :min="rangeMin"
-      :max="rangeMax"
-      dot-size="20"
-      v-model.lazy="value"
-      tooltip="none"
-      ref="slider"
-      :silent="true"
-      :lazy="true"
-      :enable-cross="true"
-      @dragging="updateDisplayValue()"
-      @drag-end="updateRouter()"
-    >
-    </vue-slider>
+  <div class="flex flex-row w-full justify-center">
+    <div class="inline-flex flex-col items-center">
+      <span class="mb-1 font-normal"> {{ displayValueHeading }} </span>
+      <vue-slider
+        :class="isMobile ? 'mt-2 mr-6' : 'mt-2'"
+        :width="setWidth"
+        height="2px"
+        :min="rangeMin"
+        :max="rangeMax"
+        dot-size="20"
+        v-model.lazy="value"
+        tooltip="none"
+        ref="slider"
+        :silent="true"
+        :lazy="true"
+        :enable-cross="true"
+        @dragging="updateDisplayValue()"
+        @drag-end="updateRouter()"
+      >
+      </vue-slider>
+    </div>
   </div>
 </template>
 
@@ -31,6 +33,10 @@ export default {
     VueSlider,
   },
   props: {
+    isMobile: {
+      type: Boolean,
+      default: false,
+    },
     option: Object,
     item: Object,
   },
@@ -40,6 +46,7 @@ export default {
       rangeMin: null,
       rangeMax: null,
       displayValue: null,
+      windowWidth: window.innerWidth,
     };
   },
   methods: {
@@ -102,6 +109,9 @@ export default {
         this.displayValue[this.displayValue.length - 1]
       }`;
     },
+    setWidth(width) {
+      return this.isMobile ? `${width * 0.75}px` : "208px";
+    },
   },
   watch: {
     foundProducts: {
@@ -146,6 +156,10 @@ export default {
   },
   mounted() {
     //console.log("mounted");
+    window.addEventListener("resize", () => {
+      return this.setWidth(window.innerWidth);
+    });
+
     this.$refs.slider.setValue(this.value);
     this.updateDisplayValue();
   },
