@@ -22,16 +22,18 @@
 
             <template v-slot:option-label>
               <div
-                class="border-l-8"
                 @click="
                   [
                     (option.checked = !option.checked),
                     sortSettingsHandler(option.value),
                   ]
                 "
+                class="border-l-0 py-3 pl-3"
                 :class="[
-                  { 'pl-3 py-4 tracking-widest text-base': isMobile },
-                  option.checked ? 'border-black' : 'border-white',
+                  {
+                    'pl-3 py-4 tracking-widest text-base border-l-8': isMobile,
+                  },
+                  option.checked ? 'border-black ' : 'border-white',
                 ]"
               >
                 {{ option.label }}

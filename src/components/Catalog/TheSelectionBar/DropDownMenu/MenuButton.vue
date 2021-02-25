@@ -12,7 +12,7 @@
         { 'border-hover z-30': !isMobile && isExpanded },
         isMobile
           ? 'py-4 px-3 w-full'
-          : 'w-auto px-3 relative z-10 border border-white',
+          : 'w-auto px-3 relative z-10 border border-transparent',
       ]"
     >
       <div
@@ -105,12 +105,12 @@ export default {
 button:focus {
   outline-width: 0;
   outline-style: auto;
-  outline-color: white;
+  outline-color: transparent;
 }
 
 .border-hover {
   border: 1px solid black;
-  border-bottom: 0 solid white;
-  box-shadow: 0 1px 0 0 white;
+  border-bottom: 0 solid transparent;
+  box-shadow: 0 1px 0 0 transparent;
 }
 </style>

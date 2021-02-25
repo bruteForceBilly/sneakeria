@@ -11,8 +11,12 @@
     >
       <template v-slot:menu-items>
         <MenuOption
-          class="p-4 hover:bg-gray-200"
-          :class="[{ 'py-3 pl-6': isMobile }]"
+          :class="[
+            { 'py-3 pl-6': isMobile },
+            select.name === 'color' && !isMobile
+              ? 'p-3 last:flex-grow'
+              : 'py-3 pl-3 hover:bg-gray-200',
+          ]"
           :item="select"
           v-for="option in selectOptions"
           :key="option.id"

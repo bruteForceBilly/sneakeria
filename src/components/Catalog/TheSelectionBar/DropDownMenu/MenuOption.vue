@@ -1,7 +1,7 @@
 <template>
   <div>
     <li>
-      <label class="custom-label flex font-normal text-base sm:text-sm">
+      <label class="flex font-normal text-base capitalize sm:text-sm">
         <slot name="option-input"></slot>
         <slot name="option-label"></slot>
       </label>

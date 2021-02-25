@@ -224,6 +224,7 @@ module.exports = {
     borderWidth: ["odd", "even", "first", "last"],
     wordBreak: ["responsive", "group-hover"],
     textOverflow: ["responsive", "group-hover"],
+    flexGrow: ["odd", "even", "first", "last"],
   },
   plugins: [],
 };

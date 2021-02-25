@@ -123,11 +123,10 @@
                 :selects="settings.selects"
               ></FilterSelects>
 
-              <!-- 
               <RangeSelects
                 :isMobile="true"
                 :range-sliders="settings.rangeSliders"
-              ></RangeSelects> -->
+              ></RangeSelects>
 
               <!-- APPLY BUTTON -->
               <transition name="button-slide-fade">

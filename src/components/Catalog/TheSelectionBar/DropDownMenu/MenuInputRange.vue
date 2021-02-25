@@ -3,8 +3,8 @@
     <div class="inline-flex flex-col items-center">
       <span class="mb-1 font-normal"> {{ displayValueHeading }} </span>
       <vue-slider
-        :class="isMobile ? 'mt-2 mr-6' : 'mt-2'"
-        width="180px"
+        class="mt-2"
+        :width="isMobile ? rangeWidth : '160px'"
         height="2px"
         :min="rangeMin"
         :max="rangeMax"

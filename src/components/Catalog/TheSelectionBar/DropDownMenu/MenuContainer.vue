@@ -1,17 +1,8 @@
 <template>
   <div>
-    <div :class="[isExpanded ? 'inline-block' : 'hidden', containerStyle]">
-      <ul
-        class="flex-wrap"
-        :class="
-          itemContainerSize === 'wide'
-            ? 'inline-flex flex-row pl-2'
-            : 'flex flex-wrap flex-col justify-start'
-        "
-      >
-        <slot name="options"> ... waiting for content</slot>
-      </ul>
-    </div>
+    <ul :class="isExpanded ? containerStyle : 'hidden'">
+      <slot name="options"> ... waiting for content</slot>
+    </ul>
   </div>
 </template>
 
@@ -30,6 +21,41 @@ export default {
     },
   },
   computed: {
+    containerLayout() {
+      const containers = {
+        "base": () => {
+          return this.isMobile ? this.baseMobileStyle : this.baseStyle;
+        },
+        "base-left": () => {
+          return this.isMobile ? this.baseLeftMobileStyle : this.baseLeftStyle;
+        },
+        "wide": () => {
+          return this.isMobile ? this.wideMobileLayout : this.wideLayout;
+        },
+        "wide-center": () => {
+          return this.isMobile
+            ? this.wideCenterMobileStyle
+            : this.wideCenterStyle;
+        },
+        "default": () => {
+          return this.isMobile ? this.baseMobileStyle : this.baseStyle;
+        },
+      };
+
+      const getContainerLayout = function (layout) {
+        let fn;
+
+        if (containers[layout]) {
+          fn = containers[layout];
+        } else {
+          fn = containers["default"];
+        }
+
+        return fn();
+      };
+
+      return getContainerLayout(this.itemContainerSize);
+    },
     containerStyle() {
       const containers = {
         "base": () => {
@@ -73,10 +99,12 @@ export default {
       baseMobileStyle: "container container--mobile",
       baseLeftStyle: "container container--left",
       baseLeftMobileStyle: "container container--mobile",
-      wideStyle: "container container--wide",
-      wideMobileStyle: "container container--mobile ",
+      wideStyle:
+        "container container--wide inline-flex flex-row flex-wrap justify-between",
+      wideMobileStyle:
+        "container container--mobile inline-flex flex-row flex-wrap",
       wideCenterStyle: "container container--wide",
-      wideCenterMobileStyle: "container container--mobile ",
+      wideCenterMobileStyle: "container container--mobile",
     };
   },
   created() {},
@@ -89,7 +117,7 @@ export default {
 }
 
 .container {
-  @apply bg-white border border-black outline-none pt-2 pb-3 top-postition absolute rounded-none w-40 z-20;
+  @apply bg-white border border-black outline-none pb-3 top-postition absolute rounded-none w-40 z-20;
 }
 
 .container--mobile {
@@ -97,14 +125,10 @@ export default {
 }
 
 .container--left {
-  @apply right-0;
+  @apply right-0 w-56 pt-3;
 }
 
 .container--wide {
-  @apply w-60;
-}
-
-.base-left {
-  right: 0;
+  @apply w-52 pt-3 px-1;
 }
 </style>
