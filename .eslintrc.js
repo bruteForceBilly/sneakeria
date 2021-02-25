@@ -21,6 +21,7 @@ module.exports = {
   },
 
   rules: {
+    "quote-props": "off",
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
     "no-unused-vars": ["error", { varsIgnorePattern: "[h]", args: "none" }],

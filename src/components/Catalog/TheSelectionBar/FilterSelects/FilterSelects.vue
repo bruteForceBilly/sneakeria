@@ -2,7 +2,7 @@
   <MenuNode
     :class="
       isMobile
-        ? 'mobile-menu-node-grid pb-px bg-gray-300'
+        ? 'mobile-menu-node-grid border-gray-300 border-b'
         : 'py-1 inline-flex justify-start'
     "
     :node="selects"
@@ -39,6 +39,5 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-flow: row;
-  gap: 1px;
 }
 </style>

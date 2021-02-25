@@ -4,7 +4,7 @@
       <span class="mb-1 font-normal"> {{ displayValueHeading }} </span>
       <vue-slider
         :class="isMobile ? 'mt-2 mr-6' : 'mt-2'"
-        :width="setWidth"
+        width="180px"
         height="2px"
         :min="rangeMin"
         :max="rangeMax"
@@ -47,6 +47,7 @@ export default {
       rangeMax: null,
       displayValue: null,
       windowWidth: window.innerWidth,
+      rangeWidth: null,
     };
   },
   methods: {
@@ -88,6 +89,11 @@ export default {
       this.value = [...this.productPriceRange];
       this.displayValue = [...this.value];
     },
+    setWidth(width) {
+      return this.isMobile
+        ? (this.rangeWidth = `${width * 0.75}px`)
+        : (this.rangeWidth = "208px");
+    },
   },
   computed: {
     ...mapState("route", ["path", "params", "query"]),
@@ -108,9 +114,6 @@ export default {
       return `€ ${this.displayValue[0]} - € ${
         this.displayValue[this.displayValue.length - 1]
       }`;
-    },
-    setWidth(width) {
-      return this.isMobile ? `${width * 0.75}px` : "208px";
     },
   },
   watch: {

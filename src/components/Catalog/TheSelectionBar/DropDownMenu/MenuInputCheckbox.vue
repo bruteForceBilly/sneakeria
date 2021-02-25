@@ -1,12 +1,12 @@
 <template>
   <div
-    class="bg-transparent border-solid border-black w-6 h-6 p-1 flex justify-center items-center mr-3"
+    class="bg-transparent border-solid border-black w-6 h-6 p-1 flex justify-center items-center"
     :class="getInputBgColor"
     style="border-width: 1px"
   >
     <input type="checkbox" class="hidden" v-model="option.checked" />
     <svg
-      class="w-4 h-4 text-black pointer-events-none block"
+      class="text-black pointer-events-none block"
       :class="getInputTextColor"
       viewBox="0 0 172 172"
     >

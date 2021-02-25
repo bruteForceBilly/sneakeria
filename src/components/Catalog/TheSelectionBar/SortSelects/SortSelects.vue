@@ -6,9 +6,10 @@
         :key="item.name"
         :item="item"
         :isMobile="isMobile"
-        :showMenuButton="false"
+        :showMenuButton="isMobile ? false : true"
       >
         <template v-slot:menu-items>
+          <!-- Config flex layout here -->
           <MenuOption
             :isMobile="isMobile"
             :class="{ 'mobile-border': isMobile }"

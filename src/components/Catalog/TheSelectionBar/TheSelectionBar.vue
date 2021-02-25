@@ -62,7 +62,7 @@
                 :range-sliders="settings.rangeSliders"
               ></RangeSelects>
 
-              <SortSelects v-if="false" class="ml-auto" :sorts="settings.sorts">
+              <SortSelects class="ml-auto" :sorts="settings.sorts">
               </SortSelects>
             </div>
           </div>
@@ -123,10 +123,11 @@
                 :selects="settings.selects"
               ></FilterSelects>
 
+              <!-- 
               <RangeSelects
                 :isMobile="true"
                 :range-sliders="settings.rangeSliders"
-              ></RangeSelects>
+              ></RangeSelects> -->
 
               <!-- APPLY BUTTON -->
               <transition name="button-slide-fade">

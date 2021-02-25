@@ -1,13 +1,4 @@
 <template>
-  <!--
-Button
-
-hasSelected
-isExpanded
-isMobile
-selectedOptionsLabels
-
- -->
   <div
     :class="{
       'border-l-0 inline-block': !isMobile,

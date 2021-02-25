@@ -1,43 +1,44 @@
 <template>
   <!-- :class="isMobile ? 'block' : 'inline-block'" -->
   <div>
-    <div>
-      <Menu
-        :isMobile="isMobile"
-        :hasSelected="hasCheckedOption"
-        v-if="visibilityHandler"
-        :key="select.id"
-        :item="select"
-      >
-        <template v-slot:menu-items>
-          <MenuOption
-            class="hover:bg-gray-200"
-            :item="select"
-            v-for="option in selectOptions"
-            :key="option.id"
-          >
-            <template v-slot:option-input>
-              <component
-                :is="currentComponent(select.inputType)"
-                :item="select"
-                :option="option"
-                v-bind="{ option }"
-                @click.native.self="setByRouteHandler()"
-              >
-              </component>
-            </template>
+    <Menu
+      :class="{ 'border-gray-300 border-t': isMobile }"
+      :isMobile="isMobile"
+      :hasSelected="hasCheckedOption"
+      v-if="visibilityHandler"
+      :key="select.id"
+      :item="select"
+    >
+      <template v-slot:menu-items>
+        <MenuOption
+          class="p-4 hover:bg-gray-200"
+          :class="[{ 'py-3 pl-6': isMobile }]"
+          :item="select"
+          v-for="option in selectOptions"
+          :key="option.id"
+        >
+          <template v-slot:option-input>
+            <component
+              :is="currentComponent(select.inputType)"
+              :item="select"
+              :option="option"
+              v-bind="{ option }"
+              @click.native.self="setByRouteHandler()"
+            >
+            </component>
+          </template>
 
-            <template v-slot:option-label>
-              <span
-                v-if="hasDisplayedLabel(option)"
-                @click.self="setByRouteHandler()"
-                >{{ option.label }}
-              </span>
-            </template>
-          </MenuOption>
-        </template>
-      </Menu>
-    </div>
+          <template v-slot:option-label>
+            <span
+              class="ml-3"
+              v-if="hasDisplayedLabel(option)"
+              @click.self="setByRouteHandler()"
+              >{{ option.label }}
+            </span>
+          </template>
+        </MenuOption>
+      </template>
+    </Menu>
     <MenuNode
       :isMobile="isMobile"
       :class="isMobile ? '' : 'inline'"
@@ -215,3 +216,4 @@ export default {
   },
 };
 </script>
+<style lang="postcss"></style>

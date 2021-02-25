@@ -1,10 +1,4 @@
 <template>
-  <!-- Menu Base to be imported in 
-  :class="isMobile ? 'block' : 'inline-block'"
-
-relative
-
-  -->
   <div :class="item != null && isMobile ? 'static' : 'relative'">
     <div v-if="!showMenuButton">
       <MenuContainer :isExpanded="true" :item="item" :isMobile="isMobile">
