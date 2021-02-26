@@ -1,18 +1,16 @@
 <template>
   <div
-    :class="{
-      'border-l-0 inline-block': !isMobile,
-      'border-l-8 border-black': isMobile && hasSelected && !isExpanded,
-    }"
+    :class="[
+      isMobile ? 'border-l8' : 'border-l-0',
+      { 'border-black': isMobile && hasSelected && !isExpanded },
+    ]"
   >
     <button
-      class="outline-none uppercase bg-white rounded-none"
+      class="w-full outline-none uppercase bg-white rounded-none"
       :class="[
         isMobile && selectedOptionsLabels ? 'pt-2 pb-6' : 'py-3 sm:py-2',
         { 'border-hover z-30': !isMobile && isExpanded },
-        isMobile
-          ? 'py-4 px-3 w-full'
-          : 'w-auto px-3 relative z-10 border border-transparent',
+        isMobile ? 'py-4 px-3' : 'px-3 relative z-10 border border-transparent',
       ]"
     >
       <div

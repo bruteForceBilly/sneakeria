@@ -33,7 +33,7 @@
             }"
           >
             <div v-for="menu in mobileMenus" :key="menu.name">
-              <div class="h-full w-full bg-white">
+              <div class="h-full w-full">
                 <MenuButton
                   :isBlock="true"
                   @click.native="mobileMenuSelected = menu"

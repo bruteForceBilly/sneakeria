@@ -117,18 +117,18 @@ export default {
 }
 
 .container {
-  @apply bg-white border border-black outline-none pb-3 top-postition absolute rounded-none w-40 z-20;
+  @apply bg-white border border-black outline-none pb-3 pt-3 top-postition absolute rounded-none w-40 z-20;
 }
 
 .container--mobile {
-  @apply relative border-transparent w-full;
+  @apply relative border-transparent pt-0 w-full;
 }
 
 .container--left {
-  @apply right-0 w-56 pt-3;
+  @apply right-0 w-56;
 }
 
 .container--wide {
-  @apply w-52 pt-3 px-1;
+  @apply w-52 px-1;
 }
 </style>
