@@ -9,6 +9,7 @@
     </div>
     <div v-else @click="isExpanded = !isExpanded">
       <MenuButton
+        v-on-clickaway="away"
         :isExpanded="isExpanded"
         :hasSelected="hasSelected"
         :isMobile="isMobile"
@@ -29,9 +30,11 @@
 <script>
 import MenuButton from "./MenuButton.vue";
 import MenuContainer from "./MenuContainer.vue";
+import { mixin as clickaway } from "vue-clickaway";
 
 export default {
   name: "CatalogSelectionBarDropDownMenu",
+  mixins: [clickaway],
   props: {
     showMenuButton: {
       type: Boolean,
@@ -55,7 +58,13 @@ export default {
       isExpanded: false,
     };
   },
-
+  methods: {
+    away: function () {
+      if (this.isMobile === false) {
+        this.isExpanded = false;
+      }
+    },
+  },
   watch: {
     hover: {
       immediate: true,

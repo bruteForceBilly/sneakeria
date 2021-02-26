@@ -34,6 +34,7 @@
     "qs": "^6.9.4",
     "utf-8-validate": "^5.0.2",
     "vue": "^2.6.11",
+    "vue-clickaway": "^2.2.2",
     "vue-mq": "^1.0.1",
     "vue-range-component": "^1.0.3",
     "vue-router": "^3.1.5",
