@@ -44,7 +44,6 @@
       </template>
     </Menu>
     <MenuNode
-      :close="close"
       :isMobile="isMobile"
       :class="isMobile ? '' : 'inline'"
       v-for="select in node"
