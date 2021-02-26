@@ -259,14 +259,6 @@ const data = [
         label: "Essentials",
         value: "essentials",
       },
-      {
-        id: 3,
-        groupId: 3,
-        checked: false,
-        name: "campaigns",
-        label: "New Arrivals",
-        value: "new",
-      },
     ],
   },
   {

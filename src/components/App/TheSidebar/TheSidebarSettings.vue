@@ -33,12 +33,6 @@ export default {
                     parent: "Shoes",
                   },
                   {
-                    name: "New",
-                    label: "New arrivals",
-                    value: "men-shoes-new",
-                    parent: "Shoes",
-                  },
-                  {
                     name: "Essentials",
                     label: "Essentials",
                     value: "men-shoes-essentials",
@@ -83,12 +77,6 @@ export default {
                     parent: "Clothing",
                     children: [
                       {
-                        name: "New",
-                        label: "New Arrivals",
-                        value: "men-shirts-new",
-                        parent: "Clothing",
-                      },
-                      {
                         name: "Sale",
                         label: "Men's Shirts",
                         value: "men-shirts-sale",
@@ -121,12 +109,6 @@ export default {
                     name: "All",
                     label: "All Women's shoes",
                     value: "women-shoes",
-                    parent: "Shoes",
-                  },
-                  {
-                    name: "New",
-                    label: "New arrivals",
-                    value: "women-shoes-new",
                     parent: "Shoes",
                   },
                   {
@@ -173,12 +155,6 @@ export default {
                     value: "women-shirts",
                     parent: "Clothing",
                     children: [
-                      {
-                        name: "New",
-                        label: "New Arrivals",
-                        value: "women-shirts-new",
-                        parent: "Clothing",
-                      },
                       {
                         name: "Sale",
                         label: "Women's Shirts",
