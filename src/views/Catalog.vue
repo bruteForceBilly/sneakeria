@@ -60,11 +60,12 @@ export default {
     ...mapState("search", ["foundProductsPagination", "foundProductsLength"]),
   },
   methods: {
-    ...mapActions("navigation", ["selectsInit"]),
+    ...mapActions("navigation", ["selectsInit", "navigationInitAction"]),
   },
 
   beforeCreate() {
     //this.$store.dispatch("navigation/selectsInitAction");
+    this.$store.dispatch("navigation/navigationInitAction");
   },
 };
 </script>

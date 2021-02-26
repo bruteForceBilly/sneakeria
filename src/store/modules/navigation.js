@@ -1,7 +1,9 @@
 import getSelects from "@/services/selects.js";
+import getNavigation from "@/services/navigation.js";
 
 const state = () => ({
   selectsIsLoading: false,
+  navigationIsLoading: false,
   mobile: [
     {
       label: "Filter By",
@@ -513,6 +515,7 @@ const state = () => ({
       ],
     },
   ],
+  header: null,
 });
 
 const getters = {
@@ -584,6 +587,37 @@ const actions = {
     });
   },
 
+  async navigationGetAction({ commit, state }, menuName) {
+    // you need query param so json server can filter
+    commit("navigationLoadingMutation", true);
+    return await getNavigation(menuName);
+  },
+  async navigationSetAction({ commit, state }, navigation) {
+    // Set mutation depending on query param
+    // if query is "header" then set headerSetMutation
+    console.log("nav store", navigation);
+
+    const { menuName } = navigation;
+
+    if (menuName == "header") {
+      commit("headerSetMutation", navigation);
+    } else {
+      console.log("not header");
+    }
+
+    //commit("headerSetMutation", navigation);
+
+    //commit("navigationSetMutation", navigation);
+  },
+  async navigationInitAction({ dispatch, commit, state }) {
+    // Should take query param
+    await dispatch("navigationGetAction", {
+      menuName: "header",
+    }).then(async function (navigation) {
+      await dispatch("navigationSetAction", navigation);
+      commit("navigationLoadingMutation", false);
+    });
+  },
   toggleIndex({ commit }, { name, value }) {
     return commit("toggleElement", {
       name: name,
@@ -698,6 +732,14 @@ const mutations = {
   },
   selectsLoadingMutation(state, selectsIsLoading) {
     return (state.selectsIsLoading = selectsIsLoading);
+  },
+
+  headerSetMutation(state, navigation) {
+    return (state.header = navigation);
+  },
+
+  navigationLoadingMutation(state, navigationIsLoading) {
+    return (state.navigationIsLoading = navigationIsLoading);
   },
 };
 

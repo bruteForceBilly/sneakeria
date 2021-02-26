@@ -517,6 +517,67 @@ const catalog = [
   },
 ];
 
+const navigation = [
+  {
+    id: 1,
+    menuName: "sidebar",
+    menuContent: [],
+  },
+  {
+    id: 2,
+    menuName: "header",
+    menuContent: [
+      {
+        name: "links",
+        items: [
+          {
+            name: "section",
+            label: "Men",
+            value: "men",
+          },
+          {
+            name: "section",
+            label: "Women",
+            value: "women",
+          },
+          {
+            name: "campaigns",
+            label: "New",
+            value: "new",
+          },
+          {
+            name: "campaigns",
+            label: "Essentials",
+            value: "essentials",
+          },
+        ],
+      },
+      {
+        name: "icons",
+        items: [
+          {
+            name: "Help",
+            label: "help",
+            value: "help",
+            src: "help-circle.svg",
+          },
+          {
+            name: "Whishlist",
+            label: "Whishlist",
+            value: "whishlist",
+            src: "heart.svg",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 3,
+    menuName: "selectionbar",
+    menuContent: [],
+  },
+];
+
 let versions = [];
 
 module.exports = {
@@ -527,4 +588,5 @@ module.exports = {
   styleType: styleType,
   colors: colors,
   versions: versions,
+  navigation: navigation,
 };

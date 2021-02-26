@@ -1,9 +1,10 @@
 const fs = require("fs");
 const { newProducts } = require("./product.js");
-const { catalog, versions } = require("./data.js");
+const { catalog, versions, navigation } = require("./data.js");
 
 let output = {
   catalog: catalog,
+  navigation: navigation,
   products: newProducts(399),
   versions: versions.flat(),
 };
