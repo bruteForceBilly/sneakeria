@@ -58,11 +58,6 @@ const option = [
     groupId: 3,
   },
   {
-    id: 7,
-    name: "new",
-    groupId: 3,
-  },
-  {
     id: 8,
     name: "tennis",
     groupId: 4,
@@ -444,14 +439,6 @@ const catalog = [
         name: "campaigns",
         label: "Essentials",
         value: "essentials",
-      },
-      {
-        id: 3,
-        groupId: 3,
-        checked: false,
-        name: "campaigns",
-        label: "New Arrivals",
-        value: "new",
       },
     ],
   },

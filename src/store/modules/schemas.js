@@ -2,7 +2,7 @@ const state = () => ({
   product: {
     section: ["men", "women"],
     category: ["shoes", "clothing"],
-    campaigns: ["sale", "essentials", "new"],
+    campaigns: ["sale", "essentials"],
     productType: [
       "boots",
       "sandals",
@@ -47,7 +47,6 @@ const state = () => ({
 
 const getters = {
   findByPropKey: (state) => (arr, table) => {
-    console.log("schemas");
     return arr.reduce(function (acc, cv) {
       for (const key of Object.keys(state.productSchema)) {
         if (state.productSchema[key].includes(cv)) {

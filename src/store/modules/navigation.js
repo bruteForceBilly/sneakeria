@@ -321,15 +321,6 @@ const state = () => ({
           label: "Essentials",
           value: "essentials",
         },
-        {
-          id: 3,
-          level: "option",
-          groupId: 3,
-          checked: false,
-          name: "campaigns",
-          label: "New Arrivals",
-          value: "new",
-        },
       ],
     },
     {
