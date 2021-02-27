@@ -1,20 +1,29 @@
 <template>
   <div id="app">
-    <TheHeader> </TheHeader>
-    <div>
-      <transition name="fade" mode="out-in">
-        <router-view> </router-view>
-      </transition>
-    </div>
+    <AppSettings
+      #default="{
+        api,
+      }"
+    >
+      {{ api }}
+      <TheHeader> </TheHeader>
+      <div>
+        <transition name="fade" mode="out-in">
+          <router-view> </router-view>
+        </transition>
+      </div>
+    </AppSettings>
   </div>
 </template>
 
 <script>
+import AppSettings from "./AppSettings.vue";
 import TheHeader from "@/components/App/TheHeader/TheHeader";
 
 export default {
   name: "App",
   components: {
+    AppSettings,
     TheHeader,
   },
 };

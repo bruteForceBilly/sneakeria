@@ -65,7 +65,9 @@ export default {
 
   beforeCreate() {
     //this.$store.dispatch("navigation/selectsInitAction");
-    this.$store.dispatch("navigation/navigationInitAction");
+    this.$store.dispatch("navigation/navigationInitAction", {
+      menuName: "header",
+    });
   },
 };
 </script>

@@ -516,6 +516,8 @@ const state = () => ({
     },
   ],
   header: null,
+  sidebar: null,
+  selectionbar: null,
 });
 
 const getters = {
@@ -601,19 +603,19 @@ const actions = {
 
     if (menuName == "header") {
       commit("headerSetMutation", navigation);
+    } else if (menuName == "sidebar") {
+      commit("sidebarSetMutation", navigation);
+    } else if (menuName == "selectionbar") {
+      commit("selectionbarSetMutation", navigation);
     } else {
-      console.log("not header");
+      console.error("navigationSetAction Menu Not Found");
     }
-
-    //commit("headerSetMutation", navigation);
-
-    //commit("navigationSetMutation", navigation);
   },
-  async navigationInitAction({ dispatch, commit, state }) {
+  async navigationInitAction({ dispatch, commit, state }, menuName) {
     // Should take query param
-    await dispatch("navigationGetAction", {
-      menuName: "header",
-    }).then(async function (navigation) {
+    await dispatch("navigationGetAction", menuName).then(async function (
+      navigation
+    ) {
       await dispatch("navigationSetAction", navigation);
       commit("navigationLoadingMutation", false);
     });
@@ -733,9 +735,14 @@ const mutations = {
   selectsLoadingMutation(state, selectsIsLoading) {
     return (state.selectsIsLoading = selectsIsLoading);
   },
-
   headerSetMutation(state, navigation) {
     return (state.header = navigation);
+  },
+  sidebarSetMutation(state, navigation) {
+    return (state.sidebar = navigation);
+  },
+  selectionbarSetMutation(state, navigation) {
+    return (state.selectionbar = navigation);
   },
 
   navigationLoadingMutation(state, navigationIsLoading) {
