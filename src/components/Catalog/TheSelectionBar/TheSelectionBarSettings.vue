@@ -12,6 +12,7 @@
         route,
         selectOptionsCheckToggle,
         updateRouteQueryParams,
+        navigationIsloading,
       }"
     ></slot>
   </div>
@@ -28,7 +29,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("navigation", ["selectsIsLoading"]),
+    ...mapState("navigation", ["selectsIsLoading", "navigationIsloading"]),
     ...mapState("route", ["query"]),
 
     ...mapGetters("navigation", [

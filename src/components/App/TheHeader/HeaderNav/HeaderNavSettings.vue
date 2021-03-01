@@ -5,7 +5,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
+  computed: {
+    ...mapState("navigation", ["header"]),
+  },
   data() {
     return {
       items: {

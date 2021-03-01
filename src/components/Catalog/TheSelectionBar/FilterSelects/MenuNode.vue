@@ -60,7 +60,7 @@ import Menu from "../DropDownMenu/Menu.vue";
 import MenuOption from "../DropDownMenu/MenuOption.vue";
 import MenuInputCheckbox from "../DropDownMenu/MenuInputCheckbox.vue";
 import MenuInputHidden from "../DropDownMenu/MenuInputHidden.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "MenuNode",
@@ -93,6 +93,7 @@ export default {
   computed: {
     ...mapGetters("navigation", ["selectedOptionsElements"]),
     ...mapGetters("search", ["foundProducts"]),
+    ...mapState("search", ["navigationIsLoading"]),
 
     visibilityHandler() {
       let res = null;
@@ -148,11 +149,15 @@ export default {
 
     siblings() {
       // selectsGetter
-      return this.$store.getters["navigation/selectsGetter"]
-        .find((group) => group.id === this.select.groupId)
-        .options.find((option) => option.id === this.select.optionId)
-        .attributes.filter((attribute) => attribute.id !== this.select.id)
-        .flatMap((sibling) => sibling.options);
+      let res = null;
+      if (!this.navigationIsLoading) {
+        res = this.$store.getters["navigation/selectionbarGetter"]
+          .find((group) => group.id === this.select.groupId)
+          .options.find((option) => option.id === this.select.optionId)
+          .attributes.filter((attribute) => attribute.id !== this.select.id)
+          .flatMap((sibling) => sibling.options);
+      }
+      return res ? res : [];
     },
     checkedSiblings() {
       return this.siblings.filter((sibling) => sibling.checked);

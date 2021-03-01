@@ -1,25 +1,28 @@
 <template>
   <div>
-    <TheHeaderSettings v-slot:default="{ show, setShow }">
-      <TheHeaderLayout :show="show">
+    <TheHeaderSettings v-slot:default="{ settings }">
+      <TheHeaderLayout :show="settings.show">
         <template v-slot:sidebarToggleIcon>
-          <img @click="setShow($event)" src="@/assets/menu.svg" />
+          <img @click="settings.setShow($event)" src="@/assets/menu.svg" />
         </template>
 
         <template v-slot:logo>
           <img src="@/assets/logo.svg" />
         </template>
 
-        <template v-slot:links>
-          <HeaderNav mode="links" />
+        <template v-slot:links v-if="settings.headerLinks">
+          <HeaderNav :links="settings.headerLinks" mode="links" />
         </template>
 
         <template v-slot:icons>
-          <HeaderNav mode="icons" />
+          <HeaderNav :icons="settings.headerIcons" mode="icons" />
         </template>
       </TheHeaderLayout>
 
-      <TheSidebar :show="show" :set-show="setShow"></TheSidebar>
+      <TheSidebar
+        :show="settings.show"
+        :set-show="settings.setShow"
+      ></TheSidebar>
     </TheHeaderSettings>
   </div>
 </template>
@@ -37,6 +40,9 @@ export default {
     TheHeaderLayout,
     TheSidebar,
     HeaderNav,
+  },
+  beforeUpdate() {
+    console.log("hello", this.items);
   },
 };
 </script>

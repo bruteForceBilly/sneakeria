@@ -2,10 +2,10 @@
   <div id="app">
     <AppSettings
       #default="{
-        api,
+        settings,
       }"
     >
-      {{ api }}
+      {{ settings }}
       <TheHeader> </TheHeader>
       <div>
         <transition name="fade" mode="out-in">

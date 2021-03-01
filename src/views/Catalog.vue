@@ -14,7 +14,7 @@
     <div v-else>
     </div> -->
 
-    <SelectionBar :selects="selects"></SelectionBar>
+    <SelectionBar :selects="selectionbarGetter"></SelectionBar>
 
     <ProductGrid
       :loaded-products="products"
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from "vuex";
 import BreadCrumbsBar from "@/components/Catalog/TheBreadCrumbsBar/BreadCrumbsBar.vue";
 import SelectionBar from "@/components/Catalog/TheSelectionBar/TheSelectionBar.vue";
 import DisplayTitle from "@/components/Catalog/TheDisplayTitle.vue";
@@ -39,7 +40,6 @@ import ProductGrid from "@/components/Catalog/TheProductGrid.vue";
 import ThePaginationBar from "@/components/Catalog/ThePaginationBar.vue";
 
 import LoadMoreButton from "@/components/Catalog/LoadMoreButton.vue";
-import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Catalog",
@@ -54,7 +54,7 @@ export default {
   computed: {
     ...mapGetters("load", ["products"]),
     ...mapGetters("search", ["queryParamsObject", "selectedDisplayTitle"]),
-    ...mapGetters("navigation", ["selectsGetter"]),
+    ...mapGetters("navigation", ["selectsGetter", "selectionbarGetter"]),
     ...mapState(["route"]),
     ...mapState("navigation", ["selects"]),
     ...mapState("search", ["foundProductsPagination", "foundProductsLength"]),
@@ -65,9 +65,6 @@ export default {
 
   beforeCreate() {
     //this.$store.dispatch("navigation/selectsInitAction");
-    this.$store.dispatch("navigation/navigationInitAction", {
-      menuName: "header",
-    });
   },
 };
 </script>

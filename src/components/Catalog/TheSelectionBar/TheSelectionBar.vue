@@ -4,6 +4,7 @@
       :selects="selects"
       v-slot:default="{
         settings,
+        navigationIsloading,
       }"
     >
       <!-- We need to get the calc height from hang element 
@@ -12,7 +13,8 @@
       WE NEED A SELECTION BAR LAYOUT COMPONENET
 
       -->
-      <div :style="{ height: `${hangHeight}px` }" class="mb-3">
+      <div v-if="navigationIsloading">...loading</div>
+      <div :style="{ height: `${hangHeight}px` }" class="mb-3" v-else>
         <div
           v-hang="'hang'"
           :style="$mq == 'sm' ? 'top:55px' : 'top: 1rem'"
