@@ -1,24 +1,22 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import catalog from "./modules/catalog.js";
 import search from "./modules/search.js";
-import range from "./modules/range.js";
 import load from "./modules/load.js";
 import cache from "./modules/cache.js";
 import sort from "./modules/sort.js";
 import navigation from "./modules/navigation.js";
-import schemas from "./modules/schemas.js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
+    catalog,
     search,
     load,
     cache,
     sort,
-    range,
     navigation,
-    schemas,
   },
   state: {
     rootData: null,

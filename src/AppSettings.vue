@@ -8,7 +8,7 @@
 export default {
   name: "AppSettings",
   beforeCreate() {
-    ["header", "sidebar", "selectionbar"].forEach((cv) => {
+    ["header", "sidebar", "selectionbar", "mobile"].forEach((cv) => {
       this.$store.dispatch("navigation/navigationInitAction", {
         menuName: cv,
       });

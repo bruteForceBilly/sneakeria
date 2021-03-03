@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import getCatalog from "@/services/catalog.js";
 import Vue from "vue";
 
 const state = () => ({
@@ -158,8 +156,12 @@ const getters = {
 };
 
 const actions = {
-  queryParamsObjectAction({ commit, rootState }, to) {
-    const queryParamsObjectArray = [];
+  queryParamsObjectAction(
+    { dispatch, commit, state, getters, rootState, rootGetters },
+    to
+  ) {
+    let queryParamsObject;
+    let queryParamsObjectArray = [];
 
     let params = [];
     let initializePaginationInQuery = { _page: "1", _limit: "48" };
@@ -174,7 +176,7 @@ const actions = {
     const findByPropKey = function (arg, table) {
       let res = [];
 
-      if (Array.isArray(arg)) {
+      if (table && Array.isArray(arg)) {
         res = arg.reduce(function (acc, cv) {
           for (const key of Object.keys(table)) {
             if (table[key].includes(cv)) {
@@ -183,7 +185,7 @@ const actions = {
           }
           return acc;
         }, []);
-      } else {
+      } else if (table) {
         Object.keys(query).forEach((key) => {
           if (Object.values(table).flat().includes(key)) {
             let temp = {};
@@ -192,6 +194,7 @@ const actions = {
           }
         });
       }
+
       return res;
     };
 
@@ -212,68 +215,86 @@ const actions = {
         .slice(0, -1);
     };
 
-    queryParamsObjectArray.push({
-      product: queryString(params, rootState.schemas.product),
-      productProp: findByPropKey(params, rootState.schemas.product),
-    });
-
-    if (findByPropKey(params, rootState.schemas.productVersion).length > 0) {
+    const makeQueryParamsObject = function () {
       queryParamsObjectArray.push({
-        version: queryString(params, rootState.schemas.productVersion),
-        versionProp: findByPropKey(params, rootState.schemas.productVersion),
+        product: queryString(params, rootGetters["catalog/product"]),
+        productProp: findByPropKey(params, rootGetters["catalog/product"]),
       });
-    }
 
-    if (Object.keys(query).length > 0) {
-      let foundOperatorProps = findByPropKey(query, rootState.schemas.operator);
-      let operatorPropString = foundOperatorProps
-        .reduce((acc, cv) => {
-          for (const [key, value] of Object.entries(cv)) {
-            acc += `${key}=${value}&`;
+      if (findByPropKey(params, rootGetters.productVersion).length > 0) {
+        queryParamsObjectArray.push({
+          version: queryString(params, rootGetters["catalog/productVersion"]),
+          versionProp: findByPropKey(
+            params,
+            rootGetters["catalog/productVersion"]
+          ),
+        });
+      }
+
+      if (Object.keys(query).length > 0) {
+        let foundOperatorProps = findByPropKey(
+          query,
+          rootGetters["catalog/operator"]
+        );
+        let operatorPropString = foundOperatorProps
+          .reduce((acc, cv) => {
+            for (const [key, value] of Object.entries(cv)) {
+              acc += `${key}=${value}&`;
+            }
+            return acc;
+          }, "")
+          .slice(0, -1);
+
+        queryParamsObjectArray.push({
+          operator: operatorPropString,
+          operatorProp: foundOperatorProps,
+        });
+      }
+
+      // check why does the object become
+      return (queryParamsObject = queryParamsObjectArray
+        .flat()
+        .reduce(function (prev, next) {
+          let prevKeys = Object.keys(prev);
+          let nextKey = Object.keys(next).pop();
+
+          if (prevKeys.includes(nextKey)) {
+            prev[nextKey].push(next[nextKey].pop());
+          } else {
+            prev = { ...prev, ...next };
           }
-          return acc;
-        }, "")
-        .slice(0, -1);
 
-      queryParamsObjectArray.push({
-        operator: operatorPropString,
-        operatorProp: foundOperatorProps,
-      });
-    }
-
-    // check why does the object become
-    let queryParamsObject = queryParamsObjectArray
-      .flat()
-      .reduce(function (prev, next) {
-        let prevKeys = Object.keys(prev);
-        let nextKey = Object.keys(next).pop();
-
-        if (prevKeys.includes(nextKey)) {
-          prev[nextKey].push(next[nextKey].pop());
-        } else {
-          prev = { ...prev, ...next };
-        }
-
-        return prev;
-      }, {});
+          return prev;
+        }, {}));
+    };
 
     // Operator behave differently when searchQueryRoute
 
-    if (to.name === "searchQueryRoute") {
-      const { product, version, operator = null } = queryParamsObject;
+    const formatOperator = function () {
+      if (to.name === "searchQueryRoute") {
+        const { product, version, operator = null } = queryParamsObject;
 
-      if (operator !== null) {
-        let res = operator
-          .replace(product + "&", "")
-          .replace(version + "&", "");
+        if (operator !== null) {
+          let res = operator
+            .replace(product + "&", "")
+            .replace(version + "&", "");
 
-        queryParamsObject.operator = res;
+          return (queryParamsObject.operator = res);
+        }
       }
-    }
+    };
 
     // console.log("queryParamsObject INPUT", to);
     // console.log("queryParamsObject OUTPUT", queryParamsObject);
 
+    // return async () => {
+    //   await makeQueryParamsObject();
+    //   await formatOperator();
+    //   commit("queryParamsObjectMutation", queryParamsObject);
+    // };
+
+    makeQueryParamsObject();
+    formatOperator();
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
 

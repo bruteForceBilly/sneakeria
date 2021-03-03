@@ -7,12 +7,7 @@
         navigationIsloading,
       }"
     >
-      <!-- We need to get the calc height from hang element 
-      :style="{ height: `${hangHeight}px` }"
-
-      WE NEED A SELECTION BAR LAYOUT COMPONENET
-
-      -->
+      <!-- WE NEED A SELECTION BAR LAYOUT COMPONENET -->
       <div v-if="navigationIsloading">...loading</div>
       <div :style="{ height: `${hangHeight}px` }" class="mb-3" v-else>
         <div
@@ -34,7 +29,7 @@
               'border border-gray-900 bg-gray-900': hang,
             }"
           >
-            <div v-for="menu in mobileMenus" :key="menu.name">
+            <div v-for="menu in selectionbarMobile" :key="menu.name">
               <div class="h-full w-full">
                 <MenuButton
                   :isBlock="true"
@@ -56,15 +51,15 @@
               <FilterSelects
                 :isMobile="false"
                 :selected-options-object="settings.selectedOptionsObject"
-                :selects="settings.selects"
+                :selects="settings.selectionbarFilters"
               ></FilterSelects>
 
               <RangeSelects
                 :isMobile="false"
-                :range-sliders="settings.rangeSliders"
+                :range-sliders="settings.selectionbarRanges"
               ></RangeSelects>
 
-              <SortSelects class="ml-auto" :sorts="settings.sorts">
+              <SortSelects class="ml-auto" :sorts="settings.selectionbarSorts">
               </SortSelects>
             </div>
           </div>
@@ -74,7 +69,7 @@
             v-if="isMobileScreen && mobileMenuSelected != null"
             class="fixed top-0 left-0 right-0 bottom-0 z-60 h-screen w-screen flex flex-col bg-white overflow-y-auto"
           >
-            <div v-if="mobileMenuSelected.value == 'SortSelects'">
+            <div v-if="mobileMenuSelected.name == 'sortBy'">
               <div class="flex justify-end items-center p-3">
                 <span
                   class="flex-grow tracking-tighter uppercase text-lg inline"
@@ -90,13 +85,13 @@
 
               <SortSelects
                 :isMobile="true"
-                :sorts="settings.sorts"
+                :sorts="settings.selectionbarSorts"
                 @click.native="mobileMenuSelected = null"
               />
             </div>
 
             <div
-              v-if="mobileMenuSelected.value == 'FilterSelects'"
+              v-if="mobileMenuSelected.name == 'filterBy'"
               class="absolute w-full pb-28"
             >
               <div class="flex justify-end items-center p-3">
@@ -122,12 +117,12 @@
                 class="mt-4"
                 :isMobile="true"
                 :selected-options-object="settings.selectedOptionsObject"
-                :selects="settings.selects"
+                :selects="settings.selectionbarFilters"
               ></FilterSelects>
 
               <RangeSelects
                 :isMobile="true"
-                :range-sliders="settings.rangeSliders"
+                :range-sliders="settings.selectionbarRanges"
               ></RangeSelects>
 
               <!-- APPLY BUTTON -->
@@ -220,11 +215,10 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("navigation", ["selectedOptionsElements"]),
-
-    mobileMenus() {
-      return this.$store.state.navigation.mobile.slice(0, 2);
-    },
+    ...mapGetters("navigation", [
+      "selectedOptionsElements",
+      "selectionbarMobile",
+    ]),
     isMobileScreen() {
       return this.$mq !== "xl" ? true : false;
     },

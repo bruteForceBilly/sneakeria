@@ -14,7 +14,10 @@
     <div v-else>
     </div> -->
 
-    <SelectionBar :selects="selectionbarGetter"></SelectionBar>
+    <SelectionBar
+      v-if="!navigationIsLoading"
+      :selects="selectionbarFilters"
+    ></SelectionBar>
 
     <ProductGrid
       :loaded-products="products"
@@ -52,19 +55,18 @@ export default {
     ThePaginationBar,
   },
   computed: {
+    ...mapState(["route"]),
     ...mapGetters("load", ["products"]),
     ...mapGetters("search", ["queryParamsObject", "selectedDisplayTitle"]),
-    ...mapGetters("navigation", ["selectsGetter", "selectionbarGetter"]),
-    ...mapState(["route"]),
-    ...mapState("navigation", ["selects"]),
     ...mapState("search", ["foundProductsPagination", "foundProductsLength"]),
+
+    ...mapState("navigation", ["selects", "navigationIsLoading"]),
+    ...mapState("catalog", ["catalogIsLoading"]),
+
+    ...mapGetters("navigation", ["selectionbarFilters"]),
   },
   methods: {
     ...mapActions("navigation", ["selectsInit", "navigationInitAction"]),
-  },
-
-  beforeCreate() {
-    //this.$store.dispatch("navigation/selectsInitAction");
   },
 };
 </script>

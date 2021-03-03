@@ -4,21 +4,10 @@ import getNavigation from "@/services/navigation.js";
 const state = () => ({
   selectsIsLoading: false,
   navigationIsLoading: false,
-  mobile: [
-    {
-      label: "Filter By",
-      value: "FilterSelects",
-      menus: ["FilterSelects", "RangeSelects"],
-    },
-    {
-      label: "Sort By",
-      value: "SortSelects",
-      menus: ["SortSelect"],
-    },
-  ],
   header: null,
   sidebar: null,
   selectionbar: null,
+  mobile: null,
 });
 
 const getters = {
@@ -43,62 +32,75 @@ const getters = {
       : null;
   },
   sidebar: (state) => {
-    return state.sidebar ? state.sidebar.menuContent[0] : {};
+    return state.sidebar ? state.sidebar.menuContent[0] : null;
   },
-  selectionbarGetter: (state) => {
-    return state.selectionbar ? state.selectionbar.menuContent : [];
+  selectionbarContent: (state) => {
+    return state.selectionbar ? state.selectionbar.menuContent : null;
+  },
+  selectionbarFilters: (state, getters) => {
+    return state.navigationIsLoading
+      ? null
+      : state.selectionbar.menuContent.filter(
+          (menu) => menu.value === "filterSelects"
+        );
+  },
+  selectionbarSorts: (state, getters) => {
+    return state.navigationIsLoading
+      ? null
+      : state.selectionbar.menuContent.filter(
+          (menu) => menu.value === "sortSelect"
+        );
+  },
+  selectionbarRanges: (state, getters) => {
+    return state.navigationIsLoading
+      ? null
+      : state.selectionbar.menuContent.filter(
+          (menu) => menu.value === "rangeSelects"
+        );
+  },
+  selectionbarMobile: (state, getters) => {
+    return state.navigationIsLoading ? null : state.mobile.menuContent;
   },
 
-  selectsGetter: (state) => {
-    return state.selects;
-  },
-  allOptions: (state) => {
-    let res;
-    // if selects are not there return empty array
-    if (state.selectsIsLoading || !state.selects) {
-      res = [];
-    } else {
-      res = state.selects.reduce(function (acc, cv) {
-        const recur = (n, q) => {
-          if (Object.keys(n).includes(q)) {
-            acc.push(n);
-          }
+  allOptions: (state, getters) => {
+    return state.navigationIsLoading
+      ? null
+      : getters.selectionbarFilters.reduce(function (acc, cv) {
+          const recur = (n, q) => {
+            if (Object.keys(n).includes(q)) {
+              acc.push(n);
+            }
 
-          if (Object.values(n).some((val) => Array.isArray(val))) {
-            Object.values(n)
-              .filter((val) => Array.isArray(val))
-              .flat()
-              .forEach((el) => recur(el, q));
-          }
-        };
+            if (Object.values(n).some((val) => Array.isArray(val))) {
+              Object.values(n)
+                .filter((val) => Array.isArray(val))
+                .flat()
+                .forEach((el) => recur(el, q));
+            }
+          };
 
-        recur(cv, "checked");
-        return acc;
-      }, []);
-    }
-
-    return res;
+          recur(cv, "checked");
+          return acc;
+        }, []);
   },
   selectedOptionsElements: (state, getters) => {
-    let res = getters.allOptions.filter((option) => option.checked);
-    return res;
+    return state.navigationIsLoading
+      ? null
+      : getters.allOptions.filter((option) => option.checked);
   },
   selectedOptionsObject: (state, getters) => {
-    let res = getters.selectedOptionsElements.reduce(function (
-      previous,
-      element
-    ) {
-      if (element.name in previous) {
-        //previous[element.name] = [previous[element.name]];
-        previous[element.name].push(element.value);
-      } else {
-        previous[element.name] = [];
-        previous[element.name].push(element.value);
-      }
-      return previous;
-    },
-    {});
-    return res;
+    return state.navigationIsLoading
+      ? null
+      : getters.selectedOptionsElements.reduce(function (previous, element) {
+          if (element.name in previous) {
+            //previous[element.name] = [previous[element.name]];
+            previous[element.name].push(element.value);
+          } else {
+            previous[element.name] = [];
+            previous[element.name].push(element.value);
+          }
+          return previous;
+        }, {});
   },
 };
 
@@ -118,23 +120,19 @@ const actions = {
   },
 
   async navigationGetAction({ commit, state }, menuName) {
-    // you need query param so json server can filter
     commit("navigationLoadingMutation", true);
     return await getNavigation(menuName);
   },
   async navigationSetAction({ commit, state }, navigation) {
-    // Set mutation depending on query param
-    // if query is "header" then set headerSetMutation
-    console.log("nav store", navigation);
-
     const { menuName } = navigation;
-
     if (menuName == "header") {
       commit("headerSetMutation", navigation);
     } else if (menuName == "sidebar") {
       commit("sidebarSetMutation", navigation);
     } else if (menuName == "selectionbar") {
       commit("selectionbarSetMutation", navigation);
+    } else if (menuName == "mobile") {
+      commit("mobileSetMutation", navigation);
     } else {
       console.error("navigationSetAction Menu Not Found");
     }
@@ -175,11 +173,6 @@ const actions = {
   ) {
     // rename to selectOptionsCheckToggleByRouter
 
-    // console.log(
-    //   "selectOptionsCheckToggle queryParamsObject",
-    //   queryParamsObject
-    // );
-
     const { productProp = null, versionProp = null } = queryParamsObject;
 
     let elements = [];
@@ -207,12 +200,16 @@ const actions = {
       return mapped.flat();
     };
 
-    return mappedElements(getters.allOptions, elements).forEach((el) =>
-      commit("toggleElement", el)
-    );
+    return state.navigationIsLoading
+      ? null
+      : mappedElements(getters.allOptions, elements).forEach((el) =>
+          commit("toggleElement", el)
+        );
   },
-  selectOptionsCheckReset({ commit, getters }) {
-    return getters.allOptions.forEach((el) => commit("resetElement", el));
+  selectOptionsCheckReset({ commit, state, getters }) {
+    return state.navigationIsLoading
+      ? null
+      : getters.allOptions.forEach((el) => commit("resetElement", el));
   },
 };
 
@@ -272,7 +269,9 @@ const mutations = {
   selectionbarSetMutation(state, navigation) {
     return (state.selectionbar = navigation);
   },
-
+  mobileSetMutation(state, navigation) {
+    return (state.mobile = navigation);
+  },
   navigationLoadingMutation(state, navigationIsLoading) {
     return (state.navigationIsLoading = navigationIsLoading);
   },

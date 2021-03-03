@@ -1,9 +1,9 @@
 import axios from "axios";
 import { API_CATALOG } from "@/constants";
 
-export default function (cb) {
+export default function () {
   return axios
     .get(API_CATALOG)
-    .then((response) => cb(response.data))
-    .catch((err) => cb(err.toString()));
+    .then((response) => response.data)
+    .catch((err) => err.toString());
 }

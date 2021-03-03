@@ -1,5 +1,4 @@
 <template>
-  <!-- :class="isMobile ? 'block' : 'inline-block'" -->
   <div>
     <Menu
       :class="{ 'border-gray-300 border-t': isMobile }"
@@ -91,7 +90,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("navigation", ["selectedOptionsElements"]),
+    ...mapGetters("navigation", [
+      "selectedOptionsElements",
+      "selectionbarContent",
+    ]),
     ...mapGetters("search", ["foundProducts"]),
     ...mapState("search", ["navigationIsLoading"]),
 
@@ -147,11 +149,12 @@ export default {
       }
     },
 
+    // Should be a method that takes an argument, so we can decouple it?
     siblings() {
       // selectsGetter
       let res = null;
       if (!this.navigationIsLoading) {
-        res = this.$store.getters["navigation/selectionbarGetter"]
+        res = this.$store.getters["navigation/selectionbarContent"]
           .find((group) => group.id === this.select.groupId)
           .options.find((option) => option.id === this.select.optionId)
           .attributes.filter((attribute) => attribute.id !== this.select.id)

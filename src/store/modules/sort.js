@@ -1,46 +1,5 @@
 const state = () => ({
   setting: { sort: "default", order: "default" },
-  sorts: [
-    {
-      id: 1,
-      name: "sortBy",
-      label: "Sort By",
-      value: "sortSelect",
-      inputType: "hidden",
-      containerSize: "base-left",
-      multiple: false,
-      options: [
-        {
-          id: 1,
-          name: "sortBy",
-          label: "Price (Low - High)",
-          value: { sort: "PriceMin", order: "Ascending" },
-          checked: false,
-        },
-        {
-          id: 2,
-          name: "sortBy",
-          label: "Price (High - Low)",
-          value: { sort: "PriceMax", order: "Descending" },
-          checked: false,
-        },
-        {
-          id: 3,
-          name: "sortBy",
-          label: "Oldest",
-          value: { sort: "DateMin", order: "Ascending" },
-          checked: false,
-        },
-        {
-          id: 4,
-          name: "sortBy",
-          label: "Newest",
-          value: { sort: "DateMax", order: "Descending" },
-          checked: false,
-        },
-      ],
-    },
-  ],
 });
 
 const actions = {

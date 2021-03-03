@@ -44,10 +44,6 @@ import { mapState, mapGetters, mapMutations } from "vuex";
 
 export default {
   props: {
-    selects: {
-      type: Array,
-      required: true,
-    },
     selectedOptionsObject: {
       type: Object,
       default: function () {
@@ -57,6 +53,7 @@ export default {
     updateRouteQueryParams: Function,
   },
   computed: {
+    ...mapState("navigation", ["navigationIsLoading"]),
     ...mapGetters("navigation", ["selectedOptionsElements"]),
     ...mapState("route", ["path", "params", "query"]),
     priceOperators() {

@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import Vue from "vue";
 import VueRouter from "vue-router";
-
 import store from "@/store/index.js";
 import products from "@/services/products.js";
 import Home from "../views/Home.vue";
@@ -148,12 +147,6 @@ const routes = [
   },
 ];
 
-const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL, // I havent set a base url?
-  routes,
-});
-
 // router.afterEach((to, from) => {
 //   // if (process.env.NODE_ENV === "development") {
 //   //   console.log("ROUTER TO:\n", to);
@@ -161,5 +154,11 @@ const router = new VueRouter({
 //   // }
 //   //console.log(store.state.cache.stack);
 // });
+
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL, // I havent set a base url?
+  routes,
+});
 
 export default router;

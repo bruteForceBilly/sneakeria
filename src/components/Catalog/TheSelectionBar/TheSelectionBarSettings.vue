@@ -2,9 +2,9 @@
   <div>
     <slot
       :settings="{
-        sorts,
-        selects,
-        rangeSliders,
+        selectionbarFilters,
+        selectionbarSorts,
+        selectionbarRanges,
         selectedOptionsElements,
         selectedOptionsObject,
         searchQueryParamsObject,
@@ -33,14 +33,14 @@ export default {
     ...mapState("route", ["query"]),
 
     ...mapGetters("navigation", [
+      "selectionbarFilters",
+      "selectionbarSorts",
+      "selectionbarRanges",
       "selectedOptionsElements",
       "selectedOptionsObject",
     ]),
     sorts() {
       return this.$store.state.sort.sorts;
-    },
-    rangeSliders() {
-      return this.$store.state.range.ranges;
     },
     searchQueryParamsObject() {
       return this.$store.state.search.queryParamsObject;

@@ -8,11 +8,14 @@ import "./assets/css/tailwind.css";
 
 Vue.config.productionTip = false;
 
-sync(store, router);
+store.dispatch("catalog/initialize").then(() => {
+  sync(store, router);
+  window.App = new Vue({
+    router,
+    store,
+    media,
+    render: (h) => h(App),
+  }).$mount("#app");
+});
 
-window.App = new Vue({
-  router,
-  store,
-  media,
-  render: (h) => h(App),
-}).$mount("#app");
+// listen to some event here from the action
