@@ -1,8 +1,6 @@
-import getSelects from "@/services/selects.js";
 import getNavigation from "@/services/navigation.js";
 
 const state = () => ({
-  selectsIsLoading: false,
   navigationIsLoading: false,
   header: null,
   sidebar: null,
@@ -105,46 +103,30 @@ const getters = {
 };
 
 const actions = {
-  async selectsGetAction({ commit, state }) {
-    commit("selectsLoadingMutation", true);
-    return await getSelects();
-  },
-  async selectsSetAction({ commit, state }, selects) {
-    commit("selectsSetMutation", selects);
-  },
-  async selectsInitAction({ dispatch, commit, state }) {
-    await dispatch("selectsGetAction").then(async function (selects) {
-      await dispatch("selectsSetAction", selects);
-      commit("selectsLoadingMutation", false);
-    });
-  },
-
-  async navigationGetAction({ commit, state }, menuName) {
+  async navigationGetAction({ commit, state }) {
     commit("navigationLoadingMutation", true);
-    return await getNavigation(menuName);
+    return await getNavigation();
   },
   async navigationSetAction({ commit, state }, navigation) {
-    const { menuName } = navigation;
-    if (menuName == "header") {
-      commit("headerSetMutation", navigation);
-    } else if (menuName == "sidebar") {
-      commit("sidebarSetMutation", navigation);
-    } else if (menuName == "selectionbar") {
-      commit("selectionbarSetMutation", navigation);
-    } else if (menuName == "mobile") {
-      commit("mobileSetMutation", navigation);
-    } else {
-      console.error("navigationSetAction Menu Not Found");
-    }
+    const header = navigation.filter((nav) => nav.menuName === "header")[0];
+    const sidebar = navigation.filter((nav) => nav.menuName === "sidebar")[0];
+    const selectionbar = navigation.filter(
+      (nav) => nav.menuName === "selectionbar"
+    )[0];
+    const mobile = navigation.filter((nav) => nav.menuName === "mobile")[0];
+
+    commit("headerSetMutation", header);
+    commit("sidebarSetMutation", sidebar);
+    commit("selectionbarSetMutation", selectionbar);
+    commit("mobileSetMutation", mobile);
   },
-  async navigationInitAction({ dispatch, commit, state }, menuName) {
+  async navigationInitAction({ dispatch, commit, state }) {
     // Should take query param
-    await dispatch("navigationGetAction", menuName).then(async function (
-      navigation
-    ) {
+    await dispatch("navigationGetAction").then(async function (navigation) {
       await dispatch("navigationSetAction", navigation);
       commit("navigationLoadingMutation", false);
     });
+    return "done";
   },
   toggleIndex({ commit }, { name, value }) {
     return commit("toggleElement", {
@@ -224,13 +206,13 @@ const mutations = {
     let foundElement;
 
     if (el.groupId) {
-      foundElement = state.selects
+      foundElement = state.selectionbar.menuContent
         .find((select) => select.id === el.groupId)
         .options.find((option) => option.id === el.id);
     }
 
     if (el.groupId && el.optionId && el.attributeId) {
-      foundElement = state.selects
+      foundElement = state.selectionbar.menuContent
         .find((select) => select.id === el.groupId)
         .options.find((option) => option.id === el.optionId)
         .attributes.find((attribute) => attribute.id === el.attributeId)
@@ -238,28 +220,20 @@ const mutations = {
     }
 
     if (el.groupId && el.optionId && el.attributeId && el.productTypeId) {
-      foundElement = state.selects
+      foundElement = state.selectionbar.menuContent
         .find((select) => select.id === el.groupId)
         .options.find((option) => option.id === el.optionId)
         .attributes.find((attribute) => attribute.id === el.attributeId)
         .options.filter((option) => option.id === el.id);
     }
 
-    return !foundElement.checked
-      ? (foundElement.checked = true)
-      : (foundElement.checked = false);
+    return (foundElement.checked = !foundElement.checked);
   },
 
   resetElement(state, el) {
     return (el.checked = false);
   },
 
-  selectsSetMutation(state, selects) {
-    return (state.selects = selects);
-  },
-  selectsLoadingMutation(state, selectsIsLoading) {
-    return (state.selectsIsLoading = selectsIsLoading);
-  },
   headerSetMutation(state, navigation) {
     return (state.header = navigation);
   },

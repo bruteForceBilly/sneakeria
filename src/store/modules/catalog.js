@@ -6,19 +6,6 @@ const state = () => ({
 });
 
 const getters = {
-  findByPropKey: (state) => (arr, table) => {
-    console.log("arr", arr);
-    return state.catalogIsloading
-      ? null
-      : arr.reduce(function (acc, cv) {
-          for (const key of Object.keys(state.productSchema)) {
-            if (state.productSchema[key].includes(cv)) {
-              acc.push({ [key]: cv });
-            }
-          }
-          return acc;
-        }, []);
-  },
   product: (state) => {
     return state.catalogIsloading
       ? null
@@ -55,7 +42,7 @@ const actions = {
       await dispatch("catalogSetAction", catalog);
       await commit("catalogLoadingMutation", false);
     });
-    return "done";
+    return;
   },
   toggleIndex({ commit }, { name, value }) {
     return commit("toggleElement", {
@@ -67,11 +54,9 @@ const actions = {
 
 const mutations = {
   catalogLoadingMutation(state, isLoading) {
-    //console.log("catalogLoadingMutation", isLoading);
     return (state.catalogIsloading = isLoading);
   },
   catalogSetMutation(state, catalog) {
-    //console.log("catalogSetMutation", catalog);
     return (state.content = catalog);
   },
 };

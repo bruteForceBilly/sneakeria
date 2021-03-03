@@ -53,10 +53,12 @@ const routes = [
         searchQuery = store.state.search.queryParamsObject;
         // Reset all checked options to false then toggle with query params
         store.dispatch("navigation/selectOptionsCheckReset").then(() => {
-          store.dispatch(
-            "navigation/selectOptionsCheckToggle",
-            store.state.search.queryParamsObject
-          );
+          if (!store.state.navigation.navigationIsLoading) {
+            store.dispatch(
+              "navigation/selectOptionsCheckToggle",
+              store.state.search.queryParamsObject
+            );
+          }
         });
       } else {
         store.dispatch("search/queryParamsObjectAction", to);

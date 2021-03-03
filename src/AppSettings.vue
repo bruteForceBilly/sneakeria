@@ -5,13 +5,19 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "AppSettings",
+  computed: {
+    ...mapState("search", ["queryParamsObject"]),
+  },
   beforeCreate() {
-    ["header", "sidebar", "selectionbar", "mobile"].forEach((cv) => {
-      this.$store.dispatch("navigation/navigationInitAction", {
-        menuName: cv,
-      });
+    this.$store.dispatch("navigation/navigationInitAction").then(() => {
+      this.$store.dispatch(
+        "navigation/selectOptionsCheckToggle",
+        this.queryParamsObject
+      );
     });
   },
 };
