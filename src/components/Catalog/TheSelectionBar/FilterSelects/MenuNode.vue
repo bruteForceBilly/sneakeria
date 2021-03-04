@@ -44,7 +44,7 @@
     </Menu>
     <MenuNode
       :isMobile="isMobile"
-      :class="isMobile ? '' : 'inline'"
+      :class="isMobile ? '' : 'inline-flex'"
       v-for="select in node"
       :key="select.id + select.name"
       :select="select"

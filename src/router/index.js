@@ -108,7 +108,6 @@ const routes = [
     name: "searchRequestRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
-      store.commit("load/countReset");
       store.commit("cache/resetStack");
 
       store

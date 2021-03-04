@@ -443,13 +443,13 @@ const navigation = [
           },
           {
             name: "campaigns",
-            label: "New",
-            value: "new",
+            label: "Essentials",
+            value: "essentials",
           },
           {
             name: "campaigns",
-            label: "Essentials",
-            value: "essentials",
+            label: "Sale",
+            value: "sale",
           },
         ],
       },

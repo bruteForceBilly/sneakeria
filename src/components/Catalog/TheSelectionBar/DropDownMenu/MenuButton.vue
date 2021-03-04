@@ -10,7 +10,7 @@
       :class="[
         isMobile && selectedOptionsLabels ? 'pt-2 pb-6' : 'py-3 sm:py-2',
         { 'border-hover z-30': !isMobile && isExpanded },
-        isMobile ? 'py-4 px-3' : 'px-3 relative z-10 border border-transparent',
+        isMobile ? 'py-4 px-3' : 'px-3 relative border border-transparent',
       ]"
     >
       <div
