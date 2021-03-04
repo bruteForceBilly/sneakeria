@@ -41,7 +41,7 @@ export default {
     searchFoundProductsLength: {
       type: Number,
     },
-    loadedProducts: {
+    products: {
       type: Array,
     },
   },
@@ -81,7 +81,7 @@ export default {
   methods: {
     sortSelect({ sort, order } = { sort: "default", order: "default" }) {
       if (sort == "default") {
-        return this.loadedProducts;
+        return this.products;
       } else {
         return this[sort + (order[0].toUpperCase() + order.slice(1))];
       }

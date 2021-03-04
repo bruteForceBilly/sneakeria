@@ -10,25 +10,16 @@
       :search-found-products-length="foundProductsPagination.contentCount"
     ></DisplayTitle>
 
-    <!-- <div v-if="selectsIsLoading">...selection bar loading</div>
-    <div v-else>
-    </div> -->
-
     <SelectionBar
       v-if="!navigationIsLoading"
       :selects="selectionbarFilters"
     ></SelectionBar>
 
     <ProductGrid
-      :loaded-products="products"
+      :products="foundProducts"
       :current-route="route"
       :search-found-products-length="foundProductsLength"
     ></ProductGrid>
-
-    <LoadMoreButton
-      :search-found-products-length="foundProductsLength"
-      :loaded-products="products"
-    ></LoadMoreButton>
 
     <ThePaginationBar />
   </div>
@@ -42,8 +33,6 @@ import DisplayTitle from "@/components/Catalog/TheDisplayTitle.vue";
 import ProductGrid from "@/components/Catalog/TheProductGrid.vue";
 import ThePaginationBar from "@/components/Catalog/ThePaginationBar.vue";
 
-import LoadMoreButton from "@/components/Catalog/LoadMoreButton.vue";
-
 export default {
   name: "Catalog",
   components: {
@@ -51,13 +40,15 @@ export default {
     SelectionBar,
     DisplayTitle,
     ProductGrid,
-    LoadMoreButton,
     ThePaginationBar,
   },
   computed: {
     ...mapState(["route"]),
-    ...mapGetters("load", ["products"]),
-    ...mapGetters("search", ["queryParamsObject", "selectedDisplayTitle"]),
+    ...mapGetters("search", [
+      "queryParamsObject",
+      "selectedDisplayTitle",
+      "foundProducts",
+    ]),
     ...mapState("search", ["foundProductsPagination", "foundProductsLength"]),
 
     ...mapState("navigation", ["selects", "navigationIsLoading"]),

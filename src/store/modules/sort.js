@@ -10,8 +10,6 @@ const actions = {
         v[0].toLowerCase() + v.slice(1),
       ])
     );
-    //console.log("formattedSettingParameters", formattedSettingParameters);
-
     return commit("settingMutation", formattedSettingParameters);
   },
 };
@@ -23,8 +21,13 @@ const mutations = {
 };
 
 const getters = {
+  products: (state, getters, rootState, rootGetters) => {
+    let copyProducts = [...rootGetters["search/foundProducts"]];
+    return copyProducts;
+  },
   dateMin: (state, getters, rootState, rootGetters) => {
-    let copyProducts = [...rootGetters["load/products"]];
+    let copyProducts = [...getters.products];
+
     copyProducts.forEach((product) => {
       const minDateObj = new Date(
         Math.min(
@@ -54,7 +57,8 @@ const getters = {
     return sorted;
   },
   dateMax: (state, getters, rootState, rootGetters) => {
-    let copyProducts = [...rootGetters["load/products"]];
+    let copyProducts = [...getters.products];
+
     copyProducts.forEach((product) => {
       const maxDateObj = new Date(
         Math.max(
@@ -85,8 +89,7 @@ const getters = {
     return sorted;
   },
   priceMin: (state, getters, rootSate, rootGetters) => {
-    let copyProducts = [...rootGetters["load/products"]];
-
+    let copyProducts = [...getters.products];
     copyProducts.forEach((product) => {
       let prices = [];
       product.versions.forEach((ver) => prices.push(ver.price.amountOffered));
@@ -105,7 +108,7 @@ const getters = {
   },
 
   priceMax: (state, getters, rootSate, rootGetters) => {
-    let copyProducts = [...rootGetters["load/products"]];
+    let copyProducts = [...getters.products];
 
     copyProducts.forEach((product) => {
       let prices = [];

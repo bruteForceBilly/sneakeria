@@ -1,30 +1,33 @@
 <template>
   <div id="app">
-    <AppSettings
-      #default="{
-        settings,
-      }"
-    >
-      {{ settings }}
-      <TheHeader> </TheHeader>
-      <div>
-        <transition name="fade" mode="out-in">
-          <router-view> </router-view>
-        </transition>
-      </div>
-    </AppSettings>
+    <TheHeader> </TheHeader>
+    <div>
+      <transition name="fade" mode="out-in">
+        <router-view> </router-view>
+      </transition>
+    </div>
   </div>
 </template>
 
 <script>
-import AppSettings from "./AppSettings.vue";
 import TheHeader from "@/components/App/TheHeader/TheHeader";
+import { mapState } from "vuex";
 
 export default {
   name: "App",
   components: {
-    AppSettings,
     TheHeader,
+  },
+  computed: {
+    ...mapState("search", ["queryParamsObject"]),
+  },
+  beforeCreate() {
+    this.$store.dispatch("navigation/navigationInitAction").then(() => {
+      this.$store.dispatch(
+        "navigation/selectOptionsCheckToggle",
+        this.queryParamsObject
+      );
+    });
   },
 };
 </script>
@@ -46,18 +49,5 @@ export default {
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: slateblue;
-}
-
-#nav a.router-link-exact-active {
-  color: slateblue;
 }
 </style>
