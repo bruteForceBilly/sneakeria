@@ -116,6 +116,7 @@ const routes = [
         .then(() => {
           let searchQueryString =
             "/search?" + store.getters["search/searchQueryString"];
+          console.log("searchRequestRoute", searchQueryString);
           next({
             path: searchQueryString,
           });

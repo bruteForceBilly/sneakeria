@@ -160,18 +160,51 @@ const actions = {
     { dispatch, commit, state, getters, rootState, rootGetters },
     to
   ) {
+    console.log("queryParamsObjectAction to", to);
+
     let queryParamsObject;
     let queryParamsObjectArray = [];
 
     let params = [];
-    let initializePaginationInQuery = { _page: "1", _limit: "48" };
-    let query = { ...initializePaginationInQuery, ...to.query };
+    let query;
+    // query = { ...initializePaginationInQuery, ...to.query };
 
-    if (to.name === "searchQueryRoute") {
-      params = Object.values(to.query).flat();
-    } else if (to.name === "searchRequestRoute") {
+    // To be imported via config
+    let initializePaginationInQuery = { _page: "1", _limit: "48" };
+
+    if (to.name === "searchRequestRoute") {
       params = to.params.id.split("-");
     }
+
+    if (to.name === "searchQueryRoute") {
+      //params = Object.values(to.query).flat();
+
+      let toQuerySorted = Object.entries(to.query).reduce(
+        (acc, cv) => {
+          cv.some((el) => /^_/.test(el))
+            ? (acc.query[cv[0]] = cv[1])
+            : (acc.params[cv[0]] = cv[1]);
+          return acc;
+        },
+        {
+          params: {},
+          query: {},
+        }
+      );
+      params = Object.values(toQuerySorted.params);
+
+      if (
+        toQuerySorted &&
+        Object.keys(toQuerySorted.query).length === 0 &&
+        toQuerySorted.query.constructor === Object
+      ) {
+        query = initializePaginationInQuery;
+      } else {
+        query = toQuerySorted.query;
+      }
+    }
+
+    console.log("queryParamsObjectAction params", params);
 
     const findByPropKey = function (arg, table) {
       let res = [];
