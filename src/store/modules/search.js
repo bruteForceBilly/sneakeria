@@ -8,6 +8,7 @@ const state = () => ({
   foundProductsPagination: null,
   foundProducts: null,
   routeLastBeforeEnter: null,
+  routeLastDisplayQuery: null,
   init: null,
 });
 
@@ -166,18 +167,14 @@ const actions = {
     let queryParamsObjectArray = [];
 
     let params = [];
-    let query;
-    // query = { ...initializePaginationInQuery, ...to.query };
+    let query = {};
 
-    // To be imported via config
     let initializePaginationInQuery = { _page: "1", _limit: "48" };
 
-    if (to.name === "searchRequestRoute") {
-      params = to.params.id.split("-");
-    }
+    // To be imported via config
 
     if (to.name === "searchQueryRoute") {
-      //params = Object.values(to.query).flat();
+      params = Object.values(to.query).flat();
 
       let toQuerySorted = Object.entries(to.query).reduce(
         (acc, cv) => {
@@ -191,20 +188,16 @@ const actions = {
           query: {},
         }
       );
-      params = Object.values(toQuerySorted.params);
 
-      if (
-        toQuerySorted &&
-        Object.keys(toQuerySorted.query).length === 0 &&
-        toQuerySorted.query.constructor === Object
-      ) {
-        query = initializePaginationInQuery;
-      } else {
-        query = toQuerySorted.query;
-      }
+      query = { ...initializePaginationInQuery, ...toQuerySorted.query };
+      params = Object.values(toQuerySorted.params);
+    } else if (to.name === "searchRequestRoute") {
+      query = { ...initializePaginationInQuery, ...to.query };
+      params = to.params.id.split("-");
     }
 
     console.log("queryParamsObjectAction params", params);
+    console.log("queryParamsObjectAction query", query);
 
     const findByPropKey = function (arg, table) {
       let res = [];
@@ -407,6 +400,9 @@ const mutations = {
   },
   routeLastBeforeEnterMutation(state, routeLastBeforeEnter) {
     Vue.set(state, "routeLastBeforeEnter", routeLastBeforeEnter);
+  },
+  routeLastDisplayQueryMutation(state, bool) {
+    Vue.set(state, "routeLastDisplayQuery", bool);
   },
 };
 

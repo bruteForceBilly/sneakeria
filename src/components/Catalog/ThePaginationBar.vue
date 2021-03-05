@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import store from "@/store";
 /*
 containerSize: (...)
 id: (...)
@@ -170,6 +171,7 @@ export default {
       },
     },
     selectedPage: function (newVal) {
+      store.commit("search/routeLastDisplayQueryMutation", true);
       return this.$router
         .push({
           path: this.$store.state.route.path,
