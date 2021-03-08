@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row justify-around content-center">
     <span
-      @click="setSelectedPage(pagination.pagePrevious)"
+      @click="selectPage(pagination.pagePrevious)"
       class="cursor-pointer mt-4 text-sm tracking-widest text-gray-900 font-black underline"
       :class="pagination.pageCurrent === 1 ? 'invisible' : 'visible'"
     >
@@ -51,7 +51,7 @@
         >
           <ul class="list-outside">
             <li
-              @click="setSelectedPage(option.id)"
+              @click="selectPage(option.id)"
               class="hover:bg-gray-200 w-full py-3"
               v-for="option in options"
               :key="option.id"
@@ -69,7 +69,7 @@
     </div>
 
     <span
-      @click="setSelectedPage(pagination.pageNext)"
+      @click="selectPage(pagination.pageNext)"
       class="cursor-pointer mt-4 sm:ml-auto text-sm tracking-widest text-gray-900 font-black underline"
       :class="
         pagination.pageCurrent === pagination.pageCount
@@ -99,12 +99,25 @@ export default {
   data() {
     return {
       hover: false,
-      selectedPage: 1,
     };
   },
+  props: {
+    selectedPage: {
+      type: Number,
+      default: 1,
+      required: true,
+    },
+  },
   methods: {
-    setSelectedPage(n) {
-      return (this.selectedPage = n);
+    selectPage(n) {
+      store.commit("search/routeLastDisplayQueryMutation", true);
+
+      return this.$router
+        .push({
+          path: this.$store.state.route.path,
+          query: { _page: n },
+        })
+        .catch((e) => {});
     },
   },
   computed: {
@@ -159,27 +172,8 @@ export default {
         options: this.options,
       };
     },
-    route() {
-      return this.$store.state.route;
-    },
   },
-  watch: {
-    route: {
-      deep: true,
-      handler: function () {
-        return this.setSelectedPage(1);
-      },
-    },
-    selectedPage: function (newVal) {
-      store.commit("search/routeLastDisplayQueryMutation", true);
-      return this.$router
-        .push({
-          path: this.$store.state.route.path,
-          query: { _page: newVal },
-        })
-        .catch((e) => {});
-    },
-  },
+
   created() {
     this.selectedPage = this.pagination.pageCurrent;
   },

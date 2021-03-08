@@ -21,7 +21,11 @@
       :search-found-products-length="foundProductsLength"
     ></ProductGrid>
 
-    <ThePaginationBar />
+    <ThePaginationBar
+      :selected-page="
+        this.$store.state.search.foundProductsPagination.pageCurrent
+      "
+    />
   </div>
 </template>
 

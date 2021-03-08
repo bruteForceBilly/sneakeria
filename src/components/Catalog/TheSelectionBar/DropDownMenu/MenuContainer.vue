@@ -113,7 +113,7 @@ export default {
 
 <style lang="postcss" scoped>
 .top-postition {
-  top: calc(100% - 2px);
+  top: calc(100% - 1px);
 }
 
 .container {

@@ -108,7 +108,7 @@ button:focus {
 
 .border-hover {
   border: 1px solid black;
-  border-bottom: 0 solid transparent;
+  border-bottom: 1px solid white;
   box-shadow: 0 1px 0 0 transparent;
 }
 </style>

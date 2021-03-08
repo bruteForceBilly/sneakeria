@@ -161,7 +161,7 @@ const actions = {
     { dispatch, commit, state, getters, rootState, rootGetters },
     to
   ) {
-    console.log("queryParamsObjectAction to", to);
+    console.log("queryParamsObjectAction to >>>>>>>>>", to);
 
     let queryParamsObject;
     let queryParamsObjectArray = [];
@@ -196,8 +196,8 @@ const actions = {
       params = to.params.id.split("-");
     }
 
-    console.log("queryParamsObjectAction params", params);
-    console.log("queryParamsObjectAction query", query);
+    console.log("params", params);
+    console.log("query", query);
 
     const findByPropKey = function (arg, table) {
       let res = [];

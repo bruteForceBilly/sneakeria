@@ -101,7 +101,7 @@ export default {
       immediate: false,
       handler: function () {
         if (this.getSetByRoute === false) {
-          this.updateRouteQueryParams(this.selectedOptionsObject, this.query);
+          this.updateRouteQueryParams(this.selectedOptionsObject);
         }
       },
     },
