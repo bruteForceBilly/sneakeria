@@ -65,6 +65,9 @@ const routes = [
         searchQuery = store.state.search.queryParamsObject; //to.fullPath.split("?").pop();
       }
 
+      console.log("to", to);
+      console.log("searchQuery", searchQuery);
+
       return new Promise(function (resolve, reject) {
         products("search", searchQuery, (data) => {
           if (data !== undefined) {

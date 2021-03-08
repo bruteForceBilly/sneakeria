@@ -161,8 +161,6 @@ const actions = {
     { dispatch, commit, state, getters, rootState, rootGetters },
     to
   ) {
-    console.log("queryParamsObjectAction to >>>>>>>>>", to);
-
     let queryParamsObject;
     let queryParamsObjectArray = [];
 
@@ -195,9 +193,6 @@ const actions = {
       query = { ...initializePaginationInQuery, ...to.query };
       params = to.params.id.split("-");
     }
-
-    console.log("params", params);
-    console.log("query", query);
 
     const findByPropKey = function (arg, table) {
       let res = [];
@@ -247,7 +242,9 @@ const actions = {
         productProp: findByPropKey(params, rootGetters["catalog/product"]),
       });
 
-      if (findByPropKey(params, rootGetters.productVersion).length > 0) {
+      if (
+        findByPropKey(params, rootGetters["catalog/productVersion"]).length > 0
+      ) {
         queryParamsObjectArray.push({
           version: queryString(params, rootGetters["catalog/productVersion"]),
           versionProp: findByPropKey(
@@ -309,15 +306,6 @@ const actions = {
         }
       }
     };
-
-    // console.log("queryParamsObject INPUT", to);
-    // console.log("queryParamsObject OUTPUT", queryParamsObject);
-
-    // return async () => {
-    //   await makeQueryParamsObject();
-    //   await formatOperator();
-    //   commit("queryParamsObjectMutation", queryParamsObject);
-    // };
 
     makeQueryParamsObject();
     formatOperator();

@@ -54,41 +54,16 @@ export default {
   },
   methods: {
     ...mapActions("navigation", ["selectOptionsCheckToggle"]),
-    updateRouteQueryParams(...args) {
-      let validatedArgs = args.reduce((acc, cv) => {
-        if (Object.keys(cv).length > 0 && cv.constructor === Object) {
-          acc.push(cv);
-        }
-        return acc;
-      }, []);
+    updateRouteQueryParams(selectedOptionsObject) {
+      let queryParams = [];
 
-      //console.log(validatedArgs);
+      for (const [key, value] of Object.entries(selectedOptionsObject)) {
+        value.forEach((val) => queryParams.push(`${key}=${val}`));
+      }
 
-      let queryParamsString = validatedArgs
-        .filter((o) => Object.keys(o).length !== 0)
-        .reduce((acc, cv) => {
-          for (const [key, value] of Object.entries(cv)) {
-            if (Array.isArray(value) && value.length > 1) {
-              value.forEach((val) => {
-                acc += `${key}=${val}&`;
-              });
-            } else {
-              for (const [key, value] of Object.entries(cv)) {
-                if (value.length > 1) {
-                  value.forEach((val) => {
-                    acc += `${key}=${val}&`;
-                  });
-                } else {
-                  acc += `${key}=${value}&`;
-                }
-              }
-            }
-            return acc;
-          }
-        }, "")
-        .slice(0, -1);
+      let queryParamsString = queryParams.toString().replace(/,/g, "&");
 
-      if (!queryParamsString) {
+      if (queryParams.length === 0) {
         this.$router.push({ name: "all" }).catch((err) => {});
       } else {
         this.$router.push("search?" + queryParamsString).catch((err) => {});

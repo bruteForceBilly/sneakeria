@@ -50,6 +50,7 @@ export default {
   computed: {
     ...mapGetters("search", ["queryParamsObject", "selectedDisplayTitle"]),
     ...mapState(["route"]),
+
     displayTitel() {
       let res = [
         this.selectedDisplayTitle(this.queryParamsObject.productProp),
@@ -63,9 +64,6 @@ export default {
       }
     },
   },
-  // created() {
-  //   console.log("hello", this.displayTitel);
-  // },
 };
 </script>
 
