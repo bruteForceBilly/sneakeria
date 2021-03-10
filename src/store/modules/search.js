@@ -161,6 +161,8 @@ const actions = {
     { dispatch, commit, state, getters, rootState, rootGetters },
     to
   ) {
+    console.log("to name >>>>>>>", to.name);
+
     let queryParamsObject;
     let queryParamsObjectArray = [];
 
@@ -188,7 +190,9 @@ const actions = {
       );
 
       query = { ...initializePaginationInQuery, ...toQuerySorted.query };
-      params = Object.values(toQuerySorted.params);
+      params = Object.values(toQuerySorted.params).flat();
+
+      console.log("params", params, "query", query);
     } else if (to.name === "searchRequestRoute") {
       query = { ...initializePaginationInQuery, ...to.query };
       params = to.params.id.split("-");
@@ -215,6 +219,8 @@ const actions = {
           }
         });
       }
+
+      console.log("arg", arg, "table", table, "res", res);
 
       return res;
     };
