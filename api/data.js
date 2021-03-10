@@ -997,7 +997,7 @@ const navigation = [
       {
         id: 8,
         name: "sortBy",
-        label: "Sort By",
+        label: "Sort",
         value: "sortSelect",
         multiple: false,
         inputType: "hidden",

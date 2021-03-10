@@ -179,6 +179,8 @@ module.exports = {
         sans: ["IBM Plex Mono", "Roboto", "Helvetica", "Arial", "sans-serif"],
       },
       fontSize: {
+        tiny: ".25rem",
+        xxs: "0.5rem",
         xs: "0.75rem",
         sm: "0.875rem",
         base: "1rem",
@@ -189,6 +191,7 @@ module.exports = {
         "4xl": "2.25rem",
         "5xl": "3rem",
         "6xl": "4rem",
+        "vh-tiny": "calc(.5vh + .25rem)",
         "vh-xxs": "calc(.5vh + .5rem)",
         "vh-xs": "calc(1vh + .5rem)",
         "vh-sm": "calc(1vh + .875rem)",
@@ -225,6 +228,8 @@ module.exports = {
     wordBreak: ["responsive", "group-hover"],
     textOverflow: ["responsive", "group-hover"],
     flexGrow: ["odd", "even", "first", "last"],
+    position: ["hover"],
+    zIndex: ["hover"],
   },
   plugins: [],
 };

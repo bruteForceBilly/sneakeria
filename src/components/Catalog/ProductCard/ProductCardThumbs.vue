@@ -26,7 +26,7 @@
           <div
             v-for="(version, index) in this.productVersions"
             v-bind:key="version.versionId"
-            class="flex-none opacity-50 hover:opacity-100 inline-block pb-2 h-16 w-1/4 temp-bg border-solid border-b-2 border-transparent overflow-hidden hover:border-black"
+            class="flex-none opacity-50 hover:opacity-100 inline-block h-16 w-1/4 temp-bg border-solid border-b-2 border-transparent overflow-hidden hover:border-black"
           >
             <img
               class="h-full object-contain mx-auto"
