@@ -66,7 +66,6 @@ const routes = [
       }
 
       //console.log("to", to);
-      console.log("searchQuery productProp", searchQuery.productProp);
 
       return new Promise(function (resolve, reject) {
         products("search", searchQuery, (data) => {
