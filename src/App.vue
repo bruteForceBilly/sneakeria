@@ -11,23 +11,11 @@
 
 <script>
 import TheHeader from "@/components/App/TheHeader/TheHeader";
-import { mapState } from "vuex";
 
 export default {
   name: "App",
   components: {
     TheHeader,
-  },
-  computed: {
-    ...mapState("search", ["queryParamsObject"]),
-  },
-  beforeCreate() {
-    this.$store.dispatch("navigation/navigationInitAction").then(() => {
-      this.$store.dispatch(
-        "navigation/selectOptionsCheckToggle",
-        this.queryParamsObject
-      );
-    });
   },
 };
 </script>

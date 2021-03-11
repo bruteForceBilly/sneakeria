@@ -9,6 +9,13 @@ import "./assets/css/tailwind.css";
 Vue.config.productionTip = false;
 
 store.dispatch("catalog/initialize").then(() => {
+  store.dispatch("navigation/navigationInitAction").then(() => {
+    store.dispatch(
+      "navigation/selectOptionsCheckToggle",
+      store.state.search.queryParamsObject
+    );
+  });
+
   sync(store, router);
   window.App = new Vue({
     router,

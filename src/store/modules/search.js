@@ -192,6 +192,13 @@ const actions = {
     } else if (to.name === "searchRequestRoute") {
       query = { ...initializePaginationInQuery, ...to.query };
       params = to.params.id.split("-");
+    } else if (
+      to.name !== "searchQueryRoute" ||
+      to.name !== "searchRequestRoute" ||
+      to.name !== "searchRequestResult"
+    ) {
+      query = null;
+      params = null;
     }
 
     const findByPropKey = function (arg, table) {
@@ -307,8 +314,13 @@ const actions = {
       }
     };
 
-    makeQueryParamsObject();
-    formatOperator();
+    if (query && params === null) {
+      queryParamsObject = null;
+    } else {
+      makeQueryParamsObject();
+      formatOperator();
+    }
+
     return commit("queryParamsObjectMutation", queryParamsObject);
   },
 

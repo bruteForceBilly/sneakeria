@@ -31,7 +31,6 @@
     "postcss-cli": "^8.3.1",
     "postcss-html": "^0.36.0",
     "postcss-syntax": "^0.36.2",
-    "qs": "^6.9.4",
     "utf-8-validate": "^5.0.2",
     "vue": "^2.6.11",
     "vue-clickaway": "^2.2.2",

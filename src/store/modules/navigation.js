@@ -154,6 +154,7 @@ const actions = {
     queryParamsObject
   ) {
     // rename to selectOptionsCheckToggleByRouter
+    if (queryParamsObject === null) return;
 
     const { productProp = null, versionProp = null } = queryParamsObject;
 

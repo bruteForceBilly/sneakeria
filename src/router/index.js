@@ -6,7 +6,7 @@ import products from "@/services/products.js";
 import Home from "../views/Home.vue";
 import Catalog from "../views/Catalog.vue";
 import Product from "../views/Product.vue";
-import qs from "qs";
+import Whishlist from "../views/Whishlist.vue";
 
 Vue.use(VueRouter);
 
@@ -15,6 +15,11 @@ const routes = [
     path: "/",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/wishlist",
+    name: "whishlist",
+    component: Whishlist,
   },
   {
     path: "/all",
@@ -133,7 +138,7 @@ const routes = [
     },
   },
   {
-    path: "/:slug?",
+    path: "/:slug?(!whishlist)",
     name: "searchResultRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {
