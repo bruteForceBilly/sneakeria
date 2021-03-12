@@ -34,9 +34,6 @@ export default {
     };
   },
   computed: {
-    isSelectedVersionLiked() {
-      return this.likedVersions[this.selectedVersion.id];
-    },
     layout() {
       if (this.viewContext === "catalog") {
         return "card";
@@ -86,8 +83,19 @@ export default {
       let arr = [...this.versionDates].map((date) => date.toString());
       return arr.findIndex((el) => el == max);
     },
+    isSelectedVersionLiked() {
+      return this.likedVersions[this.selectedVersion.id];
+    },
   },
   methods: {
+    likeHandler() {
+      console.log("likeHandler", this.likedVersions, this.selectedVersion.id);
+
+      this.$store.dispatch("wishlist/wish", {
+        productId: this.productData.id,
+        versionId: this.selectedVersion.id,
+      });
+    },
     selectHandler(version) {
       return (this.selectedVersion.id = version);
     },
@@ -103,11 +111,6 @@ export default {
           },
         });
       }
-    },
-    likeHandler() {
-      return this.isSelectedVersionLiked
-        ? (this.likedVersions[this.selectedVersion.id] = false)
-        : (this.likedVersions[this.selectedVersion.id] = true);
     },
   },
   watch: {
@@ -134,17 +137,13 @@ export default {
     ) {
       this.selectedVersion.id = this.$store.state.route.query.versionId;
     } else {
-      this.selectedVersion.id = 0;
+      this.selectedVersion.id = Math.min(...this.productData.versionIds);
     }
   },
   mounted() {
-    this.product.versions.forEach((version) => {
-      this.$set(this.likedVersions, version.id, false);
+    this.product.versionIds.forEach((versionId) => {
+      this.$set(this.likedVersions, versionId, false);
     });
-  },
-  beforeUpdate() {
-    //console.log(this.versionDatesMin);
-    //let prices = this.versions.map((version) => version.price.amountOffered);
   },
 };
 </script>

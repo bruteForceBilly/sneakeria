@@ -17,7 +17,7 @@ const routes = [
     component: Home,
   },
   {
-    path: "/wishlist",
+    path: "/wishlist/:id",
     name: "whishlist",
     component: Whishlist,
   },
@@ -69,8 +69,6 @@ const routes = [
         store.dispatch("search/queryParamsObjectAction", to);
         searchQuery = store.state.search.queryParamsObject; //to.fullPath.split("?").pop();
       }
-
-      //console.log("to", to);
 
       return new Promise(function (resolve, reject) {
         products("search", searchQuery, (data) => {
@@ -138,7 +136,7 @@ const routes = [
     },
   },
   {
-    path: "/:slug?(!whishlist)",
+    path: "/:slug?",
     name: "searchResultRoute",
     component: Catalog,
     beforeEnter: (to, from, next) => {

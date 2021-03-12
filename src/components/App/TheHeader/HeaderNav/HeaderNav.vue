@@ -14,8 +14,10 @@
       </div>
     </div>
     <div v-else-if="mode === 'icons'" class="flex item-center">
-      <div v-for="icon in icons" :key="icon.value">
-        <img :src="require(`@/assets/${icon.src}`)" class="px-1 sm:px-2" />
+      <div v-for="icon in icons" :key="icon.value" @click="setByRoute(true)">
+        <router-link :to="icon.value">
+          <img :src="require(`@/assets/${icon.src}`)" class="px-1 sm:px-2" />
+        </router-link>
       </div>
     </div>
   </div>

@@ -24,8 +24,8 @@
       >
         <div class="flex flex-row items-stretch">
           <div
-            v-for="(version, index) in this.productVersions"
-            v-bind:key="version.versionId"
+            v-for="version in this.productVersions"
+            v-bind:key="version.id"
             class="flex-none opacity-50 hover:opacity-100 inline-block h-16 w-1/4 temp-bg border-solid border-b-2 border-transparent overflow-hidden hover:border-black"
           >
             <img
@@ -35,9 +35,9 @@
                 [
                   settings.settings.viewContext === 'product'
                     ? settings.settings.versionLinkQueryHandler(
-                        settings.settings.selectHandler(index)
+                        settings.settings.selectHandler(version.id)
                       )
-                    : settings.settings.selectHandler(index),
+                    : settings.settings.selectHandler(version.id),
                 ]
               "
             />

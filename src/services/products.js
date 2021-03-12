@@ -187,5 +187,68 @@ export default function (o, q, cb) {
 
         return cb(paginatedProducts);
       });
+  } else if (o === "fetch") {
+    const { product, version = null } = q;
+
+    // first get the versions
+    // then get the products of found versions
+
+    console.log("fetch", product, version);
+
+    let makeQuery = (arr) =>
+      arr.reduce((acc, cv) => {
+        acc += `id=${cv}&`;
+        return acc;
+      }, "");
+
+    let versionQuery = makeQuery(version);
+
+    let apiProductResponse = [];
+    let apiVersionResponse = [];
+    let apiAllVersionsResponse = [];
+
+    return axios
+      .get(API_VERSIONS + "?" + versionQuery)
+      .catch(function (error) {
+        console.log("API_VERSIONS error:", error);
+      })
+      .then((response) => {
+        apiVersionResponse = response.data;
+
+        let apiVersionProductIdsParam = response.data
+          .map((cv) => cv.productId)
+          .reduce(function (acc, cv) {
+            acc += `id=${cv}&`;
+            return acc;
+          }, "?")
+          .slice(0, -1);
+
+        return apiVersionProductIdsParam;
+      })
+      .then((response) => {
+        return axios
+          .get(API_PRODUCTS + response)
+          .catch(function (error) {
+            console.log("API_PRODUCTS ALL error:", error);
+          })
+          .then((response) => {
+            apiProductResponse = response.data;
+          });
+      })
+      .then(() => {
+        //apiProductResponse DONE, apiVersionResponse DONE, apiAllVersionsResponse;
+
+        let foundProducts = apiProductResponse.reduce((result, product) => {
+          product["versions"] = [];
+          product.versionIds.forEach((id) => {
+            let version = apiVersionResponse.filter((ver) => ver.id === id);
+            product.versions.push(version);
+          });
+          result.push(product);
+          return result;
+        }, []);
+
+        return cb(foundProducts);
+      });
   }
 }

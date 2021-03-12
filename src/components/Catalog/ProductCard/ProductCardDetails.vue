@@ -92,7 +92,9 @@ export default {
       return this.productVersions.map((version) => version.color);
     },
     selectedVersion() {
-      return this.productVersions[this.sku];
+      return this.productVersions.filter(
+        (version) => version.id === this.sku
+      )[0];
     },
     selectedVersionPrice() {
       return this.selectedVersion.price;
