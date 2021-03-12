@@ -4,28 +4,23 @@
     style="padding-top: 50px"
   >
     <div class="pt-1 sm:pt-5 pb-1">
-      <h1 class="text-2xl sm:text-3xl font-black uppercase">Min Önskelista</h1>
-      <h2 class="uppercase mt-4">6 varor</h2>
+      <h1 class="text-2xl sm:text-3xl font-black uppercase">My wishlist</h1>
+      <h2 class="uppercase mt-4">{{ wishedProducts.length }} products</h2>
     </div>
-
-    <ProductCard
-      v-for="product in wishedProducts"
-      :product-data="product"
-      :key="'product-' + product.id"
-      view-context="catalog"
-    ></ProductCard>
+    <div>
+      <article v-for="wish in wishedProducts" :key="wish.id">
+        <pre>{{ wish }}</pre>
+      </article>
+    </div>
   </div>
 </template>
 
 <script>
-import ProductCard from "@/components/Catalog/ProductCard/ProductCardBase.vue";
 import { mapState } from "vuex";
 
 export default {
   name: "Product",
-  components: {
-    ProductCard,
-  },
+
   computed: {
     ...mapState("wishlist", ["wishedProducts"]),
   },

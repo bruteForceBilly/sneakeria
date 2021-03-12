@@ -31,13 +31,15 @@ const actions = {
   },
   getWishedProducts({ dispatch, commit, state }) {
     let fetchQuery = {
-      product: [1, 2, 3, 4],
-      version: [1, 2, 3, 4],
+      product: state.wishes.map((wish) => wish.productId),
+      version: state.wishes.map((wish) => wish.versionId),
     };
 
-    products("fetch", fetchQuery, (data) => {
-      dispatch("setWishedProducts", data);
-    });
+    if (state.wishes.length > 1) {
+      products("fetch", fetchQuery, (data) => {
+        dispatch("setWishedProducts", data);
+      });
+    }
   },
 
   setWishedProducts({ commit }, data) {

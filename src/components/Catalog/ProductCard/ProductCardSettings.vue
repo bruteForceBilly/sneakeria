@@ -48,7 +48,7 @@ export default {
       return this.product.versions;
     },
     selectedVersionId() {
-      return this.selectedVersion.id;
+      return this.selectedVersion.id ? this.selectedVersion.id : null;
     },
     versionPrices() {
       return [...this.versions].map((version) => version.price.amountOffered);
