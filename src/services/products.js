@@ -188,12 +188,14 @@ export default function (o, q, cb) {
         return cb(paginatedProducts);
       });
   } else if (o === "fetch") {
-    const { product, version = null } = q;
-
     // first get the versions
     // then get the products of found versions
 
-    console.log("fetch", product, version);
+    /*
+    let fetchQuery = [
+      { "productId": 8, "versionId": 1343 },
+      { "productId": 8, "versionId": 1344 },
+    ]; */
 
     let makeQuery = (arr) =>
       arr.reduce((acc, cv) => {
@@ -201,7 +203,7 @@ export default function (o, q, cb) {
         return acc;
       }, "");
 
-    let versionQuery = makeQuery(version);
+    let versionQuery = makeQuery(q.map((cv) => cv.versionId));
 
     let apiProductResponse = [];
     let apiVersionResponse = [];
@@ -236,19 +238,18 @@ export default function (o, q, cb) {
           });
       })
       .then(() => {
-        //apiProductResponse DONE, apiVersionResponse DONE, apiAllVersionsResponse;
-
-        let foundProducts = apiProductResponse.reduce((result, product) => {
-          product["versions"] = [];
-          product.versionIds.forEach((id) => {
-            let version = apiVersionResponse.filter((ver) => ver.id === id);
-            product.versions.push(version);
+        let foundVersions = apiVersionResponse.reduce((acc, cv) => {
+          cv.product = {};
+          apiProductResponse.forEach((product) => {
+            if (product.id === cv.productId) {
+              cv.product = product;
+            }
           });
-          result.push(product);
-          return result;
+          acc.push(cv);
+          return acc;
         }, []);
 
-        return cb(foundProducts);
+        return cb(foundVersions);
       });
   }
 }

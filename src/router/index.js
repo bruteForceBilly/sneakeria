@@ -12,13 +12,13 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
+    path: "/home",
     name: "home",
     component: Home,
   },
   {
-    path: "/wishlist/:id",
-    name: "whishlist",
+    path: "/wish/:id",
+    name: "whish",
     component: Whishlist,
   },
   {
@@ -146,11 +146,6 @@ const routes = [
       store.commit("search/routeLastBeforeEnterMutation", to.name);
       next();
     },
-  },
-  {
-    path: "/product/:product",
-    name: "product",
-    component: Product,
   },
 ];
 

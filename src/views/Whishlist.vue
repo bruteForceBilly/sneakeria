@@ -8,8 +8,26 @@
       <h2 class="uppercase mt-4">{{ wishedProducts.length }} products</h2>
     </div>
     <div>
-      <article v-for="wish in wishedProducts" :key="wish.id">
-        <pre>{{ wish }}</pre>
+      <article
+        v-for="wish in wishedProducts"
+        :key="wish.id"
+        class="flex w-full h-20 m-6"
+      >
+        <img src="@/assets/2.png" class="h-full" />
+        <div class="pl-4 flex-grow">
+          <ul>
+            <li class="capitalize text-lg">
+              {{ wish.product.brand }} {{ wish.product.productType }}
+            </li>
+
+            <li class="text-sm tracking-wide">
+              €{{ wish.price.amountOffered }}
+            </li>
+            <li class="capitalize text-xs mt-1 font-light">
+              {{ wish.color }}
+            </li>
+          </ul>
+        </div>
       </article>
     </div>
   </div>
@@ -24,7 +42,7 @@ export default {
   computed: {
     ...mapState("wishlist", ["wishedProducts"]),
   },
-  created() {
+  beforeCreate() {
     this.$store.dispatch("wishlist/getWishedProducts");
   },
 };

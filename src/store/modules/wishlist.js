@@ -30,19 +30,18 @@ const actions = {
     }
   },
   getWishedProducts({ dispatch, commit, state }) {
-    let fetchQuery = {
-      product: state.wishes.map((wish) => wish.productId),
-      version: state.wishes.map((wish) => wish.versionId),
-    };
+    let fetchQuery = [
+      { "productId": 8, "versionId": 1343 },
+      { "productId": 8, "versionId": 1344 },
+    ];
 
-    if (state.wishes.length > 1) {
-      products("fetch", fetchQuery, (data) => {
-        dispatch("setWishedProducts", data);
-      });
-    }
+    products("fetch", fetchQuery, (data) => {
+      dispatch("setWishedProducts", data);
+    });
   },
 
   setWishedProducts({ commit }, data) {
+    console.log("data", data);
     commit("wishedProducts", data);
   },
 };
