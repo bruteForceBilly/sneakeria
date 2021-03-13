@@ -13,8 +13,12 @@
         :key="wish.id"
         class="flex w-full h-20 m-6"
       >
-        <img src="@/assets/2.png" class="h-full" />
-        <div class="pl-4 flex-grow">
+        <img
+          src="@/assets/2.png"
+          class="h-full hover:opacity-50"
+          @click="likeHandler(wish.id, wish.productId)"
+        />
+        <div class="pl-4">
           <ul>
             <li class="capitalize text-lg">
               {{ wish.product.brand }} {{ wish.product.productType }}
@@ -41,6 +45,14 @@ export default {
 
   computed: {
     ...mapState("wishlist", ["wishedProducts"]),
+  },
+  methods: {
+    likeHandler(productId, versionId) {
+      this.$store.commit("wishlist/removeWishedProduct", {
+        "productId": productId,
+        "versionId": versionId,
+      });
+    },
   },
   beforeCreate() {
     this.$store.dispatch("wishlist/getWishedProducts");

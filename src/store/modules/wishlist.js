@@ -5,6 +5,9 @@ const state = () => ({
   wishedProducts: [],
 });
 
+// If a wish is removed, then fire off an remove wish action that slices array
+// if a wish is added, then fire off get wished products
+
 const getters = {
   isWished: (state) => (wish) => {
     const { productId, versionId } = wish;
@@ -22,6 +25,10 @@ const actions = {
         productId: wish.productId,
         versionId: wish.versionId,
       });
+      commit("removeWishedProduct", {
+        productId: wish.productId,
+        versionId: wish.versionId,
+      });
     } else {
       commit("addWish", {
         productId: wish.productId,
@@ -30,18 +37,17 @@ const actions = {
     }
   },
   getWishedProducts({ dispatch, commit, state }) {
-    let fetchQuery = [
-      { "productId": 8, "versionId": 1343 },
-      { "productId": 8, "versionId": 1344 },
-    ];
+    // let fetchQuery = [
+    //   { "productId": 8, "versionId": 1343 },
+    //   { "productId": 8, "versionId": 1344 },
+    // ];
 
-    products("fetch", fetchQuery, (data) => {
+    products("fetch", state.wishes, (data) => {
       dispatch("setWishedProducts", data);
     });
   },
 
   setWishedProducts({ commit }, data) {
-    console.log("data", data);
     commit("wishedProducts", data);
   },
 };
@@ -60,6 +66,15 @@ const mutations = {
       }
       return acc;
     }, []);
+  },
+  removeWishedProduct(state, wish) {
+    const { productId } = wish;
+
+    // OBS!! productId is version Id something has gone wrong in how you pass the var
+
+    state.wishedProducts = [...state.wishedProducts].filter(
+      (version) => version.id != productId
+    );
   },
 };
 

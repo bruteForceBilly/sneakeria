@@ -12,14 +12,14 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/wishlist",
+    name: "whishlist",
+    component: Whishlist,
+  },
+  {
     path: "/home",
     name: "home",
     component: Home,
-  },
-  {
-    path: "/wish/:id",
-    name: "whish",
-    component: Whishlist,
   },
   {
     path: "/all",

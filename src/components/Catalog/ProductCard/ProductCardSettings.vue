@@ -89,8 +89,6 @@ export default {
   },
   methods: {
     likeHandler() {
-      console.log("likeHandler", this.likedVersions, this.selectedVersion.id);
-
       this.$store.dispatch("wishlist/wish", {
         productId: this.productData.id,
         versionId: this.selectedVersion.id,
