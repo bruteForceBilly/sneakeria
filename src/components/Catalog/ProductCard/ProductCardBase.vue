@@ -15,7 +15,6 @@
       >
         <template v-slot:favourite>
           <ProductCardButton
-            v-on:click.native="settings.likeHandler()"
             icon="heart"
             button-style="link square"
             :settings="{

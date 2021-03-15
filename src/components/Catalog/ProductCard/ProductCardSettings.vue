@@ -6,8 +6,6 @@
         likeHandler,
         versionLinkQueryHandler,
         selectedVersion,
-        likedVersions,
-        isSelectedVersionLiked,
         layout,
         product,
         viewContext,
@@ -16,6 +14,8 @@
   </div>
 </template>
 <script>
+import { mapState, mapGetters } from "vuex";
+
 export default {
   /* eslint-disable no-unused-vars */
 
@@ -29,11 +29,13 @@ export default {
     return {
       selectedVersion: {
         id: null,
+        isLiked: null,
       },
-      likedVersions: {},
     };
   },
   computed: {
+    ...mapState("wishlist", ["wishes"]),
+    ...mapGetters("wishlist", ["isWished"]),
     layout() {
       if (this.viewContext === "catalog") {
         return "card";
@@ -83,17 +85,15 @@ export default {
       let arr = [...this.versionDates].map((date) => date.toString());
       return arr.findIndex((el) => el == max);
     },
-    isSelectedVersionLiked() {
-      return this.likedVersions[this.selectedVersion.id];
-    },
   },
   methods: {
     likeHandler() {
-      this.$store.dispatch("wishlist/wish", {
+      return this.$store.dispatch("wishlist/toggleWish", {
         productId: this.productData.id,
         versionId: this.selectedVersion.id,
       });
     },
+
     selectHandler(version) {
       return (this.selectedVersion.id = version);
     },
@@ -112,6 +112,16 @@ export default {
     },
   },
   watch: {
+    wishes: {
+      handler: function () {
+        this.wishes.map((wish) => wish.productId).includes(this.product.id) &&
+        this.wishes
+          .map((wish) => wish.versionId)
+          .includes(this.selectedVersion.id)
+          ? (this.selectedVersion.isLiked = true)
+          : (this.selectedVersion.isLiked = false);
+      },
+    },
     sortSetting: {
       deep: true,
       handler: function (newVal, oldVal) {
@@ -137,11 +147,6 @@ export default {
     } else {
       this.selectedVersion.id = Math.min(...this.productData.versionIds);
     }
-  },
-  mounted() {
-    this.product.versionIds.forEach((versionId) => {
-      this.$set(this.likedVersions, versionId, false);
-    });
   },
 };
 </script>

@@ -35,10 +35,14 @@
           </svg>
         </div>
 
-        <div v-if="icon === 'heart'" class="relatie flex-none text-vh-xs">
+        <div
+          v-if="icon === 'heart'"
+          class="relatie flex-none text-vh-xs"
+          @click="settings.settings.likeHandler()"
+        >
           <svg
             :class="[
-              settings.settings.isSelectedVersionLiked
+              settings.settings.selectedVersion.isLiked
                 ? 'fillSvg'
                 : 'transparentSvg',
             ]"

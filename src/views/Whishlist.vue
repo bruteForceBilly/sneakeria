@@ -16,7 +16,9 @@
         <img
           src="@/assets/2.png"
           class="h-full hover:opacity-50"
-          @click="likeHandler(wish.id, wish.productId)"
+          @click="
+            likeHandler({ 'productId': wish.productId, 'versionId': wish.id })
+          "
         />
         <div class="pl-4">
           <ul>
@@ -47,11 +49,8 @@ export default {
     ...mapState("wishlist", ["wishedProducts"]),
   },
   methods: {
-    likeHandler(productId, versionId) {
-      this.$store.commit("wishlist/removeWishedProduct", {
-        "productId": productId,
-        "versionId": versionId,
-      });
+    likeHandler(ids) {
+      this.$store.dispatch("wishlist/toggleWish", ids);
     },
   },
   beforeCreate() {
