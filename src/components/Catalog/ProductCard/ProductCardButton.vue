@@ -41,11 +41,7 @@
           @click="settings.settings.likeHandler()"
         >
           <svg
-            :class="[
-              settings.settings.selectedVersion.isLiked
-                ? 'fillSvg'
-                : 'transparentSvg',
-            ]"
+            :class="[settings.settings.isLiked ? 'fillSvg' : 'transparentSvg']"
             xmlns="http://www.w3.org/2000/svg"
             width="1.1em"
             height="100%"

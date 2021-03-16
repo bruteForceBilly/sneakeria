@@ -1,21 +1,28 @@
 <template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    :width="width"
-    :height="height"
-    viewBox="0 0 24 24"
-    role="presentation"
-    :stroke="color"
-    stroke-width="3"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class="feather feather-heart"
-  >
-    <title :id="name">{{ name }}</title>
-    <g :fill="filling">
-      <slot />
-    </g>
-  </svg>
+  <div class="relative">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      :width="width"
+      :height="height"
+      viewBox="0 0 24 24"
+      role="presentation"
+      :stroke="color"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="feather feather-heart"
+    >
+      <title :id="name">{{ name }}</title>
+      <g :fill="filling">
+        <slot />
+      </g>
+    </svg>
+    <span
+      class="absolute z-10 bottom-2 left-5 bg-blue-500 text-white font-black rounded-full text-xxs w-5 h-5 p-1 text-center"
+      v-if="status"
+      >{{ status }}</span
+    >
+  </div>
 </template>
 
 <script>
@@ -28,11 +35,11 @@ export default {
     },
     width: {
       type: [Number, String],
-      default: 36,
+      default: 24,
     },
     height: {
       type: [Number, String],
-      default: 36,
+      default: 24,
     },
     color: {
       type: String,
@@ -43,7 +50,7 @@ export default {
       required: false,
     },
     status: {
-      type: [Number, String],
+      type: [Number, String, Boolean],
       required: false,
       default: null,
     },

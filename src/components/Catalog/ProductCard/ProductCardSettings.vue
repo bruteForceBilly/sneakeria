@@ -7,6 +7,7 @@
         versionLinkQueryHandler,
         selectedVersion,
         layout,
+        isLiked,
         product,
         viewContext,
       }"
@@ -29,13 +30,13 @@ export default {
     return {
       selectedVersion: {
         id: null,
-        isLiked: null,
       },
     };
   },
   computed: {
     ...mapState("wishlist", ["wishes"]),
     ...mapGetters("wishlist", ["isWished"]),
+
     layout() {
       if (this.viewContext === "catalog") {
         return "card";
@@ -43,6 +44,13 @@ export default {
         return "jumbo";
       }
     },
+
+    isLiked() {
+      return this.wishes
+        .map((wish) => wish.versionId)
+        .includes(this.selectedVersion.id);
+    },
+
     product() {
       return this.productData;
     },
@@ -112,16 +120,6 @@ export default {
     },
   },
   watch: {
-    wishes: {
-      handler: function () {
-        this.wishes.map((wish) => wish.productId).includes(this.product.id) &&
-        this.wishes
-          .map((wish) => wish.versionId)
-          .includes(this.selectedVersion.id)
-          ? (this.selectedVersion.isLiked = true)
-          : (this.selectedVersion.isLiked = false);
-      },
-    },
     sortSetting: {
       deep: true,
       handler: function (newVal, oldVal) {

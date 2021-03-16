@@ -1,14 +1,14 @@
 <template>
   <div
-    class="no-underline font-normal uppercase tracking-widest text-xs py-3 mr-8 border-transparent border-b-2 hover:border-black"
+    class="no-underline font-normal uppercase tracking-widest text-xs mr-8 py-3 border-transparent border-b-2 hover:border-black"
     :class="{ 'font-bold': link.id < 3 }"
   >
     <AppIcon
       v-if="link.name === 'icons'"
-      :is-filled="$store.state.wishlist.wishes.length > 0"
-      class="px-1 sm:px-2"
+      :is-filled="iconIsFilled"
+      :status="iconStatus(link.value)"
     >
-      <IconHeart />
+      <component :is="iconComponent"></component>
     </AppIcon>
 
     <span v-if="link.name === 'links'" class="text-black">{{
@@ -19,21 +19,42 @@
 
 <script>
 import AppIcon from "@/components/App/Base/AppIcon.vue";
-import IconHeart from "@/components/App/Base/IconHeart.vue";
+import IconHelp from "@/components/App/Base/IconHelp.vue";
+import IconWish from "@/components/App/Base/IconWish.vue";
 
-// !!$store.state.wishlist.wishes
 export default {
   name: "HeaderNavLink",
   components: {
     AppIcon,
-    IconHeart,
+    IconWish,
+    IconHelp,
   },
   props: {
     link: {
       type: Object,
     },
   },
+  computed: {
+    iconComponent() {
+      return this.link.value;
+    },
+    iconIsFilled() {
+      return this.link.value == "IconWish" &&
+        this.$store.state.wishlist.wishes.length > 0
+        ? true
+        : false;
+    },
+  },
+  methods: {
+    iconStatus(val) {
+      let res;
+      if (val == "IconWish") {
+        res = this.$store.state.wishlist.wishes.length;
+      } else if (val == "IconHelp") {
+        res = false;
+      }
+      return res;
+    },
+  },
 };
 </script>
-
-<style lang="postcss" scoped></style>
