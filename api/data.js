@@ -432,22 +432,26 @@ const navigation = [
         name: "links",
         items: [
           {
-            name: "section",
+            id: 1,
+            name: "links",
             label: "Men",
             value: "men",
           },
           {
-            name: "section",
+            id: 2,
+            name: "links",
             label: "Women",
             value: "women",
           },
           {
-            name: "campaigns",
+            id: 3,
+            name: "links",
             label: "Essentials",
             value: "essentials",
           },
           {
-            name: "campaigns",
+            id: 4,
+            name: "links",
             label: "Sale",
             value: "sale",
           },
@@ -457,13 +461,15 @@ const navigation = [
         name: "icons",
         items: [
           {
-            name: "Help",
-            label: "help",
+            id: 1,
+            name: "icons",
+            label: "Help",
             value: "help",
             src: "help-circle.svg",
           },
           {
-            name: "Whishlist",
+            id: 2,
+            name: "icons",
             label: "Whishlist",
             value: "whishlist",
             src: "heart.svg",

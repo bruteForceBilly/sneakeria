@@ -11,11 +11,11 @@
         </template>
 
         <template v-slot:links v-if="settings.headerLinks">
-          <HeaderNav :links="settings.headerLinks" mode="links" />
+          <HeaderNav :content="settings.headerLinks" />
         </template>
 
         <template v-slot:icons>
-          <HeaderNav :icons="settings.headerIcons" mode="icons" />
+          <HeaderNav :content="settings.headerIcons" />
         </template>
       </TheHeaderLayout>
 
