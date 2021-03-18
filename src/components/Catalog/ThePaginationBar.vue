@@ -111,11 +111,11 @@ export default {
   methods: {
     selectPage(n) {
       store.commit("search/routeLastDisplayQueryMutation", true);
-
+      let newPage = { _page: n };
       return this.$router
         .push({
           path: this.$store.state.route.path,
-          query: { _page: n },
+          query: { ...this.$store.state.route.query, ...newPage },
         })
         .catch((e) => {});
     },
