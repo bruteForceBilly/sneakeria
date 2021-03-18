@@ -1,14 +1,15 @@
 <template>
   <div
-    class="no-underline font-normal uppercase tracking-widest text-xs mr-8 py-3 border-transparent border-b-2 hover:border-black"
+    class="no-underline font-normal cursor-pointer uppercase tracking-widest text-xs mr-4 sm:mr-8 py-3 border-transparent border-b-2 hover:border-black"
     :class="{ 'font-bold': link.id < 3 }"
   >
     <AppIcon
-      v-if="link.name === 'icons'"
+      v-if="link.name === 'icon'"
       :is-filled="iconIsFilled"
-      :status="iconStatus(link.value)"
+      :status="iconStatus(link.src)"
+      :name="link.label"
     >
-      <component :is="iconComponent"></component>
+      <component :is="link.src"></component>
     </AppIcon>
 
     <span v-if="link.name === 'links'" class="text-black">{{
@@ -35,11 +36,8 @@ export default {
     },
   },
   computed: {
-    iconComponent() {
-      return this.link.value;
-    },
     iconIsFilled() {
-      return this.link.value == "IconWish" &&
+      return this.link.src == "IconWish" &&
         this.$store.state.wishlist.wishes.length > 0
         ? true
         : false;

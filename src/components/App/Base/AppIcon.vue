@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative cursor-pointer">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       :width="width"
@@ -7,7 +7,7 @@
       viewBox="0 0 24 24"
       role="presentation"
       :stroke="color"
-      stroke-width="2.5"
+      :stroke-width="strokeWidth"
       stroke-linecap="round"
       stroke-linejoin="round"
       class="feather feather-heart"
@@ -31,7 +31,6 @@ export default {
   props: {
     name: {
       type: String,
-      default: "box",
     },
     width: {
       type: [Number, String],
@@ -40,6 +39,10 @@ export default {
     height: {
       type: [Number, String],
       default: 24,
+    },
+    strokeWidth: {
+      type: Number,
+      default: 2,
     },
     color: {
       type: String,

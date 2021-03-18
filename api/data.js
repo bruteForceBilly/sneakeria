@@ -462,17 +462,17 @@ const navigation = [
         items: [
           {
             id: 1,
-            name: "icons",
+            name: "icon",
             label: "Help",
-            value: "IconHelp",
-            src: "help-circle.svg",
+            value: "help",
+            src: "IconHelp",
           },
           {
             id: 2,
-            name: "icons",
+            name: "icon",
             label: "Whish",
-            value: "IconWish",
-            src: "heart.svg",
+            value: "wishlist",
+            src: "IconWish",
           },
         ],
       },
