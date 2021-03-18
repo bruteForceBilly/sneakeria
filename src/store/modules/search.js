@@ -174,11 +174,18 @@ const actions = {
     if (to.name === "searchQueryRoute") {
       params = Object.values(to.query).flat();
 
+      const isOperor = (val) => {
+        return (
+          val.some((el) => /^_/.test(el)) || val.some((el) => /^price/.test(el))
+        );
+      };
+
       let toQuerySorted = Object.entries(to.query).reduce(
         (acc, cv) => {
-          cv.some((el) => /^_/.test(el))
+          isOperor(cv)
             ? (acc.query[cv[0]] = cv[1])
             : (acc.params[cv[0]] = cv[1]);
+
           return acc;
         },
         {

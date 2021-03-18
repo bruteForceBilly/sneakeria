@@ -68,7 +68,9 @@ export default {
         }
       );
 
-      console.log("queryConfig", queryConfig, "router path", this.path);
+      //console.log("queryConfig", queryConfig, "router path", this.path);
+
+      this.$store.commit("search/routeLastDisplayQueryMutation", true);
 
       this.$router
         .push({
