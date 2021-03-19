@@ -110,7 +110,7 @@ const routes = [
           next(nextConfig);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     },
   },
