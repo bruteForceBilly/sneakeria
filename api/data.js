@@ -461,13 +461,6 @@ const navigation = [
         name: "icons",
         items: [
           {
-            id: 1,
-            name: "icon",
-            label: "Help",
-            value: "help",
-            src: "IconHelp",
-          },
-          {
             id: 2,
             name: "icon",
             label: "Whish",
