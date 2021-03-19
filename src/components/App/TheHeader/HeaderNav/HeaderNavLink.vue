@@ -1,7 +1,10 @@
 <template>
   <div
-    class="no-underline font-normal cursor-pointer uppercase tracking-widest text-xs mr-4 sm:mr-8 py-3 border-transparent border-b-2 hover:border-black"
-    :class="{ 'font-bold': link.id < 3 }"
+    class="no-underline font-normal cursor-pointer uppercase tracking-widest text-xs mr-4 sm:mr-8 py-4"
+    :class="{
+      'border-transparent border-b-2 hover:border-black': link.name === 'links',
+      'font-bold': link.id < 3,
+    }"
   >
     <AppIcon
       v-if="link.name === 'icon'"
