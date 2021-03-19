@@ -2,7 +2,9 @@
   "name": "sneakeria",
   "version": "0.1.0",
   "private": true,
-  "engines" : { "node" : "v14.12.0" },
+  "engines": {
+    "node": "v14.12.0"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -23,6 +25,7 @@
     "@vue/babel-preset-jsx": "^1.1.2",
     "@vuex-orm/core": "^0.36.3",
     "autoprefixer": "^9.8.6",
+    "axios": "^0.21.1",
     "babel-core": "^7.0.0-bridge.0",
     "bufferutil": "^4.0.1",
     "core-js": "^3.9.0",
