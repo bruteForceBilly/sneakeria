@@ -41,9 +41,6 @@ export default {
     TheSidebar,
     HeaderNav,
   },
-  beforeUpdate() {
-    console.log("hello", this.items);
-  },
 };
 </script>
 

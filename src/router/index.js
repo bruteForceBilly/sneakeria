@@ -106,8 +106,6 @@ const routes = [
           // delete to.query["_page"];
           // delete to.query["_limit"];
 
-          console.log("nextConfig", nextConfig);
-
           store.commit("search/routeLastBeforeEnterMutation", to.name);
           next(nextConfig);
         })

@@ -1,5 +1,12 @@
 <template>
-  <div class="fixed z-40 sm:z-0 sm:static w-full">
+  <div
+    v-hang="'hang'"
+    class="w-full"
+    :class="{
+      'invisible': hang,
+      '`fixed z-60 sm:z-0 sm:static `': !hang,
+    }"
+  >
     <div class="relative">
       <!-- Container start -->
       <div
@@ -39,24 +46,37 @@
         <div
           v-if="show"
           class="block w-full h-screen absolute inset-0 z-20 bg-gray-900 opacity-25"
-        >
-          <span class="text-white text-xs fixed bottom-0 right-0 m-8"
-            >made with ❤️ by bruteForceBilly</span
-          >
-        </div>
+        ></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import hang from "@/directives/hang.js";
+
 export default {
   name: "TheHeaderLayout",
   props: ["show", "setShow"],
+  data() {
+    return {
+      hang: false,
+      windowHeight: null,
+    };
+  },
   computed: {
     mq() {
       return this.$mq;
     },
+  },
+  directives: {
+    hang: hang,
+  },
+  mounted() {
+    this.windowHeight = window.innerHeight;
+    window.addEventListener("resize", () => {
+      this.windowHeight = window.innerHeight;
+    });
   },
 };
 </script>

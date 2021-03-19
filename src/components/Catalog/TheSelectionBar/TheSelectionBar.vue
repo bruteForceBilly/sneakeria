@@ -14,7 +14,7 @@
           v-hang="'hang'"
           :style="$mq == 'sm' ? 'top:55px' : 'top: 1rem'"
           :class="{
-            'hang-enter fixed left-0 z-40 w-full': hang,
+            'hang-enter fixed left-0 z-60 w-full': hang,
             '`static`': !hang,
           }"
         >
@@ -169,7 +169,6 @@ import RangeSelects from "./RangeSelects/RangeSelects.vue";
 import TheSelectedOptions from "./TheSelectedOptions/TheSelectedOptions.vue";
 import Settings from "./TheSelectionBarSettings.vue";
 import hang from "@/directives/hang.js";
-import close from "@/directives/close.js";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
@@ -225,7 +224,6 @@ export default {
   },
   directives: {
     hang: hang,
-    close: close,
   },
   mounted() {
     this.windowHeight = window.innerHeight;
