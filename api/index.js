@@ -14,7 +14,7 @@ let outputJson = JSON.stringify(output);
 const writeJson = function (jsonData, destFileName) {
   return fs.writeFile(destFileName, jsonData, function (err) {
     if (err) return console.log(err);
-    console.log("wrote " + destFileName);
+    //console.log("wrote " + destFileName);
   });
 };
 

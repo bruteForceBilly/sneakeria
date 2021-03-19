@@ -44,7 +44,7 @@ export default function (o, q, cb) {
     return axios
       .get(API_PRODUCTS + "?" + product)
       .catch(function (error) {
-        console.log("API_PRODUCTS error:", error);
+        //console.log("API_PRODUCTS error:", error);
       })
       .then((response) => {
         apiProductResponse = response.data;
@@ -77,7 +77,7 @@ export default function (o, q, cb) {
         return axios
           .get(API_VERSIONS + apiVersionsQuery)
           .catch(function (error) {
-            console.log("API_VERSIONS error:", error);
+            //console.log("API_VERSIONS error:", error);
           })
           .then((response) => {
             apiVersionResponse = response.data;
@@ -87,7 +87,7 @@ export default function (o, q, cb) {
         return axios
           .get(API_VERSIONS)
           .catch(function (error) {
-            console.log("API_VERSIONS ALL error:", error);
+            //console.log("API_VERSIONS ALL error:", error);
           })
           .then((response) => {
             apiAllVersionsResponse = response.data;
@@ -212,7 +212,7 @@ export default function (o, q, cb) {
     return axios
       .get(API_VERSIONS + "?" + versionQuery)
       .catch(function (error) {
-        console.log("API_VERSIONS error:", error);
+        //console.log("API_VERSIONS error:", error);
       })
       .then((response) => {
         apiVersionResponse = response.data;
@@ -231,7 +231,7 @@ export default function (o, q, cb) {
         return axios
           .get(API_PRODUCTS + response)
           .catch(function (error) {
-            console.log("API_PRODUCTS ALL error:", error);
+            //console.log("API_PRODUCTS ALL error:", error);
           })
           .then((response) => {
             apiProductResponse = response.data;

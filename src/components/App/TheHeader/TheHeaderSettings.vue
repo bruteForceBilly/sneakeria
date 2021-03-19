@@ -73,7 +73,7 @@ export default {
           that.show = !that.show;
           break;
         default:
-          console.log("setShow switch arg not found", event);
+        //console.log("setShow switch arg not found", event);
       }
     },
   },

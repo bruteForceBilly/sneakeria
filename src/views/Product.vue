@@ -20,7 +20,7 @@ export default {
   },
   beforeCreate() {
     products("route", this.$store.state.route.params.product, (data) => {
-      console.log(data);
+      //console.log(data);
       return (this.product = data);
     });
   },

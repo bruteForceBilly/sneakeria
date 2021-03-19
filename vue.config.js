@@ -4,6 +4,8 @@ module.exports = {
     public: "http://localhost:8080",
   },
 
+  publicPath: process.env.NODE_ENV === "production" ? "/sneakeria/" : "/",
+
   pages: {
     index: {
       // entry for the page
@@ -23,6 +25,6 @@ module.exports = {
 
   pluginOptions: {
     lintStyleOnBuild: false,
-    stylelint: {}
-  }
+    stylelint: {},
+  },
 };
