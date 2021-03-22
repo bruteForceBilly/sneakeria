@@ -177,7 +177,7 @@ module.exports = {
         70: "70",
       },
       fontFamily: {
-        sans: ["IBM Plex Mono", "Roboto", "Helvetica", "Arial", "sans-serif"],
+        sans: ["IBM Plex Mono", "Helvetica", "Arial", "sans-serif"],
       },
       fontSize: {
         tiny: ".25rem",

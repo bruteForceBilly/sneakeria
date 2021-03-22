@@ -4,6 +4,7 @@ import { sync } from "vuex-router-sync";
 import store from "./store";
 import router from "./router";
 import media from "./media";
+import "@fontsource/ibm-plex-mono";
 import "tailwindcss/tailwind.css";
 
 Vue.config.productionTip = false;
