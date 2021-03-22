@@ -4,7 +4,7 @@ import { sync } from "vuex-router-sync";
 import store from "./store";
 import router from "./router";
 import media from "./media";
-import "./assets/css/tailwind.css";
+import "tailwindcss/tailwind.css";
 
 Vue.config.productionTip = false;
 

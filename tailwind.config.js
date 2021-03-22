@@ -1,11 +1,5 @@
 module.exports = {
-  purge: [
-    "./pages/**/*.vue",
-    "./components/**/*.vue",
-    "./plugins/**/*.vue",
-    "./static/**/*.vue",
-    "./store/**/*.vue",
-  ],
+  purge: ["./src/**/*.html", "./src/**/*.js", "./src/**/*.vue"],
   theme: {
     extend: {
       spacing: {
