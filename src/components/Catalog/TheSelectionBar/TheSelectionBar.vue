@@ -134,7 +134,6 @@
                 >
                   <ProductCardButton
                     v-show="mobileMenuSelected.value == 'FilterSelects'"
-                    v-if="mobileMenuSelected != null"
                     class="w-full"
                     @click.native="mobileMenuSelected = null"
                     icon="none"
