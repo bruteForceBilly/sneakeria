@@ -125,7 +125,6 @@
                 :range-sliders="settings.selectionbarRanges"
               ></RangeSelects>
 
-              <!-- APPLY BUTTON -->
               <transition name="button-slide-fade">
                 <div
                   v-if="selectedOptionsElements.length > 0"
