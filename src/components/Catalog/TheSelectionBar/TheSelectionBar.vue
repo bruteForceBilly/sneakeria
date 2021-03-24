@@ -133,7 +133,6 @@
                   style="margin-top: calc(100vh - 4.5rem)"
                 >
                   <ProductCardButton
-                    v-show="mobileMenuSelected.value == 'FilterSelects'"
                     class="w-full"
                     @click.native="mobileMenuSelected = null"
                     icon="none"
