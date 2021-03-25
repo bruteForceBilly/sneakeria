@@ -12,9 +12,8 @@
       <div :style="{ height: `${hangHeight}px` }" class="mb-3" v-else>
         <div
           v-hang="'hang'"
-          :style="$mq == 'sm' ? 'top:55px' : 'top: 1rem'"
           :class="{
-            'hang-enter fixed left-0 z-60 w-full': hang,
+            'hang-enter fixed left-0 top-5 z-70 w-full': hang,
             '`static`': !hang,
           }"
         >
@@ -130,7 +129,7 @@
                   v-if="selectedOptionsElements.length > 0"
                   class="fixed top-0 right-0 left-0 w-full px-7 z-70"
                   :style="
-                    this.$browserDetect.isIOS
+                    isIOS
                       ? 'margin-top: 78vh'
                       : 'margin-top: calc(100vh - 4.5rem)'
                   "
@@ -219,6 +218,10 @@ export default {
       "selectedOptionsElements",
       "selectionbarMobile",
     ]),
+
+    isIOS() {
+      return this.$browserDetect.isIOS;
+    },
     isMobileScreen() {
       return this.$mq !== "xl" ? true : false;
     },

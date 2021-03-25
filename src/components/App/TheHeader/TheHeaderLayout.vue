@@ -2,13 +2,10 @@
   <div
     v-hang="'hang'"
     class="w-full"
-    :class="{
-      'invisible': hang,
-      '`fixed z-60 sm:z-0 sm:static `': !hang,
-    }"
+    :class="this.$browserDetect.isIOS ? 'static' : 'fixed z-60'"
   >
     <div class="relative">
-      <!-- Container start -->
+      <!-- Container start && !this.$browserDetect.isIOS  -->
       <div
         class="border-b px-4 lg:px-12 xl:px-4 bg-white flex justify-between items-center"
         style="height: 50px"
