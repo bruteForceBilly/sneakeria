@@ -49,26 +49,8 @@
             ? productVersionsColors.length + " Colors"
             : productVersionsColors.length + " Color"
         }}
-        <!-- versions: {{ productVersions.length }} -->
-
-        <!-- | min price :
-        {{ product.minPrice }} | max price : {{ product.maxPrice }} -->
       </h6>
-      <!--
-      <h6 class="text-gray-600 mt-1 text-vw-xxs w-full">
-        Serial: {{ settings.settings.selectedVersion.id }} |
-        {{ settings.settings.product.versions.length }} Colors
-      </h6>
-      <div class="mt-6 w-full">
-        <slot name="buy">... buy button</slot>
-      </div>
-      -->
     </div>
-
-    <!--<p class="text-gray-500">
-       {{ details.info.variants[ui.selectedVariant.sku].flair }}
-      {{ this.variants[this.sku].flairs }}
-    </p>  -->
   </div>
 </template>
 
