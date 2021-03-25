@@ -27,14 +27,19 @@
           </li>
 
           <div
-            v-show="isMobile"
+            v-if="isMobile"
             class="text-xs w-4/5 truncate absolute tracking-tight capitalize"
           >
             <li class="absolute">
               <span> {{ selectedOptionsLabels }}</span>
             </li>
             <div
-              class="relative z-10 bg-gradient-to-l via-transparent from-white"
+              class="relative z-10"
+              :class="
+                this.$browserDetect.isIOS
+                  ? ''
+                  : 'bg-gradient-to-l via-transparent from-white'
+              "
             >
               <span class="invisible">{{ selectedOptionsLabels }}</span>
             </div>

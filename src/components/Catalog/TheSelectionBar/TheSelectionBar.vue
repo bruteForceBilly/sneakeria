@@ -97,8 +97,8 @@
               <div class="flex justify-end items-center p-3">
                 <span
                   class="flex-grow tracking-tighter uppercase text-lg inline"
-                  >{{ mobileMenuSelected.label }}</span
-                >
+                  >{{ mobileMenuSelected.label }}
+                </span>
 
                 <span
                   v-show="selectedOptionsElements.length > 0"
@@ -128,8 +128,12 @@
               <transition name="button-slide-fade">
                 <div
                   v-if="selectedOptionsElements.length > 0"
-                  class="fixed top-0 right-0 left-0 w-screen px-7 z-70"
-                  style="margin-top: calc(100vh - 4.5rem)"
+                  class="fixed top-0 right-0 left-0 w-full px-7 z-70"
+                  :style="
+                    this.$browserDetect.isIOS
+                      ? 'margin-top: 78vh'
+                      : 'margin-top: calc(100vh - 4.5rem)'
+                  "
                 >
                   <ProductCardButton
                     class="w-full"
