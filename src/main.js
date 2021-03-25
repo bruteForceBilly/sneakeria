@@ -6,6 +6,8 @@ import router from "./router";
 import media from "./media";
 import "@fontsource/ibm-plex-mono";
 import "tailwindcss/tailwind.css";
+import browserDetect from "vue-browser-detect-plugin";
+Vue.use(browserDetect);
 
 Vue.config.productionTip = false;
 
@@ -25,5 +27,3 @@ store.dispatch("catalog/initialize").then(() => {
     render: (h) => h(App),
   }).$mount("#app");
 });
-
-// listen to some event here from the action
