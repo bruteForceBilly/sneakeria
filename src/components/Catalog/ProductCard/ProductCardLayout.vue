@@ -11,7 +11,7 @@
         <section class="relative z-10 h-full overflow-hidden temp-bg">
           <div v-if="settings.settings.product.campaigns.length !== 0">
             <span
-              class="overflow-visible absolute m-4 z-20 top-0 inline writing-mode-rotate"
+              class="overflow-visible absolute m-4 z-20 left-0 top-0 inline writing-mode-rotate"
             >
               <h4
                 class="text-xxs md:text-vh-xxs lg:text-vh-tiny xl:text-vh-xs inline bg-white tracking-widest font-normal italic uppercase px-1 py-2"
