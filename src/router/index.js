@@ -86,9 +86,6 @@ const routes = [
           const { params, query } = slug;
           let nextConfig = {};
 
-          // Make boolean ins tore
-          // If boolean then pass with query pbject
-
           if (store.state.search.routeLastDisplayQuery) {
             nextConfig = {
               name: "searchResultRoute",
@@ -96,15 +93,18 @@ const routes = [
               query: query,
             };
             store.commit("search/routeLastDisplayQueryMutation", false);
+          } else if (Object.keys(query).some((q) => /^price/.test(q))) {
+            nextConfig = {
+              name: "searchResultRoute",
+              params: { slug: params },
+              query: query,
+            };
           } else {
             nextConfig = {
               name: "searchResultRoute",
               params: { slug: params },
             };
           }
-
-          // delete to.query["_page"];
-          // delete to.query["_limit"];
 
           store.commit("search/routeLastBeforeEnterMutation", to.name);
           next(nextConfig);
@@ -139,21 +139,11 @@ const routes = [
     component: Catalog,
     beforeEnter: (to, from, next) => {
       store.commit("setByRoute", false);
-      // store.state.search.routeLastBeforeEnter === "searchQueryRoute"
-      //store.commit("search/routeLastBeforeEnterMutation", to.name);
       store.commit("search/routeLastBeforeEnterMutation", to.name);
       next();
     },
   },
 ];
-
-// router.afterEach((to, from) => {
-//   // if (process.env.NODE_ENV === "development") {
-//   //   console.log("ROUTER TO:\n", to);
-//   //   console.log("FROM:\n", from);
-//   // }
-//   //console.log(store.state.cache.stack);
-// });
 
 const router = new VueRouter({
   mode: "history",

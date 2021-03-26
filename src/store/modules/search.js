@@ -173,7 +173,6 @@ const actions = {
 
     if (to.name === "searchQueryRoute") {
       params = Object.values(to.query).flat();
-
       const isOperor = (val) => {
         return (
           val.some((el) => /^_/.test(el)) || val.some((el) => /^price/.test(el))
@@ -193,7 +192,6 @@ const actions = {
           query: {},
         }
       );
-
       query = { ...initializePaginationInQuery, ...toQuerySorted.query };
       params = Object.values(toQuerySorted.params).flat();
     } else if (to.name === "searchRequestRoute") {

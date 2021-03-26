@@ -2,13 +2,12 @@ module.exports = {
   devServer: {
     host: "localhost",
     public: "http://localhost:8080",
-    proxy: 'https://sneakeria-api.herokuapp.com/'
+    proxy: "https://sneakeria-api.herokuapp.com/",
   },
 
   publicPath: "/",
-  outputDir: 'dist',
-  assetsDir: '',
-  indexPath: 'index.html',
+  outputDir: "dist",
+  indexPath: "index.html",
   filenameHashing: true,
 
   pages: {
@@ -21,10 +20,14 @@ module.exports = {
     },
   },
 
-  lintOnSave: process.env.NODE_ENV !== 'production',
+  lintOnSave: process.env.NODE_ENV !== "production",
 
   pluginOptions: {
     lintStyleOnBuild: false,
     stylelint: {},
+  },
+
+  configureWebpack: {
+    devtool: "source-map",
   },
 };
