@@ -6,25 +6,26 @@
     <BreadCrumbsBar v-if="this.$mq != 'sm'" />
 
     <DisplayTitle
+      v-if="foundProductsPagination"
       :current-route="route"
       :search-found-products-length="foundProductsPagination.contentCount"
     ></DisplayTitle>
 
     <SelectionBar
-      v-if="!navigationIsLoading"
+      v-if="!navigationIsLoading && foundProductsPagination"
       :selects="selectionbarFilters"
     ></SelectionBar>
 
     <ProductGrid
+      v-if="foundProductsPagination"
       :products="foundProducts"
       :current-route="route"
-      :search-found-products-length="foundProductsLength"
+      :search-found-products-length="foundProductsPagination.contentCount"
     ></ProductGrid>
 
     <ThePaginationBar
-      :selected-page="
-        this.$store.state.search.foundProductsPagination.pageCurrent
-      "
+      v-if="foundProductsPagination"
+      :selected-page="foundProductsPagination.pageCurrent"
     />
   </div>
 </template>

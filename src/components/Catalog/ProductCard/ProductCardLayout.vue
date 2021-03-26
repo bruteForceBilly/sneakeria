@@ -1,5 +1,6 @@
 <template>
   <article
+    v-on-clickaway="away"
     class="relative z-0 hover:z-30 flex flex-col bg-white"
     v-on:mouseenter="hover = true"
     v-on:mouseleave="hover = false"
@@ -27,10 +28,7 @@
             </slot>
           </div>
 
-          <div
-            v-on:click="settings.settings.versionLinkQueryHandler(1)"
-            class=""
-          >
+          <div>
             <div class="flex justify-center h-full">
               <div class="flex-grow">
                 <slot name="image">
@@ -60,7 +58,10 @@
 </template>
 
 <script>
+import { mixin as clickaway } from "vue-clickaway";
+
 export default {
+  mixins: [clickaway],
   props: {
     settings: Object,
   },
@@ -72,6 +73,11 @@ export default {
   computed: {
     layout() {
       return this.settings.settings.layout;
+    },
+  },
+  methods: {
+    away: function () {
+      return (this.hover = !!this.hover);
     },
   },
 };
