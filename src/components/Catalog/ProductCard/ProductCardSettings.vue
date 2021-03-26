@@ -4,7 +4,6 @@
       :settings="{
         selectHandler,
         likeHandler,
-        versionLinkQueryHandler,
         selectedVersion,
         layout,
         isLiked,
@@ -101,22 +100,8 @@ export default {
         versionId: this.selectedVersion.id,
       });
     },
-
     selectHandler(version) {
       return (this.selectedVersion.id = version);
-    },
-    versionLinkQueryHandler() {
-      if (this.selectedVersion.id == this.$store.state.route.query.versionId) {
-        return;
-      } else {
-        this.$router.push({
-          name: "product",
-          params: { product: this.product.id },
-          query: {
-            versionId: this.selectedVersion.id,
-          },
-        });
-      }
     },
   },
   watch: {
