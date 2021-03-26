@@ -31,15 +31,7 @@
             <img
               class="h-full object-contain mx-auto"
               src="@/assets/2.png"
-              @mouseover="
-                [
-                  settings.settings.viewContext === 'product'
-                    ? settings.settings.versionLinkQueryHandler(
-                        settings.settings.selectHandler(version.id)
-                      )
-                    : settings.settings.selectHandler(version.id),
-                ]
-              "
+              @mouseover="settings.settings.selectHandler(version.id)"
             />
             <!-- bind :src later to product -->
           </div>

@@ -103,28 +103,28 @@ lg 386
   display: grid;
   grid-template-columns: repeat(4, minmax(306px, 1fr));
   grid-auto-rows: auto;
-  gap: 2px;
+  gap: 1px;
 }
 
 .grid-sm {
   display: grid;
   grid-template-columns: repeat(2, minmax(155px, 1fr));
   grid-auto-rows: auto;
-  gap: 2px;
+  gap: 1px;
 }
 
 .grid-md {
   display: grid;
   grid-template-columns: repeat(3, minmax(155px, 1fr));
   grid-auto-rows: auto;
-  gap: 2px;
+  gap: 1px;
 }
 
 .grid-lg {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: auto;
-  gap: 2px;
+  gap: 1px;
 }
 
 /*
