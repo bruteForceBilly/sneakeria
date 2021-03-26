@@ -103,9 +103,6 @@ const routes = [
             };
           }
 
-          // delete to.query["_page"];
-          // delete to.query["_limit"];
-
           store.commit("search/routeLastBeforeEnterMutation", to.name);
           next(nextConfig);
         })
@@ -139,8 +136,6 @@ const routes = [
     component: Catalog,
     beforeEnter: (to, from, next) => {
       store.commit("setByRoute", false);
-      // store.state.search.routeLastBeforeEnter === "searchQueryRoute"
-      //store.commit("search/routeLastBeforeEnterMutation", to.name);
       store.commit("search/routeLastBeforeEnterMutation", to.name);
       next();
     },

@@ -57,8 +57,15 @@ export default {
     updateRouteQueryParams(selectedOptionsObject) {
       let queryParams = [];
 
-      for (const [key, value] of Object.entries(selectedOptionsObject)) {
-        value.forEach((val) => queryParams.push(`${key}=${val}`));
+      for (const [key, value] of Object.entries({
+        ...selectedOptionsObject,
+        ...this.$store.state.route.query,
+      })) {
+        if (Array.isArray(value)) {
+          return value.forEach((val) => queryParams.push(`${key}=${val}`));
+        } else {
+          queryParams.push(`${key}=${value}`);
+        }
       }
 
       let queryParamsString = queryParams.toString().replace(/,/g, "&");
@@ -66,6 +73,9 @@ export default {
       if (queryParams.length === 0) {
         this.$router.push({ name: "all" }).catch((err) => {});
       } else {
+        if (this.$store.state.route.query) {
+          this.$store.commit("search/routeLastDisplayQueryMutation", true);
+        }
         this.$router.push("search?" + queryParamsString).catch((err) => {});
       }
     },
