@@ -7,9 +7,69 @@
         navigationIsloading,
       }"
     >
-      <!-- WE NEED A SELECTION BAR LAYOUT COMPONENET -->
-      <div v-if="navigationIsloading">...loading</div>
-      <div :style="{ height: `${hangHeight}px` }" class="mb-3" v-else>
+      <Layout
+        v-if="false"
+        :settings="settings"
+        :isLoading="navigationIsloading"
+      >
+        <template v-if="isMobileScreen" v-slot:mobile>
+          <div v-for="menu in selectionbarMobile" :key="menu.name">
+            <div class="h-full w-full">
+              <MenuButton
+                :isBlock="true"
+                @click.native="mobileMenuSelected = menu"
+              >
+                <template v-slot:menu-label>
+                  <span class="text-xs">{{ menu.label }} </span></template
+                >
+              </MenuButton>
+            </div>
+          </div>
+        </template>
+        <template v-else v-slot:desktop>
+          <FilterSelects
+            :isMobile="false"
+            :selected-options-object="settings.selectedOptionsObject"
+            :selects="settings.selectionbarFilters"
+          ></FilterSelects>
+
+          <RangeSelects
+            :isMobile="false"
+            :range-sliders="settings.selectionbarRanges"
+          ></RangeSelects>
+
+          <SortSelects class="ml-auto" :sorts="settings.selectionbarSorts">
+          </SortSelects>
+        </template>
+        <Modal :settings="settings">
+          <template v-slot:sorts>
+            <SortSelects :isMobile="true" :sorts="settings.selectionbarSorts" />
+          </template>
+          <template v-slot:filters>
+            <FilterSelects
+              class="mt-4"
+              :isMobile="true"
+              :selected-options-object="settings.selectedOptionsObject"
+              :selects="settings.selectionbarFilters"
+            ></FilterSelects>
+
+            <RangeSelects
+              :isMobile="true"
+              :range-sliders="settings.selectionbarRanges"
+            ></RangeSelects>
+          </template>
+        </Modal>
+        <div v-if="!hang" class="mt-4">
+          <TheSelectedOptions
+            :update-route-query-params="settings.updateRouteQueryParams"
+            :selected-options-object="settings.selectedOptionsObject"
+            :selects="settings.selects"
+          ></TheSelectedOptions>
+        </div>
+      </Layout>
+
+      <!-- <div v-if="navigationIsloading">...loading</div> -->
+      <div :style="{ height: `${hangHeight}px` }" class="mb-3" v-if="false">
         <div
           v-hang="'hang'"
           :class="{
@@ -42,6 +102,7 @@
             </div>
             <!-- End of If mobile -->
           </div>
+
           <div v-else class="relative">
             <div
               class="bg-white w-full flex justify-start items-center transition delay-500 duration-500 ease-in-out"
@@ -163,6 +224,8 @@ import SortSelects from "./SortSelects/SortSelects.vue";
 import RangeSelects from "./RangeSelects/RangeSelects.vue";
 import TheSelectedOptions from "./TheSelectedOptions/TheSelectedOptions.vue";
 import Settings from "./TheSelectionBarSettings.vue";
+import Layout from "./TheSelectionBarLayout.vue";
+import Modal from "./TheSelectionBarLayout.vue";
 import hang from "@/directives/hang.js";
 import { mapGetters, mapMutations } from "vuex";
 
@@ -175,6 +238,8 @@ export default {
     RangeSelects,
     TheSelectedOptions,
     Settings,
+    Layout,
+    Modal,
     ProductCardButton,
   },
   props: {
