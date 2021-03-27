@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import ProductCardButton from "@/components/Catalog/ProductCard/ProductCardButton.vue";
 
 export default {
@@ -93,6 +93,12 @@ export default {
     },
   },
   methods: {
+    ...mapMutations("navigation", ["toggleElement"]),
+
+    toggleOption(option) {
+      this.$store.commit("setByRoute", false);
+      return this.toggleElement(option);
+    },
     clearAllTags() {
       return [...this.selectedOptionsElements].forEach((option) =>
         this.toggleOption(option)

@@ -9,7 +9,7 @@
           '`static`': !hang,
         }"
       >
-        <!-- If mobile to render the two boxes -->
+        <!-- If mobile -->
         <div
           v-if="isMobileScreen"
           :style="{
@@ -20,12 +20,24 @@
             'border border-gray-900 bg-gray-900': hang,
           }"
         >
-          <!-- Make slot here -->
-          <slot name="mobile"></slot>
+          <div v-for="menu in selectionbarMobile" :key="menu.name">
+            <div class="h-full w-full">
+              <MenuButton
+                :isBlock="true"
+                @click.native="mobileMenuSelected = menu"
+              >
+                <template v-slot:menu-label>
+                  <span class="text-xs">{{ menu.label }} </span></template
+                >
+              </MenuButton>
+            </div>
+          </div>
         </div>
         <!-- End of If mobile -->
+
         <!-- Start Desktop -->
         <div
+          v-if="!isMobileScreen"
           class="relative bg-white w-full flex justify-start items-center transition delay-500 duration-500 ease-in-out"
           :class="hang ? 'border border-gray-900' : 'border-t border-b'"
         >
@@ -34,19 +46,28 @@
         <!-- End Desktop -->
       </div>
     </div>
+
+    <div v-if="!hang" class="mt-4">
+      <slot name="selected-options"></slot>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import hang from "@/directives/hang.js";
+import MenuButton from "@/components/Catalog/TheSelectionBar/DropDownMenu/MenuButton.vue";
 
 export default {
   name: "SelectionBarLayout",
+  components: {
+    MenuButton,
+  },
   directives: {
     hang,
   },
   props: {
-    isLoading: {
+    navigationIsloading: {
       type: Boolean,
     },
     settings: {
@@ -58,9 +79,13 @@ export default {
       hang: false,
       hangHeight: null,
       windowHeight: null,
+      mobileMenuSelected: null,
+      mobileMenuSelectedOpen: null,
     };
   },
   computed: {
+    ...mapGetters("navigation", ["selectionbarMobile"]),
+
     isMobileScreen() {
       return this.$mq !== "xl" ? true : false;
     },
@@ -70,6 +95,11 @@ export default {
     window.addEventListener("resize", () => {
       this.windowHeight = window.innerHeight;
     });
+  },
+  methods: {
+    menuHeight() {
+      return this.windowHeight - 55;
+    },
   },
 };
 </script>
