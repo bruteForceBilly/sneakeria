@@ -1,14 +1,5 @@
 <template>
-  <div
-    v-if="isMobileScreen"
-    :style="{
-      '`height: calc(${menuHeight()}px - 1rem)`': hang,
-    }"
-    class="relative w-full mobile-menu-grid transition delay-500 duration-500 ease-in-out bg-gray-300 border-t border-b"
-    :class="{
-      'border border-gray-900 bg-gray-900': hang,
-    }"
-  >
+  <div class="mobile-menu-grid">
     <div v-for="menu in selectionbarMobile" :key="menu.name">
       <div class="h-full w-full">
         <MenuButton :isBlock="true" @click.native="mobileMenuSelected = menu">
@@ -95,8 +86,6 @@
 </template>
 
 <script>
-import hang from "@/directives/hang.js";
-
 import { mapGetters, mapMutations } from "vuex";
 import MenuButton from "@/components/Catalog/TheSelectionBar/DropDownMenu/MenuButton.vue";
 import ProductCardButton from "@/components/Catalog/ProductCard/ProductCardButton.vue";
@@ -107,10 +96,10 @@ import RangeSelects from "../RangeSelects/RangeSelects.vue";
 
 export default {
   name: "SelectionBarMobile",
-  directives: {
-    hang,
-  },
   props: {
+    isHanging: {
+      type: Boolean,
+    },
     navigationIsloading: {
       type: Boolean,
     },
@@ -136,18 +125,9 @@ export default {
   },
   data() {
     return {
-      hang: false,
-      hangHeight: null,
-      windowHeight: null,
       mobileMenuSelected: null,
       mobileMenuSelectedOpen: null,
     };
-  },
-  mounted() {
-    this.windowHeight = window.innerHeight;
-    window.addEventListener("resize", () => {
-      this.windowHeight = window.innerHeight;
-    });
   },
   methods: {
     ...mapMutations("navigation", ["toggleElement"]),
@@ -160,9 +140,6 @@ export default {
       return [...this.selectedOptionsElements].forEach((option) =>
         this.toggleOption(option)
       );
-    },
-    menuHeight() {
-      return this.windowHeight - 55;
     },
   },
 };
