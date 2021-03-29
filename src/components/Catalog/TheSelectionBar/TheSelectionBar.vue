@@ -51,7 +51,7 @@ import RangeSelects from "./RangeSelects/RangeSelects.vue";
 import TheSelectedOptions from "./TheSelectedOptions/TheSelectedOptions.vue";
 import Settings from "./TheSelectionBarSettings.vue";
 import Layout from "./TheSelectionBarLayout.vue";
-import SelectionBarMobile from "./TheSelectionBarMobile.vue";
+import SelectionBarMobile from "./Mobile/TheSelectionBarMobile.vue";
 
 export default {
   name: "TheCatalogSelectionBar",

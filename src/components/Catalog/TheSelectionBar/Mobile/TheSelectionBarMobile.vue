@@ -45,19 +45,17 @@
           />
         </div>
 
-        <div @click="mobileMenuSelected = null">
-          <FilterSelects
-            class="mt-4"
-            :isMobile="true"
-            :selected-options-object="settings.selectedOptionsObject"
-            :selects="settings.selectionbarFilters"
-          ></FilterSelects>
+        <FilterSelects
+          class="mt-4"
+          :isMobile="true"
+          :selected-options-object="settings.selectedOptionsObject"
+          :selects="settings.selectionbarFilters"
+        ></FilterSelects>
 
-          <RangeSelects
-            :isMobile="true"
-            :range-sliders="settings.selectionbarRanges"
-          ></RangeSelects>
-        </div>
+        <RangeSelects
+          :isMobile="true"
+          :range-sliders="settings.selectionbarRanges"
+        ></RangeSelects>
 
         <transition name="button-slide-fade">
           <div
@@ -103,9 +101,9 @@ import { mapGetters, mapMutations } from "vuex";
 import MenuButton from "@/components/Catalog/TheSelectionBar/DropDownMenu/MenuButton.vue";
 import ProductCardButton from "@/components/Catalog/ProductCard/ProductCardButton.vue";
 
-import FilterSelects from "./FilterSelects/FilterSelects.vue";
-import SortSelects from "./SortSelects/SortSelects.vue";
-import RangeSelects from "./RangeSelects/RangeSelects.vue";
+import FilterSelects from "../FilterSelects/FilterSelects.vue";
+import SortSelects from "../SortSelects/SortSelects.vue";
+import RangeSelects from "../RangeSelects/RangeSelects.vue";
 
 export default {
   name: "SelectionBarMobile",
