@@ -143,3 +143,48 @@
           </div>
         </div>
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- If mobile -->
+        <div
+          v-if="isMobileScreen"
+          :style="{
+            '`height: calc(${menuHeight()}px - 1rem)`': hang,
+          }"
+          class="relative w-full mobile-menu-grid transition delay-500 duration-500 ease-in-out bg-gray-300 border-t border-b"
+          :class="{
+            'border border-gray-900 bg-gray-900': hang,
+          }"
+        >
+          <div v-for="menu in selectionbarMobile" :key="menu.name">
+            <div class="h-full w-full">
+              <MenuButton
+                :isBlock="true"
+                @click.native="mobileMenuSelected = menu"
+              >
+                <template v-slot:menu-label>
+                  <span class="text-xs">{{ menu.label }} </span></template
+                >
+              </MenuButton>
+            </div>
+          </div>
+        </div>
+        <!-- End of If mobile -->

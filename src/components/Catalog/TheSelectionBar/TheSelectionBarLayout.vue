@@ -9,33 +9,7 @@
           '`static`': !hang,
         }"
       >
-        <!-- If mobile -->
-        <div
-          v-if="isMobileScreen"
-          :style="{
-            '`height: calc(${menuHeight()}px - 1rem)`': hang,
-          }"
-          class="relative w-full mobile-menu-grid transition delay-500 duration-500 ease-in-out bg-gray-300 border-t border-b"
-          :class="{
-            'border border-gray-900 bg-gray-900': hang,
-          }"
-        >
-          <div v-for="menu in selectionbarMobile" :key="menu.name">
-            <div class="h-full w-full">
-              <MenuButton
-                :isBlock="true"
-                @click.native="mobileMenuSelected = menu"
-              >
-                <template v-slot:menu-label>
-                  <span class="text-xs">{{ menu.label }} </span></template
-                >
-              </MenuButton>
-            </div>
-          </div>
-        </div>
-        <!-- End of If mobile -->
-
-        <!-- Start Desktop -->
+        <!-- Start Horizontal layout -->
         <div
           v-if="!isMobileScreen"
           class="relative bg-white w-full flex justify-start items-center transition delay-500 duration-500 ease-in-out"
@@ -43,8 +17,23 @@
         >
           <slot name="desktop"></slot>
         </div>
-        <!-- End Desktop -->
+        <!-- End Horizontal -->
       </div>
+
+      <!-- If mobile -->
+      <div
+        v-if="isMobileScreen"
+        :style="{
+          '`height: calc(${menuHeight()}px - 1rem)`': hang,
+        }"
+        class="relative w-full mobile-menu-grid transition delay-500 duration-500 ease-in-out bg-gray-300 border-t border-b"
+        :class="{
+          'border border-gray-900 bg-gray-900': hang,
+        }"
+      >
+        <slot name="mobile"></slot>
+      </div>
+      <!-- End of If mobile -->
     </div>
 
     <div v-if="!hang" class="mt-4">
@@ -54,15 +43,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import hang from "@/directives/hang.js";
-import MenuButton from "@/components/Catalog/TheSelectionBar/DropDownMenu/MenuButton.vue";
 
 export default {
   name: "SelectionBarLayout",
-  components: {
-    MenuButton,
-  },
   directives: {
     hang,
   },
@@ -79,13 +63,9 @@ export default {
       hang: false,
       hangHeight: null,
       windowHeight: null,
-      mobileMenuSelected: null,
-      mobileMenuSelectedOpen: null,
     };
   },
   computed: {
-    ...mapGetters("navigation", ["selectionbarMobile"]),
-
     isMobileScreen() {
       return this.$mq !== "xl" ? true : false;
     },

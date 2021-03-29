@@ -28,26 +28,10 @@
           </SortSelects>
         </template>
 
-        <!-- We need to make a mobile component, that has modal as child so we can set which menu should be open -->
+        <template v-slot:mobile>
+          <SelectionBarMobile :settings="settings" />
+        </template>
 
-        <Modal :settings="settings">
-          <template v-slot:sorts>
-            <SortSelects :isMobile="true" :sorts="settings.selectionbarSorts" />
-          </template>
-          <template v-slot:filters>
-            <FilterSelects
-              class="mt-4"
-              :isMobile="true"
-              :selected-options-object="settings.selectedOptionsObject"
-              :selects="settings.selectionbarFilters"
-            ></FilterSelects>
-
-            <RangeSelects
-              :isMobile="true"
-              :range-sliders="settings.selectionbarRanges"
-            ></RangeSelects>
-          </template>
-        </Modal>
         <template v-slot:selected-options>
           <TheSelectedOptions
             :update-route-query-params="settings.updateRouteQueryParams"
@@ -67,7 +51,7 @@ import RangeSelects from "./RangeSelects/RangeSelects.vue";
 import TheSelectedOptions from "./TheSelectedOptions/TheSelectedOptions.vue";
 import Settings from "./TheSelectionBarSettings.vue";
 import Layout from "./TheSelectionBarLayout.vue";
-import Modal from "./TheSelectionBarLayout.vue";
+import SelectionBarMobile from "./TheSelectionBarMobile.vue";
 
 export default {
   name: "TheCatalogSelectionBar",
@@ -78,7 +62,7 @@ export default {
     TheSelectedOptions,
     Settings,
     Layout,
-    Modal,
+    SelectionBarMobile,
   },
   props: {
     selects: {
