@@ -21,18 +21,8 @@
       </div>
 
       <!-- If mobile -->
-      <div
-        v-if="isMobileScreen"
-        :style="{
-          '`height: calc(${menuHeight()}px - 1rem)`': hang,
-        }"
-        class="relative w-full mobile-menu-grid transition delay-500 duration-500 ease-in-out bg-gray-300 border-t border-b"
-        :class="{
-          'border border-gray-900 bg-gray-900': hang,
-        }"
-      >
-        <slot name="mobile"></slot>
-      </div>
+      <slot name="mobile"></slot>
+
       <!-- End of If mobile -->
     </div>
 
