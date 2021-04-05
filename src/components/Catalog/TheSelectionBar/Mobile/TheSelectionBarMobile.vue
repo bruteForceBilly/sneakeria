@@ -18,7 +18,7 @@
         v-if="mobileMenuSelected.name == 'filterBy'"
         class="absolute w-full pb-28"
       >
-        <div class="flex justify-end items-center p-3">
+        <div class="flex justify-end items-center p-3 mb-4">
           <span class="flex-grow tracking-tighter uppercase text-lg inline"
             >{{ mobileMenuSelected.label }}
           </span>
@@ -37,7 +37,6 @@
         </div>
 
         <FilterSelects
-          class="mt-4"
           :isMobile="true"
           :selected-options-object="settings.selectedOptionsObject"
           :selects="settings.selectionbarFilters"
@@ -97,9 +96,6 @@ import RangeSelects from "../RangeSelects/RangeSelects.vue";
 export default {
   name: "SelectionBarMobile",
   props: {
-    isHanging: {
-      type: Boolean,
-    },
     navigationIsloading: {
       type: Boolean,
     },
