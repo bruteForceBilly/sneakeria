@@ -14,8 +14,8 @@ let outputJson = JSON.stringify(output);
 const writeJson = function (jsonData, destFileName) {
   return fs.writeFile(destFileName, jsonData, function (err) {
     if (err) return console.log(err);
-    //console.log("wrote " + destFileName);
+    console.log("data-gen.js wrote to" + destFileName);
   });
 };
 
-writeJson(outputJson, "db.json");
+writeJson(outputJson, "../db.json");
