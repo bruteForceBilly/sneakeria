@@ -1,4 +1,6 @@
-require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
 const express = require("express");
 var history = require("connect-history-api-fallback");
 const serveStatic = require("serve-static");
