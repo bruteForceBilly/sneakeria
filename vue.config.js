@@ -1,8 +1,8 @@
 module.exports = {
   devServer: {
     host: "localhost",
-    public: "http://localhost:8080",
-    proxy: "https://sneakeria-api.herokuapp.com/",
+    public: "http://localhost:" + process.env.PORT,
+    proxy: "http://localhost:" + process.env.PROXY,
   },
 
   publicPath: "/",
