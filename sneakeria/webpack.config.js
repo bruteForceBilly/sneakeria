@@ -1,8 +1,5 @@
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 module.exports = {
-  entry: {
-    main: "./src/main.js",
-  },
   rules: [
     {
       test: /\.vue$/,
