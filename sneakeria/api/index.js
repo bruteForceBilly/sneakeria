@@ -1,8 +1,10 @@
-const express = require("express");
+const jsonServer = require('json-server')
+const app = jsonServer.create()
+const router = jsonServer.router('db.json')
+const middlewares = jsonServer.defaults()
 const cors = require("cors");
-const app = express();
 var db = require("./db.json");
-const PORT = 5000;
+const PORT = 3000;
 
 const whitelist = [
   "http://localhost",
@@ -20,13 +22,11 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use(express.json());
+app.use('/api', router)
 
-app.get("/", (req, res) => {
-  res.header("Content-Type", "application/json");
-  res.json(db);
-});
+app.use(middlewares)
+app.use(router)
 
-app.listen(PORT, (err) => {
-  console.log("Listening on port:", PORT);
-});
+app.listen(PORT, () => {
+  console.log('JSON Server is running on port:', PORT)
+})
