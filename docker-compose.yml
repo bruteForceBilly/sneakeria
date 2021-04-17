@@ -1,14 +1,14 @@
 version: '3'
 services:
-    client:
+    sneakeria:
         build:
-            context: ./client
+            context: ./sneakeria
             args:
                 VUE_APP_API: ${VUE_APP_API}
         ports:
             - 80:80
     api:
         build:
-            context: ./api
+            context: ./sneakeria/api
         ports:
             - 5000:5000
