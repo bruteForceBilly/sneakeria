@@ -1,0 +1,39 @@
+{ 
+"stylelint.enable": true,
+"css.validate": false,
+"less.validate": false,
+"scss.validate": false,
+"eslint.validate": [
+        "vue",
+        "html",
+        "javascript",
+        "typescript",
+        "javascriptreact",
+        "typescriptreact"
+    ],
+"editor.formatOnSave": false,  
+"prettier.htmlWhitespaceSensitivity": "ignore",
+"vetur.validation.template": true,
+"editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+    },
+"indentRainbow.errorColor": "rgba(100,0,0,0.1)",
+"indentRainbow.colors": [
+    "rgba(255,255,64,0.2)",
+    "rgba(127,255,127,0.2)",
+    "rgba(255,127,255,0.2)",
+    "rgba(79,236,236,0.2)",
+],
+"filesize.useDecimal": true,
+"javascript.suggestionActions.enabled": false,
+"typescript.validate.enable": false,
+"javascript.validate.enable": false,
+"emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": ".vue",
+        "cmd": "stylelint --fix ${file}"
+      }
+    ]
+  },
+}
