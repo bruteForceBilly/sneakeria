@@ -96,16 +96,19 @@ export default {
     },
     getVersionIdOfPriceSort(priceSort){
       let versionPrices = [...this.versions].map((v) => v.price.amountOffered);
+      
       let getPriceSortMinOrMax = {
         "priceMin" : Math.min(...versionPrices),
         "priceMax": Math.max(...versionPrices)
       }
-      return [...this.versions].reduce((acc, cv) => {
+      let res = [...this.versions].reduce((acc, cv) => {
         if(cv.price.amountOffered ===  getPriceSortMinOrMax[priceSort]) {
-          return acc = cv["id"]
+          return acc = cv.id
         }
         return acc
-      })
+      }, null)
+      
+      return res
     },
   },
   watch: {
