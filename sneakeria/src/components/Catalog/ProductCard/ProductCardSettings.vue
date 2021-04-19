@@ -59,39 +59,7 @@ export default {
     selectedVersionId() {
       //return this.selectedVersion.id ? this.selectedVersion.id : null;
       return this.selectedVersion.id 
-    },
-    versionPrices() {
-      return [...this.versions].map((version) => version.price.amountOffered);
-    },
-    versionPricesMax() {
-      return [...this.versionPrices].reduce((acc, cv, i) => {
-        if (cv === Math.max(...this.versionPrices)) {
-          acc = cv;
-        }
-        return acc;
-      }, null);
-    },
-    versionPricesMin() {
-      return [...this.versionPrices].reduce((acc, cv, i) => {
-        if (cv === Math.min(...this.versionPrices)) {
-          acc = cv;
-        }
-        return acc;
-      }, null);
-    },
-    versionDates() {
-      return [...this.versions].map((version) => new Date(version.dateRelease));
-    },
-    versionDatesMin() {
-      let min = new Date(Math.min(...this.versionDates)).toString();
-      let arr = [...this.versionDates].map((date) => date.toString());
-      return arr[arr.findIndex((el) => el == min)];
-    },
-    versionDatesMax() {
-      let max = new Date(Math.max(...this.versionDates)).toString();
-      let arr = [...this.versionDates].map((date) => date.toString());
-      return arr[arr.findIndex((el) => el == max)];
-    },
+    },  
   },
   methods: {
     likeHandler() {
@@ -149,8 +117,8 @@ export default {
         const getVersionIndex = {
           priceMin: this.getVersionIdOfPriceSort(sort), 
           priceMax: this.getVersionIdOfPriceSort(sort), 
-          dateMin: this.getVersionIdOfDateSort(sort), //this.versionDatesMin,
-          dateMax: this.getVersionIdOfDateSort(sort) //this.versionDatesMax,
+          dateMin: this.getVersionIdOfDateSort(sort),
+          dateMax: this.getVersionIdOfDateSort(sort) 
         };
 
         return this.selectHandler(getVersionIndex[sort]);

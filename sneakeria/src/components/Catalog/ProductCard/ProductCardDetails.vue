@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full" v-if="false">
+  <div class="h-full">
     <div class="w-full h-full flex flex-row flex-wrap items-start">
       <!-- TITLE -->
 
@@ -15,7 +15,7 @@
             : 'text-vw-xl',
         ]"
       >
-              {{ productTitle }} {{ sku }}
+              {{ productTitle }}
 
       </h3>
 
