@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full" v-if="sku">
+  <div class="h-full" v-if="false">
     <div class="w-full h-full flex flex-row flex-wrap items-start">
       <!-- TITLE -->
 
@@ -112,12 +112,6 @@ export default {
         return "$" + amount; // + parseFloat(price_amount).toFixed(2)
       }
     },
-  },
-  watch: {
-    selectedVersionPrice(newValue, oldValue) {
-      console.log("selectedVersionPrice new", newValue)
-      console.log("selectedVersionPrice old", oldValue)
-    }
   },
 };
 </script>

@@ -85,12 +85,12 @@ export default {
     versionDatesMin() {
       let min = new Date(Math.min(...this.versionDates)).toString();
       let arr = [...this.versionDates].map((date) => date.toString());
-      return arr.findIndex((el) => el == min);
+      return arr[arr.findIndex((el) => el == min)];
     },
     versionDatesMax() {
       let max = new Date(Math.max(...this.versionDates)).toString();
       let arr = [...this.versionDates].map((date) => date.toString());
-      return arr.findIndex((el) => el == max);
+      return arr[arr.findIndex((el) => el == max)];
     },
   },
   methods: {
@@ -102,6 +102,29 @@ export default {
     },
     selectHandler(version) {
       return (this.selectedVersion.id = version);
+    },
+    getVersionIdOfDateSort(dateSort){
+
+      let versionDates = this.versions.reduce((acc, cv) => {
+        acc.push(cv.dateRelease)
+        return acc;
+      }, [])
+
+    
+      let getDateSort = {
+        "dateMin": versionDates.reduce(function (a, b) { return a < b ? a : b; }),
+        "dateMax": versionDates.reduce(function (a, b) { return a > b ? a : b; })
+      }
+
+      let res = [...this.versions].reduce((acc, cv) => {
+        if(new Date(cv.dateRelease).getTime() === new Date(getDateSort[dateSort]).getTime()) {
+          acc = cv.id
+        }
+        return acc
+      }, null)
+
+      return res;
+
     },
     getVersionIdOfPriceSort(priceSort){
       let versionPrices = [...this.versions].map((v) => v.price.amountOffered);
@@ -118,10 +141,6 @@ export default {
     },
   },
   watch: {
-    selectedVersionId: function(newVal, oldVal){
-      console.log("selectedVersionId NEW >>", newVal, "selectedVersionId OLD >>", oldVal)
-    
-    },
     sortSetting: {
       deep: true,
       handler: function (newVal, oldVal) {
@@ -130,8 +149,8 @@ export default {
         const getVersionIndex = {
           priceMin: this.getVersionIdOfPriceSort(sort), 
           priceMax: this.getVersionIdOfPriceSort(sort), 
-          dateMin: this.versionDatesMin,
-          dateMax: this.versionDatesMax,
+          dateMin: this.getVersionIdOfDateSort(sort), //this.versionDatesMin,
+          dateMax: this.getVersionIdOfDateSort(sort) //this.versionDatesMax,
         };
 
         return this.selectHandler(getVersionIndex[sort]);
