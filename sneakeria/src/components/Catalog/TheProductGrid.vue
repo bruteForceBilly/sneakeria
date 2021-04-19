@@ -74,9 +74,6 @@ export default {
         return "grid";
       }
     },
-    selectedVersion() {
-      return this.$store.state.selectedVersion;
-    },
   },
   methods: {
     sortSelect({ sort, order } = { sort: "default", order: "default" }) {

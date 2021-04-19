@@ -16,6 +16,7 @@ const actions = {
 
 const mutations = {
   settingMutation(state, formattedSettingParameters) {
+    console.log("setting", formattedSettingParameters)
     state.setting = formattedSettingParameters;
   },
 };

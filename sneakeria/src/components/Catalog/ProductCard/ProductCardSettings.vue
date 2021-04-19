@@ -57,7 +57,8 @@ export default {
       return this.product.versions;
     },
     selectedVersionId() {
-      return this.selectedVersion.id ? this.selectedVersion.id : null;
+      //return this.selectedVersion.id ? this.selectedVersion.id : null;
+      return this.selectedVersion.id 
     },
     versionPrices() {
       return [...this.versions].map((version) => version.price.amountOffered);
@@ -65,7 +66,7 @@ export default {
     versionPricesMax() {
       return [...this.versionPrices].reduce((acc, cv, i) => {
         if (cv === Math.max(...this.versionPrices)) {
-          acc = i;
+          acc = cv;
         }
         return acc;
       }, null);
@@ -73,12 +74,11 @@ export default {
     versionPricesMin() {
       return [...this.versionPrices].reduce((acc, cv, i) => {
         if (cv === Math.min(...this.versionPrices)) {
-          acc = i;
+          acc = cv;
         }
         return acc;
       }, null);
     },
-
     versionDates() {
       return [...this.versions].map((version) => new Date(version.dateRelease));
     },
@@ -103,16 +103,33 @@ export default {
     selectHandler(version) {
       return (this.selectedVersion.id = version);
     },
+    getVersionIdOfPriceSort(priceSort){
+      let versionPrices = [...this.versions].map((v) => v.price.amountOffered);
+      let getPriceSortMinOrMax = {
+        "priceMin" : Math.min(...versionPrices),
+        "priceMax": Math.max(...versionPrices)
+      }
+      return [...this.versions].reduce((acc, cv) => {
+        if(cv.price.amountOffered ===  getPriceSortMinOrMax[priceSort]) {
+          return acc = cv["id"]
+        }
+        return acc
+      })
+    },
   },
   watch: {
+    selectedVersionId: function(newVal, oldVal){
+      console.log("selectedVersionId NEW >>", newVal, "selectedVersionId OLD >>", oldVal)
+    
+    },
     sortSetting: {
       deep: true,
       handler: function (newVal, oldVal) {
         let { sort } = newVal;
 
         const getVersionIndex = {
-          priceMin: this.versionPricesMin,
-          priceMax: this.versionPricesMax,
+          priceMin: this.getVersionIdOfPriceSort(sort), 
+          priceMax: this.getVersionIdOfPriceSort(sort), 
           dateMin: this.versionDatesMin,
           dateMax: this.versionDatesMax,
         };
@@ -122,14 +139,7 @@ export default {
     },
   },
   created() {
-    if (
-      this.viewContext === "product" &&
-      this.$store.state.route.query.versionId
-    ) {
-      this.selectedVersion.id = this.$store.state.route.query.versionId;
-    } else {
-      this.selectedVersion.id = Math.min(...this.productData.versionIds);
-    }
+      this.selectedVersion.id = this.productData.versions[0].id;
   },
 };
 </script>

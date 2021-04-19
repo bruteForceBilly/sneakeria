@@ -21,14 +21,10 @@ export default new Vuex.Store({
   state: {
     rootData: null,
     setByRoute: null,
-    selectedVersion: null,
   },
   mutations: {
     setByRoute(state, setByRoute) {
       Vue.set(state, "setByRoute", setByRoute);
-    },
-    selectedVersionMutation(state, selectedVersion) {
-      Vue.set(state, "selectedVersion", selectedVersion);
     },
   },
 });

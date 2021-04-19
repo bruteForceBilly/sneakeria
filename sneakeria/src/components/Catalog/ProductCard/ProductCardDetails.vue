@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full">
+  <div class="h-full" v-if="sku">
     <div class="w-full h-full flex flex-row flex-wrap items-start">
       <!-- TITLE -->
 
@@ -15,9 +15,11 @@
             : 'text-vw-xl',
         ]"
       >
-        {{ productTitle }}
+              {{ productTitle }} {{ sku }}
+
       </h3>
 
+      <div>
       <!-- PRICE -->
       <div
         :class="[
@@ -50,6 +52,10 @@
             : productVersionsColors.length + " Color"
         }}
       </h6>
+
+      </div>
+
+
     </div>
   </div>
 </template>
@@ -61,6 +67,9 @@ export default {
     settings: Object,
   },
   computed: {
+    selectedVersion(){
+      return this.settings.settings.selectedVersion
+    },
     sku() {
       return this.settings.settings.selectedVersion.id;
     },
@@ -104,8 +113,11 @@ export default {
       }
     },
   },
-  beforeUpdate() {
-    //console.log("selectedVersion", this.settings.settings.selectedVersion);
+  watch: {
+    selectedVersionPrice(newValue, oldValue) {
+      console.log("selectedVersionPrice new", newValue)
+      console.log("selectedVersionPrice old", oldValue)
+    }
   },
 };
 </script>
