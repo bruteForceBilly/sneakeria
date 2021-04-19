@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center">
     <div v-for="link in content" :key="link.value" @click="setByRoute(true)">
-      <router-link :to="link.value" v-slot="{ navigate }">
+      <router-link :to="link.value" v-slot="{ navigate }" custom>
         <header-nav-link @click.native="navigate" :link="link" />
       </router-link>
     </div>

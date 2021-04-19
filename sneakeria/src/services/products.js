@@ -4,6 +4,7 @@ import { API_PRODUCTS } from "@/constants";
 import { API_VERSIONS } from "@/constants";
 import store from "@/store/index.js";
 
+
 // Refactor so it also takes an option var called o to link it to the right if
 // Route, Filter, Slice, Sort, Full-text search
 

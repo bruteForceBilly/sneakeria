@@ -12,7 +12,7 @@
 
     <span class="mx-2">/</span>
 
-    <router-link :to="{ name: 'home' }">
+    <router-link :to="{ name: 'home' }" custom>
       <span class="underline cursor-pointer">Home</span>
     </router-link>
 

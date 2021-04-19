@@ -61,8 +61,9 @@ export default {
         ...selectedOptionsObject,
         ...this.$store.state.route.query,
       })) {
+        
         if (Array.isArray(value)) {
-          return value.forEach((val) => queryParams.push(`${key}=${val}`));
+          value.forEach((val) => queryParams.push(`${key}=${val}`));
         } else {
           queryParams.push(`${key}=${value}`);
         }

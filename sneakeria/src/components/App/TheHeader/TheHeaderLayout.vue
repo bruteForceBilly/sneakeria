@@ -22,7 +22,7 @@
 
         <!-- Logo -->
         <div class="">
-          <router-link :to="{ name: 'home' }">
+          <router-link :to="{ name: 'home' }" custom>
             <slot name="logo">
               <p>... logo should go here</p>
             </slot>
