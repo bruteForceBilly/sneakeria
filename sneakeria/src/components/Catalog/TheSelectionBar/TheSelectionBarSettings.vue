@@ -57,7 +57,6 @@ export default {
     updateRouteQueryParams(selectedOptionsObject) {
       let queryParams = [];
 
-      console.log("selectedOptionsObject", selectedOptionsObject)
 
       for (const [key, value] of Object.entries({
         ...selectedOptionsObject,
@@ -75,11 +74,14 @@ export default {
 
       if (queryParams.length === 0) {
         this.$router.push({ name: "all" }).catch((err) => {});
-      } else {
-        if (this.$store.state.route.query) {
+      } 
+        
+      if (this.$store.state.route.query) {
           this.$store.commit("search/routeLastDisplayQueryMutation", true);
-        }
-        this.$router.push("search?" + queryParamsString).catch((err) => {});
+          const { _page } = this.$store.state.route.query
+          this.$router.push({ path:"search?" + queryParamsString, query: { _page : 1 } }).catch((err) => {});
+        } else {
+          this.$router.push("search?" + queryParamsString).catch((err) => {});
       }
     },
   },
