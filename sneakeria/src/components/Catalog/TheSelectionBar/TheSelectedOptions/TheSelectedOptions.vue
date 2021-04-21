@@ -16,7 +16,7 @@
 
       <div
         v-if="priceOperators !== false"
-        @click="togglePriceOperator()"
+        @click="togglePriceOperator(selectedOptionsObject)"
         class="tag focus:outline-none"
       >
         {{ priceOperators }}
@@ -72,8 +72,23 @@ export default {
       this.$store.commit("setByRoute", false);
       return this.toggleElement(option);
     },
-    togglePriceOperator() {
-      this.updateRouteQueryParams(this.selectedOptionsObject);
+    togglePriceOperator(selectedOptionsObject) {
+    let queryParams = [];
+
+      for (const [key, value] of Object.entries({
+        ...selectedOptionsObject,
+      })) {
+        if (Array.isArray(value)) {
+          value.forEach((val) => queryParams.push(`${key}=${val}`));
+        } else {
+          queryParams.push(`${key}=${value}`);
+        }
+      }
+
+      let queryParamsString = queryParams.toString().replace(/,/g, "&");
+
+      this.$router.push("search?" + queryParamsString).catch((err) => {});
+
     },
     clearAllTags() {
       let copySelectedOptionsElements = [...this.selectedOptionsElements];

@@ -57,6 +57,8 @@ export default {
     updateRouteQueryParams(selectedOptionsObject) {
       let queryParams = [];
 
+      console.log("selectedOptionsObject", selectedOptionsObject)
+
       for (const [key, value] of Object.entries({
         ...selectedOptionsObject,
         ...this.$store.state.route.query,
