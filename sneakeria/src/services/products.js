@@ -8,12 +8,79 @@ import store from "@/store/index.js";
 // Refactor so it also takes an option var called o to link it to the right if
 // Route, Filter, Slice, Sort, Full-text search
 
+const paginator = (data, operator) => {
+  let operatorParams = operator.split("&");
+
+  const pageParams = operatorParams.reduce((acc, cv) => {
+    const page = /_page=\d+/g;
+    const limit = /_limit=\d+/g;
+
+    if (page.test(cv)) {
+      acc.pageCurrent = parseInt(cv.match(/\d+/g)[0], 10);
+    } else if (limit.test(cv)) {
+      acc.contentLimit = parseInt(cv.match(/\d+/g)[0], 10);
+    }
+
+    return acc;
+  }, {});
+
+  const { pageCurrent, contentLimit } = pageParams;
+  const contentCount = data.length;
+  const getContentStart = () => {
+    if (pageCurrent == 1) {
+      return 0;
+    } else {
+      if (pageCurrent * contentLimit > contentCount) {
+        return (
+          contentLimit -
+          (contentLimit - contentCount) +
+          (contentLimit - contentCount)
+        );
+      } else {
+        return pageCurrent * contentLimit;
+      }
+    }
+  };
+
+  const contentStart = getContentStart();
+
+  const contentEnd =
+    contentStart + contentLimit > contentCount
+      ? contentCount
+      : contentStart + contentLimit;
+
+  const pageCount = Math.ceil(contentCount / contentLimit);
+  const pagePrevious = pageCurrent > 1 ? pageCurrent - 1 : 1;
+  const pageNext =
+    pageCurrent < pageCount ? pageCurrent + 1 : pageCount;
+
+  return {
+    pageCount,
+    pageCurrent,
+    pageNext,
+    pagePrevious,
+    contentLimit,
+    contentCount,
+    contentStart,
+    contentEnd,
+  };
+};
+
+// const pagination = paginator(response.data, "_page=1&_limit=48");
+// const paginatedProducts = response.data.slice(
+//   pagination.contentStart,
+//   pagination.contentEnd
+// );
+// store.commit("search/foundProductsPagination", pagination);
+
+
 export default function (o, q, cb) {
   if (o === "route" && q === "all") {
     //console.log("ALL PRODUCTS", q);
     return axios
       .get(API_PRODUCTS)
-      .then((response) => {
+      .then((response) => {    
+        // you need to map it together with the versions and then paginate all products
         cb(response.data);
       })
       .catch((err) => err.toString());
@@ -117,63 +184,63 @@ export default function (o, q, cb) {
           });
         });
 
-        const paginator = (data, operator) => {
-          let operatorParams = operator.split("&");
+        // const paginator = (data, operator) => {
+        //   let operatorParams = operator.split("&");
 
-          const pageParams = operatorParams.reduce((acc, cv) => {
-            const page = /_page=\d+/g;
-            const limit = /_limit=\d+/g;
+        //   const pageParams = operatorParams.reduce((acc, cv) => {
+        //     const page = /_page=\d+/g;
+        //     const limit = /_limit=\d+/g;
 
-            if (page.test(cv)) {
-              acc.pageCurrent = parseInt(cv.match(/\d+/g)[0], 10);
-            } else if (limit.test(cv)) {
-              acc.contentLimit = parseInt(cv.match(/\d+/g)[0], 10);
-            }
+        //     if (page.test(cv)) {
+        //       acc.pageCurrent = parseInt(cv.match(/\d+/g)[0], 10);
+        //     } else if (limit.test(cv)) {
+        //       acc.contentLimit = parseInt(cv.match(/\d+/g)[0], 10);
+        //     }
 
-            return acc;
-          }, {});
+        //     return acc;
+        //   }, {});
 
-          const { pageCurrent, contentLimit } = pageParams;
-          const contentCount = data.length;
-          const getContentStart = () => {
-            if (pageCurrent == 1) {
-              return 0;
-            } else {
-              if (pageCurrent * contentLimit > contentCount) {
-                return (
-                  contentLimit -
-                  (contentLimit - contentCount) +
-                  (contentLimit - contentCount)
-                );
-              } else {
-                return pageCurrent * contentLimit;
-              }
-            }
-          };
+        //   const { pageCurrent, contentLimit } = pageParams;
+        //   const contentCount = data.length;
+        //   const getContentStart = () => {
+        //     if (pageCurrent == 1) {
+        //       return 0;
+        //     } else {
+        //       if (pageCurrent * contentLimit > contentCount) {
+        //         return (
+        //           contentLimit -
+        //           (contentLimit - contentCount) +
+        //           (contentLimit - contentCount)
+        //         );
+        //       } else {
+        //         return pageCurrent * contentLimit;
+        //       }
+        //     }
+        //   };
 
-          const contentStart = getContentStart();
+        //   const contentStart = getContentStart();
 
-          const contentEnd =
-            contentStart + contentLimit > contentCount
-              ? contentCount
-              : contentStart + contentLimit;
+        //   const contentEnd =
+        //     contentStart + contentLimit > contentCount
+        //       ? contentCount
+        //       : contentStart + contentLimit;
 
-          const pageCount = Math.ceil(contentCount / contentLimit);
-          const pagePrevious = pageCurrent > 1 ? pageCurrent - 1 : 1;
-          const pageNext =
-            pageCurrent < pageCount ? pageCurrent + 1 : pageCount;
+        //   const pageCount = Math.ceil(contentCount / contentLimit);
+        //   const pagePrevious = pageCurrent > 1 ? pageCurrent - 1 : 1;
+        //   const pageNext =
+        //     pageCurrent < pageCount ? pageCurrent + 1 : pageCount;
 
-          return {
-            pageCount,
-            pageCurrent,
-            pageNext,
-            pagePrevious,
-            contentLimit,
-            contentCount,
-            contentStart,
-            contentEnd,
-          };
-        };
+        //   return {
+        //     pageCount,
+        //     pageCurrent,
+        //     pageNext,
+        //     pagePrevious,
+        //     contentLimit,
+        //     contentCount,
+        //     contentStart,
+        //     contentEnd,
+        //   };
+        // };
 
         const pagination = paginator(filteredProducts, operator);
 

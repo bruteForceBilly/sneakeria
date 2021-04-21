@@ -32,6 +32,14 @@ const routes = [
       store.commit("setByRoute", true);
       store.commit("search/foundProductsMutation", null);
       store.commit("search/routeLastBeforeEnterMutation", to.name);
+      products("route", "all", (data) => {
+        if (data !== undefined) {
+          store.commit("search/foundProductsMutation", data);
+          return resolve(data);
+        } else {
+          return reject(new Error("Products call failed in searchQuery"));
+        }
+      });
       next();
     },
   },

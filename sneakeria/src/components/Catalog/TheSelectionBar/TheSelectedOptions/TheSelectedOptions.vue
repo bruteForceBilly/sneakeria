@@ -92,9 +92,10 @@ export default {
     },
     clearAllTags() {
       let copySelectedOptionsElements = [...this.selectedOptionsElements];
-      return copySelectedOptionsElements.forEach((option) =>
+      copySelectedOptionsElements.forEach((option) =>
         this.toggleOption(option)
       );
+      return this.$router.push({ name: "all"}).catch((err) => {});
     },
   },
 };

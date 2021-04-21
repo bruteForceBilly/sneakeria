@@ -57,14 +57,13 @@ export default {
     ...mapGetters("search", ["queryParamsObject", "selectedDisplayTitle"]),
 
     displayTitel() {
-      return this.selectedDisplayTitle
-        ? [
-            this.selectedDisplayTitle(this.queryParamsObject.productProp),
-            this.selectedDisplayTitle(this.queryParamsObject.versionProp),
+      return this.$store.state.route.path === 'all'
+        ? "" : [
+            this.selectedDisplayTitle(this.queryParamsObject?.productProp),
+            this.selectedDisplayTitle(this.queryParamsObject?.versionProp),
           ]
             .filter((val) => val != null)
-            .flat()
-        : "";
+            .flat();
     },
   },
   methods: {
