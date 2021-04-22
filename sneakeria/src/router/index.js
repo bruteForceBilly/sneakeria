@@ -5,7 +5,7 @@ import store from "@/store/index.js";
 import products from "@/services/products.js";
 import Home from "../views/Home.vue";
 import Catalog from "../views/Catalog.vue";
-import Product from "../views/Product.vue";
+//import Product from "../views/Product.vue";
 import Whishlist from "../views/Whishlist.vue";
 
 Vue.use(VueRouter);
@@ -32,10 +32,16 @@ const routes = [
       store.commit("setByRoute", true);
       store.commit("search/foundProductsMutation", null);
       store.commit("search/routeLastBeforeEnterMutation", to.name);
-      products("route", "all", (data) => {
+
+      if(to.query && Object.keys(to.query ).length === 0 && to.query.constructor === Object) {
+        to.query._page = 1;
+        to.query._limit = 48;
+      }
+      products("all", to.query, (data) => {
+        console.log("dataaaaaa", data)
         if (data !== undefined) {
           store.commit("search/foundProductsMutation", data);
-          return resolve(data);
+          return data;
         } else {
           return reject(new Error("Products call failed in searchQuery"));
         }

@@ -95,7 +95,7 @@ export default {
       copySelectedOptionsElements.forEach((option) =>
         this.toggleOption(option)
       );
-      return this.$router.push({ name: "all"}).catch((err) => {});
+      return this.$router.push({ name: "all", query: { _page: 1, _limit:48 }}).catch((err) => {});
     },
   },
 };

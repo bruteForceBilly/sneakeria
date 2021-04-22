@@ -175,7 +175,7 @@ export default {
   },
 
   created() {
-    this.selectedPage = this.pagination.pageCurrent;
+    //this.selectedPage = this.pagination.pageCurrent;
   },
 };
 </script>
