@@ -12,6 +12,9 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: '/', redirect: { name: 'home' }
+  },
+  {
     path: "/wishlist",
     name: "whishlist",
     component: Whishlist,
