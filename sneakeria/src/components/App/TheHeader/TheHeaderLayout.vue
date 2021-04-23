@@ -43,7 +43,7 @@
         <div
           v-if="show"
           class="block w-full h-screen absolute inset-0 z-20 bg-gray-900 opacity-25"
-        ></div>
+        ></div> 
       </div>
     </div>
   </div>

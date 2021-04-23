@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-screen overflow-hidden bg-white text-4xl fixed top-0 z-50 shadow-lg"
+    class="h-screen overflow-hidden bg-white text-4xl fixed top-0 z-70 shadow-lg"
     :class="$mq == 'xl' || $mq == 'lg' ? 'w-1/2' : 'w-full'"
   >
     <SidebarTransitionGroup :appear="true" animation="slide-fade">
