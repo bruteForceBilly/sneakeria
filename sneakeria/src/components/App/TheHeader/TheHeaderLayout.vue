@@ -1,11 +1,11 @@
 <template>
   <div
     v-hang="'hang'"
-    class="w-full"
-    :class="this.$browserDetect.isIOS ? 'static' : 'fixed z-60'"
+    class="w-full fixed z-60"
+    :class="[isVisible ? 'visible' : 'invisible']"
   >
     <div class="relative">
-      <!-- Container start && !this.$browserDetect.isIOS  -->
+      <!-- Container start -->
       <div
         class="border-b px-4 lg:px-12 xl:px-4 bg-white flex justify-between items-center"
         style="height: 50px"
@@ -34,7 +34,7 @@
         </div>
 
         <!-- Icons ml-16 mr-2 xl:mr-12 -->
-        <div class="sm:ml-16 sm:mr-2 xl:mr-12">
+        <div class="sm:ml-16 sm:mr-2 xl:mr-12">          
           <slot name="icons">
             <p>... icons shold go here</p>
           </slot>
@@ -59,12 +59,23 @@ export default {
     return {
       hang: false,
       windowHeight: null,
+      scrollY: null
     };
   },
   computed: {
+    isVisibleDesktop(){
+      return this.scrollY < 200 && this.$mq == 'xl'  ? true : false
+    },
+    isVisibleMobile(){
+      return this.$mq !== 'xl'  ? true : false
+    },
+    isVisible(){
+      return this.$mq !== 'xl' ? this.isVisibleMobile : this.isVisibleDesktop;
+    },
+    
     mq() {
       return this.$mq;
-    },
+    }
   },
   directives: {
     hang: hang,
@@ -74,6 +85,13 @@ export default {
     window.addEventListener("resize", () => {
       this.windowHeight = window.innerHeight;
     });
+    window.addEventListener('scroll', () => {
+      this.scrollY = window.scrollY
+    });
   },
+  destroyed () {
+    window.removeEventListener('scroll');
+  },
+
 };
 </script>
