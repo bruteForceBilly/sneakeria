@@ -2,7 +2,8 @@
   <div>
     <div class="pt-1 sm:pt-5 pb-1">
       <h1
-        class="text-4xl sm:text-5xl tracking-tighter font-normal italic uppercase"
+        style="transform: skew(-15deg, 0);"
+        class="text-4xl sm:text-5xl tracking-tighter font-normal uppercase"
       >
         <span
           v-if="currentRoute.name === 'all' && searchFoundProductsLength < 1"

@@ -4,8 +4,8 @@
       <h1 class="text-xl font-semibold tracking-wide mb-3">👋 Hello there!</h1>
       <p>
         Welcome to Sneakeria, a <i>sneaky</i> copy of the adidas <a class="underline text-blue-500 visited:text-purple-600" href="https://www.adidas.nl/blauw" target="_blank" title="Check out Adidas catalog page for comparison">catalog page</a>, reverse
-        engineered and built in vue.js, json-server, tailwind and dockerized with docker
-        compose. Deployed to a digital ocean droplet. Product data is seeded from a homegrown data generation tool run
+        engineered and built in vue.js, json-server, tailwind. Dockerized with docker
+        compose and deployed to a digital ocean droplet. Product data is seeded from a homegrown data generation tool run
         by node.js. Click on {{ getSuggestion }} to get started, or why
         not just check out all <router-link to="/blue" class="underline text-blue-500 visited:text-purple-600">blue</router-link> products?
       </p>
