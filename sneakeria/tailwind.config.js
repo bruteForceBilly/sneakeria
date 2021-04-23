@@ -231,6 +231,9 @@ module.exports = {
     flexGrow: ["odd", "even", "first", "last"],
     position: ["hover"],
     zIndex: ["hover"],
+    extend: {
+      textColor: ['visited'],
+    }
   },
   plugins: [],
 };
