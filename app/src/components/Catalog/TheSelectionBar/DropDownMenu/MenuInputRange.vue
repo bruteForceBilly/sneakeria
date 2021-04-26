@@ -170,3 +170,20 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.vue-slider-dot-handle-focus,
+.vue-slider-dot-handle {
+  border: 2px solid black;
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0) !important;
+}
+
+  .vue-slider-dot-tooltip-inner,
+  .vue-slider-dot-tooltip-inner,
+  .vue-slider-dot-handle-disabled,
+  .vue-slider-rail,
+  .vue-slider-process {
+    background-color: #000000 !important;
+  } 
+
+</style>
