@@ -1,10 +1,7 @@
 <template>
   <MenuNode
     :class="[
-      isMobile ? '' : 'py-1 inline-flex justify-start',
-      this.$browserDetect.isIOS
-        ? 'mobile-menu-node-grid border-gray-300 border-b'
-        : '',
+      isMobile ? 'mobile-menu-node-grid border-gray-300 border-b' : 'py-1 inline-flex justify-start',
     ]"
     :node="selects"
     :isMobile="isMobile"

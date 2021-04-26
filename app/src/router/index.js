@@ -41,7 +41,6 @@ const routes = [
         to.query._limit = 48;
       }
       products("all", to.query, (data) => {
-        console.log("dataaaaaa", data)
         if (data !== undefined) {
           store.commit("search/foundProductsMutation", data);
           return data;

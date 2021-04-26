@@ -103,9 +103,12 @@ export default {
   },
   props: {
     selectedPage: {
-      type: Number,
+      type: [Number, String],
       default: 1,
       required: true,
+      validator: function(propValue){
+        return typeof propValue === 'string' ? parseInt(propValue, 10) : propValue;
+      }
     },
   },
   methods: {

@@ -104,7 +104,7 @@ export default function (o, q, cb) {
         store.commit("search/foundProductsPagination", pagination);
 
         //console.log(apiProductResponse, apiVersionResponse, apiAllVersionsResponse)
-        console.log(filteredProducts, paginatedProducts, pagination);
+        //console.log(filteredProducts, paginatedProducts, pagination);
 
         return cb(paginatedProducts);
       });

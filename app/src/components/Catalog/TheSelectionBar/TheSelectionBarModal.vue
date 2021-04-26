@@ -49,7 +49,7 @@
           v-if="selectedOptionsElements.length > 0"
           class="fixed right-0 bottom-0 left-0 w-full p-7 z-70 flex flex-col justify-end"
         >
-          <ProductCardButton
+          <ProductCardButton id="ProductCardButton"
             class="w-full"
             @click.native="mobileMenuSelected = null"
             icon="none"
