@@ -22,14 +22,6 @@
 <script>
 export default {
   name: "Home",
-  computed: {
-    isMobileScreen() {
-      return this.$mq == "sm" ? true : false;
-    },
-    getSuggestion() {
-      return this.isMobileScreen ? "menu in the upper left corner" : "one of the link in the navbar";
-    }
-  },
 };
 </script>
 
