@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="no-select">
     <SidebarTransitionGroup animation="slide-fade">
       <div v-if="showing && node.name != parent.name" :key="keyProp">
         <div
@@ -11,7 +11,7 @@
           @click="[expand(), select(parent)]"
         >
           <img src="@/assets/chevron-l.svg" class="mx-4" />
-          <span class="pt-1 text-lg tracking-wide font-semibold uppercase"
+          <span class="pt-1 text-lg tracking-wide font-semibold uppercase select-none"
             >{{ node.label }}
           </span>
         </div>
@@ -22,7 +22,7 @@
           :key="keyProp"
           class="flex justify-between items-center mr-5"
           :class="[
-            parent.name === 'Root' ? 'ml-8 font-semibold uppercase' : 'ml-16',
+            parent.name === 'Root' ? 'ml-8 font-semibold uppercase select-none' : 'ml-16',
           ]"
         >
           <span class="text-lg tracking-wider py-2">{{ node.label }}</span>
@@ -36,7 +36,7 @@
         >
           <span
             @click="[setByRoute(true), setShow($event)]"
-            class="text-lg tracking-wider py-2"
+            class="text-lg tracking-wider py-2 select-none"
           >
             <router-link
               :to="{
@@ -126,3 +126,17 @@ export default {
   },
 };
 </script>
+<style>
+.no-select {
+  cursor: default;
+  background: none;  
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+</style>
